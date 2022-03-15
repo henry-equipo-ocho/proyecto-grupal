@@ -1,0 +1,24 @@
+{
+  "name": "proyecto-grupal-API",
+  "version": "1.0.0",
+  "description": "App estinerary\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[3~z",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henry-equipo-ocho/proyecto-grupal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henry-equipo-ocho/proyecto-grupal/issues"
+  },
+  "homepage": "https://github.com/henry-equipo-ocho/proyecto-grupal#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
