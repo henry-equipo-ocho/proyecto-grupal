@@ -18,6 +18,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StarIcon from '@mui/icons-material/Star';
+import GoogleIcon from '@mui/icons-material/Google';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
@@ -82,7 +83,7 @@ export default function InputAdornments() {
           </Box>
         </Box>
         <Box>
-          <Alert severity="warning">All fields are required</Alert>
+          <Alert severity="info">All fields are required</Alert>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center' }}>
             <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
               <InputLabel htmlFor="name" color='secondary'>Name</InputLabel>
@@ -187,6 +188,14 @@ export default function InputAdornments() {
               Register
             </Button>
           </Box>
+        <Box sx={{textAlign: 'center', marginBottom: '10px'}}>
+          <span>OR</span>
+        </Box>
+        <Box sx={{textAlign: 'center', marginBottom: '25px'}}>
+          <Button variant='outlined'>
+            Register with&nbsp;&nbsp;<GoogleIcon />
+          </Button>
+        </Box>
         </Box>
       </Box>
     </Container >
