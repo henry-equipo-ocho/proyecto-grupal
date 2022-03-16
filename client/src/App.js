@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Register from './Components/Register'
+import Register from './Components/Register/Register'
 
 function App() {
   return (
