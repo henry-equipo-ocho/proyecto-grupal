@@ -1,19 +1,15 @@
 import { Request, Response } from 'express';
-import User from '../models/user.model';
+import { signUpService } from '../services/signup.services';
 
-export const signUp = async (req: Request, res: Response) => {
-    if(!req.body.email || !req.body.password || !req.body.name || !req.body.lastname) {
+export const signUpController = async (req: Request, res: Response) => {
+    if(!req.body.email || !req.body.password || !req.body.name || !req.body.surname || !req.body.country) {
         return res.status(400).send('Missing values');
     }
 
-    const user = await User.findOne({email: req.body.email});
-
-    if(user) {
-        return res.status(400).send('User already exists');
+    try {
+        const newUser = await signUpService(req);
+        return res.status(200).send(newUser);
+    } catch (error: any) {
+        return res.status(error.status || 400).json(error.message || error)
     }
-
-    const newUser = new User(req.body);
-    await newUser.save();
-
-    res.status(201).send(newUser);
 }

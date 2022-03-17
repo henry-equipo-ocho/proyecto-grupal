@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import express from 'express';
 import morgan from 'morgan';
-import signup from '../routes/signup';
+import signup from './signup.route';
 
 
 const router = Router();

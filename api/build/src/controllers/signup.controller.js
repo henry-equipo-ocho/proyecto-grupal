@@ -8,22 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUp = void 0;
-const user_model_1 = __importDefault(require("../models/user.model"));
-const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.body.email || !req.body.password || !req.body.name || !req.body.lastname) {
+exports.signUpController = void 0;
+const signup_services_1 = require("../services/signup.services");
+const signUpController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.body.email || !req.body.password || !req.body.name || !req.body.surname || !req.body.country) {
         return res.status(400).send('Missing values');
     }
-    const user = yield user_model_1.default.findOne({ email: req.body.email });
-    if (user) {
-        return res.status(400).send('User already exists');
+    try {
+        const newUser = yield (0, signup_services_1.signUpService)(req);
+        return res.status(200).send(newUser);
     }
-    const newUser = new user_model_1.default(req.body);
-    yield newUser.save();
-    res.status(201).send(newUser);
+    catch (error) {
+        return res.status(error.status || 400).json(error.message || error);
+    }
 });
-exports.signUp = signUp;
+exports.signUpController = signUpController;

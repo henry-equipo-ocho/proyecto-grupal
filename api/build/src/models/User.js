@@ -12,14 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
+const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const userSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    lastname: { type: String, required: true },
-    email: { type: String, unique: true, lowercase: true, required: true, trim: true },
-    password: { type: String, required: true },
-    country: { type: String, select: false }
+const userSchema = new mongoose_1.default.Schema({
+    name: { type: String, required: [true, 'Missing name attribute'] },
+    surname: { type: String, required: [true, 'Missing surname attribute'] },
+    email: { type: String, required: [true, 'Missing email attribute'], unique: true, lowercase: true, trim: true },
+    country: { type: String, required: [true, 'Missing country attribute'] },
+    password: { type: String, required: [true, 'Missing password attribute'] },
+    role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -37,4 +38,4 @@ userSchema.methods.comparePassword = function (password) {
         return yield bcrypt_1.default.compare(password, this.password);
     });
 };
-exports.default = (0, mongoose_1.model)('User', userSchema);
+exports.default = mongoose_1.default.model('User', userSchema);

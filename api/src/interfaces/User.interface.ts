@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export enum UserRoles {
     Client,
     Business,
@@ -5,7 +7,7 @@ export enum UserRoles {
     Admin
 }
 
-export default interface User {
+export default interface User extends Document {
     name: string,
     surname: string,
     email: string,

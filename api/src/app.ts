@@ -1,6 +1,6 @@
 import morgan from 'morgan';
 import cors from 'cors';
-import routes from './routes/index';
+import routes from './routes/index.route';
 import express, { Application } from "express";
 
 import connectToDB from "./db";

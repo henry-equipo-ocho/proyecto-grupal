@@ -1,5 +1,6 @@
 import server from './src/app';
 import './src/db';
 
-server.listen(server.get('port'));
-console.log('Server on port', server.get('port'))
+server.listen(3001, () => {
+    console.log('Server listening at 3001')
+});
