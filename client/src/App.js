@@ -9,6 +9,7 @@ function App() {
         <Route exact path='/' element={<NavBar/>} />
         <Route exact path='/register' element={ <Register/>  } />
       </Routes>
+
     </div>
   );
 }
