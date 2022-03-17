@@ -17,7 +17,7 @@ export default function NavBar({handleLoginForm}) {
                     <Button
                     color="inherit"
                     variant='none'
-                    
+                    href='/home'
                     size='large'>
                         <img src={Logo} alt='img notfound' width="50" height="50" />
                     </Button>
