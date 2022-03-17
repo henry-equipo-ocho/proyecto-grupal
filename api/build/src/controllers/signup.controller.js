@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUp = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.body.email || !req.body.password) {
+    if (!req.body.email || !req.body.password || !req.body.name || !req.body.lastname) {
         return res.status(400).send('Missing values');
     }
     const user = yield user_model_1.default.findOne({ email: req.body.email });
