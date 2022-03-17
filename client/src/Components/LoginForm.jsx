@@ -134,6 +134,7 @@ const FormDialog = () => {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
+      <DialogTitle>Iniciar Sesión</DialogTitle>
         <DialogContent>
 
         <TextField
