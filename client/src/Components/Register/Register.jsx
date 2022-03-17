@@ -22,6 +22,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import countries from './countries';
+import NavBar from '../NavBar'
 
 export default function InputAdornments() {
   const [values, setValues] = useState({
@@ -49,7 +50,9 @@ export default function InputAdornments() {
 
 
   return (
+  
     <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
+       <NavBar />
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>
           <h1 style={{ fontWeight: '300', fontSize: '60px' }}>
