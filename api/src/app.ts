@@ -1,22 +1,18 @@
-import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import routes from './routes/index';
+import express, { Application } from "express";
 
-// Initialization
-const server = express();
+import connectToDB from "./db";
 
-server.set('port', process.env.PORT || 3001);
+connectToDB();
 
-server.use(morgan('dev'));
-server.use(cors());
-server.use(express.urlencoded({extended: false}));
-server.use(express.json());
+const app: Application = express();
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
-server.get('/', (req, res) => {
-    res.send(`API is at http://localhost:${server.get('port')}`);
-});
+app.use('/', routes);
 
-server.use('/', routes);
-
-export default server;
+export default app;

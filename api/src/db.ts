@@ -1,15 +1,16 @@
-import mongoose from 'mongoose';
-import config from './config/config';
+import { connect } from "mongoose";
+import dotenv from "dotenv";
 
-mongoose.connect(config.DB.URI);
+dotenv.config();
 
-const connection = mongoose.connection;
+const MONGO_URI: string = process.env.MONGO_URI || 'erroringURI'; // TS won't allow a process.env
 
-connection.once('open', () => {
-    console.log('Mongodb connection stablished');
-});
-
-connection.on('error', err => {
-    console.log(err);
-    process.exit(0);
-});
+export default async function connectToDB(): Promise<void> {
+    try {
+        const conn = await connect(MONGO_URI);
+        console.log(`MongoDB connected to ${conn.connection.host}`);
+    } catch (error) {
+        console.error(`MongoDB connection failed: ${error}`);
+        process.exit(1);
+    }
+}
