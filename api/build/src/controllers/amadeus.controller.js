@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.amadeusController = void 0;
 const Amadeus = require('amadeus');
+// Actividades de Buenos Aires
 const amadeusController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var amadeus = new Amadeus({
         clientId: 'OwaxoAtHCKCD5uateGJFssikTWyoHWNO',
@@ -20,6 +21,6 @@ const amadeusController = (req, res) => __awaiter(void 0, void 0, void 0, functi
         latitude: -34.599722,
         longitude: -58.381944
     }).then((response) => response.data).catch((error) => error.code);
-    res.send(activities);
+    res.status(200).send(activities);
 });
 exports.amadeusController = amadeusController;
