@@ -3,7 +3,7 @@ import cors from 'cors';
 import routes from './routes/index.route';
 import express, { Application } from "express";
 import passport from 'passport';
-import passportMiddleware from './middlewares/passport';
+import passportMiddleware, { signInGoogleService } from './middlewares/passport';
 
 import connectToDB from "./db";
 
@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(passport.initialize());
 passport.use(passportMiddleware);
+passport.use(signInGoogleService);
 
 app.use('/', routes);
 
