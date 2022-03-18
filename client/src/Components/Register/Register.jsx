@@ -69,10 +69,11 @@ export default function Register() {
       if (terms) {
         console.log(values)
         try{
-          await axios.post('localhost:3000/signup', values)
+          await axios.post('http://localhost:3001/signup', values)
           alert("Succesfully registered!");
         }
         catch(e){
+          console.log(e)
           alert(e)
         }
       } else {
