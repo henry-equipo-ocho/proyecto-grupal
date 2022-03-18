@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export enum UserRoles {
     Client,
     Business,
@@ -5,11 +7,12 @@ export enum UserRoles {
     Admin
 }
 
-export default interface User {
+export default interface User extends Document {
     name: string,
     surname: string,
     email: string,
     country: string,
     password: string,
-    role: UserRoles
+    role: UserRoles,
+    comparePassword: (password: string) => Promise<boolean>
 }
