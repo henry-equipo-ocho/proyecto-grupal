@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 export const createTokenService = (user: UserInterface) => {
     return jwt.sign({id: user.id, email: user.email}, process.env.JWT_SECRET as string, {
         expiresIn: '1d'

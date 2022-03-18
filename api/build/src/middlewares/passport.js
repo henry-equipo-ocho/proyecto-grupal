@@ -12,9 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.signInGoogleService = void 0;
 const passport_jwt_1 = require("passport-jwt");
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_models_1 = __importDefault(require("../models/User.models"));
+const passport_1 = __importDefault(require("passport"));
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 dotenv_1.default.config();
 const optStrategy = {
     jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -32,3 +35,16 @@ exports.default = new passport_jwt_1.Strategy(optStrategy, (payload, done) => __
         console.log(error);
     }
 }));
+exports.signInGoogleService = new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/signin/google/callback"
+}, function (accessToken, refreshToken, profile, done) {
+    done(null, profile);
+});
+passport_1.default.serializeUser((user, done) => {
+    done(null, user);
+});
+passport_1.default.deserializeUser((user, done) => {
+    done(null, user);
+});
