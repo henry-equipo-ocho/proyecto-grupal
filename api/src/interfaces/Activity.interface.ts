@@ -1,7 +1,4 @@
-import { Document } from 'mongoose';
-
-
-export default interface Activity extends Document {
+export default interface Activity {
     name: string,
     description: string,
     picture: string,
