@@ -15,7 +15,7 @@ export default function Home() {
 
             <div>
                 <label>
-                    Hola Viajaro, ¿A donde quieres ir?
+                    Hola Viajero, ¿A donde quieres ir?
                 </label>
             </div>
 

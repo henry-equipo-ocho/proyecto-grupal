@@ -10,6 +10,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import Logo from '../Media/Logo.png'
 
 export default function NavBar({handleLoginForm}) {
+    const isLogged = false
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -24,16 +26,28 @@ export default function NavBar({handleLoginForm}) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
+
+                    {isLogged ? <Button
+                    color="inherit"
+                    variant='outlined'
+                    onClick={handleLoginForm}
+                    startIcon={<PersonIcon />} >Logout</Button>
+                    :
+                    <>
                     <Button
                     color="inherit"
                     variant='outlined'
                     onClick={handleLoginForm}
-                    startIcon={<PersonIcon />} >Login</Button>
+                    startIcon={<PersonIcon />}>Login</Button>
+
                     <Button
                     color="inherit"
                     variant='outlined'
                     startIcon={<AppRegistrationIcon />}
-                    href='/register'>Singup</Button>   
+                    href='/register'>Singup</Button> 
+                    </>
+                    }
+  
                 </Toolbar>
             </AppBar>
         </Box>
