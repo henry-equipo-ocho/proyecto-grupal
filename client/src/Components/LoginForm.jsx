@@ -9,89 +9,90 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link } from '@mui/material';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export default function FormDialog({close}) {
-  const [open, setOpen] = React.useState(false);
-  const [input, setInput] = React.useState({
-       Email: "",
-       Password: "",
-   })
+// export default function FormDialog({close}) {
+//   const [open, setOpen] = React.useState(false);
+//   const [input, setInput] = React.useState({
+//        Email: "",
+//        Password: "",
+//    })
 
 
-   const handleClickOpen = () => {
-     setOpen(true);
-   };
+//    const handleClickOpen = () => {
+//      setOpen(true);
+//    };
 
-   const handleClose = () => {
-     setOpen(false);
-   };
+//    const handleClose = () => {
+//      setOpen(false);
+//    };
 
    const handleSubmit = (e) => {
      e.preventDefault()
    }
-   const handleInputChange = (e) => {
-       setInput({
-           ...input,
-           [e.target.name]: e.target.value
-       })
-   }
+//    const handleInputChange = (e) => {
+//        setInput({
+//            ...input,
+//            [e.target.name]: e.target.value
+//        })
+//    }
   
 
-   return (
-     <div>
-         <DialogTitle>Iniciar Sesión</DialogTitle>
-         <DialogContent>
-           <TextField
-             autoFocus
-             name='Email'
-             onChange={(e) => handleInputChange(e)}
-             value={input.email}
-             margin="dense"
-             id="Email"
-             label="Email Address"
-             type="email"
-             fullWidth
-             variant="standard"
-           />
+//    return (
+//      <div>
+//          <DialogTitle>Iniciar Sesión</DialogTitle>
+//          <DialogContent>
+//            <TextField
+//              autoFocus
+//              name='Email'
+//              onChange={(e) => handleInputChange(e)}
+//              value={input.email}
+//              margin="dense"
+//              id="Email"
+//              label="Email Address"
+//              type="email"
+//              fullWidth
+//              variant="standard"
+//            />
 
-         <TextField
-             autoFocus
-             onChange={(e) => handleInputChange(e)}
-             name='Password'
-             margin="dense"
-             id="password"
-             label="password"
-             type="password"
-             fullWidth
-             variant="standard"
-           />
-         </DialogContent>
-         <DialogContentText>
-             <Button>
-                 Olvidaste tu Contraseña
-             </Button>
-         </DialogContentText>
-         <DialogActions>
-           <Button 
-           onClick={close}
-           variant="outlined"
-           >Cancel</Button>
+//          <TextField
+//              autoFocus
+//              onChange={(e) => handleInputChange(e)}
+//              name='Password'
+//              margin="dense"
+//              id="password"
+//              label="password"
+//              type="password"
+//              fullWidth
+//              variant="standard"
+//            />
+//          </DialogContent>
+//          <DialogContentText>
+//              <Button>
+//                  Olvidaste tu Contraseña
+//              </Button>
+//          </DialogContentText>
+//          <DialogActions>
+//            <Button 
+//            onClick={close}
+//            variant="outlined"
+//            >Cancel</Button>
 
-           <Button 
-           onClick={(e) => handleSubmit(e)}
-           variant="outlined"
-           >Iniciar Sesión</Button>
-         </DialogActions>
+//            <Button 
+//            onClick={(e) => handleSubmit(e)}
+//            variant="outlined"
+//            >Iniciar Sesión</Button>
+//          </DialogActions>
 
-         <DialogContentText>
-         ¿No tienes cuenta?
-             <Button href='/register'>
-                  Registrese aquí
-             </Button>
-         </DialogContentText>
-     </div>
-   );
- } 
+//          <DialogContentText>
+//          ¿No tienes cuenta?
+//              <Button href='/register'>
+//                   Registrese aquí
+//              </Button>
+//          </DialogContentText>
+//      </div>
+//    );
+//  } 
 
 /*
        <Button variant="outlined" onClick={handleClickOpen}>
@@ -100,7 +101,19 @@ export default function FormDialog({close}) {
 
 */
 
-/* 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
@@ -109,6 +122,7 @@ const validationSchema = yup.object({
   password: yup
     .string('Enter your password')
     .min(8, 'Password should be of minimum 8 characters length')
+    .max(15, 'Password should be of maximun 15 characters lenght')
     .required('Password is required'),
 });
 
@@ -120,6 +134,7 @@ const FormDialog = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const { data }=
       alert(JSON.stringify(values, null, 2));
     },
   });
@@ -128,9 +143,10 @@ const FormDialog = () => {
     <div>
       <form onSubmit={formik.handleSubmit}>
       <DialogTitle>Iniciar Sesión</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={style}>
 
         <TextField
+          autoFocus
           fullWidth
           id="email"
           name="email"
@@ -141,7 +157,10 @@ const FormDialog = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
+        </DialogContent>
+        <DialogContent>
         <TextField
+          autoFocus
           fullWidth
           id="password"
           name="password"
@@ -154,11 +173,35 @@ const FormDialog = () => {
           helperText={formik.touched.password && formik.errors.password}
         />
         </DialogContent>
-        <Button color="primary" variant="contained" fullWidth type="submit">
+                <DialogContentText>
+          <Button>
+               Olvidaste tu Contraseña?
+          </Button>
+        </DialogContentText>
+          <DialogActions>
+           <Button 
+          
+            variant="outlined"
+            >Cancel</Button>
+
+            <Button 
+            onClick={(e) => handleSubmit(e)}
+            variant="outlined"
+            >Iniciar Sesión</Button>
+          </DialogActions>
+
+
+        <Button color="primary" variant="contained"  fullWidth type="submit">
           Submit
         </Button>
       </form>
     </div>
   );
 };
-export default FormDialog; */
+export default FormDialog; 
+
+// Render Prop
+
+
+
+
