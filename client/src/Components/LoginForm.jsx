@@ -10,104 +10,97 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link } from '@mui/material';
 
-// export default function FormDialog() {
-//   const [open, setOpen] = React.useState(false);
-//   const [input, setInput] = React.useState({
-//       Email: "",
-//       Password: "",
-//   })
+export default function FormDialog({close}) {
+  const [open, setOpen] = React.useState(false);
+  const [input, setInput] = React.useState({
+       Email: "",
+       Password: "",
+   })
 
 
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
+   const handleClickOpen = () => {
+     setOpen(true);
+   };
 
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
+   const handleClose = () => {
+     setOpen(false);
+   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault()
-//   }
-//   const handleInputChange = (e) => {
-//       setInput({
-//           ...input,
-//           [e.target.name]: e.target.value
-//       })
-//   }
+   const handleSubmit = (e) => {
+     e.preventDefault()
+   }
+   const handleInputChange = (e) => {
+       setInput({
+           ...input,
+           [e.target.name]: e.target.value
+       })
+   }
   
 
-//   return (
-//     <div>
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         Open form dialog
-//       </Button>
-//       <Dialog open={open} onClose={handleClose}>
-//         <DialogTitle>Iniciar Sesión</DialogTitle>
-//         <DialogContent>
-          
-//           <TextField
-//             autoFocus
-//             name='Email'
-//             onChange={(e) => handleInputChange(e)}
-//             value={input.email}
-//             margin="dense"
-//             id="Email"
-//             label="Email Address"
-//             type="email"
-//             fullWidth
-//             variant="standard"
-//           />
+   return (
+     <div>
+         <DialogTitle>Iniciar Sesión</DialogTitle>
+         <DialogContent>
+           <TextField
+             autoFocus
+             name='Email'
+             onChange={(e) => handleInputChange(e)}
+             value={input.email}
+             margin="dense"
+             id="Email"
+             label="Email Address"
+             type="email"
+             fullWidth
+             variant="standard"
+           />
 
-//         <TextField
-//             autoFocus
-//             onChange={(e) => handleInputChange(e)}
-//             name='Password'
-//             margin="dense"
-//             id="password"
-//             label="password"
-//             type="password"
-//             fullWidth
-//             variant="standard"
-//           />
-//         </DialogContent>
-//         <DialogContentText>
-//             <Button>
-//                 Olvidaste tu Contraseña
-//             </Button>
-//         </DialogContentText>
-//         <DialogActions>
-//           <Button 
-//           onClick={handleClose}
-//           variant="outlined"
-//           >Cancel</Button>
+         <TextField
+             autoFocus
+             onChange={(e) => handleInputChange(e)}
+             name='Password'
+             margin="dense"
+             id="password"
+             label="password"
+             type="password"
+             fullWidth
+             variant="standard"
+           />
+         </DialogContent>
+         <DialogContentText>
+             <Button>
+                 Olvidaste tu Contraseña
+             </Button>
+         </DialogContentText>
+         <DialogActions>
+           <Button 
+           onClick={close}
+           variant="outlined"
+           >Cancel</Button>
 
-//           <Button 
-//           onClick={(e) => handleSubmit(e)}
-//           variant="outlined"
-//           >Iniciar Sesión</Button>
-//         </DialogActions>
+           <Button 
+           onClick={(e) => handleSubmit(e)}
+           variant="outlined"
+           >Iniciar Sesión</Button>
+         </DialogActions>
 
-//         <DialogContentText>
-//         ¿No tienes cuenta?
-//             <Button>
-//                 <Link to='/register'>
-//                  Registrese aquí
+         <DialogContentText>
+         ¿No tienes cuenta?
+             <Button href='/register'>
+                  Registrese aquí
+             </Button>
+         </DialogContentText>
+     </div>
+   );
+ } 
 
-//                 </Link>
+/*
+       <Button variant="outlined" onClick={handleClickOpen}>
+         Open form dialog
+       </Button>
 
-                    
-//                 `
-//             </Button>
+*/
 
-//         </DialogContentText>
-//       </Dialog>
-//     </div>
-//   );
-// }
-
-
-
+/* 
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
@@ -168,4 +161,4 @@ const FormDialog = () => {
     </div>
   );
 };
-export default FormDialog;
+export default FormDialog; */

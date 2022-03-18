@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import HomeIcon from '@mui/icons-material/Home';
+import Logo from '../Media/Logo.png'
 
 export default function NavBar({handleLoginForm}) {
     return (
@@ -16,8 +17,9 @@ export default function NavBar({handleLoginForm}) {
                     <Button
                     color="inherit"
                     variant='none'
-                    startIcon={<HomeIcon />}
+                    href='/home'
                     size='large'>
+                        <img src={Logo} alt='img notfound' width="50" height="50" />
                     </Button>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary

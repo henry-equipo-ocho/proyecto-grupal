@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "description": "App eztinerary",
   "dependencies": {
-    "@emotion/react": "^11.8.2",
-    "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
     "@testing-library/jest-dom": "^5.16.2",
@@ -20,9 +18,9 @@
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "yup": "^0.32.11",
     "sweet": "^0.1.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
