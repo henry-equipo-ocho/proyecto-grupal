@@ -27,6 +27,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import StarIcon from '@mui/icons-material/Star';
 
 import countries from './countries';
+import NavBar from '../NavBar'
 
 const validationSchema = yup.object({
   name: yup
@@ -85,7 +86,9 @@ export default function Register() {
   };
 
   return (
+  
     <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
+       <NavBar />
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>
           <h1 style={{ fontWeight: '300', fontSize: '60px' }}>
