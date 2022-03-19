@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import axios from 'axios'
 // export default function FormDialog({close}) {
 //   const [open, setOpen] = React.useState(false);
 //   const [input, setInput] = React.useState({
@@ -126,6 +126,7 @@ const validationSchema = yup.object({
     .required('Password is required'),
 });
 
+
 const FormDialog = () => {
   const formik = useFormik({
     initialValues: {
@@ -133,8 +134,8 @@ const FormDialog = () => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      const { data }=
+    onSubmit: async(values) => {
+      const datos = await axios.post('http://localhost:3001/signin', values)
       alert(JSON.stringify(values, null, 2));
     },
   });
@@ -157,8 +158,8 @@ const FormDialog = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        </DialogContent>
-        <DialogContent>
+        
+       
         <TextField
           autoFocus
           fullWidth
@@ -172,28 +173,27 @@ const FormDialog = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        </DialogContent>
+        
                 <DialogContentText>
           <Button>
                Olvidaste tu Contraseña?
           </Button>
-        </DialogContentText>
+
           <DialogActions>
            <Button 
           
             variant="outlined"
             >Cancel</Button>
 
-            <Button 
-            onClick={(e) => handleSubmit(e)}
-            variant="outlined"
-            >Iniciar Sesión</Button>
-          </DialogActions>
-
-
         <Button color="primary" variant="contained"  fullWidth type="submit">
           Submit
         </Button>
+          </DialogActions>
+        </DialogContentText>
+        </DialogContent>
+          
+
+
       </form>
     </div>
   );
