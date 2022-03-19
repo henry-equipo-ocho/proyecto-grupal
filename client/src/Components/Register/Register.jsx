@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -54,7 +54,9 @@ const validationSchema = yup.object({
 
 export default function Register() {
   const [open, setOpen] = useState(false);
-  const [terms, setTerms] = useState(false)
+  const [terms, setTerms] = useState(false);
+
+  const history = useHistory()
 
   const formik = useFormik({
     initialValues: {
@@ -69,8 +71,9 @@ export default function Register() {
       if (terms) {
         console.log(values)
         try{
-          await axios.post('http://localhost:3001/signup', values)
+          await axios.post('http://localhost:3001/signup', values);
           alert("Succesfully registered!");
+          history.push('/home');
         }
         catch(e){
           console.log(e)
