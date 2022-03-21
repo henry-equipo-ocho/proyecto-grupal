@@ -6,6 +6,13 @@ import LoginForm from './LoginForm'
 
 export default function Home() {
     const [loginForm, setLoginForm] = useState(null);
+   
+    const userName = useSelector(state => state.userName)
+
+    
+    
+    //console.log(usuario)
+    
 
     return (
          <>
@@ -15,14 +22,14 @@ export default function Home() {
 
             <div>
                 <label>
-                    Hola Viajaro, ¿A donde quieres ir?
+                    Hola {userName.split('@')[0]}  ¿A donde quieres ir?
                 </label>
             </div>
 
             </div>
             
             {loginForm &&
-            <LoginForm activity={loginForm} close={() => setLoginForm(null)} />}
+            <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
         </>
     );
 };
