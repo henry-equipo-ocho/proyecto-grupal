@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import { createUserTokenService, getUserService, matchUserPasswordService } from '../services/signin.services';
 import passport from 'passport';
 
-export const signInController = async (req: Request, res: Response) => {
+export const signInController: RequestHandler = async (req: Request, res: Response) => {
 
     const {email, password} = req.body;
 
@@ -26,13 +26,14 @@ export const signInController = async (req: Request, res: Response) => {
 
 // Google sign in controller on testing
 
-export const signInGoogleController = passport.authenticate('google', { scope: ['profile'] });
+export const signInGoogleController: RequestHandler = passport.authenticate('google', { scope: ['profile'] });
 
-export const signInGoogleFailureController = async (req: Request, res: Response) => {
-    return res.status(401).send({success: false, message: 'Error'});
+export const signInGoogleFailureController: RequestHandler = async (req: Request, res: Response) => {
+    return res.status(401).send({ success: false, message: 'Error' });
 };
 
-export const signInGoogleCallBackController = passport.authenticate('google', {
+export const signInGoogleCallBackController: RequestHandler = passport.authenticate('google', {
+    // TODO: set up this URLs
     successRedirect: 'http://localhost:3000/',
     failureRedirect: '/google/failure'
 })

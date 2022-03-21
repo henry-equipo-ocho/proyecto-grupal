@@ -1,7 +1,7 @@
 import User from '../models/User.models';
 import { Request } from 'express';
 
-export const signUpService = async (req: Request) => {
+export const signUpService = async (req: Request): Promise<any> => {
 
     
     try {

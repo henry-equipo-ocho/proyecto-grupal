@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { signInController, signInGoogleCallBackController, signInGoogleController, signInGoogleFailureController } from "../controllers/signin.controller";
-import passport from "passport";
 
-const router = Router();
+const router: Router = Router();
 
 router.post('/', signInController);
 
