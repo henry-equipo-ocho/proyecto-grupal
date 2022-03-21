@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
+import ServerResponse from '../interfaces/ServerResponse.interface';
 const Amadeus = require('amadeus');
 import dotenv from 'dotenv';
 
@@ -6,7 +7,7 @@ dotenv.config();
 
 
 // Actividades de Buenos Aires
-export const amadeusController = async (req: Request, res: Response) => {
+export const amadeusController: RequestHandler = async (req: Request, res: Response) => {
 
     var amadeus = new Amadeus({
         clientId: process.env.AMADEUS_CLIENT_ID,
@@ -18,7 +19,5 @@ export const amadeusController = async (req: Request, res: Response) => {
         longitude: -58.381944
     }).then((response: any) => response.data).catch((error: any) => error.code);
 
-    
-
-     res.status(200).send(activities);
+    res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities});
 };
