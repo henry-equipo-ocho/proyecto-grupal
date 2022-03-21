@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 
-export const signedController = async (req: Request, res: Response) => {
+export const signedController: RequestHandler = async (req: Request, res: Response) => {
     res.send('Authenticated');
 }

@@ -16,10 +16,15 @@ userSchema.pre<User>('save', async function(next) {
 
     if(!user.isModified('password')) return next();
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(user.password, salt);
-    user.password = hash;
-    next();
+    try {
+        const salt:string | Error = await bcrypt.genSalt(10);
+        const hash:string | Error = await bcrypt.hash(user.password, salt);
+        user.password = hash;
+        next();
+    } catch (error) {
+        // TODO: what could throw an error?
+        throw error;
+    }
 });
 
 userSchema.methods.comparePassword = async function(password: string): Promise<boolean> {

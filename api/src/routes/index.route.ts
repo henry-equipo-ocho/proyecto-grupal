@@ -7,7 +7,7 @@ import signed from './signed.route';
 import amadeus from './amadeus.route';
 
 
-const router = Router();
+const router: Router = Router();
 
 router.use(morgan('dev'));
 router.use(express.urlencoded({extended: false}));
