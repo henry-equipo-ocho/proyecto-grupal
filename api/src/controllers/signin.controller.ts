@@ -1,26 +1,27 @@
 import { Request, Response, RequestHandler } from 'express';
 import { createUserTokenService, getUserService, matchUserPasswordService } from '../services/signin.services';
+import ServerResponse from '../interfaces/ServerResponse.interface';
 import passport from 'passport';
 
 export const signInController: RequestHandler = async (req: Request, res: Response) => {
 
     const {email, password} = req.body;
 
-    if(!email || !password) return res.status(400).send({status: 400, message: `Missing values`});
+    if(!email || !password) return res.status(400).send(<ServerResponse>{status: 'failed', message: `Missing values`});
 
     try {
       const user = await getUserService(email);
-      if(!user) return res.status(400).json({status: 400, message: `User doesn't exists`});
+      if(!user) return res.status(400).json(<ServerResponse>{status: 'failed', message: `User doesn't exists`});
 
       const match = await matchUserPasswordService(user, password);
-      if(!match) return res.status(400).json({status: 400, message: `Invalid password`});
+      if(!match) return res.status(400).json(<ServerResponse>{status: 'failed', message: `Invalid password`});
 
       const token = createUserTokenService(user);
-      if(!token) return res.status(400).json({status: 400, message: `Couldn't create token`})
+      if(!token) return res.status(400).json(<ServerResponse>{status: 'failed', message: `Couldn't create token`})
 
-      return res.status(200).json({status: 200, message: `Succesfull login`, data: token});
+      return res.status(200).json(<ServerResponse>{status: 'success', message: `Succesfull login`, data: token});
     } catch (e: any) {
-        return res.status(e.status || 400).json({status: e.status || 400, message: e.message || e})
+        return res.status(e.status || 400).json(<ServerResponse>{status: e.status || 'failed', message: e.message || e})
     }
 };
 
