@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { amadeusController } from "../controllers/amadeus.controller";
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', amadeusController);
 

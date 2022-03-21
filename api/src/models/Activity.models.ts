@@ -8,8 +8,8 @@ const activitySchema = new mongoose.Schema<Activity>({
     picture: { type: String, required: [true, 'Missing picture attribute'], unique: true, lowercase: true, trim: true },
     city: { type: String, required: [true, 'Missing city attribute'] },
     country: { type: String, required: [true, 'Missing country attribute'] },
-    price_currency: { type: String, required: [true, 'Missing country attribute']}, 
-    price_amount: { type: String, required: [true, 'Missing country attribute']} 
+    price_currency: { type: String, required: [true, 'Missing currency attribute']},
+    price_amount: { type: String, required: [true, 'Missing amount attribute']}
 });
 
 

@@ -17,7 +17,7 @@ const signUpController = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     try {
         const newUser = yield (0, signup_services_1.signUpService)(req);
-        return res.status(200).send(newUser);
+        return res.status(200).send(newUser); // TODO: user created
     }
     catch (error) {
         return res.status(error.status || 400).json(error.message || error);

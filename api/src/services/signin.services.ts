@@ -6,21 +6,21 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const createTokenService = (user: UserInterface) => {
-    return jwt.sign({id: user.id, email: user.email}, process.env.JWT_SECRET as string, {
+export const createTokenService = (user: UserInterface): string => {
+    return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, {
         expiresIn: '1d'
     })
- }
+}
 
-export const signInServices = async (req: Request) => {
+export const signInServices = async (req: Request): Promise<object> => {
     try {
-        const user = await User.findOne({email: req.body.email});
-        if(!user) {return 'The user doesnt exists';}
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) { throw new Error("The user doesn't exist"); }
 
-        const match = await user.comparePassword(req.body.password);
-        if(match) {return {token: createTokenService(user)};}
+        const match: boolean = await user.comparePassword(req.body.password);
+        if (match) { return { token: createTokenService(user) }; }
 
-        return 'Password is incorrect';
+        throw new Error("Password is incorrect")
     } catch (error) {
         throw error
     }
