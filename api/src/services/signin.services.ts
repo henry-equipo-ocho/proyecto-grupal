@@ -1,6 +1,9 @@
 import UserInterface from '../interfaces/User.interface';
 import User from '../models/User.models';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const getUserService = async (email: string) => {
     try {

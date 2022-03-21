@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const getUserService = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findOne({ email: email });
