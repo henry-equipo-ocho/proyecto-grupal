@@ -1,14 +1,17 @@
 import { Request, Response, RequestHandler } from 'express';
 import ServerResponse from '../interfaces/ServerResponse.interface';
 const Amadeus = require('amadeus');
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 // Actividades de Buenos Aires
 export const amadeusController: RequestHandler = async (req: Request, res: Response) => {
 
     var amadeus = new Amadeus({
-        // TODO: these should be environment variables
-        clientId: 'OwaxoAtHCKCD5uateGJFssikTWyoHWNO',
-        clientSecret: 'TGICwSH7oXB81kNQ'
+        clientId: process.env.AMADEUS_CLIENT_ID,
+        clientSecret: process.env.AMADEUS_CLIENT_SECRET 
     })
 
     const activities = await amadeus.shopping.activities.get({

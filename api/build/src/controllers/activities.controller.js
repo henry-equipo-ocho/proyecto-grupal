@@ -8,14 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.amadeusController = void 0;
 const Amadeus = require('amadeus');
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 // Actividades de Buenos Aires
 const amadeusController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var amadeus = new Amadeus({
-        clientId: 'OwaxoAtHCKCD5uateGJFssikTWyoHWNO',
-        clientSecret: 'TGICwSH7oXB81kNQ'
+        clientId: process.env.AMADEUS_CLIENT_ID,
+        clientSecret: process.env.AMADEUS_CLIENT_SECRET
     });
     const activities = yield amadeus.shopping.activities.get({
         latitude: -34.599722,
