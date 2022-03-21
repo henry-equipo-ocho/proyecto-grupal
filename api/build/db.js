@@ -12,20 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
-const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield User_models_1.default.findOne({ email: req.body.email });
-        if (user)
-            return;
-        const newUser = new User_models_1.default(req.body);
-        yield newUser.save();
-        // TODO: is it necessary to return the new user?
-        return newUser;
-    }
-    catch (error) {
-        throw error;
-    }
-});
-exports.signUpService = signUpService;
+const mongoose_1 = require("mongoose");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const MONGO_URI = process.env.MONGO_URI || 'erroringURI'; // TS won't allow a process.env
+function connectToDB() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const conn = yield (0, mongoose_1.connect)(MONGO_URI);
+            console.log(`MongoDB connected to ${conn.connection.host}`);
+        }
+        catch (error) {
+            console.error(`MongoDB connection failed: ${error}`);
+            process.exit(1);
+        }
+    });
+}
+exports.default = connectToDB;
