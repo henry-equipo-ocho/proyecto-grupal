@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 const Amadeus = require('amadeus');
 
+
+
+
+// Actividades de Buenos Aires
 export const amadeusController = async (req: Request, res: Response) => {
 
     var amadeus = new Amadeus({
@@ -11,8 +15,9 @@ export const amadeusController = async (req: Request, res: Response) => {
     const activities = await amadeus.shopping.activities.get({
         latitude: -34.599722,
         longitude: -58.381944
-    }).then((response: any) => response.data).catch((error: any) => error.code)
-    ;
+    }).then((response: any) => response.data).catch((error: any) => error.code);
 
-    res.send(activities);
+    
+
+     res.status(200).send(activities);
 };

@@ -1,53 +1,90 @@
 import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import List from '@mui/material/List';
 import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { Container } from '@mui/material';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StarIcon from '@mui/icons-material/Star';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import StarIcon from '@mui/icons-material/Star';
+
 import countries from './countries';
 import NavBar from '../NavBar'
 
-export default function InputAdornments() {
-  const [values, setValues] = useState({
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-    showPassword: false,
+const validationSchema = yup.object({
+  name: yup
+    .string('Enter your name')
+    .min(2, 'Name should be of minimum 8 characters length')
+    .required('Name is required'),
+  surname: yup
+    .string('Enter your surname')
+    .min(2, 'Surname should be of minimum 8 characters length')
+    .required('Surname is required'),
+  country: yup
+    .string('Select your country')
+    .min(3, 'Enter a valid country')
+    .required('Country is required'),
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
+
+export default function Register() {
+  const [open, setOpen] = useState(false);
+  const [terms, setTerms] = useState(false)
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      surname: '',
+      country: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      if (terms) {
+        console.log(values)
+        try{
+          await axios.post('http://localhost:3001/signup', values)
+          alert("Succesfully registered!");
+        }
+        catch(e){
+          console.log(e)
+          alert(e)
+        }
+      } else {
+        setOpen(true);
+      }
+    },
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleClose = () => {
+    setOpen(false);
   };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
 
   return (
   
@@ -81,117 +118,118 @@ export default function InputAdornments() {
                 <ListItemText primary="¡Entre muchos más!" />
               </ListItem>
             </List>
-            <Button variant='contained'>Conocer más beneficios</Button>
+            <Button variant='contained' color='primary'>Conocer más beneficios</Button>
           </Box>
         </Box>
         <Box>
-          <Alert severity="warning">All fields are required</Alert>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center' }}>
-            <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-              <InputLabel htmlFor="name" color='secondary'>Name</InputLabel>
-              <OutlinedInput
-                color='secondary'
-                id="name"
-                type='text'
-                value={values.name}
-                onChange={handleChange('name')}
-                label="Name"
-              />
-            </FormControl>
-            <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-              <InputLabel htmlFor="surname" color='secondary'>Surname</InputLabel>
-              <OutlinedInput
-                color='secondary'
-                id="surname"
-                type='text'
-                value={values.surname}
-                onChange={handleChange('surname')}
-                label="Surname"
-              />
-            </FormControl>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-              <InputLabel htmlFor="email" color='secondary'>Email</InputLabel>
-              <OutlinedInput
-                color='secondary'
-                id="email"
-                type='email'
-                value={values.email}
-                onChange={handleChange('email')}
-                label="Email"
-              />
-            </FormControl>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-              <Autocomplete
-                id="country-select"
-                color='secondary'
-                options={countries}
-                autoHighlight
-                getOptionLabel={(option) => option.label}
-                renderOption={(props, option) => (
-                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    <img
-                      loading="lazy"
-                      width="20"
-                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                      alt=""
-                    />
-                    {option.label}
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    color='secondary'
-                    label="Nationality (Choose a country)"
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: 'country-select', // disable autocomplete and autofill
-                    }}
-                  />
-                )}
-              />
-            </FormControl>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password" color='secondary'>Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                color='secondary'
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', marginTop: '70px' }}>
+            <Alert severity="info" sx={{ marginLeft: '10px' }}>All fields are required</Alert>
+            <form onSubmit={formik.handleSubmit}>
+              <Box>
+                <TextField
+                  sx={{ m: 1, width: '100%' }}
+                  id="name"
+                  name="name"
+                  label="Name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+                <TextField
+                  sx={{ m: 1, width: '100%' }}
+                  id="surname"
+                  name="surname"
+                  label="Surname"
+                  value={formik.values.surname}
+                  onChange={formik.handleChange}
+                  error={formik.touched.surname && Boolean(formik.errors.surname)}
+                  helperText={formik.touched.surname && formik.errors.surname}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  sx={{ m: 1, width: '100%' }}
+                  id="email"
+                  name="email"
+                  label="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  sx={{ m: 1, width: '100%' }}
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type='password'
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                />
+              </Box>
+              <FormControl sx={{ m: 1, width: '100%' }}>
+                <InputLabel id="country-select-label">Select country</InputLabel>
+                <Select labelId="country-select-label"
+                  id="country"
+                  name="country"
+                  value={formik.values.country}
+                  defaultValue="Select country"
+                  label="Select country"
+                  onChange={formik.handleChange}
+                  error={formik.touched.country && Boolean(formik.errors.country)}
+                >
+                  {countries.map(option => {
+                    return (<MenuItem key={option.code} value={option.label}>
+                      <img
+                        width="20"
+                        src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                        srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                        alt=""
+                      />
+                      {option.label}
+                    </MenuItem>)
+                  })}
+                </Select>
+              </FormControl>
+              <Box sx={{ textAlign: 'center' }}>
+                <FormControlLabel control={<Checkbox color='primary' id='terms' onChange={e => {
+                  setTerms(e.target.checked)
                 }
-                label="Password"
-              />
-            </FormControl>
-          </Box>
-          <Box sx={{textAlign: 'center'}}>
-            <FormControlLabel control={<Checkbox color='secondary' defaultChecked />} label="I accept the terms and conditions" />
-          </Box>
-          <Box sx={{textAlign: 'center', marginBottom: '25px'}}>
-            <Button color='secondary' variant='contained' component={Link} to='/'>
-              Register
-            </Button>
+                } />} label="I accept the terms and conditions" color={!terms ? 'error' : ''} />
+              </Box>
+              <Button
+                sx={{ m: 1, width: '100%' }}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Box>
-      </Box>
+      </Box >
+      <Dialog
+          open={open}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Error"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              You need accept terms and conditions.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Check</Button>
+          </DialogActions>
+        </Dialog>
     </Container >
   );
-}
+};
