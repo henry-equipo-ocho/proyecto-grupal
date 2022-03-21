@@ -21,6 +21,7 @@ const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         const newUser = new User_models_1.default(req.body);
         yield newUser.save();
+        // TODO: is it necessary to return the new user?
         return newUser;
     }
     catch (error) {

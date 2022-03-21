@@ -18,21 +18,21 @@ const passport_1 = __importDefault(require("passport"));
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password)
-        return res.status(400).send({ status: 400, message: `Missing values` });
+        return res.status(400).send({ status: 'failed', message: `Missing values` });
     try {
         const user = yield (0, signin_services_1.getUserService)(email);
         if (!user)
-            return res.status(400).json({ status: 400, message: `User doesn't exists` });
+            return res.status(400).json({ status: 'failed', message: `User doesn't exists` });
         const match = yield (0, signin_services_1.matchUserPasswordService)(user, password);
         if (!match)
-            return res.status(400).json({ status: 400, message: `Invalid password` });
+            return res.status(400).json({ status: 'failed', message: `Invalid password` });
         const token = (0, signin_services_1.createUserTokenService)(user);
         if (!token)
-            return res.status(400).json({ status: 400, message: `Couldn't create token` });
-        return res.status(200).json({ status: 200, message: `Succesfull login`, data: token });
+            return res.status(400).json({ status: 'failed', message: `Couldn't create token` });
+        return res.status(200).json({ status: 'success', message: `Succesfull login`, data: token });
     }
     catch (e) {
-        return res.status(e.status || 400).json({ status: e.status || 400, message: e.message || e });
+        return res.status(e.status || 400).json({ status: e.status || 'failed', message: e.message || e });
     }
 });
 exports.signInController = signInController;
@@ -43,6 +43,7 @@ const signInGoogleFailureController = (req, res) => __awaiter(void 0, void 0, vo
 });
 exports.signInGoogleFailureController = signInGoogleFailureController;
 exports.signInGoogleCallBackController = passport_1.default.authenticate('google', {
+    // TODO: set up this URLs
     successRedirect: 'http://localhost:3000/',
     failureRedirect: '/google/failure'
 });

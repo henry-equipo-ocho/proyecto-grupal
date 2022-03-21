@@ -11,6 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signedController = void 0;
 const signedController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('Authenticated');
+    res.send({ status: 'success', message: 'Authenticated' });
 });
 exports.signedController = signedController;

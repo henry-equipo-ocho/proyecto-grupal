@@ -26,6 +26,6 @@ const amadeusController = (req, res) => __awaiter(void 0, void 0, void 0, functi
         latitude: -34.599722,
         longitude: -58.381944
     }).then((response) => response.data).catch((error) => error.code);
-    res.status(200).send(activities);
+    res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded', data: activities });
 });
 exports.amadeusController = amadeusController;
