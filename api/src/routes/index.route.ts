@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import signup from './signup.route';
 import signin from './signin.route';
 import signed from './signed.route';
-import amadeus from './amadeus.route';
+import amadeus from './activities.route';
 
 
 const router = Router();

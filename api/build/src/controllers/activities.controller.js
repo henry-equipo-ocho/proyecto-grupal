@@ -8,23 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
-const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield User_models_1.default.findOne({ email: req.body.email });
-        if (user)
-            return;
-        const newUser = new User_models_1.default(req.body);
-        yield newUser.save();
-        return newUser;
-    }
-    catch (error) {
-        throw error;
-    }
+exports.amadeusController = void 0;
+const Amadeus = require('amadeus');
+// Actividades de Buenos Aires
+const amadeusController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var amadeus = new Amadeus({
+        clientId: 'OwaxoAtHCKCD5uateGJFssikTWyoHWNO',
+        clientSecret: 'TGICwSH7oXB81kNQ'
+    });
+    const activities = yield amadeus.shopping.activities.get({
+        latitude: -34.599722,
+        longitude: -58.381944
+    }).then((response) => response.data).catch((error) => error.code);
+    res.status(200).send(activities);
 });
-exports.signUpService = signUpService;
+exports.amadeusController = amadeusController;
