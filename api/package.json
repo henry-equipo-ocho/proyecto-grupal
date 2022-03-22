@@ -1,12 +1,13 @@
 {
-  "name": "proyecto-grupal-API",
+  "name": "proyecto-grupal-api",
   "version": "1.0.0",
-  "description": "App estinerary\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[3~z",
+  "description": "App eztinerary",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --project ./",
-    "dev": "nodemon index.ts"
+    "start": "nodemon build/index.js",
+    "build": "tsc",
+    "dev": "tsc-watch --onSuccess \"nodemon build/index.js\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/henry-equipo-ocho/proyecto-grupal#readme",
   "dependencies": {
+    "amadeus": "^5.7.1",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -26,15 +28,22 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.6",
-    "pg": "^8.7.3"
+    "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "pg": "^8.7.3",
+    "tsc-watch": "^4.6.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.21",
+    "@types/passport-jwt": "^3.0.6",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0"
