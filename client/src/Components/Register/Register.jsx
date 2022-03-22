@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -54,7 +54,9 @@ const validationSchema = yup.object({
 
 export default function Register() {
   const [open, setOpen] = useState(false);
-  const [terms, setTerms] = useState(false)
+  const [terms, setTerms] = useState(false);
+
+  const history = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -68,11 +70,12 @@ export default function Register() {
     onSubmit: async (values) => {
       if (terms) {
         console.log(values)
-        try{
-          await axios.post('http://localhost:3001/signup', values)
+        try {
+          await axios.post('http://localhost:3001/signup', values);
           alert("Succesfully registered!");
+          history('/home');
         }
-        catch(e){
+        catch (e) {
           console.log(e)
           alert(e)
         }
@@ -87,9 +90,9 @@ export default function Register() {
   };
 
   return (
-  
+
     <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
-       <NavBar />
+      <NavBar />
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>
           <h1 style={{ fontWeight: '300', fontSize: '60px' }}>
@@ -215,21 +218,21 @@ export default function Register() {
         </Box>
       </Box >
       <Dialog
-          open={open}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Error"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              You need accept terms and conditions.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Check</Button>
-          </DialogActions>
-        </Dialog>
+        open={open}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Error"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            You need accept terms and conditions.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Check</Button>
+        </DialogActions>
+      </Dialog>
     </Container >
   );
 };
