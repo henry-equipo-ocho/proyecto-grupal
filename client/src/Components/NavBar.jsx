@@ -7,11 +7,24 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import HomeIcon from '@mui/icons-material/Home';
-import Logo from '../Media/Logo.png'
+import Logo from '../Media/Logo.png';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { setUserName } from './Redux/Actions/actions';
 
-export default function NavBar({handleLoginForm}) {
-    const isLogged = false
+export default function NavBar({ handleLoginForm, abierto }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const isLogged = window.localStorage.getItem('token') ? true : false;
 
+    const logout = (e) => {
+        e.preventDefault();
+        window.localStorage.clear();
+        dispatch(setUserName('Viajero'));
+        navigate('/home');
+        window.location.reload();
+    }
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -30,7 +43,8 @@ export default function NavBar({handleLoginForm}) {
                     {isLogged ? <Button
                     color="inherit"
                     variant='outlined'
-                    onClick={handleLoginForm}
+                    href="javascript:location.reload()"
+                    onClick={(e) => logout(e)}
                     startIcon={<PersonIcon />} >Logout</Button>
                     :
                     <>
@@ -44,10 +58,9 @@ export default function NavBar({handleLoginForm}) {
                     color="inherit"
                     variant='outlined'
                     startIcon={<AppRegistrationIcon />}
-                    href='/register'>Singup</Button> 
+                    href='/register'>Signup</Button> 
                     </>
                     }
-  
                 </Toolbar>
             </AppBar>
         </Box>

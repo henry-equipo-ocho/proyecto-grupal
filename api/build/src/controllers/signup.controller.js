@@ -20,7 +20,7 @@ const signUpController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const newUser = yield (0, signup_services_1.signUpService)(req);
         if (!newUser)
             return res.status(400).json({ status: 'failed', message: `Email already registered` });
-        return res.status(200).json({ status: 'success', message: `User created succesfully`, data: newUser });
+        return res.status(200).json({ status: 'success', message: `User created succesfully` });
     }
     catch (e) {
         return res.status(e.status || 400).json({ status: 'error', message: e.message || e });

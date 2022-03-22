@@ -12,6 +12,7 @@
     "alert": "^5.0.10",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -21,6 +22,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "styled-components": "^5.3.3",
     "sweet": "^0.1.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
