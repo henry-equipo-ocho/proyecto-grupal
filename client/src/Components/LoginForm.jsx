@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { formLabelClasses, Link } from '@mui/material';
 import axios from 'axios';
-import jwt_decode  from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 
@@ -36,21 +36,18 @@ const validationSchema = yup.object({
     .required('Password is required'),
 });
 
-const FormDialog = ({ abierto }) => {
-  const [open, setOpen] = React.useState(abierto)
-
+const FormDialog = ({ abierto, close }) => {
+  const [open, setOpen] = React.useState(abierto);
   const dispatch = useDispatch();
-
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       try {
-        console.log(values)
-        
+        //console.log(values)
         const datos = await axios.post('http://localhost:3001/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage
@@ -65,81 +62,68 @@ const FormDialog = ({ abierto }) => {
     },
   });
 
-
   return (
     <>
-    <Dialog 
-    sx={style} 
-    open={open}
-    BackdropProps={{
-      style: {
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-      },
-    }}
-    > 
-      <form style={{ border:'solid 1px black' }} onSubmit={formik.handleSubmit}>
-      <DialogTitle>Iniciar Sesión</DialogTitle>
+      <Dialog
+        sx={style}
+        open={open}
+        BackdropProps={{
+          style: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          },
+        }}
+      >
+        <form style={{ border: 'solid 1px black' }} onSubmit={formik.handleSubmit}>
+          <DialogTitle>Iniciar Sesión</DialogTitle>
+          <DialogContent >
+            <TextField
+              autoFocus
+              fullWidth
+              id="email"
+              name="email"
+              label="Email"
+              variant="standard"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              autoFocus
+              fullWidth
+              id="password"
+              name="password"
+              label="Password"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              variant="standard"
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+            />
 
-        <DialogContent >
-
-        <TextField
-          autoFocus
-          fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          variant="standard"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-         
-        <TextField
-          autoFocus
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          variant="standard"
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
-
-
-        
-          <DialogContentText>
-            <Button>
+            <DialogContentText>
+              <Button>
                 Olvidaste tu Contraseña?
-            </Button>
-
-          <DialogActions>
-
-           <Button 
-            onClick={() => setOpen(!open)}
-            variant="outlined"
-            >Cancel
-            </Button>
-
-        <Button onClick={() => setOpen(!open)} color="primary" variant="contained"  fullWidth type="submit">
-          Submit
-        </Button>
-          </DialogActions>
-        </DialogContentText>
-
-
-        </DialogContent>
-          
-      </form>
+              </Button>
+              <DialogActions>
+                <Button
+                  onClick={close}
+                  variant="outlined"
+                >Cancel
+                </Button>
+                <Button onClick={() => setOpen(!open)} color="primary" variant="contained" fullWidth type="submit">
+                  Submit
+                </Button>
+              </DialogActions>
+            </DialogContentText>
+          </DialogContent>
+        </form>
       </Dialog>
     </>
   );
 };
-
 
 export default FormDialog
 

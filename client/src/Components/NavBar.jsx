@@ -12,20 +12,19 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 
-export default function NavBar({ handleLoginForm }) {
+export default function NavBar({ handleLoginForm, abierto }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;
-
-const navigate = useNavigate();
-const dispatch = useDispatch();
 
     const logout = (e) => {
         e.preventDefault();
-        window.localStorage.clear()
-        dispatch(setUserName('Viajero'))
-        navigate('/home')
+        window.localStorage.clear();
+        dispatch(setUserName('Viajero'));
+        navigate('/home');
+        window.location.reload();
     }
     
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -44,6 +43,7 @@ const dispatch = useDispatch();
                     {isLogged ? <Button
                     color="inherit"
                     variant='outlined'
+                    href="javascript:location.reload()"
                     onClick={(e) => logout(e)}
                     startIcon={<PersonIcon />} >Logout</Button>
                     :
@@ -61,7 +61,6 @@ const dispatch = useDispatch();
                     href='/register'>Signup</Button> 
                     </>
                     }
-  
                 </Toolbar>
             </AppBar>
         </Box>
