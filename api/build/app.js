@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./src/app"));
-app_1.default.listen(3001, () => {
-    console.log('Server listening at 3001');
-});
+const express_1 = __importDefault(require("express"));
+const db_1 = __importDefault(require("./db"));
+(0, db_1.default)();
+const app = (0, express_1.default)();

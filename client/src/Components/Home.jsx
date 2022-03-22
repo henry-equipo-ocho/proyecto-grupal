@@ -8,7 +8,12 @@ import ActivityDetail from './ActivityDetail';
 
 export default function Home() {
     const [loginForm, setLoginForm] = useState(null);
+
     const [detail, setDetail] = useState(null);
+
+   
+    const userName = useSelector(state => state.userName)
+
 
     return (
          <>
@@ -18,7 +23,7 @@ export default function Home() {
 
             <div>
                 <label>
-                    Hola Viajero, ¿A donde quieres ir?
+                    Hola {userName.split('@')[0]}  ¿A donde quieres ir?
                 </label>
             </div>
             <ActivityCard
@@ -26,10 +31,13 @@ export default function Home() {
 
             </div>
             {loginForm &&
+
             <LoginForm activity={loginForm} close={() => setLoginForm(null)} />}
 
             {detail &&
             <ActivityDetail activity={detail} close={() => setDetail(null)} />}
+
+            <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
         </>
     );
 };

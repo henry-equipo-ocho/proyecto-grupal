@@ -8,24 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
-const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield User_models_1.default.findOne({ email: req.body.email });
-        if (user)
-            return;
-        const newUser = new User_models_1.default(req.body);
-        yield newUser.save();
-        // TODO: is it necessary to return the new user?
-        return newUser;
-    }
-    catch (error) {
-        throw error;
-    }
+exports.signedController = void 0;
+const signedController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send({ status: 'success', message: 'Authenticated' });
 });
-exports.signUpService = signUpService;
+exports.signedController = signedController;

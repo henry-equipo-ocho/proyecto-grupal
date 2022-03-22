@@ -12,20 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpService = void 0;
+exports.signInServices = exports.createTokenService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
-const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const createTokenService = (user) => {
+    return jsonwebtoken_1.default.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+        expiresIn: '1d'
+    });
+};
+exports.createTokenService = createTokenService;
+const signInServices = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findOne({ email: req.body.email });
-        if (user)
-            return;
-        const newUser = new User_models_1.default(req.body);
-        yield newUser.save();
-        // TODO: is it necessary to return the new user?
-        return newUser;
+        if (!user) {
+            return 'The user doesnt exists';
+        }
+        const match = yield user.comparePassword(req.body.password);
+        if (match) {
+            return { token: (0, exports.createTokenService)(user) };
+        }
+        return 'Password is incorrect';
     }
     catch (error) {
         throw error;
     }
 });
-exports.signUpService = signUpService;
+exports.signInServices = signInServices;

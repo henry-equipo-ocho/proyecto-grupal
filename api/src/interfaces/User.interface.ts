@@ -13,5 +13,6 @@ export default interface User extends Document {
     email: string,
     country: string,
     password: string,
-    role: UserRoles
+    role: UserRoles,
+    comparePassword: (password: string) => Promise<boolean>
 }
