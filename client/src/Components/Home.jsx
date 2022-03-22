@@ -18,9 +18,11 @@ export default function Home() {
                     />
 
                 <div>
-                    <label>
-                        Hola {userName.split('@')[0]}  ¿A donde quieres ir?
-                    </label>
+                    <center>
+                        <label style={{ fontSize: '30px'}}>
+                            Hola {userName.split('@')[0]}  ¿A donde quieres ir?
+                        </label>
+                    </center>
                 </div>
 
                 <ActivityCard
