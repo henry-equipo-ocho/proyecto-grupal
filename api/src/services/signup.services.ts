@@ -4,7 +4,7 @@ import { Request } from 'express';
 export const signUpService = async (req: Request): Promise<any> => {
     try {
         const user = await User.findOne({email: req.body.email});
-        if(user) return;
+        if(user) throw new Error();
 
         const newUser = new User(req.body);
         await newUser.save();
