@@ -18,8 +18,8 @@ export default function Home() {
     return (
          <>
             <div>
-                <NavBar
-                handleLoginForm={setLoginForm}/>
+                <NavBar />
+               
 
             <div>
                 <label>
@@ -32,12 +32,12 @@ export default function Home() {
             </div>
             {loginForm &&
 
-            <LoginForm activity={loginForm} close={() => setLoginForm(null)} />}
+            <LoginForm activity={loginForm}  abierto={true} />}
 
             {detail &&
             <ActivityDetail activity={detail} close={() => setDetail(null)} />}
 
-            <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
+           
         </>
     );
 };

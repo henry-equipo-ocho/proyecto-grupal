@@ -7,10 +7,24 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import HomeIcon from '@mui/icons-material/Home';
-import Logo from '../Media/Logo.png'
+import Logo from '../Media/Logo.png';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { setUserName } from './Redux/Actions/actions';
 
-export default function NavBar({handleLoginForm}) {
-    const isLogged = false
+export default function NavBar({ handleLoginForm }) {
+    const isLogged = window.localStorage.getItem('token') ? true : false;
+
+const navigate = useNavigate();
+const dispatch = useDispatch();
+
+    const logout = (e) => {
+        e.preventDefault();
+        window.localStorage.clear()
+        dispatch(setUserName('Viajero'))
+        navigate('/home')
+    }
+    
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -30,7 +44,7 @@ export default function NavBar({handleLoginForm}) {
                     {isLogged ? <Button
                     color="inherit"
                     variant='outlined'
-                    onClick={handleLoginForm}
+                    onClick={(e) => logout(e)}
                     startIcon={<PersonIcon />} >Logout</Button>
                     :
                     <>
@@ -44,7 +58,7 @@ export default function NavBar({handleLoginForm}) {
                     color="inherit"
                     variant='outlined'
                     startIcon={<AppRegistrationIcon />}
-                    href='/register'>Singup</Button> 
+                    href='/register'>Signup</Button> 
                     </>
                     }
   
