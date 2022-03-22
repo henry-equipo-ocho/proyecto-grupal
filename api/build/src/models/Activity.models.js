@@ -10,7 +10,7 @@ const activitySchema = new mongoose_1.default.Schema({
     picture: { type: String, required: [true, 'Missing picture attribute'], unique: true, lowercase: true, trim: true },
     city: { type: String, required: [true, 'Missing city attribute'] },
     country: { type: String, required: [true, 'Missing country attribute'] },
-    price_currency: { type: String, required: [true, 'Missing country attribute'] },
-    price_amount: { type: String, required: [true, 'Missing country attribute'] }
+    price_currency: { type: String, required: [true, 'Missing currency attribute'] },
+    price_amount: { type: String, required: [true, 'Missing amount attribute'] }
 });
 exports.default = mongoose_1.default.model('Activity', activitySchema);

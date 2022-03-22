@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { amadeusController } from "../controllers/amadeus.controller";
+import { amadeusController } from "../controllers/activities.controller";
 
 const router: Router = Router();
 

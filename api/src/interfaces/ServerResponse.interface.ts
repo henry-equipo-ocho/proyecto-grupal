@@ -1,5 +1,5 @@
 export default interface ServerResponse {
     status: string,
-    data?: object,
+    data?: any,
     errors?: object
 }

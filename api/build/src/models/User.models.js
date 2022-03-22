@@ -27,10 +27,16 @@ userSchema.pre('save', function (next) {
         const user = this;
         if (!user.isModified('password'))
             return next();
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hash = yield bcrypt_1.default.hash(user.password, salt);
-        user.password = hash;
-        next();
+        try {
+            const salt = yield bcrypt_1.default.genSalt(10);
+            const hash = yield bcrypt_1.default.hash(user.password, salt);
+            user.password = hash;
+            next();
+        }
+        catch (error) {
+            // TODO: what could throw an error?
+            throw error;
+        }
     });
 });
 userSchema.methods.comparePassword = function (password) {
