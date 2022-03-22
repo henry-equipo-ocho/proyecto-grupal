@@ -14,7 +14,7 @@ export const signUpController: RequestHandler = async (req: Request, res: Respon
         const newUser = await signUpService(req);
 
         if(!newUser) return res.status(400).json(<ServerResponse>{status: 'failed', message: `Email already registered`})
-        return res.status(200).json(<ServerResponse>{status: 'success', message: `User created succesfully`, data: newUser});
+        return res.status(200).json(<ServerResponse>{status: 'success', message: `User created succesfully`});
 
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>{status: 'error', message: e.message || e});
