@@ -12,56 +12,73 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPOIsController = exports.getActivitiesController = void 0;
+exports.getActivitiesController = exports.apiActivitiesController = void 0;
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
-const Activity_models_1 = __importDefault(require("../models/Activity.models"));
+const activities_services_1 = require("../services/activities.services");
 dotenv_1.default.config();
 // Actividades de Buenos Aires
-const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const apiActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e;
-    var amadeus = new Amadeus({
-        clientId: process.env.AMADEUS_CLIENT_ID,
-        clientSecret: process.env.AMADEUS_CLIENT_SECRET
-    });
-    const activities = yield amadeus.shopping.activities.get({
-        latitude: req.body.lat,
-        longitude: req.body.lon
-    }).then((response) => response.data).catch((error) => error.code);
-    for (let i = 0; i < activities.length; i++) {
-        const activitiesFormat = {
-            name: activities[i].name,
-            description: activities[i].shortDescription,
-            picture: activities[i].pictures ? activities[i].pictures[0] : null,
-            city: req.body.city,
-            country: req.body.country,
-            price_currency: (_b = (_a = activities[i]) === null || _a === void 0 ? void 0 : _a.price) === null || _b === void 0 ? void 0 : _b.currencyCode,
-            price_amount: (_d = (_c = activities[i]) === null || _c === void 0 ? void 0 : _c.price) === null || _d === void 0 ? void 0 : _d.amount,
-            booking: (_e = activities[i]) === null || _e === void 0 ? void 0 : _e.bookingLink
-        };
-        const { name, description, picture, city, country, price_currency, price_amount, booking } = activitiesFormat;
-        if (!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {
-            continue;
+    try {
+        const activities = yield (0, activities_services_1.getAPIActivitiesService)(req);
+        for (let i = 0; i < activities.length; i++) {
+            const activitiesFormat = {
+                name: activities[i].name,
+                description: activities[i].shortDescription,
+                picture: activities[i].pictures ? activities[i].pictures[0] : null,
+                city: req.body.city,
+                country: req.body.country,
+                price_currency: (_b = (_a = activities[i]) === null || _a === void 0 ? void 0 : _a.price) === null || _b === void 0 ? void 0 : _b.currencyCode,
+                price_amount: (_d = (_c = activities[i]) === null || _c === void 0 ? void 0 : _c.price) === null || _d === void 0 ? void 0 : _d.amount,
+                booking: (_e = activities[i]) === null || _e === void 0 ? void 0 : _e.bookingLink
+            };
+            const { name, description, picture, city, country, price_currency, price_amount, booking } = activitiesFormat;
+            if (!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {
+                continue;
+            }
+            ;
+            yield (0, activities_services_1.saveActivitiesService)(activitiesFormat);
         }
-        ;
-        const newActivity = new Activity_models_1.default(activitiesFormat);
-        yield newActivity.save();
+        res.status(200).send({ status: 'success', message: 'Activities sucesfully saved' });
     }
-    res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded' });
+    catch (e) {
+        return res.status(e.status || 400).json({ status: 'error', message: e.message || e });
+    }
+});
+exports.apiActivitiesController = apiActivitiesController;
+const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { country, city } = req.body;
+    try {
+        if (country && city) {
+            const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+            return res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded', data: activities });
+        }
+        if (country) {
+            const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+            return res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded', data: activities });
+        }
+        const activities = yield (0, activities_services_1.getAllDBActivities)();
+        return res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded', data: activities });
+    }
+    catch (e) {
+        return res.status(e.status || 400).json({ status: 'error', message: e.message || e });
+    }
 });
 exports.getActivitiesController = getActivitiesController;
-const getPOIsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var amadeus = new Amadeus({
-        clientId: process.env.AMADEUS_CLIENT_ID,
-        clientSecret: process.env.AMADEUS_CLIENT_SECRET
-    });
-    const pointsOfInterest = yield amadeus.referenceData.locations.pointsOfInterest.get({
-        latitude: 41.397158,
-        longitude: 2.160873
-    });
-    res.status(200).send({ status: 'success', message: 'Activities sucesfully loaded', data: pointsOfInterest });
-});
-exports.getPOIsController = getPOIsController;
+// ToDO: Save POI's in DB ¿Maybe?.
+// export const getPOIsController: RequestHandler = async (req: Request, res: Response) => {
+//     var amadeus = new Amadeus({
+//         clientId: process.env.AMADEUS_CLIENT_ID,
+//         clientSecret: process.env.AMADEUS_CLIENT_SECRET 
+//     })
+//     const pointsOfInterest = await amadeus.referenceData.locations.pointsOfInterest.get({
+//         latitude : 41.397158,
+//         longitude : 2.160873
+//     })
+//     res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: pointsOfInterest});
+// };
+// ToDO: City controller, service and route to add new cities to DB.
 // export const saveCitiesController: RequestHandler = async (req: Request, res: Response) => {
 //     try {
 //         for(let i: number = 0; i < cities.length; i++){

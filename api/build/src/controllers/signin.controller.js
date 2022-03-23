@@ -36,7 +36,7 @@ const signInController = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.signInController = signInController;
-// Google sign in controller on testing
+// Google sign in controller on development
 exports.signInGoogleController = passport_1.default.authenticate('google', { scope: ['profile'] });
 const signInGoogleFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(401).send({ success: false, message: 'Error' });
