@@ -46,6 +46,39 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         data: JWTTokenString || errorMessage
     }
 ```
+
+### Activities
+Allows the front to request activities (All, by country or by city)
+```http
+    POST /activities
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :-------------|
+| `country` | `string` | **Optional** |
+| `city` | `string` | **Optional** |
+
+#### Returns
+Alongside the HTTP response status code, the endpoint sends a JSON object
+```js
+    {
+        status: "success" || "fail" || "error",
+        data: activities || errorMessage
+    }
+```
+Activities return a object like this:
+```js
+    {
+        name: string,
+        description: string,
+        picture: string,
+        city: string,
+        country: string,
+        price_currency: string,
+        price_amount: string,
+        booking: string
+    }
+```
+
 #### Google user
 Allows the user to sign in to their account using their Google account
 ```http
