@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { formLabelClasses, Link } from '@mui/material';
+// import { formLabelClasses, Link } from '@mui/material';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
@@ -39,6 +39,7 @@ const validationSchema = yup.object({
 const FormDialog = ({ abierto, close }) => {
   const [open, setOpen] = React.useState(abierto);
   const dispatch = useDispatch();
+  
   const formik = useFormik({
     initialValues: {
       email: '',
