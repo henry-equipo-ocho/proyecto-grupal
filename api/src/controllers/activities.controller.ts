@@ -32,31 +32,32 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
             await saveActivitiesService(activitiesFormat);
         }
 
-        res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully saved'});
+        res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully saved'}));
 
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>{status: 'error', message: e.message || e});
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: e.message || e}));
     }
 };
 
 export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
     
     const {country, city} = req.body;
+    const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'} 
 
     try {
         if(country && city) {
             const activities = await getDBCityActivities(country, city);
-            return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
         }
         if(country) {
             const activities = await getDBCountryActivities(country);
-            return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
         }
 
         const activities = await getAllDBActivities();
-        return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
-    } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>{status: 'error', message: e.message || e});
+        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
+    } catch (e: any) {  
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: e.message || e}));
     }
 };
 

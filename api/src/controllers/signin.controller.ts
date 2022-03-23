@@ -7,21 +7,21 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
 
     const {email, password} = req.body;
 
-    if(!email || !password) return res.status(400).send(<ServerResponse>{status: 'failed', message: `Missing values`});
+    if(!email || !password) return res.status(400).send(<ServerResponse>({status: 'failed', message: `Missing values`}));
 
     try {
       const user = await getUserService(email);
-      if(!user) return res.status(400).json(<ServerResponse>{status: 'failed', message: `User doesn't exists`});
+      if(!user) return res.status(400).json(<ServerResponse>({status: 'failed', message: `User doesn't exists`}));
 
       const match = await matchUserPasswordService(user, password);
-      if(!match) return res.status(400).json(<ServerResponse>{status: 'failed', message: `Invalid password`});
+      if(!match) return res.status(400).json(<ServerResponse>({status: 'failed', message: `Invalid password`}));
 
       const token = createUserTokenService(user);
-      if(!token) return res.status(400).json(<ServerResponse>{status: 'failed', message: `Couldn't create token`})
+      if(!token) return res.status(400).json(<ServerResponse>({status: 'failed', message: `Couldn't create token`}));
 
       return res.status(200).json(<ServerResponse>{status: 'success', message: `Succesfull login`, data: token});
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>{status: e.status || 'failed', message: e.message || e})
+        return res.status(e.status || 400).json(<ServerResponse>({status: e.status || 'failed', message: e.message || e}));
     }
 };
 
