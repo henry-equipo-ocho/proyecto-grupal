@@ -18,7 +18,7 @@ const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findOne({ email: req.body.email });
         if (user)
-            return;
+            throw new Error();
         const newUser = new User_models_1.default(req.body);
         yield newUser.save();
         // TODO: is it necessary to return the new user?

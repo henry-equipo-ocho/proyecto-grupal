@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { amadeusController } from "../controllers/activities.controller";
+import { getActivitiesController } from "../controllers/activities.controller";
 
 const router: Router = Router();
 
-router.get('/', amadeusController);
+router.get('/', getActivitiesController);
+// router.get('/cities', saveCitiesController);
 
 export default router;
