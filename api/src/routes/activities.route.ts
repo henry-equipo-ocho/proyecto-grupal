@@ -3,7 +3,7 @@ import { apiActivitiesController, getActivitiesController } from "../controllers
 
 const router: Router = Router();
 
-router.get('/', getActivitiesController);
-router.get('/amadeus', apiActivitiesController);
+router.post('/', getActivitiesController);
+router.post('/amadeus', apiActivitiesController);
 
 export default router;
