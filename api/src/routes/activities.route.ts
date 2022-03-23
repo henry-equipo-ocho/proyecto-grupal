@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { amadeusController } from "../controllers/activities.controller";
+import { apiActivitiesController, getActivitiesController } from "../controllers/activities.controller";
 
 const router: Router = Router();
 
-router.get('/', amadeusController);
+router.post('/', getActivitiesController);
+router.post('/amadeus', apiActivitiesController);
 
 export default router;
