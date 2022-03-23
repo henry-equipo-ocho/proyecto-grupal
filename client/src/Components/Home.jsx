@@ -4,11 +4,16 @@ import NavBar from './NavBar';
 import LoginForm from './LoginForm';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
+import { getActivities } from './Redux/Actions/actions';
 
 export default function Home() {
+    const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
     const userName = useSelector(state => state.userName);
+    const activities = useSelector(state => state.activities);
+    useEffect(() => dispatch(getActivities()), [dispatch]);
+    console.log(activities);
 
     return (
         <>
@@ -26,7 +31,8 @@ export default function Home() {
                 </div>
 
                 <ActivityCard
-                    handleDetail={setDetail} />
+                    handleDetail={setDetail}
+                    />
             </div>
 
             {loginForm &&
