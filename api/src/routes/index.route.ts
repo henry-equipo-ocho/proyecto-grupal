@@ -3,7 +3,6 @@ import express from 'express';
 import morgan from 'morgan';
 import signup from './signup.route';
 import signin from './signin.route';
-import signed from './signed.route';
 import activities from './activities.route';
 
 
@@ -14,7 +13,6 @@ router.use(express.urlencoded({extended: false}));
 
 router.use('/signup', signup);
 router.use('/signin', signin);
-router.use('/signed', signed);
-router.use('/amadeus', activities);
+router.use('/activities', activities);
 
 export default router;
