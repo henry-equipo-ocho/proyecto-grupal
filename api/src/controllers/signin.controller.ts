@@ -25,7 +25,7 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
     }
 };
 
-// Google sign in controller on testing
+// Google sign in controller on development
 
 export const signInGoogleController: RequestHandler = passport.authenticate('google', { scope: ['profile'] });
 
