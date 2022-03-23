@@ -45,7 +45,7 @@ export const getActivitiesController: RequestHandler = async (req: Request, res:
     const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'} 
 
     try {
-        if(country && city) {
+        if(city) {
             const activities = await getDBCityActivities(country, city);
             return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
         }

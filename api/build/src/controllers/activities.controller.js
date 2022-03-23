@@ -51,7 +51,7 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     const { country, city } = req.body;
     const noactivities = { status: 'success', message: 'Activities not found' };
     try {
-        if (country && city) {
+        if (city) {
             const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
             return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: activities }));
         }
