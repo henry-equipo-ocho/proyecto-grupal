@@ -1,22 +1,26 @@
-import {
-    SET_USER_NAME
- } from '../Actions/actions_types'
-const initialState ={
-    userName: 'viajero'
-}
-export default function rootReducer(state=initialState, action){
-    switch(action.type){
+import { SET_USER_NAME } from '../Actions/actions_types';
+
+const initialState = {
+    userName: 'viajero',
+    activities: [],
+};
+
+export default function rootReducer(state = initialState, action) {
+    switch (action.type) {
         case SET_USER_NAME: {
             return {
                 ...state,
                 userName: action.payload
-            }
+            };
+        };
 
-        }
-        default:
+        case 'GET_ACTIVITIES':
             return {
-                ...state
-            }
+                ...state,
+                activities: action.payload,
+            };
 
-    }
-}
+        default:
+            return state;
+    };
+};
