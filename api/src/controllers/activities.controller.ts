@@ -2,63 +2,82 @@ import { Request, Response, RequestHandler } from 'express';
 import ServerResponse from '../interfaces/ServerResponse.interface';
 const Amadeus = require('amadeus');
 import dotenv from 'dotenv';
-import City from '../models/City.models';
-import Activity from '../models/Activity.models';
+import ActivityInterface from '../interfaces/Activity.interface';
+import { getAPIActivitiesService, saveActivitiesService, getAllDBActivities, getDBCountryActivities, getDBCityActivities } from '../services/activities.services'
 
 dotenv.config();
 
-
 // Actividades de Buenos Aires
-export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
+export const apiActivitiesController: RequestHandler = async (req: Request, res: Response) => {
 
+    try {
+        const activities = await getAPIActivitiesService(req);
 
-    var amadeus = new Amadeus({
-        clientId: process.env.AMADEUS_CLIENT_ID,
-        clientSecret: process.env.AMADEUS_CLIENT_SECRET 
-    });
+        for(let i: number = 0; i < activities.length; i++){
+            const activitiesFormat: ActivityInterface = {
+                name: activities[i].name,
+                description: activities[i].shortDescription,
+                picture: activities[i].pictures ? activities[i].pictures[0] : null,
+                city: req.body.city,
+                country: req.body.country,
+                price_currency: activities[i]?.price?.currencyCode,
+                price_amount: activities[i]?.price?.amount,
+                booking: activities[i]?.bookingLink
+            }
 
-    const activities = await amadeus.shopping.activities.get({
-        latitude: req.body.lat,
-        longitude: req.body.lon
-    }).then((response: any) => response.data).catch((error: any) => error.code);
+            const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
 
-    for(let i: number = 0; i < activities.length; i++){
-        const activitiesFormat = {
-            name: activities[i].name,
-            description: activities[i].shortDescription,
-            picture: activities[i].pictures ? activities[i].pictures[0] : null,
-            city: req.body.city,
-            country: req.body.country,
-            price_currency: activities[i]?.price?.currencyCode,
-            price_amount: activities[i]?.price?.amount,
-            booking: activities[i]?.bookingLink
+            if(!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {continue};
+
+            await saveActivitiesService(activitiesFormat);
         }
 
-        const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
+        res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully saved'});
 
-        if(!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {continue};
-
-        const newActivity = new Activity(activitiesFormat);
-        await newActivity.save();
+    } catch (e: any) {
+        return res.status(e.status || 400).json(<ServerResponse>{status: 'error', message: e.message || e});
     }
+};
+
+export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
     
-    res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded'});
+    const {country, city} = req.body;
+
+    try {
+        if(country && city) {
+            const activities = await getDBCityActivities(country, city);
+            return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
+        }
+        if(country) {
+            const activities = await getDBCountryActivities(country);
+            return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
+        }
+
+        const activities = await getAllDBActivities();
+        return res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: activities})
+    } catch (e: any) {
+        return res.status(e.status || 400).json(<ServerResponse>{status: 'error', message: e.message || e});
+    }
 };
 
-export const getPOIsController: RequestHandler = async (req: Request, res: Response) => {
+// ToDO: Save POI's in DB ¿Maybe?.
 
-    var amadeus = new Amadeus({
-        clientId: process.env.AMADEUS_CLIENT_ID,
-        clientSecret: process.env.AMADEUS_CLIENT_SECRET 
-    })
+// export const getPOIsController: RequestHandler = async (req: Request, res: Response) => {
 
-    const pointsOfInterest = await amadeus.referenceData.locations.pointsOfInterest.get({
-        latitude : 41.397158,
-        longitude : 2.160873
-      })
+//     var amadeus = new Amadeus({
+//         clientId: process.env.AMADEUS_CLIENT_ID,
+//         clientSecret: process.env.AMADEUS_CLIENT_SECRET 
+//     })
 
-    res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: pointsOfInterest});
-};
+//     const pointsOfInterest = await amadeus.referenceData.locations.pointsOfInterest.get({
+//         latitude : 41.397158,
+//         longitude : 2.160873
+//     })
+
+//     res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: pointsOfInterest});
+// };
+
+// ToDO: City controller, service and route to add new cities to DB.
 
 // export const saveCitiesController: RequestHandler = async (req: Request, res: Response) => {
     
