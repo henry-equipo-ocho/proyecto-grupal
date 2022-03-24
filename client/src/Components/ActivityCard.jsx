@@ -5,26 +5,21 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import viaje from '../Media/viaje.jpg'
-
 
 export default function ActivityCard({
-    name, pictures, shorTDescription, price, handleDetail
+    nombre, imagen, handleDetail
 }) {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 400, border: 1 }}>
         <CardMedia
           component="img"
-          height="140"
+          height="300"
           alt="Turismo"
-          image ={ viaje }
+          image ={imagen}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Turismo {name}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-           {shorTDescription} Viaja y conoce Latinoamerica con nosotros y maravillate con los impresionantes paisajes que tiene por descrubir
+            {nombre}
           </Typography>
         </CardContent>
         <CardActions style={{justifyContent: 'center'}} >

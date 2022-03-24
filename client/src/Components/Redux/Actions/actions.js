@@ -10,7 +10,7 @@ export function setUserName(payload){
 
 export function getActivities() {
     return async function (dispatch) {
-        var json = await axios.get('http://localhost:3001/activities');
+        var json = await axios.post('http://localhost:3001/activities');
         return dispatch({
             type: 'GET_ACTIVITIES',
             payload: json.data,
