@@ -23,17 +23,16 @@ export default function Favorites() {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Turismo {name}
+            Turismo
           </Typography>
           <Typography variant="body1" color="text.secondary">
-           {shorTDescription} Viaja y conoce Latinoamerica con nosotros y maravillate con los impresionantes paisajes que tiene por descrubir
+           Viaja y conoce Latinoamerica con nosotros y maravillate con los impresionantes paisajes que tiene por descrubir
           </Typography>
         </CardContent>
         <CardActions style={{justifyContent: 'center'}} >
           <Button
           color="inherit"
           variant='outlined'
-          onClick={handleDetail}
           size="small">Conoce mas</Button>
         </CardActions>
       </Card>
