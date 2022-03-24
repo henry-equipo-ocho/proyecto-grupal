@@ -1,0 +1,16 @@
+.cardsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    align-content: space-around;
+    row-gap: 20px;
+}
+
+.userName{
+    display:flex;
+    justify-content: center;
+    margin: 1em;
+    border: 2px solid;
+    background-color:#24c59c ;
+    font-family: Roboto ;
+}

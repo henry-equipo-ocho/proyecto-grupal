@@ -16,39 +16,39 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
-    height: 400,
+    width: 900,
+    height: 650,
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
     p: 4,
 };
 
-export default function ActivityDetail({ close }) {
+export default function ActivityDetail({ activity, close }) {
+    const usDollar = Math.round(parseInt(activity.price_amount) * 1.10) ;
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+    console.log(activity)
     return (
         <div>
 
             <DialogContent sx={style}>
                 <DialogTitle id="responsive-dialog-title">
-                    {"Viaje por latinoamerica"}
+                    {activity.name}
                 </DialogTitle>
                 <CardMedia
                     component="img"
-                    height="140"
+                    height="300"
                     alt="Turismo"
-                    image={Latam}
+                    image={activity.picture}
                 />
                 <DialogContent>
                     <DialogContentText>
-                        Una variedad de actividades para realizar desde caminata ecologicas
-                        hasta paracadismo
+                    {activity.description}
                     </DialogContentText>
                     <DialogContentText>
                         <Typography variant="h5" color='black'>
-                        US $ 1.000
+                        ${usDollar}
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -62,7 +62,9 @@ export default function ActivityDetail({ close }) {
                     autoFocus
                     color="inherit"
                     variant='outlined'
-                    >Comprar</Button>
+                    href={activity.booking}
+                    target='_blank'
+                    >Reservar</Button>
                 </DialogActions>
             </DialogContent>
         </div>
