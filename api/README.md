@@ -4,68 +4,89 @@ API del proyecto grupal "eztinerary"
 
 ## API Reference
 
-### Sign Up 
+### Sign Up
+
 Creates a new user with the given information and saves it to the DB
+
 ```http
     POST /signup
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :----------------------- |
-| `name` | `string` | **Required** |
-| `surname` | `string` | **Required** |
-| `email` | `string` | **Required** |
-| `country` | `string` | **Required** (in English) |
-| `password` | `string` | **Required** |
+
+| Parameter  | Type     | Description               |
+| :--------- | :------- | :------------------------ |
+| `name`     | `string` | **Required**              |
+| `surname`  | `string` | **Required**              |
+| `email`    | `string` | **Required**              |
+| `country`  | `string` | **Required** (in English) |
+| `password` | `string` | **Required**              |
 
 #### Returns
+
 Alongside the HTTP response status code, the endpoint sends a JSON object
+
 ```js
     {
-        status: "success" || "fail" || "error",
-        data: newUser || errorMessage
+        status: "success" || "failed" || "error",
+        data?: newUser,
+        errors?: errorMessage
     }
     // see src/interfaces/User.interface.ts
 ```
 
 ### Sign In
+
 #### "native" user
+
 Allows the user to sign in to their account using email and password
+
 ```http
     POST /signin
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :-------------|
-| `email` | `string` | **Required** |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `email`    | `string` | **Required** |
 | `password` | `string` | **Required** |
 
 #### Returns
+
 Alongside the HTTP response status code, the endpoint sends a JSON object
+
 ```js
     {
-        status: "success" || "fail" || "error",
-        data: JWTTokenString || errorMessage
+        status: "success" || "failed" || "error",
+        data?: JWTTokenString,
+        errors?: errorMessage
     }
 ```
 
 ### Activities
+
 Allows the front to request activities (All, by country or by city)
+
 ```http
     POST /activities
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :-------------|
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
 | `country` | `string` | **Optional** |
-| `city` | `string` | **Optional** |
+| `city`    | `string` | **Optional** |
 
 #### Returns
+
 Alongside the HTTP response status code, the endpoint sends a JSON object
+
 ```js
     {
-        status: "success" || "fail" || "error",
-        data: activities || errorMessage
+        status: "success" || "failed" || "error",
+        data?: activities,
+        errors?: errorMessage
     }
 ```
+
 Activities return a object like this:
+
 ```js
     {
         name: string,
@@ -80,8 +101,88 @@ Activities return a object like this:
 ```
 
 #### Google user
+
 Allows the user to sign in to their account using their Google account
+
 ```http
     GET /google
 ```
+
 This endpoint is under development.
+
+### User favorites
+
+Allows the user to see a list (or more) of their favorite activities
+
+```http
+    GET /favorites
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `userID`  | `string` | **Required** |
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: array of activitiesArray,
+        errors?: errorMessage
+    }
+    // see src/interfaces/Activity.interface.ts
+```
+
+---
+
+Allows adding an activity to the list of favorites
+
+```http
+    POST /favorites
+```
+
+| Parameter        | Type     | Description                                           |
+| :--------------- | :------- | :---------------------------------------------------- |
+| `userID`         | `string` | **Required**                                          |
+| `activityID`     | `string` | **Required**                                          |
+| `itineraryIndex` | `number` | If not provided, adds the activity to a new itinerary |
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: `${activityID} added to ${userID}`,
+        errors?: errorMessage
+    }
+```
+
+---
+
+Allows deleting an activity from the list of favorites
+
+```http
+    DELETE /favorites
+```
+
+| Parameter        | Type     | Description                                  |
+| :--------------- | :------- | :------------------------------------------- |
+| `userID`         | `string` | **Required**                                 |
+| `itineraryIndex` | `number` | **Required**                                 |
+| `activityID`     | `string` | If not provided, deletes the whole itinerary |
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: `${activityID} removed from ${userID}[${itineraryIndex}]` || `${itineraryIndex} removed from ${userID}`,
+        errors?: errorMessage
+    }
+```
