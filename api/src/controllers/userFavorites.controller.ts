@@ -41,7 +41,7 @@ export const deleteUserActivitiesController: RequestHandler = async (req: Reques
     }
 
     try {
-        await deleteUserFavorite(req.body.userID, req.body.activityID);
+        await deleteUserFavorite(req.body.userID, req.body.itineraryIndex, req.body.activityID);
 
         res.status(200).json(<ServerResponse>({ status: 'success', data: `Deleted activity (${req.body.activityID}) from favorites` }));
     } catch (error: any) {
