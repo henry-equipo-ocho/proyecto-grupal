@@ -8,11 +8,13 @@ export enum UserRoles {
 }
 
 export default interface User extends Document {
+    id: string,
     name: string,
     surname: string,
     email: string,
     country: string,
     password: string,
     role: UserRoles,
+    favActivities: Array<Array<string>>,
     comparePassword: (password: string) => Promise<boolean>
 }

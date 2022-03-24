@@ -9,16 +9,17 @@ const userSchema = new mongoose.Schema<User>({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
+    favActivities: { type: [[String]], required: [true, 'Missing favActivities attribute'] }
 });
 
-userSchema.pre<User>('save', async function(next) {
+userSchema.pre<User>('save', async function (next) {
     const user = this;
 
-    if(!user.isModified('password')) return next();
+    if (!user.isModified('password')) return next();
 
     try {
-        const salt:string | Error = await bcrypt.genSalt(10);
-        const hash:string | Error = await bcrypt.hash(user.password, salt);
+        const salt: string | Error = await bcrypt.genSalt(10);
+        const hash: string | Error = await bcrypt.hash(user.password, salt);
         user.password = hash;
         next();
     } catch (error) {
@@ -27,7 +28,7 @@ userSchema.pre<User>('save', async function(next) {
     }
 });
 
-userSchema.methods.comparePassword = async function(password: string): Promise<boolean> {
+userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
 }
 
