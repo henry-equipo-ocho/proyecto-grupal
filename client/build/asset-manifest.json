@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.31d6cfe0.css",
+    "main.js": "/static/js/main.14af40a9.js",
+    "static/js/787.6c890a86.chunk.js": "/static/js/787.6c890a86.chunk.js",
+    "static/media/latam.jpg": "/static/media/latam.3e740cfb243b311fe8ac.jpg",
+    "static/media/viaje.jpg": "/static/media/viaje.0b67863e765883d1ecac.jpg",
+    "static/media/img55.jpg": "/static/media/img55.600ce565a34b2f4a40ae.jpg",
+    "static/media/img59.jpg": "/static/media/img59.68f51940aac45d1c0044.jpg",
+    "static/media/img60.jpg": "/static/media/img60.4eadd3d960929f79d583.jpg",
+    "static/media/img61.jpg": "/static/media/img61.c851ce369ed6db7a8a5d.jpg",
+    "static/media/img56.jpg": "/static/media/img56.64f944a31ccefe8ca43e.jpg",
+    "static/media/img57.jpg": "/static/media/img57.bef6b837b5865b554866.jpg",
+    "static/media/img22.jpg": "/static/media/img22.b892313fb50d526f6071.jpg",
+    "static/media/img25.jpg": "/static/media/img25.9c9d88d58d1f1b72ce4d.jpg",
+    "static/media/img1.jpeg": "/static/media/img1.f4629ca3e21ad5523258.jpeg",
+    "static/media/img37.jpg": "/static/media/img37.01e120a6b0ea37cb6da5.jpg",
+    "static/media/Logo.png": "/static/media/Logo.e1411bd76fdd69c525f0.png",
+    "index.html": "/index.html",
+    "static/media/iconmonstr-angel-left-thin.svg": "/static/media/iconmonstr-angel-left-thin.b74b51c4c35fb292f28d63a42b7d73c9.svg",
+    "static/media/iconmonstr-angel-right-thin.svg": "/static/media/iconmonstr-angel-right-thin.b282d2fca8839e80178c1a178ce23993.svg",
+    "main.14af40a9.js.map": "/static/js/main.14af40a9.js.map",
+    "787.6c890a86.chunk.js.map": "/static/js/787.6c890a86.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.14af40a9.js"
+  ]
+}
