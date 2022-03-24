@@ -5,7 +5,10 @@ import {
      GET_ACTIVITIES
      } from './actions_types'
 
-     const server = "http://localhost:3001";
+const server = "http://localhost:3001";
+import { SET_USER_NAME } from './actions_types';
+import axios from 'axios';
+
 
 export function setUserName(payload){
     return {
@@ -31,3 +34,16 @@ export const setAllActivities = (payload) => {
     }
     
 }
+
+    };
+};
+
+export function getActivities() {
+    return async function (dispatch) {
+        var json = await axios.post('http://localhost:3001/activities');
+        return dispatch({
+            type: 'GET_ACTIVITIES',
+            payload: json.data,
+        });
+    };
+};

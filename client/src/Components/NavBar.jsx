@@ -6,14 +6,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import HomeIcon from '@mui/icons-material/Home';
 import Logo from '../Media/Logo.png';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 
-export default function NavBar({ handleLoginForm, abierto }) {
-    const navigate = useNavigate();
+export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;
 
@@ -21,7 +19,6 @@ export default function NavBar({ handleLoginForm, abierto }) {
         e.preventDefault();
         window.localStorage.clear();
         dispatch(setUserName('Viajero'));
-        navigate('/home');
         window.location.reload();
     }
     

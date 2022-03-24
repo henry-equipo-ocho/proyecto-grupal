@@ -5,5 +5,6 @@ export default interface Activity {
     city: string,
     country: string,
     price_currency: string,
-    price_amount: string
+    price_amount: string,
+    booking: string
 }
