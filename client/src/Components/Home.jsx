@@ -5,6 +5,7 @@ import LoginForm from './LoginForm';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import { getActivities } from './Redux/Actions/actions';
+import './Css/ActivityCard.css'
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -13,26 +14,30 @@ export default function Home() {
     const userName = useSelector(state => state.userName);
     const activities = useSelector(state => state.activities);
     useEffect(() => dispatch(getActivities()), [dispatch]);
-    console.log(activities);
 
     return (
         <>
             <div>
                 <NavBar
                     handleLoginForm={setLoginForm}
-                    />
+                />
 
-                <div>
-                    <center>
-                        <label style={{ fontSize: '30px'}}>
+                <div className='userName'>
+                        <label style={{ fontSize: '30px' }}>
                             Hola {userName.split('@')[0]}  ¿A donde quieres ir?
                         </label>
-                    </center>
+                </div>
+                <div className='cardsContainer'>
+                    {activities.data?.map((a) => (
+                        <ActivityCard
+                            handleDetail={() => setDetail(a)}
+                            nombre={a.name}
+                            imagen={a.picture}
+                            key={a.ID}
+                        />
+                    ))}
                 </div>
 
-                <ActivityCard
-                    handleDetail={setDetail}
-                    />
             </div>
 
             {loginForm &&
