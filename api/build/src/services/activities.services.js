@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
+exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -74,3 +74,12 @@ const getDBCityActivities = (country, city) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getDBCityActivities = getDBCityActivities;
+const getActivitiesFromArray = (activitiesID) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield Activity_models_1.default.find({ '_id': { $in: activitiesID } });
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.getActivitiesFromArray = getActivitiesFromArray;

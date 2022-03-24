@@ -1,5 +1,5 @@
 export default interface Activity {
-    id: string,
+    id?: string,
     name: string,
     description: string,
     picture: string,
