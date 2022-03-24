@@ -13,7 +13,7 @@ export function getActivities() {
         var json = await axios.post('http://localhost:3001/activities');
         return dispatch({
             type: 'GET_ACTIVITIES',
-            payload: json.data,
+            payload: json.data.data,
         });
     };
 };
