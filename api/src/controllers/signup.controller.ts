@@ -1,15 +1,22 @@
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import { signUpService } from '../services/signup.services';
+import ServerResponse from '../interfaces/ServerResponse.interface';
 
-export const signUpController = async (req: Request, res: Response) => {
-    if(!req.body.email || !req.body.password || !req.body.name || !req.body.surname || !req.body.country) {
-        return res.status(400).send('Missing values');
+export const signUpController: RequestHandler = async (req: Request, res: Response) => {
+
+    const {email, password, name, surname, country} = req.body;
+
+    if(!email || !password || !name || !surname || !country) {
+        return res.status(400).send(<ServerResponse>({status: 'failed', message: `Missing values`}));
     }
 
     try {
         const newUser = await signUpService(req);
-        return res.status(200).send(newUser);
-    } catch (error: any) {
-        return res.status(error.status || 400).json(error.message || error)
+
+        if(!newUser) return res.status(400).json(<ServerResponse>({status: 'failed', message: `Email already registered`}));
+        return res.status(200).json(<ServerResponse>{status: 'success', message: `User created succesfully`});
+
+    } catch (e: any) {
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: e.message || e}));
     }
 }

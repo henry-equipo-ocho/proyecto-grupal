@@ -3,18 +3,18 @@ import express from 'express';
 import morgan from 'morgan';
 import signup from './signup.route';
 import signin from './signin.route';
-import signed from './signed.route';
-import amadeus from './amadeus.route';
+import activities from './activities.route';
+import userFavorites from './userFavorites.route';
 
 
-const router = Router();
+const router: Router = Router();
 
 router.use(morgan('dev'));
 router.use(express.urlencoded({extended: false}));
 
 router.use('/signup', signup);
 router.use('/signin', signin);
-router.use('/signed', signed);
-router.use('/amadeus', amadeus);
+router.use('/activities', activities);
+router.use('/favorites', userFavorites);
 
 export default router;

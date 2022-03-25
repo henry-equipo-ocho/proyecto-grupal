@@ -10,6 +10,7 @@ import connectToDB from "./db";
 connectToDB();
 
 const app: Application = express();
+
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.urlencoded({extended: false}));
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(passport.initialize());
+
 passport.use(passportMiddleware);
 passport.use(signInGoogleService);
 

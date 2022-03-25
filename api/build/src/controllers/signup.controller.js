@@ -12,15 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpController = void 0;
 const signup_services_1 = require("../services/signup.services");
 const signUpController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.body.email || !req.body.password || !req.body.name || !req.body.surname || !req.body.country) {
-        return res.status(400).send('Missing values');
+    const { email, password, name, surname, country } = req.body;
+    if (!email || !password || !name || !surname || !country) {
+        return res.status(400).send(({ status: 'failed', message: `Missing values` }));
     }
     try {
         const newUser = yield (0, signup_services_1.signUpService)(req);
-        return res.status(200).send(newUser);
+        if (!newUser)
+            return res.status(400).json(({ status: 'failed', message: `Email already registered` }));
+        return res.status(200).json({ status: 'success', message: `User created succesfully` });
     }
-    catch (error) {
-        return res.status(error.status || 400).json(error.message || error);
+    catch (e) {
+        return res.status(e.status || 400).json(({ status: 'error', message: e.message || e }));
     }
 });
 exports.signUpController = signUpController;

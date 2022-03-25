@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
 const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_models_1.default.findOne({ email: req.body.email });
-    if (user) {
-        return 'User already exists';
-    }
     try {
+        const user = yield User_models_1.default.findOne({ email: req.body.email });
+        if (user)
+            throw new Error();
         const newUser = new User_models_1.default(req.body);
         yield newUser.save();
+        // TODO: is it necessary to return the new user?
         return newUser;
     }
     catch (error) {

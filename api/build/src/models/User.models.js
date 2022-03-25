@@ -21,16 +21,23 @@ const userSchema = new mongoose_1.default.Schema({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
+    favActivities: { type: [[String]], required: [true, 'Missing favActivities attribute'] }
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
         if (!user.isModified('password'))
             return next();
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hash = yield bcrypt_1.default.hash(user.password, salt);
-        user.password = hash;
-        next();
+        try {
+            const salt = yield bcrypt_1.default.genSalt(10);
+            const hash = yield bcrypt_1.default.hash(user.password, salt);
+            user.password = hash;
+            next();
+        }
+        catch (error) {
+            // TODO: what could throw an error?
+            throw error;
+        }
     });
 });
 userSchema.methods.comparePassword = function (password) {
