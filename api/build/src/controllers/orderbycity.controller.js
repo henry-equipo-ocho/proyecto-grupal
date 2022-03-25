@@ -17,38 +17,73 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const activities_services_1 = require("../services/activities.services");
 dotenv_1.default.config();
 const getOrderedCities = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const country = req.query.country;
+    const { country, type } = req.body;
     const noactivities = { status: 'success', message: 'Activities not found' };
-    try {
-        if (country) {
-            const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
-            var orderedActivities = activities.sort(function (a, b) {
-                if (a.city > b.city) {
-                    return 1;
-                }
-                else if (b.city > a.city) {
-                    return -1;
-                }
-                return 0;
-            });
-            return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: orderedActivities }));
+    if (type === 'A-Z') {
+        try {
+            if (country) {
+                const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+                var orderedActivities = activities.sort(function (a, b) {
+                    if (a.city > b.city) {
+                        return 1;
+                    }
+                    else if (b.city > a.city) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+            }
+            else {
+                const activities = yield (0, activities_services_1.getAllDBActivities)();
+                var orderedActivities = activities.sort(function (a, b) {
+                    if (a.city > b.city) {
+                        return 1;
+                    }
+                    else if (b.city > a.city) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+            }
         }
-        else {
-            const activities = yield (0, activities_services_1.getAllDBActivities)();
-            var orderedActivities = activities.sort(function (a, b) {
-                if (a.city > b.city) {
-                    return 1;
-                }
-                else if (b.city > a.city) {
-                    return -1;
-                }
-                return 0;
-            });
-            return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: orderedActivities }));
+        catch (error) {
+            return res.status(error.status || 400).json(({ status: 'error', message: 'Invalid Request' || error }));
         }
     }
-    catch (error) {
-        return res.status(error.status || 400).json(({ status: 'error', message: error.message || error }));
+    if (type === 'Z-A') {
+        try {
+            if (country) {
+                const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+                var orderedActivities = activities.sort(function (a, b) {
+                    if (a.city > b.city) {
+                        return -1;
+                    }
+                    else if (b.city > a.city) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+            }
+            else {
+                const activities = yield (0, activities_services_1.getAllDBActivities)();
+                var orderedActivities = activities.sort(function (a, b) {
+                    if (a.city > b.city) {
+                        return -1;
+                    }
+                    else if (b.city > a.city) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+            }
+        }
+        catch (error) {
+            return res.status(error.status || 400).json(({ status: 'error', message: 'Invalid Request' || error }));
+        }
     }
 });
 exports.getOrderedCities = getOrderedCities;
