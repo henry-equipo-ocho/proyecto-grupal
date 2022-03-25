@@ -9,8 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordUpdateController = exports.userUpdateController = void 0;
+exports.passwordUpdateController = exports.userUpdateController = exports.getUserCurrentInfoController = void 0;
 const userUpdate_services_1 = require("../services/userUpdate.services");
+const getUserCurrentInfoController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = req.user;
+        const { name, surname, email, country } = user;
+        return res.status(200).send(({ status: 'success', data: { name, surname, email, country } }));
+    }
+    catch (e) {
+        return res.status(400).send(({ status: 'error', errors: { message: e.message || e } }));
+    }
+});
+exports.getUserCurrentInfoController = getUserCurrentInfoController;
 const userUpdateController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.user;

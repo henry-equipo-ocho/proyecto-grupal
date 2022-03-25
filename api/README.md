@@ -186,6 +186,37 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         errors?: errorMessage
     }
 ```
+### GET USER CURRENT PERSONAL INFO
+
+Allows the client to get his current personal info (Name, surname, country, email)
+
+```http
+    get /update
+```
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: user,
+        errors?: errorMessage
+    }
+```
+
+user return a object like this:
+
+```js
+    {
+        name: string,
+        surname: string,
+        email: string,
+        country: string,
+    }
+```
+
 
 ### UPDATE USER'S PERSONAL INFO
 
