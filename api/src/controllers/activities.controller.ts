@@ -32,10 +32,10 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
             await saveActivitiesService(activitiesFormat);
         }
 
-        res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully saved'}));
+        res.status(200).send(<ServerResponse>({status: 'success'}));
 
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: e.message || e}));
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
 };
 
@@ -47,17 +47,17 @@ export const getActivitiesController: RequestHandler = async (req: Request, res:
     try {
         if(city) {
             const activities = await getDBCityActivities(country, city);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
         }
         if(country) {
             const activities = await getDBCountryActivities(country);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
         }
 
         const activities = await getAllDBActivities();
-        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', message: 'Activities sucesfully loaded', data: activities}))
+        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
     } catch (e: any) {  
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: e.message || e}));
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
 };
 

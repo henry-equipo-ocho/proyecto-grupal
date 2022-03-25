@@ -40,10 +40,10 @@ const apiActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
             ;
             yield (0, activities_services_1.saveActivitiesService)(activitiesFormat);
         }
-        res.status(200).send(({ status: 'success', message: 'Activities sucesfully saved' }));
+        res.status(200).send(({ status: 'success' }));
     }
     catch (e) {
-        return res.status(e.status || 400).json(({ status: 'error', message: e.message || e }));
+        return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
     }
 });
 exports.apiActivitiesController = apiActivitiesController;
@@ -53,17 +53,17 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         if (city) {
             const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: activities }));
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
         }
         if (country) {
             const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: activities }));
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
         }
         const activities = yield (0, activities_services_1.getAllDBActivities)();
-        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', message: 'Activities sucesfully loaded', data: activities }));
+        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
     }
     catch (e) {
-        return res.status(e.status || 400).json(({ status: 'error', message: e.message || e }));
+        return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
     }
 });
 exports.getActivitiesController = getActivitiesController;
