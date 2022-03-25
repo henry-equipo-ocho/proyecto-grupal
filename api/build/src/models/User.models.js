@@ -14,6 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const itinerarySchema = new mongoose_1.default.Schema({
+    name: { type: String, required: [true, 'Missing name attribute'] },
+    activities: { type: [String], required: [true, 'Missing activities attribute'] }
+});
 const userSchema = new mongoose_1.default.Schema({
     name: { type: String, required: [true, 'Missing name attribute'] },
     surname: { type: String, required: [true, 'Missing surname attribute'] },
@@ -21,7 +25,7 @@ const userSchema = new mongoose_1.default.Schema({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
-    favActivities: { type: [[String]], required: [true, 'Missing favActivities attribute'] }
+    favActivities: [itinerarySchema]
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

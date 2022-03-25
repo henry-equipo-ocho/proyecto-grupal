@@ -23,7 +23,6 @@ app.use((req, res, next) => {
     next();
 });
 app.use(passport.initialize());
-
 passport.use(passportMiddleware);
 passport.use(signInGoogleService);
 
