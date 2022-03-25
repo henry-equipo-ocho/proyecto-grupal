@@ -17,10 +17,10 @@ export const updatePersonalInfo = async (req: Request, id: string) => {
 
 export const updatePassword = async (req: Request, id: string) => {
    try {
-        User.findById(id, async function(err: any, doc: any) {
+        User.findById(id, async function(err: any, result: any) {
             if (err) return false;
-            doc.password = req.body.password;
-            await doc.save();
+            result.password = req.body.password;
+            await result.save();
         });
     } catch (e) {
         throw e
