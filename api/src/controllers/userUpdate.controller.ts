@@ -2,6 +2,16 @@ import { Request, Response, RequestHandler } from 'express';
 import ServerResponse from '../interfaces/ServerResponse.interface';
 import { updatePersonalInfo, updatePassword } from '../services/userUpdate.services';
 
+export const getUserCurrentInfoController: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const user: any = req.user;
+        const {name, surname, email, country} = user;
+
+        return res.status(200).send(<ServerResponse>({status: 'success', data: {name, surname, email, country}}))
+    } catch (e: any) {
+        return res.status(400).send(<ServerResponse>({status: 'error', errors: {message: e.message || e}}))
+    }
+}
 
 export const userUpdateController: RequestHandler = async (req: Request, res: Response) => {
     try {
