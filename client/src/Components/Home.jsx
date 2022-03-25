@@ -37,11 +37,12 @@ export default function Home() {
                 </div>
                 <div className='cardsContainer'>
                     {currentActivities ? currentActivities.map((a) => (
-                        <ActivityCard
+                       <ActivityCard
                             handleDetail={() => setDetail(a)}
                             nombre={a.name}
                             imagen={a.picture}
-                            key={a.ID}
+                            id={a._id}
+                            key={a._id}
                         />
                     )): <p className='loader'> </p>}
                 </div>
@@ -59,7 +60,7 @@ export default function Home() {
                 <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
 
             {detail &&
-                <ActivityDetail activity={detail} close={() => setDetail(null)} />}
+                <ActivityDetail activity={detail} close={() => setDetail(null)}  />}
         </>
     );
 };
