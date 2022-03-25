@@ -42,7 +42,7 @@ export const addUserActivitiesController: RequestHandler = async (req: Request, 
 
             return res.status(200).json(<ServerResponse>({ status: 'success', data: `Added activity (${req.body.activityID}) to favorites` }));
         } else {
-            return res.status(409).json(<ServerResponse>({ status: 'failed', message: `Activity (${req.body.activityID}) already exists in itinerary (${req.body.itineraryName}})` }));
+            return res.status(409).json(<ServerResponse>({ status: 'failed', data: `Activity (${req.body.activityID}) already exists in itinerary (${req.body.itineraryName}})` }));
         }
     } catch (error: any) {
         console.log("error: ", error);
