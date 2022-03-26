@@ -14,7 +14,7 @@ const iti = [[1, 2, 3], [2], [3, 2, 2, 2, 2], [2, 1]];
 
 const getFavorites = async () => {
   try{
-    
+    console.log("Testing");
   }
   catch(e){
 
