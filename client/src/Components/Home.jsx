@@ -7,12 +7,18 @@ import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
 import { getActivities } from './Redux/Actions/actions';
 import './Css/ActivityCard.css'
+import SearchBar from './SearchBar/SearchBar';
 
 export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
+
     const userName = useSelector(state => state.userName);
+<<<<<<< HEAD
+    const activities = useSelector(state => state.currentActivities);
+    
+=======
     const activities = useSelector(state => state.activities);
     const [currentPage, setCurrentPage] = useState(1);
     const indexOfFirstActivity = currentPage  * 10;
@@ -21,14 +27,17 @@ export default function Home() {
         indexOfFirstActivity + 10 - 1,
     );
 
+>>>>>>> c4c10f86857a054cb76845985a36ca7d6ed612dd
     useEffect(() => dispatch(getActivities()), [dispatch]);
 
     return (
         <>
             <div>
+                <SearchBar />
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
+
 
                 <div className='userName'>
                         <label style={{ fontSize: '30px' }}>
