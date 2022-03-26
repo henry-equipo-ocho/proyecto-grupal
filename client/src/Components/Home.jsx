@@ -6,21 +6,26 @@ import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import { getActivities } from './Redux/Actions/actions';
 import './Css/ActivityCard.css'
+import SearchBar from './SearchBar/SearchBar';
 
 export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
+
     const userName = useSelector(state => state.userName);
-    const activities = useSelector(state => state.activities);
+    const activities = useSelector(state => state.currentActivities);
+    
     useEffect(() => dispatch(getActivities()), [dispatch]);
 
     return (
         <>
             <div>
+                <SearchBar />
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
+
 
                 <div className='userName'>
                         <label style={{ fontSize: '30px' }}>
