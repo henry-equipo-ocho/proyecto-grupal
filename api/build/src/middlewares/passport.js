@@ -24,15 +24,15 @@ const optStrategy = {
     secretOrKey: process.env.JWT_SECRET
 };
 exports.default = new passport_jwt_1.Strategy(optStrategy, (payload, done) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_models_1.default.findById(payload.id);
     try {
+        const user = yield User_models_1.default.findById(payload.id);
         if (user) {
             return done(null, user);
         }
         return done(null, false);
     }
     catch (error) {
-        console.log(error);
+        done(null, false);
     }
 }));
 exports.signInGoogleService = new GoogleStrategy({

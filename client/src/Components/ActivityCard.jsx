@@ -7,8 +7,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 export default function ActivityCard({
-    nombre, imagen, handleDetail
+    nombre, imagen, handleDetail, id
 }) {
+  console.log(id)
     return (
         <Card sx={{ maxWidth: 400, border: 1 }}>
         <CardMedia
@@ -26,7 +27,7 @@ export default function ActivityCard({
           <Button
           color="inherit"
           variant='outlined'
-          onClick={handleDetail}
+          onClick={() => handleDetail(id)}
           size="small">Conoce mas</Button>
         </CardActions>
       </Card>

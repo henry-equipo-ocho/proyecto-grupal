@@ -6,8 +6,8 @@ import {
      } from './actions_types'
 
 const server = "http://localhost:3001";
-import { SET_USER_NAME } from './actions_types';
-import axios from 'axios';
+//import { SET_USER_NAME } from './actions_types';
+
 
 
 export function setUserName(payload){
@@ -27,23 +27,16 @@ export const getActivities = () => {
     }
 }
 
-export const setAllActivities = (payload) => {
-    return {
-        type: SET_ALL_ACTIVITIES,
-        payload,
-    }
-    
-}
 
-    };
-};
 
-export function getActivities() {
-    return async function (dispatch) {
-        var json = await axios.post('http://localhost:3001/activities');
+
+export const setAllActivities = (value) => {
+    return async function (dispatch){
+        let res = await axios.get(`http://localhost:3001/activities/match/${value}`)
         return dispatch({
-            type: 'GET_ACTIVITIES',
-            payload: json.data,
-        });
-    };
-};
+            type: SET_ALL_ACTIVITIES,
+            payload: res.data,
+        })
+        
+    } 
+}
