@@ -47,7 +47,7 @@ const deleteUserActivitiesController = (req, res) => __awaiter(void 0, void 0, v
         res.status(400).json(({ status: 'failed', errors: { message: "Missing info" } }));
     }
     try {
-        yield (0, userFavorites_services_1.deleteUserFavorite)(req.body.userID, req.body.activityID);
+        yield (0, userFavorites_services_1.deleteUserFavorite)(req.body.userID, req.body.itineraryIndex, req.body.activityID);
         res.status(200).json(({ status: 'success', data: `Deleted activity (${req.body.activityID}) from favorites` }));
     }
     catch (error) {

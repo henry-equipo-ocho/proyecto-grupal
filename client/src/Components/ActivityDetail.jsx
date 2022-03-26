@@ -10,6 +10,8 @@ import CardMedia from '@mui/material/CardMedia';
 import { useTheme } from '@mui/material/styles';
 import Latam from '../Media/latam.jpg'
 import { Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -24,11 +26,25 @@ const style = {
     p: 4,
 };
 
-export default function ActivityDetail({ activity, close }) {
-    const usDollar = Math.round(parseInt(activity.price_amount) * 1.10) ;
+export default function ActivityDetail({ activity, close, id }) {
+    const usDollar = Math.round(parseInt(activity.price_amount) * 1.10);
+    const isLogged = window.localStorage.getItem('token') ? true : false;
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    console.log(activity)
+    const dispatch = useDispatch();
+    const userID = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).id : false;
+
+    const isFav = async (e) => {
+        try {
+            console.log(userID)
+            console.log(activity._id)
+            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID :activity._id }) : null ;
+            
+            dispatch(fav)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
     return (
         <div>
 
@@ -44,27 +60,51 @@ export default function ActivityDetail({ activity, close }) {
                 />
                 <DialogContent>
                     <DialogContentText>
-                    {activity.description}
+                        {activity.description}
                     </DialogContentText>
                     <DialogContentText>
                         <Typography variant="h5" color='black'>
-                        ${usDollar}
+                            ${usDollar}
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                    autoFocus
-                    color="inherit"
-                    variant='outlined'
-                    onClick={close}>Cancel</Button>
-                     <Button
-                    autoFocus
-                    color="inherit"
-                    variant='outlined'
-                    href={activity.booking}
-                    target='_blank'
-                    >Reservar</Button>
+                    {isLogged ?
+                        <>
+                            <Button
+                                color="inherit"
+                                variant='outlined'
+                                onClick={(e) => isFav(e)}
+                            >Favorite</Button>
+                            <Button
+                                autoFocus
+                                color="inherit"
+                                variant='outlined'
+                                onClick={close}>Cancel</Button>
+                            <Button
+                                autoFocus
+                                color="inherit"
+                                variant='outlined'
+                                href={activity.booking}
+                                target='_blank'
+                            >Reservar</Button>
+                        </>
+                        :
+                        <>
+                            <Button
+                                autoFocus
+                                color="inherit"
+                                variant='outlined'
+                                onClick={close}>Cancel</Button>
+                            <Button
+                                autoFocus
+                                color="inherit"
+                                variant='outlined'
+                                href={activity.booking}
+                                target='_blank'
+                            >Reservar</Button>
+                        </>
+                    }
                 </DialogActions>
             </DialogContent>
         </div>
