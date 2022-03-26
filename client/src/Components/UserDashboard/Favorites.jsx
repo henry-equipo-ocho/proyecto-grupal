@@ -16,13 +16,9 @@ const iti = [[1, 2, 3], [2], [3, 2, 2, 2, 2], [2, 1]];
 
 const getFavorites = async () => {
   try{
-<<<<<<< HEAD
-    console.log("Testing");
-=======
-    const userID = JSON.parse(localStorage.getItem('data')).id;
+    //const userID = JSON.parse(localStorage.getItem('data')).id;
     //const data = await axios.get("http://localhost:3001/favorites")
     //console.log(data)
->>>>>>> c441db69532ba1f144da0328614d2498558d650e
   }
   catch(e){
     console.log(e)
