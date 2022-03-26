@@ -16,8 +16,12 @@ export function getActivities() {
     return async function (dispatch) {
         let json = await axios.post('http://localhost:3001/activities');
         return dispatch({
+
             type: GET_ACTIVITIES,
             payload: json.data,
+
+            
+
         });
     };
 };
