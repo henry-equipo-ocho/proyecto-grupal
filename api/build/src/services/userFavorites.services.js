@@ -51,19 +51,22 @@ const addUserFavorite = (userID, activityID, itineraryIndex) => __awaiter(void 0
     }
 });
 exports.addUserFavorite = addUserFavorite;
-const deleteUserFavorite = (userID, activityID) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteUserFavorite = (userID, itineraryIndex, activityID) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findById(userID);
         if (!user) {
             throw new Error(`User (${userID}) not found`);
         }
         if (activityID) {
-            User_models_1.default.findByIdAndUpdate(userID, { $pull: { "favActivities.$": { _id: activityID } } }, function (error, user) {
+            let res = User_models_1.default.findByIdAndUpdate(userID, { $pull: { "favActivities.$": { _id: activityID } } }, function (error, user) {
                 if (error) {
                     throw error;
                 }
                 return true;
             });
+            if (!res) {
+                throw new Error(`User (${userID}) not found or activity (${activityID}) not found or itinerary (${itineraryIndex}) not found`);
+            }
         }
         else {
         }

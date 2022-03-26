@@ -1,5 +1,7 @@
 import React from 'react';
 
+import axios from 'axios';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -14,12 +16,20 @@ const iti = [[1, 2, 3], [2], [3, 2, 2, 2, 2], [2, 1]];
 
 const getFavorites = async () => {
   try{
+<<<<<<< HEAD
     console.log("Testing");
+=======
+    const userID = JSON.parse(localStorage.getItem('data')).id;
+    //const data = await axios.get("http://localhost:3001/favorites")
+    //console.log(data)
+>>>>>>> c441db69532ba1f144da0328614d2498558d650e
   }
   catch(e){
-
+    console.log(e)
   }
 };
+
+getFavorites()
 
 export default function Favorites() {
   return (
@@ -31,7 +41,7 @@ export default function Favorites() {
         ? 
           iti.map((a, i) =>{
             return (
-              <Accordion sx={{ my: 1 }}>
+              <Accordion key={i} sx={{ my: 1 }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
