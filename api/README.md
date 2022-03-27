@@ -112,15 +112,15 @@ This endpoint is under development.
 
 ### User favorites
 
-Allows the user to see a list (or more) of their favorite activities
+Allows the signedin user to see their favorite activities (by individual itineraries)
 
 ```http
     GET /favorites
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
-| `userID`  | `string` | **Required** |
+| Parameter | Type | Description |
+| :-------- | :--- | :---------- |
+| none      | none | none        |
 
 #### Returns
 
@@ -129,10 +129,10 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
 ```js
     {
         status: "success" || "failed" || "error",
-        data?: array of activitiesArray,
+        data?: ItinerariesArray,
         errors?: errorMessage
     }
-    // see src/interfaces/Activity.interface.ts
+    // see src/interfaces/User.interface.ts
 ```
 
 ---
@@ -143,11 +143,11 @@ Allows adding an activity to the list of favorites
     POST /favorites
 ```
 
-| Parameter        | Type     | Description                                           |
-| :--------------- | :------- | :---------------------------------------------------- |
-| `userID`         | `string` | **Required**                                          |
-| `activityID`     | `string` | **Required**                                          |
-| `itineraryIndex` | `number` | If not provided, adds the activity to a new itinerary |
+| Parameter       | Type     | Description                                              |
+| :-------------- | :------- | :------------------------------------------------------- |
+| `userID`        | `string` | **Required**                                             |
+| `activityID`    | `string` | **Required**                                             |
+| `itineraryName` | `string` | If not provided, creates a new itinerary (it-Date.now()) |
 
 #### Returns
 
@@ -169,11 +169,11 @@ Allows deleting an activity from the list of favorites
     DELETE /favorites
 ```
 
-| Parameter        | Type     | Description                                  |
-| :--------------- | :------- | :------------------------------------------- |
-| `userID`         | `string` | **Required**                                 |
-| `itineraryIndex` | `number` | **Required**                                 |
-| `activityID`     | `string` | If not provided, deletes the whole itinerary |
+| Parameter       | Type     | Description                                  |
+| :-------------- | :------- | :------------------------------------------- |
+| `userID`        | `string` | **Required**                                 |
+| `itineraryName` | `string` | **Required**                                 |
+| `activityID`    | `string` | If not provided, deletes the whole itinerary |
 
 #### Returns
 

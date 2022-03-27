@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
-import User from "../interfaces/User.interface";
+import User, { Itinerary } from "../interfaces/User.interface";
 import bcrypt from 'bcrypt';
+
+const itinerarySchema = new mongoose.Schema({
+    name: { type: String, required: [true, 'Missing name attribute'] },
+    activities: { type: [String], required: [true, 'Missing activities attribute'] }
+});
 
 const userSchema = new mongoose.Schema<User>({
     name: { type: String, required: [true, 'Missing name attribute'] },
@@ -9,7 +14,7 @@ const userSchema = new mongoose.Schema<User>({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
-    favActivities: { type: [[String]], required: [true, 'Missing favActivities attribute'] }
+    favActivities: [itinerarySchema]
 });
 
 userSchema.pre<User>('save', async function (next) {
