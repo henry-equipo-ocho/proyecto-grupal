@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CardMedia from '@mui/material/CardMedia';
 import { useTheme } from '@mui/material/styles';
-import Latam from '../Media/latam.jpg'
+
 import { Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -35,10 +35,7 @@ export default function ActivityDetail({ activity, close, id }) {
 
     const isFav = async (e) => {
         try {
-            console.log(userID)
-            console.log(activity._id)
-            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID :activity._id }) : null ;
-            
+            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID: activity._id }) : null;
             dispatch(fav)
         } catch (error) {
             console.log(error)

@@ -13,6 +13,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -38,6 +39,7 @@ const validationSchema = yup.object({
 
 const FormDialog = ({ abierto, close }) => {
   const [open, setOpen] = React.useState(abierto);
+  const history = useNavigate();
   const dispatch = useDispatch();
   
   const formik = useFormik({
@@ -57,6 +59,7 @@ const FormDialog = ({ abierto, close }) => {
         dispatch(setUserName(decoded.email))
         formik.resetForm()
         alert('Sesión iniciada con éxito');
+        history('/dashboard');
       } catch (error) {
         console.log(error)
       }
