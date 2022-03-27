@@ -7,8 +7,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import viaje from '../../Media/viaje.jpg';
-
 export default function ActivityCard({ name, pictures, shorTDescription, price }) {
     return (
         <Card sx={{ maxWidth: 245, margin: '10px', padding: '10px' }}>
@@ -16,14 +14,17 @@ export default function ActivityCard({ name, pictures, shorTDescription, price }
           component="img"
           height="140"
           alt="Turismo"
-          image ={ viaje }
+          image ={ pictures }
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Turismo {name}
+            {name}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-           {shorTDescription} {"Viaja y conoce Latinoamerica con nosotros y maravillate con los impresionantes paisajes que tiene por descrubir".slice(0, 50)}... <a href="#">read more</a>
+           {shorTDescription.slice(0, 50)}... <a href="#">read more</a>
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+           {price}
           </Typography>
         </CardContent>
         <CardActions style={{justifyContent: 'center'}} >

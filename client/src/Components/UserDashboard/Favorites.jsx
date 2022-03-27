@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -12,22 +12,31 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import FavCard from './FavCard';
 
-const iti = [[1, 2, 3], [2], [3, 2, 2, 2, 2], [2, 1]];
+let iti = [];
 
 const getFavorites = async () => {
   try{
-    //const userID = JSON.parse(localStorage.getItem('data')).id;
-    //const data = await axios.get("http://localhost:3001/favorites")
-    //console.log(data)
+    const token = JSON.parse(localStorage.getItem('token'));
+    const id = JSON.parse(localStorage.getItem('data')).id;
+    const response = await axios.get('http://localhost:3001/favorites/' + id, 
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    iti = [...response.data.data];
   }
   catch(e){
     console.log(e)
   }
 };
 
-getFavorites()
-
 export default function Favorites() {
+  
+  useEffect(() => {
+    getFavorites();
+  }, [])
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant='h4' sx={{ marginTop: '15px', marginBottom: '10px' }}>Favorites</Typography>
@@ -37,7 +46,7 @@ export default function Favorites() {
         ? 
           iti.map((a, i) =>{
             return (
-              <Accordion key={i} sx={{ my: 1 }}>
+              <Accordion key={i} sx={{ my: 1, width: '100vw' }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
@@ -46,7 +55,7 @@ export default function Favorites() {
                 <AccordionDetails sx={{ display: 'flex', flexDirection: 'column'}}>
                   <Button variant="outlined" size="small" sx={{ display: 'inline-block' }}>Remove itinerary</Button>
                   <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                  {a.map((act, i) => <FavCard key={i} />)}
+                  {/* {a.map((act, i) => <FavCard key={i} />)} */}
                   </Box>
                 </AccordionDetails>
               </Accordion>

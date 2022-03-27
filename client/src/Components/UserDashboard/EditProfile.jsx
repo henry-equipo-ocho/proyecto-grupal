@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -42,20 +42,77 @@ const validationSchema = yup.object({
 
 export default function EditProfile() {
 
+  const datosIniciales = {};
+
+  useEffect(() => {
+    (async function cargarData (){
+      try{
+        const token = JSON.parse(localStorage.getItem('token'));
+        const response = await axios.get('http://localhost:3001/update', 
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+        datosIniciales.name = response.data.data.name;
+        datosIniciales.surname = response.data.data.surname;
+        datosIniciales.email = response.data.data.email;
+        datosIniciales.country = response.data.data.country;
+      }
+      catch(e){
+        console.log(e)
+      }
+
+      formik.setValues(
+        {
+          name: datosIniciales.name,
+          surname: datosIniciales.surname,
+          country: datosIniciales.country,
+          email: datosIniciales.email,
+          password: '',
+        }
+      );
+      console.clear();
+    })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      surname: '',
+      name: datosIniciales.name,
+      surname: datosIniciales.surname,
       country: '',
-      email: '',
+      email: datosIniciales.email,
       password: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log(values)
         try {
-          await axios.post('http://localhost:3001/signup', values);
-          alert("Succesfully registered!");
+          const token = JSON.parse(localStorage.getItem('token'));
+          const data = {
+            name: values.name,
+            surname: values.surname,
+            email: values.email,
+            country: values.country
+          }
+          await axios.post('http://localhost:3001/update', data, 
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          await axios.post('http://localhost:3001/update/password', {
+            password: values.password
+          },{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          alert("Succesfully edited!");
         }
         catch (e) {
           console.log(e)
@@ -74,7 +131,7 @@ export default function EditProfile() {
                   sx={{ my: 1, width: '100%' }}
                   id="name"
                   name="name"
-                  label="Name"
+                  label={formik.values.name}
                   value={formik.values.name}
                   onChange={formik.handleChange}
                   error={formik.touched.name && Boolean(formik.errors.name)}
@@ -84,7 +141,7 @@ export default function EditProfile() {
                   sx={{ my: 1, width: '100%' }}
                   id="surname"
                   name="surname"
-                  label="Surname"
+                  label={formik.values.surname}
                   value={formik.values.surname}
                   onChange={formik.handleChange}
                   error={formik.touched.surname && Boolean(formik.errors.surname)}
@@ -95,8 +152,9 @@ export default function EditProfile() {
                 <TextField
                   sx={{ my: 1, width: '100%' }}
                   id="email"
+                  hiddenLabel
                   name="email"
-                  label="Email"
+                  label={formik.values.email}
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   error={formik.touched.email && Boolean(formik.errors.email)}
