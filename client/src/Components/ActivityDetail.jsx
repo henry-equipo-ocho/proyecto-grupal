@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CardMedia from '@mui/material/CardMedia';
 import { useTheme } from '@mui/material/styles';
-import Latam from '../Media/latam.jpg'
+
 import { Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
