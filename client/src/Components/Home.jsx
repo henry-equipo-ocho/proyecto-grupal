@@ -6,54 +6,46 @@ import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
 import { getActivities } from './Redux/Actions/actions';
-import './Css/ActivityCard.css'
-import SearchBar from './SearchBar/SearchBar';
+import './Css/ActivityCard.css';
 
 export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
-
     const userName = useSelector(state => state.userName);
-<<<<<<< HEAD
-    const activities = useSelector(state => state.currentActivities);
-    
-=======
-    const activities = useSelector(state => state.activities);
+    const activities = useSelector(state => state.allActivities);
     const [currentPage, setCurrentPage] = useState(1);
-    const indexOfFirstActivity = currentPage  * 10;
+    const indexOfFirstActivity = currentPage * 10;
     const currentActivities = activities.slice(
         (indexOfFirstActivity === 0 ? 1 : indexOfFirstActivity) - 1,
         indexOfFirstActivity + 10 - 1,
     );
 
->>>>>>> c4c10f86857a054cb76845985a36ca7d6ed612dd
     useEffect(() => dispatch(getActivities()), [dispatch]);
 
     return (
         <>
             <div>
-                <SearchBar />
+
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
 
-
                 <div className='userName'>
-                        <label style={{ fontSize: '30px' }}>
-                            Hola {userName.split('@')[0]}  ¿A donde quieres ir?
-                        </label>
+                    <label style={{ fontSize: '30px' }}>
+                        Hola {userName.split('@')[0]}  ¿A donde quieres ir?
+                    </label>
                 </div>
                 <div className='cardsContainer'>
                     {currentActivities ? currentActivities.map((a) => (
-                       <ActivityCard
+                        <ActivityCard
                             handleDetail={() => setDetail(a)}
                             nombre={a.name}
                             imagen={a.picture}
                             id={a._id}
                             key={a._id}
                         />
-                    )): <p className='loader'> </p>}
+                    )) : <p className='loader'> </p>}
                 </div>
 
                 <Pagination
@@ -69,7 +61,7 @@ export default function Home() {
                 <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
 
             {detail &&
-                <ActivityDetail activity={detail} close={() => setDetail(null)}  />}
+                <ActivityDetail activity={detail} close={() => setDetail(null)} />}
         </>
     );
 };

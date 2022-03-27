@@ -1,16 +1,8 @@
 const SET_USER_NAME = 'SET_USER_NAME';
 const SET_ALL_ACTIVITIES = 'SET_ALL_ACTIVITIES';
-<<<<<<< HEAD
-const GET_ACTIVITIES = 'GET_ACTIVITIES';
-module.exports = {
-    SET_USER_NAME,
-    GET_ACTIVITIES,
-    SET_ALL_ACTIVITIES,
-=======
 const GET_ACTIVITIES = 'GET_ACTIVITIES'
 module.exports = {
     SET_USER_NAME,
     SET_ALL_ACTIVITIES,
     GET_ACTIVITIES
->>>>>>> Development
 }

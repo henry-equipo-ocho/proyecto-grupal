@@ -10,6 +10,7 @@ import Logo from '../Media/Logo.png';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
+import SearchBar from './SearchBar/SearchBar.jsx'
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
@@ -36,6 +37,8 @@ export default function NavBar({ handleLoginForm }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
+
+                    <SearchBar />
 
                     {isLogged ? <Button
                     color="inherit"

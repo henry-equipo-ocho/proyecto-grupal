@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 export default function ActivityCard({
     nombre, imagen, handleDetail, id
 }) {
-  console.log(id)
+
     return (
         <Card sx={{ maxWidth: 400, border: 1 }}>
         <CardMedia

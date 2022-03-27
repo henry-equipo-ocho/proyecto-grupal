@@ -35,10 +35,7 @@ export default function ActivityDetail({ activity, close, id }) {
 
     const isFav = async (e) => {
         try {
-            console.log(userID)
-            console.log(activity._id)
-            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID :activity._id }) : null ;
-            
+            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID: activity._id }) : null;
             dispatch(fav)
         } catch (error) {
             console.log(error)
