@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -130,7 +130,7 @@ export default function Register() {
             <form onSubmit={formik.handleSubmit}>
               <Box>
                 <TextField
-                  sx={{ m: 1, width: '100%' }}
+                  sx={{ my: 1, width: '100%' }}
                   id="name"
                   name="name"
                   label="Name"
@@ -140,7 +140,7 @@ export default function Register() {
                   helperText={formik.touched.name && formik.errors.name}
                 />
                 <TextField
-                  sx={{ m: 1, width: '100%' }}
+                  sx={{ my: 1, width: '100%' }}
                   id="surname"
                   name="surname"
                   label="Surname"
@@ -152,7 +152,7 @@ export default function Register() {
               </Box>
               <Box>
                 <TextField
-                  sx={{ m: 1, width: '100%' }}
+                  sx={{ my: 1, width: '100%' }}
                   id="email"
                   name="email"
                   label="Email"
@@ -164,7 +164,7 @@ export default function Register() {
               </Box>
               <Box>
                 <TextField
-                  sx={{ m: 1, width: '100%' }}
+                  sx={{ my: 1, width: '100%' }}
                   id="password"
                   name="password"
                   label="Password"
@@ -175,7 +175,7 @@ export default function Register() {
                   helperText={formik.touched.password && formik.errors.password}
                 />
               </Box>
-              <FormControl sx={{ m: 1, width: '100%' }}>
+              <FormControl sx={{ my: 1, width: '100%' }}>
                 <InputLabel id="country-select-label">Select country</InputLabel>
                 <Select labelId="country-select-label"
                   id="country"
@@ -206,7 +206,7 @@ export default function Register() {
                 } />} label="I accept the terms and conditions" color={!terms ? 'error' : ''} />
               </Box>
               <Button
-                sx={{ m: 1, width: '100%' }}
+                sx={{ my: 1, width: '100%' }}
                 color="primary"
                 variant="contained"
                 type="submit"

@@ -7,10 +7,10 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
-import SearchBar from './SearchBar/SearchBar.jsx'
+//import SearchBar from './SearchBar/SearchBar.jsx'
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
@@ -38,14 +38,23 @@ export default function NavBar({ handleLoginForm }) {
                         Eztinerary
                     </Typography>
 
-                    <SearchBar />
+                    {/* <SearchBar /> */}
 
-                    {isLogged ? <Button
+                    {isLogged ? 
+                    <>
+                    <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
+                    <Button
+                    color="inherit"
+                    variant='outlined'
+                    startIcon={<PersonIcon />} >Dashboard</Button>
+                    </Link>
+                    <Button
                     color="inherit"
                     variant='outlined'
                     href="javascript:location.reload()"
                     onClick={(e) => logout(e)}
                     startIcon={<PersonIcon />} >Logout</Button>
+                    </>
                     :
                     <>
                     <Button
