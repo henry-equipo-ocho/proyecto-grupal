@@ -32,7 +32,6 @@ export default function Favorites() {
           },
           data:{
             itineraryName,
-            itineraryIndex: 0
           }
         });
         sweetAlert('Congrats', `Itinerary "${itineraryName}" deleted!`, 'success')

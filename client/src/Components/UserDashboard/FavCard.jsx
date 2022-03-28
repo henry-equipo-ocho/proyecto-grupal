@@ -21,7 +21,6 @@ export default function ActivityCard({ name, pictures, shorTDescription, price, 
           data: {
             activityID,
             itineraryName,
-            itineraryIndex: 0
           }
         }
       );
