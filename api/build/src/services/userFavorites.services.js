@@ -20,7 +20,6 @@ const getUserFavorites = (userID) => __awaiter(void 0, void 0, void 0, function*
         if (!query) {
             throw new Error(`User (${userID}) not found`);
         }
-        console.log(query.favActivities);
         return query.favActivities;
     }
     catch (error) {
@@ -36,7 +35,6 @@ const addUserFavorite = (userID, activityID, itineraryName) => __awaiter(void 0,
         }
         let itineraryIndex = user.favActivities.findIndex((iti) => iti.name === itineraryName);
         if (itineraryIndex === -1) {
-            console.log("pushing to a");
             user.favActivities.push(({ name: itineraryName ? itineraryName : `it-${Date.now()}`, activities: [activityID] }));
             console.log("user_favorites:", user.favActivities);
         }
@@ -71,7 +69,8 @@ const deleteUserFavorite = (userID, itineraryName, activityID) => __awaiter(void
         if (activityID !== undefined) {
             let filteredItinerary = user.favActivities[itineraryIndex].activities.filter((activity) => activity !== activityID);
             console.log("filteredItinerary:", filteredItinerary);
-            if (filteredItinerary.length && user.favActivities[itineraryIndex].activities.length) {
+            console.log(filteredItinerary.length, user.favActivities[itineraryIndex].activities.length);
+            if (filteredItinerary.length === user.favActivities[itineraryIndex].activities.length) {
                 return false;
             }
             if (filteredItinerary.length > 0) {
