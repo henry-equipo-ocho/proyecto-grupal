@@ -182,7 +182,7 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
 ```js
     {
         status: "success" || "failed" || "error",
-        data?: `${activityID} removed from ${userID}[${itineraryIndex}]` || `${itineraryIndex} removed from ${userID}`,
+        data?: `${activityID} removed from ${userID}[${itineraryName}]` || `${itineraryName} removed from ${userID}`,
         errors?: errorMessage
     }
 ```
