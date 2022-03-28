@@ -31,8 +31,8 @@ const getUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void
 });
 exports.getUserActivitiesController = getUserActivitiesController;
 const addUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.user || (req.body.activityID === undefined || req.body.itineraryIndex === undefined)) {
-        console.log(req.user, req.body.activityID, req.body.itineraryIndex);
+    if (!req.user || (req.body.activityID === undefined || req.body.itineraryName === undefined)) {
+        console.log(req.user, req.body.activityID, req.body.itineraryName);
         return res.status(400).json(({ status: 'failed', errors: { message: "Missing user auth" } }));
     }
     try {
@@ -52,7 +52,7 @@ const addUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void
 });
 exports.addUserActivitiesController = addUserActivitiesController;
 const deleteUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.user || (req.body.activityID === undefined && req.body.itineraryIndex === undefined)) {
+    if (!req.user || (req.body.activityID === undefined && req.body.itineraryName === undefined)) {
         return res.status(400).json(({ status: 'failed', errors: { message: "Missing info" } }));
     }
     try {
