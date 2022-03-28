@@ -7,14 +7,16 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
-//import SearchBar from './SearchBar/SearchBar.jsx'
+import SearchBar from './SearchBar/SearchBar.jsx'
+import SearchBarCopy from './SearchBar/SearchBarCopy';
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;
+    const activities = useSelector((state) => state.currentActivities)
 
     const logout = (e) => {
         e.preventDefault();
@@ -39,6 +41,8 @@ export default function NavBar({ handleLoginForm }) {
                     </Typography>
 
                     {/* <SearchBar /> */}
+
+                    <SearchBarCopy />
 
                     {isLogged ? 
                     <>

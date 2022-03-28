@@ -2,12 +2,14 @@ import {
     SET_USER_NAME,
     SET_ALL_ACTIVITIES,
     GET_ACTIVITIES,
+    SET_LOADING,
 } from '../Actions/actions_types';
 
 const initialState = {
     userName: 'viajero',
     allActivities: [],
     currentActivities: [],
+    loading: true,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -19,11 +21,14 @@ export default function rootReducer(state = initialState, action) {
             };
 
         case SET_ALL_ACTIVITIES:
+            let value = action.payload;
+
+            console.log("value:", value)
             return {
                 ...state,
-                allActivities: action.payload,
-                currentActivities: action.payload
-            }
+                    allActivities: action.payload,
+                    currentActivities: action.payload
+            };       
 
         case GET_ACTIVITIES:
             return {
@@ -31,7 +36,11 @@ export default function rootReducer(state = initialState, action) {
                 allActivities: action.payload,
                 currentActivities: action.payload,
             };
-
+            case SET_LOADING:
+                return {
+                    ...state,
+                    loading: action.payload
+                }
 
         default:
             return state;
