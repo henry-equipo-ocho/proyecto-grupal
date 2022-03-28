@@ -38,6 +38,8 @@ const matchUserPasswordService = (user, password) => __awaiter(void 0, void 0, v
 });
 exports.matchUserPasswordService = matchUserPasswordService;
 const createUserTokenService = (user) => {
-    return jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET);
+    return jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET, {
+        expiresIn: '3h'
+    });
 };
 exports.createUserTokenService = createUserTokenService;

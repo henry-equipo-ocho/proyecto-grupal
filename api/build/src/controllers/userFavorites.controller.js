@@ -31,14 +31,12 @@ const getUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void
 });
 exports.getUserActivitiesController = getUserActivitiesController;
 const addUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.user || (req.body.activityID === undefined || req.body.itineraryName === undefined)) {
-        console.log(req.user, req.body.activityID, req.body.itineraryName);
+    if (!req.user || (req.body.activityID === undefined && req.body.itineraryName === undefined)) {
         return res.status(400).json(({ status: 'failed', errors: { message: "Missing user auth" } }));
     }
     try {
         const added = yield (0, userFavorites_services_1.addUserFavorite)(req.user._id, req.body.activityID, req.body.itineraryName);
         if (added) {
-            console.log("added", added);
             return res.status(200).json(({ status: 'success', data: `Added activity (${req.body.activityID}) to favorites` }));
         }
         else {
@@ -46,7 +44,6 @@ const addUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void
         }
     }
     catch (error) {
-        console.log("error: ", error);
         return res.status(400).json(({ status: 'error', errors: { message: error.errors } }));
     }
 });
@@ -58,7 +55,7 @@ const deleteUserActivitiesController = (req, res) => __awaiter(void 0, void 0, v
     try {
         const deleted = yield (0, userFavorites_services_1.deleteUserFavorite)(req.user._id, req.body.itineraryName, req.body.activityID);
         if (deleted) {
-            return res.status(200).json(({ status: 'success', data: `Deleted activity (${req.body.activityID}) from favorites` }));
+            return res.status(200).json(({ status: 'success', data: `Deleted activity (${req.body.activityID}) from itinerary (${req.body.itineraryName})` }));
         }
         return res.status(409).json(({ status: 'failed', message: `Itinerary (${req.body.itineraryName}) or activity (${req.body.activityID}) not found` }));
     }
