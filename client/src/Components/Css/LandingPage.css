@@ -24,7 +24,7 @@
 
 .textContainer{
     background-color: #24c59d54;
-    display: flex;
+    display: column;
     justify-content: center;
     align-items: center;
 
@@ -47,6 +47,6 @@
     transition-duration: 0.4s;
 }
 .landingButton:hover{
-    background-color: #244eda;
+    background-color: #24c59c;
     color: white;
 }
