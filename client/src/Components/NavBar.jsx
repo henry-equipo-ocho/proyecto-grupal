@@ -13,7 +13,6 @@ import { setUserName } from './Redux/Actions/actions';
 import SearchBar from './SearchBar/SearchBar.jsx'
 import SearchBarCopy from './SearchBar/SearchBarCopy';
 
-
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;

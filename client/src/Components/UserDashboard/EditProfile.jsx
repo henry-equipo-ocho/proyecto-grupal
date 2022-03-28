@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import sweetAlert from 'sweetalert';
+
 import axios from 'axios';
 
 import { useFormik } from 'formik';
@@ -112,11 +114,11 @@ export default function EditProfile() {
             }
           });
           
-          alert("Succesfully edited!");
+          sweetAlert('Congrats', 'Activity added succesfully!', 'success')
         }
         catch (e) {
           console.log(e)
-          alert(e)
+          sweetAlert('Error', e, 'error')
         }
     },
   });

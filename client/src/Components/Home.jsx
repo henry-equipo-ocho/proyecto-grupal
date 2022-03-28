@@ -9,8 +9,6 @@ import { getActivities, setLoading } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
 import Loading from './Loading/Loading';
 
-
-
 export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
