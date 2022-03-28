@@ -30,7 +30,6 @@ export default function Favorites() {
           },
           data:{
             itineraryName,
-            itineraryIndex: 0,
           }
         });
         alert(`Itinerary "${itineraryName}" deleted!`);
