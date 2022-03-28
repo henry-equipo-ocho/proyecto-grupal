@@ -45,6 +45,7 @@ export default function ActivityDetail({ activity, close, id }) {
   const [showIti, setShowIti] = useState(false);
   const [itis, setItis] = useState([]);
   const [itiID, setItiID] = useState('');
+  const [itiName, setItiname] = useState('');
 
   const checkIfHasItineraries = async () => {
     try {
@@ -65,19 +66,19 @@ export default function ActivityDetail({ activity, close, id }) {
       close(e);
       setItis([]);
       try {
-        await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryIndex: 0, itineraryName: itiID }, { headers: { 'Authorization': `Bearer ${token}` } })
+        await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : itiID }, { headers: { 'Authorization': `Bearer ${token}` } })
         sweetAlert('Congrats', `Activity added succesfully in itinerary "${itiID}"!`, 'success');
       }
-      catch (e) {
+      catch (err) {
         sweetAlert('Error', 'Error to add in itinerary, try add in another itinerary!', 'error');
-        console.log(e);
+        console.log(err);
       }
     }
     else {
       close(e);
       setItis([]);
-      await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryIndex: 0 }, { headers: { 'Authorization': `Bearer ${token}` } })
-      sweetAlert('Congrats', 'Activity added succesfully in new Itinerary!', 'success')
+      await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : 'New itinerary' }, { headers: { 'Authorization': `Bearer ${token}` } })
+      sweetAlert('Congrats', `Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`, 'success')
     }
   };
 
@@ -85,21 +86,6 @@ export default function ActivityDetail({ activity, close, id }) {
     checkIfHasItineraries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const isFav = async (e) => {
-    if (!itis.length) {
-      close(e);
-      setItis([]);
-      try {
-        await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryIndex: 0 }, { headers: { 'Authorization': `Bearer ${token}` } })
-        sweetAlert('Congrats', 'Activity added succesfully!', 'success')
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
-      setShowIti(true);
-    }
-  };
 
   return (
     <div>
@@ -151,12 +137,41 @@ export default function ActivityDetail({ activity, close, id }) {
                     }
                   </Select>
                 </FormControl>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  onClick={addItiFav}
-                >Add to Itinerary</Button>
+                {
+                  itiID === 'new'
+                    ?
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                      <TextField
+                        sx={{ ml: 1, width: '250%' }}
+                        id="name"
+                        name="name"
+                        label='Create name for itinerary'
+                        value={itiName}
+                        onChange={(e) => setItiname(prev => prev = e.target.value)}
+                      />
+                      <Button
+                        autoFocus
+                        color="inherit"
+                        variant='outlined'
+                        sx={{ my: 1 }}
+                        onClick={addItiFav}
+                      >Create new itinerary</Button>
+                    </Box>
+                    :
+                    null
+                }
+                {
+                  itiID !== 'new'
+                    ?
+                    <Button
+                      autoFocus
+                      color="inherit"
+                      variant='outlined'
+                      onClick={addItiFav}
+                    >Add to Itinerary</Button>
+                    :
+                    null
+                }
               </Box>
               :
               null
@@ -169,7 +184,7 @@ export default function ActivityDetail({ activity, close, id }) {
                 <Button
                   color="inherit"
                   variant='outlined'
-                  onClick={(e) => isFav(e)}
+                  onClick={() => setShowIti(true)}
                 >Favorite</Button>
                 <Button
                   autoFocus
