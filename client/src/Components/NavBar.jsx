@@ -8,13 +8,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 import SearchBar from './SearchBar/SearchBar.jsx'
+import SearchBarCopy from './SearchBar/SearchBarCopy';
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;
+    const activities = useSelector((state) => state.currentActivities)
 
     const logout = (e) => {
         e.preventDefault();
@@ -38,7 +40,8 @@ export default function NavBar({ handleLoginForm }) {
                         Eztinerary
                     </Typography>
 
-                    <SearchBar />
+                    {/* <SearchBar /> */}
+                    <SearchBarCopy />
 
                     {isLogged ? <Button
                     color="inherit"

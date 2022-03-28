@@ -21,7 +21,8 @@ const getMatchActivitiesController = (req, res) => __awaiter(void 0, void 0, voi
     try {
         const activities = yield (0, activities_services_1.getAllDBActivities)();
         const matchactivities = activities.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase()));
-        return res.status(200).send(({ status: 'success', data: matchactivities }));
+        return matchactivities.length ? res.status(200).json(({ status: 'success', data: matchactivities }))
+            : res.status(404).json(({ status: 'failed', message: 'Activities not found' }));
     }
     catch (e) {
         return res.status(e.status || 400).json(({ status: 'error', message: 'Invalid request' || e }));

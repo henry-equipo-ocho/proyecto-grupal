@@ -5,8 +5,11 @@ import LoginForm from './LoginForm';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
-import { getActivities } from './Redux/Actions/actions';
+import { getActivities, setLoading } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
+import Loading from './Loading/Loading';
+
+
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -14,19 +17,46 @@ export default function Home() {
     const [detail, setDetail] = useState(null);
     const userName = useSelector(state => state.userName);
     const activities = useSelector(state => state.allActivities);
+    const loading = useSelector(((state) => state.loading));
+
     const [currentPage, setCurrentPage] = useState(1);
+
     const indexOfFirstActivity = currentPage * 10;
     const currentActivities = activities.slice(
         (indexOfFirstActivity === 0 ? 1 : indexOfFirstActivity) - 1,
         indexOfFirstActivity + 10 - 1,
     );
-
+ 
+    
     useEffect(() => dispatch(getActivities()), [dispatch]);
+
+  
+
+    useEffect(() => {
+        return activities.length
+        ? dispatch(setLoading(false))
+        : dispatch(setLoading(true));
+    }, [activities, dispatch]);
+
+    
+
+    
 
     return (
         <>
-            <div>
+            {loading ? (
+                <>
+                <center>
 
+                <p className='loader' style={{fontSize:'50px'}}></p>
+                {/* <Loading /> */}
+                </center>
+                 </>
+            ) : (
+
+            
+            <div>
+                
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
@@ -37,7 +67,7 @@ export default function Home() {
                     </label>
                 </div>
                 <div className='cardsContainer'>
-                    {currentActivities ? currentActivities.map((a) => (
+                    {currentActivities.length ? currentActivities.map((a) => (
                         <ActivityCard
                             handleDetail={() => setDetail(a)}
                             nombre={a.name}
@@ -45,7 +75,7 @@ export default function Home() {
                             id={a._id}
                             key={a._id}
                         />
-                    )) : <p className='loader'> </p>}
+                    )) : <p className='loader' style={{fontSize:'50px'}}> Go Back </p>}
                 </div>
 
                 <Pagination
@@ -56,12 +86,14 @@ export default function Home() {
 
 
             </div>
+        )}
 
             {loginForm &&
                 <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
 
             {detail &&
                 <ActivityDetail activity={detail} close={() => setDetail(null)} />}
+            
         </>
     );
 };
