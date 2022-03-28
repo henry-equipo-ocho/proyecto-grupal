@@ -36,19 +36,15 @@ const addUserFavorite = (userID, activityID, itineraryName) => __awaiter(void 0,
         let itineraryIndex = user.favActivities.findIndex((iti) => iti.name === itineraryName);
         if (itineraryIndex === -1) {
             user.favActivities.push(({ name: itineraryName ? itineraryName : `it-${Date.now()}`, activities: [activityID] }));
-            console.log("user_favorites:", user.favActivities);
         }
         else {
             if (user.favActivities[itineraryIndex].activities.includes(activityID)) {
                 return false;
             }
-            console.log("pushing to a[a]");
             user.favActivities[itineraryIndex].activities.push(activityID);
-            console.log(user.favActivities);
         }
         user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
-        const saved = yield user.save();
-        console.log(saved);
+        yield user.save();
         return true;
     }
     catch (error) {
@@ -68,14 +64,11 @@ const deleteUserFavorite = (userID, itineraryName, activityID) => __awaiter(void
         }
         if (activityID !== undefined) {
             let filteredItinerary = user.favActivities[itineraryIndex].activities.filter((activity) => activity !== activityID);
-            console.log("filteredItinerary:", filteredItinerary);
-            console.log(filteredItinerary.length, user.favActivities[itineraryIndex].activities.length);
             if (filteredItinerary.length === user.favActivities[itineraryIndex].activities.length) {
                 return false;
             }
             if (filteredItinerary.length > 0) {
                 user.favActivities[itineraryIndex].activities = filteredItinerary;
-                console.log("mod fav[i]");
             }
             else {
                 user.favActivities.splice(itineraryIndex, 1);
@@ -84,7 +77,6 @@ const deleteUserFavorite = (userID, itineraryName, activityID) => __awaiter(void
         else {
             user.favActivities.splice(itineraryIndex, 1);
         }
-        console.log("user.favActivities", user.favActivities);
         user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
         yield user.save();
         return true;
