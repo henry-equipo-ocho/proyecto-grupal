@@ -28,7 +28,7 @@ export function getActivities() {
 export function setAllActivities(value) {
     return async function (dispatch) {
         let res = await axios.get(`http://localhost:3001/activities/match/${value}`)
-        console.log(res.data)
+        console.log(res.data.data)
         return dispatch({
             type: SET_ALL_ACTIVITIES,
             payload: res.data.data,

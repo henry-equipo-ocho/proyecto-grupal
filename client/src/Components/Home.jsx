@@ -15,10 +15,9 @@ export default function Home() {
     const userName = useSelector(state => state.userName);
     const activities = useSelector(state => state.allActivities);
     const [currentPage, setCurrentPage] = useState(1);
-    const indexOfFirstActivity = currentPage * 10;
+    const indexOfFirstActivity = (currentPage - 1) * 10;
     const currentActivities = activities.slice(
-        (indexOfFirstActivity === 0 ? 1 : indexOfFirstActivity) - 1,
-        indexOfFirstActivity + 10 - 1,
+        (indexOfFirstActivity), indexOfFirstActivity + 10
     );
 
     useEffect(() => dispatch(getActivities()), [dispatch]);
@@ -26,7 +25,6 @@ export default function Home() {
     return (
         <>
             <div>
-
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
@@ -51,10 +49,10 @@ export default function Home() {
                 <Pagination
                     activitiesPerPage={10}
                     allActivities={activities.length}
+                    currentPage={currentPage}
+                    handlePage={setCurrentPage}
                     paginado={(pageNumber) => setCurrentPage(pageNumber)}
                 />
-
-
             </div>
 
             {loginForm &&

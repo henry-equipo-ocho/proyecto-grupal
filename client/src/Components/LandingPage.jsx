@@ -9,18 +9,18 @@ export default function LandingPage() {
             <video className='video' src={travel} autoPlay loop muted />
             <div className='textContainer'>
                 <h1>¿Vamos a conocer Latinoamerica?</h1>
-                    <p>
-                        Conoce las principales ciudades de Latinoamerica
-                        creando un intinerario personalizado, donde podras
-                        agregar y quitar actividades a tu gusto, asi tu viaje
-                        sera unico e inolvodable.
-                    </p>
-                <Link to={'/home'}>
-                    <button className='landingButton'>Ingresar</button>
-                </Link>
-
+                <p>
+                    Conoce las principales ciudades de Latinoamerica
+                    creando un intinerario personalizado, donde podras
+                    agregar y quitar actividades a tu gusto, asi tu viaje
+                    sera unico e inolvodable.
+                </p>
+                <center>
+                    <Link to={'/home'}>
+                        <button className='landingButton'>Ingresar</button>
+                    </Link>
+                </center>
             </div>
-
         </div>
     )
 }
