@@ -31,12 +31,14 @@ export default function ActivityDetail({ activity, close, id }) {
     const isLogged = window.localStorage.getItem('token') ? true : false;
     const theme = useTheme();
     const dispatch = useDispatch();
+    const token = JSON.parse(localStorage.getItem('token'));
     const userID = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).id : false;
-
+  
     const isFav = async (e) => {
         try {
-            const fav = userID ? await axios.post('http://localhost:3001/favorites', { userID: userID, activityID: activity._id }) : null;
-            dispatch(fav)
+            const fav = userID ? await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryIndex: 0 }, { headers:{ 'Authorization': `Bearer ${token}` }}) : null;
+            //dispatch(fav)
+            alert('Activity added succesfully!')
         } catch (error) {
             console.log(error)
         }
