@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import sweetAlert from 'sweetalert';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,8 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ActivityCard({ name, pictures, shorTDescription, price, currency, link, loadFavs, actID, itID }) {
-  const remove = async (itineraryName, activityID) => {
+export default function ActivityCard({ name, pictures, shorTDescription, price, currency, link, loadFavs, actID, itName }) {
+  const remove = async (activityID, itineraryName) => {
     try {
       const token = JSON.parse(localStorage.getItem('token'));
       await axios.delete('http://localhost:3001/favorites',
@@ -18,15 +19,16 @@ export default function ActivityCard({ name, pictures, shorTDescription, price, 
             'Authorization': `Bearer ${token}`
           },
           data: {
-            itineraryName,
             activityID,
-            itineraryIndex: 0,
+            itineraryName,
+            itineraryIndex: 0
           }
-        });
-      alert(`Activity "${name.slice(0, 15)}..." deleted from itinerary "${itineraryName}"`);
+        }
+      );
+      sweetAlert('Congrats', `Activity "${name.slice(0, 15)}..." deleted from itinerary "${itName}"`, 'success')
     }
     catch (e) {
-      console.log(e);
+      sweetAlert("Error", "" + e, 'error')
     }
     loadFavs();
   }
@@ -55,7 +57,7 @@ export default function ActivityCard({ name, pictures, shorTDescription, price, 
           color="inherit"
           variant='outlined'
           size="small"
-          onClick={() => remove(itID, actID)}
+          onClick={() => remove(actID, itName)}
           >Remove from itinerary</Button>
       </CardActions>
     </Card>

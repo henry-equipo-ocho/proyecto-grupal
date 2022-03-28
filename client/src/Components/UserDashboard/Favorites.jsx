@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import sweetAlert from 'sweetalert';
+
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -30,13 +32,13 @@ export default function Favorites() {
           },
           data:{
             itineraryName,
-            itineraryIndex: 0,
+            itineraryIndex: 0
           }
         });
-        alert(`Itinerary "${itineraryName}" deleted!`);
+        sweetAlert('Congrats', `Itinerary "${itineraryName}" deleted!`, 'success')
       }  
     catch (e) {
-      console.log(e);
+      sweetAlert('Error', " " + e, 'error')
     }
     getFavorites();
   }
@@ -69,9 +71,9 @@ export default function Favorites() {
         {
           iti.length
             ?
-            iti.map((itinerary, i) => {
+            iti.map((itinerary) => {
               return (
-                <Accordion key={i} sx={{ my: 1, width: '100vw' }}>
+                <Accordion key={itinerary.name} sx={{ my: 1, width: '100vw' }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                   >
@@ -89,8 +91,8 @@ export default function Favorites() {
                           name={act.name} 
                           price={act.price_amount} 
                           currency={act.price_currency} 
-                          actID={act.id} 
-                          itID={itinerary.name}
+                          actID={act._id} 
+                          itName={itinerary.name}
                           pictures={act.picture}
                           loadFavs={getFavorites}
                           />)

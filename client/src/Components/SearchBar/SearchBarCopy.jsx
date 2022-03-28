@@ -28,16 +28,6 @@ function SearchBarCopy() {
     <form 
       onSubmit={(e) => findActivities(input,e)}
     >
-        <span
-        type="submit"
-        className="span"
-        onClick={() => dispatch(getActivities())}
-      
-        
-        >
-        Reset
-      </span>
-
       <input
         className="input"
         type="text"

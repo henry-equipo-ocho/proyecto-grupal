@@ -42,7 +42,7 @@ const addUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void
             return res.status(200).json(({ status: 'success', data: `Added activity (${req.body.activityID}) to favorites` }));
         }
         else {
-            return res.status(409).json(({ status: 'failed', message: `Activity (${req.body.activityID}) already exists in itinerary (${req.body.itineraryName}})` }));
+            return res.status(409).json(({ status: 'failed', data: `Activity (${req.body.activityID}) already exists in itinerary (${req.body.itineraryName}})` }));
         }
     }
     catch (error) {
