@@ -7,11 +7,12 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 import SearchBar from './SearchBar/SearchBar.jsx'
 import SearchBarCopy from './SearchBar/SearchBarCopy';
+
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
