@@ -15,7 +15,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
-    const userName = useSelector(state => state.userName);
+    const userName = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).email : 'viajero';
     const activities = useSelector(state => state.allActivities);
     const loading = useSelector(((state) => state.loading));
 

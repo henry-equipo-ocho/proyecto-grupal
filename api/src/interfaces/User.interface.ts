@@ -7,14 +7,19 @@ export enum UserRoles {
     Admin
 }
 
+export interface Itinerary {
+    _id?: string,
+    name: string;
+    activities: Array<string>
+}
 export default interface User extends Document {
-    id: string,
+    _id: string,
     name: string,
     surname: string,
     email: string,
     country: string,
     password: string,
     role: UserRoles,
-    favActivities: Array<Array<string>>,
+    favActivities: Array<Itinerary>,
     comparePassword: (password: string) => Promise<boolean>
 }

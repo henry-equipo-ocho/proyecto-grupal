@@ -41,14 +41,24 @@ export default function NavBar({ handleLoginForm }) {
                     </Typography>
 
                     {/* <SearchBar /> */}
+
                     <SearchBarCopy />
 
-                    {isLogged ? <Button
+                    {isLogged ? 
+                    <>
+                    <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
+                    <Button
+                    color="inherit"
+                    variant='outlined'
+                    startIcon={<PersonIcon />} >Dashboard</Button>
+                    </Link>
+                    <Button
                     color="inherit"
                     variant='outlined'
                     href="javascript:location.reload()"
                     onClick={(e) => logout(e)}
                     startIcon={<PersonIcon />} >Logout</Button>
+                    </>
                     :
                     <>
                     <Button
