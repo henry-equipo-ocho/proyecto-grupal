@@ -29,6 +29,7 @@ export function getActivities() {
 
 export function setAllActivities(value) {
     return async function (dispatch) {
+
         try {
             dispatch(setLoading(true))
             let res = await axios.get(`http://localhost:3001/activities/match/${value}`)
@@ -45,8 +46,7 @@ export function setAllActivities(value) {
         
            return dispatch (getActivities()) 
         }
-        
-        
+
     };
 
 };

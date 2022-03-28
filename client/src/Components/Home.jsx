@@ -18,20 +18,13 @@ export default function Home() {
     const userName = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).email : 'viajero';
     const activities = useSelector(state => state.allActivities);
     const loading = useSelector(((state) => state.loading));
-
     const [currentPage, setCurrentPage] = useState(1);
-
-    const indexOfFirstActivity = currentPage * 10;
+    const indexOfFirstActivity = (currentPage - 1) * 10;
     const currentActivities = activities.slice(
-        (indexOfFirstActivity === 0 ? 1 : indexOfFirstActivity) - 1,
-        indexOfFirstActivity + 10 - 1,
+        (indexOfFirstActivity), indexOfFirstActivity + 10
     );
- 
-    
+
     useEffect(() => dispatch(getActivities()), [dispatch]);
-
-  
-
     useEffect(() => {
         return activities.length
         ? dispatch(setLoading(false))
@@ -44,6 +37,8 @@ export default function Home() {
 
     return (
         <>
+            <div>
+
             {loading ? (
                 <>
                 <center>
@@ -56,7 +51,7 @@ export default function Home() {
 
             
             <div>
-                
+
                 <NavBar
                     handleLoginForm={setLoginForm}
                 />
@@ -81,10 +76,10 @@ export default function Home() {
                 <Pagination
                     activitiesPerPage={10}
                     allActivities={activities.length}
+                    currentPage={currentPage}
+                    handlePage={setCurrentPage}
                     paginado={(pageNumber) => setCurrentPage(pageNumber)}
                 />
-
-
             </div>
         )}
 
