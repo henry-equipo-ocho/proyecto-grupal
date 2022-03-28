@@ -29,7 +29,7 @@ export const getUserActivitiesController: RequestHandler = async (req: Request, 
 }
 
 export const addUserActivitiesController: RequestHandler = async (req: Request, res: Response) => {
-    if (!req.user || (req.body.activityID === undefined || req.body.itineraryName === undefined)) {
+    if (!req.user || (req.body.activityID === undefined && req.body.itineraryName === undefined)) {
         return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: "Missing user auth" } }));
     }
 
