@@ -20,7 +20,6 @@ const getUserFavorites = (userID) => __awaiter(void 0, void 0, void 0, function*
         if (!query) {
             throw new Error(`User (${userID}) not found`);
         }
-        console.log(query);
         return query.favActivities;
     }
     catch (error) {
@@ -28,22 +27,28 @@ const getUserFavorites = (userID) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getUserFavorites = getUserFavorites;
-const addUserFavorite = (userID, activityID, itineraryIndex) => __awaiter(void 0, void 0, void 0, function* () {
+const addUserFavorite = (userID, activityID, itineraryName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findById(userID);
         if (!user) {
             throw new Error(`User (${userID}) not found`);
         }
-        console.log(user);
-        if (!itineraryIndex || itineraryIndex > user.favActivities.length - 1) {
-            console.log("pushing to a");
-            user.favActivities.push([activityID]);
+        let itineraryIndex = user.favActivities.findIndex((iti) => iti.name === itineraryName);
+        if (itineraryIndex === -1) {
+            user.favActivities.push(({ name: itineraryName ? itineraryName : `it-${Date.now()}`, activities: [activityID] }));
+            console.log("user_favorites:", user.favActivities);
         }
         else {
+            if (user.favActivities[itineraryIndex].activities.includes(activityID)) {
+                return false;
+            }
             console.log("pushing to a[a]");
-            user.favActivities[itineraryIndex].push(activityID);
+            user.favActivities[itineraryIndex].activities.push(activityID);
+            console.log(user.favActivities);
         }
-        yield user.save();
+        user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
+        const saved = yield user.save();
+        console.log(saved);
         return true;
     }
     catch (error) {
@@ -51,25 +56,37 @@ const addUserFavorite = (userID, activityID, itineraryIndex) => __awaiter(void 0
     }
 });
 exports.addUserFavorite = addUserFavorite;
-const deleteUserFavorite = (userID, itineraryIndex, activityID) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteUserFavorite = (userID, itineraryName, activityID) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findById(userID);
         if (!user) {
             throw new Error(`User (${userID}) not found`);
         }
-        if (activityID) {
-            let res = User_models_1.default.findByIdAndUpdate(userID, { $pull: { "favActivities.$": { _id: activityID } } }, function (error, user) {
-                if (error) {
-                    throw error;
-                }
-                return true;
-            });
-            if (!res) {
-                throw new Error(`User (${userID}) not found or activity (${activityID}) not found or itinerary (${itineraryIndex}) not found`);
+        let itineraryIndex = user.favActivities.findIndex((iti) => iti.name === itineraryName);
+        if (itineraryIndex === -1) {
+            return false;
+        }
+        if (activityID !== undefined) {
+            let filteredItinerary = user.favActivities[itineraryIndex].activities.filter((activity) => activity !== activityID);
+            console.log("filteredItinerary:", filteredItinerary);
+            console.log(filteredItinerary.length, user.favActivities[itineraryIndex].activities.length);
+            if (filteredItinerary.length === user.favActivities[itineraryIndex].activities.length) {
+                return false;
+            }
+            if (filteredItinerary.length > 0) {
+                user.favActivities[itineraryIndex].activities = filteredItinerary;
+                console.log("mod fav[i]");
+            }
+            else {
+                user.favActivities.splice(itineraryIndex, 1);
             }
         }
         else {
+            user.favActivities.splice(itineraryIndex, 1);
         }
+        console.log("user.favActivities", user.favActivities);
+        user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
+        yield user.save();
         return true;
     }
     catch (error) {
