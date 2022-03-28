@@ -17,7 +17,7 @@ export default function Home() {
     const activities = useSelector(state => state.allActivities);
     const loading = useSelector(((state) => state.loading));
     const [currentPage, setCurrentPage] = useState(1);
-    const indexOfFirstActivity = currentPage * 10;
+    const indexOfFirstActivity = (currentPage - 1) * 10;
     const currentActivities = activities.slice(
         (indexOfFirstActivity), indexOfFirstActivity + 10
     );
