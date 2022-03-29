@@ -1,7 +1,6 @@
 import NavBar from './Components/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import Register from './Components/Register/Register'
-import Slideshow from './Components/Landingpage/Slideshow'
 import Home from './Components/Home'
 import UserDashboard from './Components/UserDashboard/UserDashboard';
 import LandingPage from './Components/LandingPage';

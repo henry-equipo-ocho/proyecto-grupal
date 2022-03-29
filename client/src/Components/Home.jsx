@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NavBar from './NavBar';
 import LoginForm from './LoginForm';
+import Filter from './Filter';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
 import { getActivities, setLoading } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
+import './Css/Home.css'
 import Loading from './Loading/Loading';
 
 export default function Home() {
@@ -19,7 +21,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfFirstActivity = (currentPage - 1) * 10;
   const currentActivities = activities.slice(
-    (indexOfFirstActivity), indexOfFirstActivity + 10
+    (indexOfFirstActivity), indexOfFirstActivity + 12
   );
 
   useEffect(() => dispatch(getActivities()), [dispatch]);
@@ -31,20 +33,15 @@ export default function Home() {
 
   return (
     <div>
-
       {loading ? (
         <>
           <center>
-
             <p className='loader' style={{ fontSize: '50px' }}></p>
             {/* <Loading /> */}
           </center>
         </>
       ) : (
-
-
         <div>
-
           <NavBar
             handleLoginForm={setLoginForm}
           />
@@ -54,23 +51,29 @@ export default function Home() {
               Hola {userName.split('@')[0]}  ¿A donde quieres ir?
             </label>
           </div>
-          <div className='cardsContainer'>
-            {currentActivities.length ? currentActivities.map((a) => (
-              <ActivityCard
-                handleDetail={() => setDetail(a)}
-                nombre={a.name}
-                imagen={a.picture}
-                id={a._id}
-                key={a._id}
-              />
-            )) : <p className='loader' style={{ fontSize: '50px' }}> Go Back </p>}
-          </div>
 
+          <div className='bodyContainer'>
+            <div className='filter'>
+              FILTROS
+              <Filter
+              handleChangeCurrentPage={setCurrentPage}/>
+            </div>
+
+            <div className='cardsContainer'>
+              {currentActivities.length ? currentActivities.map((a) => (
+                <ActivityCard
+                  handleDetail={() => setDetail(a)}
+                  nombre={a.name}
+                  imagen={a.picture}
+                  id={a._id}
+                  key={a._id}
+                />
+              )) : <p className='loader' style={{ fontSize: '50px' }}> </p>}
+            </div>
+          </div>
           <Pagination
             activitiesPerPage={10}
             allActivities={activities.length}
-            currentPage={currentPage}
-            handlePage={setCurrentPage}
             paginado={(pageNumber) => setCurrentPage(pageNumber)}
           />
         </div>
