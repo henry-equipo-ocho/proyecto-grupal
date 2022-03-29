@@ -10,8 +10,14 @@ import { getActivities, setLoading } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
 import './Css/Home.css'
 import Loading from './Loading/Loading';
+import LoginButton from './LoginButton/LoginButton';
+import { Profile } from './Profile/Profile';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Home() {
+
+  const { user } = useAuth0();
+
   const dispatch = useDispatch();
   const [loginForm, setLoginForm] = useState(null);
   const [detail, setDetail] = useState(null);
@@ -42,9 +48,8 @@ export default function Home() {
         </>
       ) : (
         <div>
-          <NavBar
-            handleLoginForm={setLoginForm}
-          />
+          <LoginButton />
+          <NavBar handleLoginForm={setLoginForm}/>
 
           <div className='userName'>
             <label style={{ fontSize: '30px' }}>

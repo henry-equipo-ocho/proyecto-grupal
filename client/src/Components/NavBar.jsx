@@ -7,24 +7,29 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
-import SearchBar from './SearchBar/SearchBar.jsx'
+
 import SearchBarCopy from './SearchBar/SearchBarCopy';
+import LoginButton from './LoginButton/LoginButton';
+import { LogoutButton } from './LogoutButton/LogoutButton';
+import { Profile } from './Profile/Profile';
+
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function NavBar({ handleLoginForm }) {
-    const dispatch = useDispatch();
-    const isLogged = window.localStorage.getItem('token') ? true : false;
-    const activities = useSelector((state) => state.currentActivities)
+    // const dispatch = useDispatch();
+    // const isLogged = window.localStorage.getItem('token') ? true : false;
 
-    const logout = (e) => {
-        e.preventDefault();
-        window.localStorage.clear();
-        dispatch(setUserName('Viajero'));
-        window.location.reload();
-    }
-    
+    // const logout = (e) => {
+    //     e.preventDefault();
+    //     window.localStorage.clear();
+    //     dispatch(setUserName('Viajero'));
+    //     window.location.reload();
+    // }
+
+    const { isAuthenticated } = useAuth0()
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -39,12 +44,24 @@ export default function NavBar({ handleLoginForm }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
+                    {
+                        isAuthenticated ?
+                        <LogoutButton />
+                        :
+                        <LoginButton />
+
+                        
+                    }
+                    
+                    
+                    <Profile  />
 
                     {/* <SearchBar /> */}
 
                     <SearchBarCopy />
 
-                    {isLogged ? 
+
+                    {/* {isLogged ? 
                     <>
                     <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
                     <Button
@@ -65,15 +82,17 @@ export default function NavBar({ handleLoginForm }) {
                     color="inherit"
                     variant='outlined'
                     onClick={handleLoginForm}
-                    startIcon={<PersonIcon />}>Login</Button>
+                    startIcon={<PersonIcon />}>Login</Button> */}
 
                     <Button
                     color="inherit"
                     variant='outlined'
                     startIcon={<AppRegistrationIcon />}
-                    href='/register'>Signup</Button> 
-                    </>
-                    }
+                    href='/register'>
+                        Signup
+                    </Button> 
+                    {/* </> */}
+                    {/* } */}
                 </Toolbar>
             </AppBar>
         </Box>
