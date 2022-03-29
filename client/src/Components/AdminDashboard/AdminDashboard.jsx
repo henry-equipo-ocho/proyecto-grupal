@@ -35,26 +35,26 @@ export default function AdminDashboard() {
   const [page, setPage] = useState('dashboard');
 
   const handlePages = (p) => {
-    switch(p){
-      case 'dashboard':{
+    switch (p) {
+      case 'dashboard': {
         return <Dashboard />
       }
-      case 'about':{
+      case 'about': {
         return <About />
       }
-      case 'actividades':{
+      case 'actividades': {
         return <Actividades />
       }
-      case 'business':{
+      case 'business': {
         return <Business />
       }
-      case 'estadisticas':{
+      case 'estadisticas': {
         return <Estadisticas />
       }
-      case 'users':{
+      case 'users': {
         return <Users />
       }
-      default:{
+      default: {
         return <Dashboard />
       }
     }
@@ -138,17 +138,21 @@ export default function AdminDashboard() {
   );
 
   return (
-    <>
-      <Button onClick={toggleDrawer(true)}><MenuIcon /></Button>
-      <SwipeableDrawer
-        anchor='left'
-        open={state}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
-        {list()}
-      </SwipeableDrawer>
-      {handlePages(page)}
-    </>
+    <Box>
+      <Box>
+        <Button onClick={toggleDrawer(true)} sx={{ position: 'absolute' }} color='inherit'><MenuIcon /></Button>
+        <SwipeableDrawer
+          anchor='left'
+          open={state}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+        >
+          {list()}
+        </SwipeableDrawer>
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {handlePages(page)}
+      </Box>
+    </Box>
   );
 }
