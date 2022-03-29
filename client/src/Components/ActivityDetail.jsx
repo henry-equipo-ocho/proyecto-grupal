@@ -35,6 +35,7 @@ const style = {
 };
 
 export default function ActivityDetail({ activity, close, id }) {
+  console.log(activity.price_amount)
   const usDollar = Math.round(parseInt(activity.price_amount) * 1.10);
   const isLogged = window.localStorage.getItem('token') ? true : false;
   const theme = useTheme();
@@ -185,19 +186,19 @@ export default function ActivityDetail({ activity, close, id }) {
                   color="inherit"
                   variant='outlined'
                   onClick={() => setShowIti(true)}
-                >Favorite</Button>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  onClick={close}>Cancel</Button>
+                >Add to...</Button>
                 <Button
                   autoFocus
                   color="inherit"
                   variant='outlined'
                   href={activity.booking}
                   target='_blank'
-                >Reservar</Button>
+                >Reserve</Button>
+                <Button
+                  autoFocus
+                  color="inherit"
+                  variant='outlined'
+                  onClick={close}>Cancel</Button>
               </Box>
             </Box>
             :
@@ -207,13 +208,6 @@ export default function ActivityDetail({ activity, close, id }) {
                 color="inherit"
                 variant='outlined'
                 onClick={close}>Cancel</Button>
-              <Button
-                autoFocus
-                color="inherit"
-                variant='outlined'
-                href={activity.booking}
-                target='_blank'
-              >Reservar</Button>
             </>
           }
         </DialogActions>

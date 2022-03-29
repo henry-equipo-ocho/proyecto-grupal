@@ -1,0 +1,9 @@
+.bodyContainer{
+    display: flex;
+    justify-content:space-around;
+    gap:20px
+}
+.filter{
+    width: 1000px;
+    background-color: aqua;
+}
