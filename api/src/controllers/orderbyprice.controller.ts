@@ -12,73 +12,54 @@ export const getOrderedPrice: RequestHandler = async (req: Request, res: Respons
     const {country, city, type} = req.body;
     const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'} 
 
-    if( type === 'Ascendent') {
-        try {
-            if(city) {
-                const activities = await getDBCityActivities(country, city);
-    
+
+    if(country) {
+
+        if(type && city) {
+            const activities = await getDBCityActivities(country, city);
+
+            if(type === 'Ascendent') {
                 const orderedActivities = activities.sort(function(a: any, b: any) {
                     return a.price_amount - b.price_amount
+                });
+
+                return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
+
+            }
+            else {
+                const orderedActivities = activities.sort(function(a: any, b: any) {
+                    return b.price_amount - a.price_amount
                 })
-    
-    
                 return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
             }
-            if(country) {
-                const activities = await getDBCountryActivities(country);
-    
+        };
+        if(city) {
+            const activities = await getDBCityActivities(country, city);
+            return !activities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
+        };
+        if(type) {
+            const activities = await getDBCountryActivities(country);
+
+            if(type === 'Ascendent') {
                 const orderedActivities = activities.sort(function(a: any, b: any) {
                     return a.price_amount - b.price_amount
+                });
+
+                return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
+
+            }
+            else {
+                const orderedActivities = activities.sort(function(a: any, b: any) {
+                    return b.price_amount - a.price_amount
                 })
-    
                 return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
             }
-    
-            const activities = await getAllDBActivities();
-    
-            const orderedActivities = activities.sort(function(a: any, b: any) {
-                return a.price_amount - b.price_amount
-            })
-    
-            return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
-           
-        } catch (e: any) {  
-            return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: 'Invalid Request'}));
-        }
+            
+        };
+        const activities = await getDBCountryActivities(country);
+        
+        return !activities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
     }
 
-    if( type === 'Descendent') {
-        try {
-            if(city) {
-                const activities = await getDBCityActivities(country, city);
-    
-                const orderedActivities = activities.sort(function(a: any, b: any) {
-                    return b.price_amount - a.price_amount
-                })
-    
-    
-                return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
-            }
-            if(country) {
-                const activities = await getDBCountryActivities(country);
-    
-                const orderedActivities = activities.sort(function(a: any, b: any) {
-                    return b.price_amount - a.price_amount
-                })
-    
-                return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
-            }
-    
-            const activities = await getAllDBActivities();
-    
-            const orderedActivities = activities.sort(function(a: any, b: any) {
-                return b.price_amount - a.price_amount
-            })
-    
-            return !orderedActivities.length? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: orderedActivities}))
-           
-        } catch (e: any) {  
-            return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: 'Invalid Request'}));
-        }
-    }
-};
+
+}
