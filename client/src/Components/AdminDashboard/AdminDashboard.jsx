@@ -151,7 +151,7 @@ export default function AdminDashboard() {
         </SwipeableDrawer>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {handlePages(page)}
+        {handlePages(page)} 
       </Box>
     </Box>
   );
