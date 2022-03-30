@@ -60,13 +60,15 @@ export default function NavBar({ handleLoginForm }) {
                     startIcon={<PersonIcon />} >Logout</Button>
                     </>
                     :
-                    <>
+                    <>                    
                     <Button
                     color="inherit"
-                    variant='outlined'
+                    href='/plans'
+                    >Plans</Button>
+                    <Button
+                    color="inherit"
                     onClick={handleLoginForm}
                     startIcon={<PersonIcon />}>Login</Button>
-
                     <Button
                     color="inherit"
                     variant='outlined'
