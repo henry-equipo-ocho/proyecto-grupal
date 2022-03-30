@@ -67,27 +67,3 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.getActivitiesController = getActivitiesController;
-// ToDO: Save POI's in DB ¿Maybe?.
-// export const getPOIsController: RequestHandler = async (req: Request, res: Response) => {
-//     var amadeus = new Amadeus({
-//         clientId: process.env.AMADEUS_CLIENT_ID,
-//         clientSecret: process.env.AMADEUS_CLIENT_SECRET 
-//     })
-//     const pointsOfInterest = await amadeus.referenceData.locations.pointsOfInterest.get({
-//         latitude : 41.397158,
-//         longitude : 2.160873
-//     })
-//     res.status(200).send(<ServerResponse>{status: 'success', message: 'Activities sucesfully loaded', data: pointsOfInterest});
-// };
-// ToDO: City controller, service and route to add new cities to DB.
-// export const saveCitiesController: RequestHandler = async (req: Request, res: Response) => {
-//     try {
-//         for(let i: number = 0; i < cities.length; i++){
-//             const newCity = new City(cities[i]);
-//             await newCity.save();
-//         }
-//         return res.sendStatus(200);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }

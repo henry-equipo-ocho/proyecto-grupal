@@ -3,6 +3,7 @@ import {
     SET_ALL_ACTIVITIES,
     GET_ACTIVITIES,
     SET_LOADING,
+    ORDER_ACTIVITIES,
 } from '../Actions/actions_types';
 
 const initialState = {
@@ -22,13 +23,11 @@ export default function rootReducer(state = initialState, action) {
 
         case SET_ALL_ACTIVITIES:
             let value = action.payload;
-
-            console.log("value:", value)
             return {
                 ...state,
-                    allActivities: action.payload,
-                    currentActivities: action.payload
-            };       
+                allActivities: action.payload,
+                currentActivities: action.payload
+            };
 
         case GET_ACTIVITIES:
             return {
@@ -36,11 +35,17 @@ export default function rootReducer(state = initialState, action) {
                 allActivities: action.payload,
                 currentActivities: action.payload,
             };
-            case SET_LOADING:
-                return {
-                    ...state,
-                    loading: action.payload
-                }
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: action.payload
+            };
+        case ORDER_ACTIVITIES:
+            return {
+                ...state,
+                allActivities: action.payload,
+                currentActivities: action.payload,
+            };
 
         default:
             return state;
