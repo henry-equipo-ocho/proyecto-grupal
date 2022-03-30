@@ -13,8 +13,7 @@ export default function Filter({ handleChangeCurrentPage }) {
         city: ''
     });
 
-    const prueba = cities.filter(p => p.country === input.country)
-    console.log(prueba)
+    const citys = cities.filter(p => p.country === input.country)
 
     function handleCountries(e) {
         setInput({
@@ -30,14 +29,6 @@ export default function Filter({ handleChangeCurrentPage }) {
         });
     };
 
-    function handleOrderName(e) {
-        setInput({
-            ...input,
-            type: e.target.value
-        });
-        console.log(input)
-    };
-
     function handleOrderPrice(e) {
         setInput({
             ...input,
@@ -47,15 +38,11 @@ export default function Filter({ handleChangeCurrentPage }) {
 
     function handlseSumbit() {
         dispatch(orderActivitiesByPrice(input));
-        //dispatch(orderActivitiesByCity(input));
         handleChangeCurrentPage(1);
     };
 
     return (
         <div className='formContainer'>
-           
-
-            
             <div>
                 <form className='form2'>
                     <label>Filter</label>
@@ -75,7 +62,7 @@ export default function Filter({ handleChangeCurrentPage }) {
                         <label>Select City </label>
                         <select onChange={(e) => handleCities(e)}>
                             <option value=''>---</option>
-                            {prueba?.map((c) => (
+                            {citys?.map((c) => (
                                 <option
                                     value={c.name} key={c._id}
                                 >{c.name}</option>

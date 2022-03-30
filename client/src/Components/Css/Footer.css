@@ -1,0 +1,37 @@
+.footerContainer{
+    background-color: #00498b;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 1em;
+    height: 150px;
+    border-radius: 50px;
+    position: relative;
+}
+.div1 img{
+    height: 50px;
+}
+.div1 h3 {
+    font-family: 'Roboto';
+    color: #24c59c
+}
+
+.div2 ul{
+    font-family: 'Roboto';
+    color: #24c59c;
+    list-style: none;
+}
+.div2 h3{
+    font-family: 'Roboto';
+    color: #24c59c
+}
+
+
+.div3 img{
+    height: 100px;
+    width: 160px;
+}
+.div3 h3{
+    font-family: 'Roboto';
+    color: #24c59c
+}
