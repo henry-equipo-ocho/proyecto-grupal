@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { ProviderContext } from './Context/context'
+
 import { useNavigate } from 'react-router-dom';
 
 import Dashboard from './Pages/Dashboard';
@@ -34,31 +36,11 @@ export default function AdminDashboard() {
 
   const [page, setPage] = useState('dashboard');
 
-  const handlePages = (p) => {
-    switch (p) {
-      case 'dashboard': {
-        return <Dashboard />
-      }
-      case 'about': {
-        return <About />
-      }
-      case 'actividades': {
-        return <Actividades />
-      }
-      case 'business': {
-        return <Business />
-      }
-      case 'estadisticas': {
-        return <Estadisticas />
-      }
-      case 'users': {
-        return <Users />
-      }
-      default: {
-        return <Dashboard />
-      }
+  const reducer = (action, payload) => {
+    if (action === 'SET_PAGE') {
+      setPage(payload)
     }
-  };
+  }
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -150,8 +132,15 @@ export default function AdminDashboard() {
           {list()}
         </SwipeableDrawer>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {handlePages(page)} 
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <ProviderContext value={{ page, reducer }} >
+        { page === 'dashboard' ? <Dashboard /> : null }
+        { page === 'about' ? <About /> : null }
+        { page === 'actividades' ? <Actividades /> : null }
+        { page === 'business' ? <Business /> : null }
+        { page === 'estadisticas' ? <Estadisticas /> : null }
+        { page === 'users' ? <Users /> : null }
+      </ProviderContext>
       </Box>
     </Box>
   );
