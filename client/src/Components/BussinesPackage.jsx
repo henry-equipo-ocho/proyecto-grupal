@@ -1,91 +1,80 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import './Css/BussinesPackage.css'
 
 export default function BussinesPackage() {
     return (
-        <div>
-            <Button href='/home' >Volver a home</Button>
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Basic
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            3 Activities for $10
-                            -
-                            -
-                            -
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+        <div >
+            <button href='/home' >Volver a home</button>
+            <div className='plansContainer'>
+                <div className='card_container'>
+                    <div className='card'>
+                        <div className='cover'>
+                            <p> 
+                            </p>
+                        </div>
 
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Standard
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            5 Activities for $35
-                            -
-                            -
-                            -
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+                        <div className='description'>
+                            <h2>Basic Plan</h2>
+                            <h3></h3>
+                            <button
+                                className='boton'
 
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Profesional
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            No limits Activities for $50
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+                            >
+                                Shop Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='card_container'>
+                    <div className='card'>
+                        <div className='cover'>
+               
+                            <h1 className='bandera'>Standard</h1>
+                            <p> Basic
+                                
+                                Plan mas economico
+                                -Hasta 3 actividades
+                                -Imagen ilustrativa
+                                -Link directo
+                            </p>
+                        </div>
+
+                        <div className='description'>
+                            <h2>Standar Plan</h2>
+                            <h3></h3>
+                            <button
+                                className='boton'>
+                                Shop Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='card_container'>
+                    <div className='card'>
+                        <div className='cover'>
+
+                            <h1 className='bandera'>Premium</h1>
+                        </div>
+
+                        <div className='description'>
+                            <h2>Premium Plan</h2>
+                            <h3></h3>
+                            <button
+                                className='boton'
+
+                            >
+                                Shop Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
 
         </div>
 

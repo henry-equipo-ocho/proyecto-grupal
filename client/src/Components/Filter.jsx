@@ -53,44 +53,9 @@ export default function Filter({ handleChangeCurrentPage }) {
 
     return (
         <div className='formContainer'>
-            <div>
-                <form className='form1'>
-                    <label>Order</label>
-                    <div>
-                        <label>Order by name</label>
-                        <select onChange={e => handleOrderName(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='A-Z'>A-Z</option>
-                            <option value='Z-A'>Z-A</option>
-                        </select>
-                    </div>
+           
 
-                    <div>
-                        <label>Order by price</label>
-                        <select onChange={e => handleOrderPrice(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='Ascendent'>Lowest Price</option>
-                            <option value='Descendent'>Highest Price</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Order by countries </label>
-                        <select onChange={(e) => handleCountries(e)}>
-                            <option value=''>---</option>
-                            {countries?.map((c) => (
-                                <option
-                                    value={c.name} key={c._id}
-                                >{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <button type='Submit' onClick={(e) => handlseSumbit(e)}>Order</button>
-
-                </form>
-            </div>
-
+            
             <div>
                 <form className='form2'>
                     <label>Filter</label>
@@ -119,7 +84,7 @@ export default function Filter({ handleChangeCurrentPage }) {
                     </div>
 
                     <div>
-                        <label>type</label>
+                        <label>Price</label>
                         <select onChange={e => handleOrderPrice(e)}>
                             <option value='Nada'>---</option>
                             <option value='Ascendent'>Lowest Price</option>
