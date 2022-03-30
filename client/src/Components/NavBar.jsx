@@ -34,7 +34,7 @@ export default function NavBar({ handleLoginForm }) {
                     variant='none'
                     href='/home'
                     size='large'>
-                        <img src={Logo} alt='img notfound' width="50" height="50" />
+                        <img src={Logo} alt='img notfound' width="65" height="50" />
                     </Button>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary

@@ -37,4 +37,4 @@ export const signInGoogleCallBackController: RequestHandler = passport.authentic
     // TODO: set up this URLs
     successRedirect: 'http://localhost:3000/',
     failureRedirect: '/google/failure'
-})
+});

@@ -1,27 +1,32 @@
+import ReactPaginate from 'react-paginate';
 import React from 'react';
 import './Css/Pagination.css'
 
-export default function Pagination({ activitiesPerPage, allActivities, paginado, handlePage, currentPage }) {
-    const pageNumber = [];
+export default function Pagination({ activitiesPerPage, allActivities, paginado }) {
+    const pagecount = Math.ceil((allActivities) / activitiesPerPage);
 
-    for (let i = 1 ; i <= Math.ceil((allActivities) / activitiesPerPage); i++) {
-        pageNumber.push(i);
+    function changePage({ selected }) {
+        paginado(selected + 1)
     };
 
     return (
         <nav>
             <div className='paginado'>
-                <button className='buttonPag' onClick={() => handlePage(currentPage - 1)}>Prev</button>
-                {pageNumber?.map(number => (
-                    <button
-                        className='but'
-                        onClick={() => paginado(number)}
-                        key={number}
-                    >
-                        {number}
-                    </button>
-                ))}
-                <button className='buttonPag' onClick={() => handlePage(currentPage + 1)}>Next</button>
+                <ReactPaginate
+                    containerClassName='paginado'
+                    pageClassName='but'
+                    previousClassName='buttonPag'
+                    nextClassName='buttonPag'
+                    breakClassName='but'
+                    previousLabel={'prev'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    pageCount={pagecount}
+                    marginPagesDisplayed={5}
+                    pageRangeDisplayed={5}
+                    onPageChange={changePage}
+                    activeClassName='focus'
+                />
             </div>
         </nav>
     )

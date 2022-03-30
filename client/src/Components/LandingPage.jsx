@@ -9,9 +9,9 @@ export default function LandingPage() {
             <video className='video' src={travel} autoPlay loop muted />
             <div className='textContainer'>
                 <h1>¿Vamos a conocer Latinoamerica?</h1>
-                <p>
-                    Conoce las principales ciudades de Latinoamerica
-                    creando un intinerario personalizado, donde podras
+                <p className="parrafo">
+                    Conoce las principales ciudades de Latinoamerica 
+                    creando un intinerario personalizado, donde podras {"\n"}
                     agregar y quitar actividades a tu gusto, asi tu viaje
                     sera unico e inolvodable.
                 </p>
