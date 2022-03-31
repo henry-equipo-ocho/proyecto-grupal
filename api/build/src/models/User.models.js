@@ -25,7 +25,8 @@ const userSchema = new mongoose_1.default.Schema({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
-    favActivities: [itinerarySchema]
+    favActivities: [itinerarySchema],
+    isVerified: { type: Boolean, default: false }
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
