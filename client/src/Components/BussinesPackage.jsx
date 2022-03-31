@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import swal from 'sweetalert';
 import logo from '../Media/Logo.png'
 import './Css/BussinesPackage.css'
 import Footer from './Footer';
 
 export default function BussinesPackage() {
     const isLogged = window.localStorage.getItem('token') ? true : false;
+    const dispatch = useDispatch();
+    const [shop, setShop] = useState({
+        cart: '',
+    });
+    //console.log(shop)
 
+    function handleClick(cart) {
+        setShop({
+            ...shop,
+            cart:cart
+        });
+    };
+
+    function handleClickLogout() {
+        swal('Sorry!', 'Please login to continue', 'info')
+    }
+
+    
     return (
         <div className='pageB'>
             <header className='header'>
@@ -32,10 +51,16 @@ export default function BussinesPackage() {
                         <center>
                             <h2>$10 US</h2>
                         </center>
-                        {isLogged?
-                        <button className='shopButton'><a></a>Shop Now</button>
-                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
                         
+                        {isLogged ?
+                            <button
+                            className='shopButton'
+                            onClick={() => handleClick('01')}
+                            ><a ></a>Buy Now</button>
+                            : <button
+                                className='shopButton'
+                                onClick={() => handleClickLogout()}>Buy Now</button>}
+
                     </div>
                 </div>
 
@@ -55,9 +80,13 @@ export default function BussinesPackage() {
                         <center>
                             <h2>$30 US</h2>
                         </center>
-                        {isLogged?
-                        <button className='shopButton'><a></a>Shop Now</button>
-                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
+                        {isLogged ?
+                            <button
+                            className='shopButton'
+                            onClick={() => handleClick('02')}><a></a>Buy Now</button>
+                            : <button
+                                className='shopButton'
+                                onClick={() => handleClickLogout()}>Buy Now</button>}
                     </div>
                 </div>
 
@@ -78,9 +107,13 @@ export default function BussinesPackage() {
                         <center>
                             <h2>$50 US</h2>
                         </center>
-                        {isLogged?
-                        <button className='shopButton'><a></a>Shop Now</button>
-                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
+                        {isLogged ?
+                            <button
+                            className='shopButton'
+                            onClick={() => handleClick('03')}><a></a>Buy Now</button>
+                            : <button
+                                className='shopButton'
+                                onClick={() => handleClickLogout()}>Buy Now</button>}
                     </div>
                 </div>
 
