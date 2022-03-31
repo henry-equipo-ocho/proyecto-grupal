@@ -4,8 +4,10 @@ import './Css/BussinesPackage.css'
 import Footer from './Footer';
 
 export default function BussinesPackage() {
+    const isLogged = window.localStorage.getItem('token') ? true : false;
+
     return (
-        <div >
+        <div className='pageB'>
             <header className='header'>
                 <div>
                     <img src={logo} alt='Not found' />
@@ -21,14 +23,19 @@ export default function BussinesPackage() {
                     <div className='cardBasic'>
                         <div className='cover'>
                             <ul>
-                            <h1>Basic</h1>
+                                <h1>Basic</h1>
                                 <li>3 Activities</li>
                                 <li>Imagen promocional</li>
                                 <li>Link directo</li>
                             </ul>
                         </div>
-                        <h2>$10 US</h2>
-                        <button className='shopButton'>Shop Now</button>
+                        <center>
+                            <h2>$10 US</h2>
+                        </center>
+                        {isLogged?
+                        <button className='shopButton'><a></a>Shop Now</button>
+                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
+                        
                     </div>
                 </div>
 
@@ -37,7 +44,7 @@ export default function BussinesPackage() {
                     <div className='cardStandard'>
                         <div className='cover'>
                             <ul>
-                            <h1>Standard</h1>
+                                <h1>Standard</h1>
                                 <li>5 Activities</li>
                                 <li>Imagen promocional</li>
                                 <li>Link directo</li>
@@ -45,8 +52,12 @@ export default function BussinesPackage() {
                                 <li>Informe de estadisticas</li>
                             </ul>
                         </div>
-                        <h2>$30 US</h2>
-                        <button className='shopButton'>Shop Now</button>
+                        <center>
+                            <h2>$30 US</h2>
+                        </center>
+                        {isLogged?
+                        <button className='shopButton'><a></a>Shop Now</button>
+                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
                     </div>
                 </div>
 
@@ -55,7 +66,7 @@ export default function BussinesPackage() {
                     <div className='cardPremium'>
                         <div className='cover'>
                             <ul>
-                            <h1>Premium</h1>
+                                <h1>Premium</h1>
                                 <li>Sin limite de actividades</li>
                                 <li>Imagen promocional</li>
                                 <li>Link directo</li>
@@ -64,14 +75,18 @@ export default function BussinesPackage() {
                                 <li>Pin en google maps</li>
                             </ul>
                         </div>
-                        <h2>$50 US</h2>
-                        <button className='shopButton'>Shop Now</button>
+                        <center>
+                            <h2>$50 US</h2>
+                        </center>
+                        {isLogged?
+                        <button className='shopButton'><a></a>Shop Now</button>
+                         :<button className='shopButton'><a href='/home'>Shop Now</a></button>}
                     </div>
                 </div>
 
-                
+
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

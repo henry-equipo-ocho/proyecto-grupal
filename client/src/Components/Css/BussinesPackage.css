@@ -2,7 +2,7 @@
     background-color: #00498b;
     height: 50px;
     display: flex;
-    border-radius: 50px;
+    border-radius: 10px;
     justify-content: space-between;
 }
 .header img{
@@ -15,7 +15,7 @@
     margin-top: 13px;
     margin-right: 10px;
     margin-left: auto;
-    border-radius: 50px;
+    border-radius: 5px;
     background-color: #24c59c;
     border-style: none;
 }
@@ -32,10 +32,17 @@
     color: white;
 }
 
+.pageB{
+    display: flex;
+    flex-direction: column;
+}
+
 
 .plansContainer{
     display: flex;
-    flex: wrap;
+    flex-wrap: wrap;
+ 
+    flex-direction: row;
     justify-content: space-evenly;
 }
 .card_container{
@@ -47,6 +54,7 @@
     font-family: 'Roboto';
 }
 
+
 .cardBasic{
     width: 300px;
     margin: 10px;
@@ -55,6 +63,9 @@
     border-radius: 20px;
     background-color: #ff880000;
     background-image: linear-gradient(#ebebeb05, #a9e8bc);
+}
+.cardBasic h2{
+    filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
 }
 
 .cardBasic:hover{
@@ -93,6 +104,9 @@
     border-radius: 20px;
     background-color: #ff880000;
     background-image: linear-gradient(#ebebeb05, #9bfb73);
+}
+.cardStandard h2{
+    filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
 }
 
 .cardStandard:hover{
@@ -133,6 +147,9 @@
     background-color: #ff880000;
     background-image: linear-gradient(#ebebeb05, #24c59c);
 }
+.cardPremium h2{
+    filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
+}
 
 .cardPremium:hover{
     width: 350px;
@@ -167,12 +184,18 @@
     font-size: 20x;
     font-style:normal;
     font-weight:550;
-    border-radius: 50px;
+    border-radius: 5px;
     margin: 1em;
     background-color: #062554;
     color: white;
     border-style: none;
 }
+.shopButton a{
+    color: white;
+    text-decoration: none;
+
+}
+
 
 .shopButton:hover{
     background-color: #00498b;
