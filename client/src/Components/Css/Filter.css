@@ -1,0 +1,14 @@
+.formContainer{
+    flex-direction: column;
+    gap:20px;
+}
+
+.form1{
+    background-color: blueviolet;
+    margin: 1em;
+}
+
+.form2{
+    background-color: brown;
+    margin: 1em;
+}

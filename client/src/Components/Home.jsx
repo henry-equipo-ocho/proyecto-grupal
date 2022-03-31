@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import NavBar from './NavBar';
 import LoginForm from './LoginForm';
 import Filter from './Filter';
+import Footer from './Footer';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
-import { getActivities, setLoading } from './Redux/Actions/actions';
+import { getActivities, setLoading, getCountries, getCities } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
 import './Css/Home.css'
 import Loading from './Loading/Loading';
@@ -31,6 +32,8 @@ export default function Home() {
   );
 
   useEffect(() => dispatch(getActivities()), [dispatch]);
+  useEffect(() => dispatch(getCountries()), [dispatch]);
+  useEffect(() => dispatch(getCities()), [dispatch])
   useEffect(() => {
     return activities.length
       ? dispatch(setLoading(false))
@@ -59,7 +62,9 @@ export default function Home() {
 
           <div className='bodyContainer'>
             <div className='filter'>
-              FILTROS
+              <center>
+                <label>Search Options</label>
+              </center>
               <Filter
               handleChangeCurrentPage={setCurrentPage}/>
             </div>
@@ -81,7 +86,10 @@ export default function Home() {
             allActivities={activities.length}
             paginado={(pageNumber) => setCurrentPage(pageNumber)}
           />
+           <Footer />
         </div>
+       
+
       )}
 
       {loginForm &&
