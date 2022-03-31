@@ -27,8 +27,15 @@ export const signInGoogleService = new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3001/signin/google/callback"
   },
-  function(accessToken: any, refreshToken: any, profile: any, done: Function) {
-    done(null, profile);
+  async function(accessToken: any, refreshToken: any, profile: any, done: Function) {
+    console.log(profile);
+    try {
+        const user = await User.findOne({email: profile._json.email});
+        if(user) {return done(null, profile)}
+        return done(null, false);
+    } catch (e) {
+        throw e
+    }
   }
 );
 

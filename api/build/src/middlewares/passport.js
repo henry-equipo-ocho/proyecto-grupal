@@ -40,7 +40,19 @@ exports.signInGoogleService = new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3001/signin/google/callback"
 }, function (accessToken, refreshToken, profile, done) {
-    done(null, profile);
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log(profile);
+        try {
+            const user = yield User_models_1.default.findOne({ email: profile._json.email });
+            if (user) {
+                return done(null, profile);
+            }
+            return done(null, false);
+        }
+        catch (e) {
+            throw e;
+        }
+    });
 });
 passport_1.default.serializeUser((user, done) => {
     done(null, user);
