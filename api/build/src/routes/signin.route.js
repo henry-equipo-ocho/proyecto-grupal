@@ -8,7 +8,12 @@ const signin_controller_1 = require("../controllers/signin.controller");
 const passport_1 = __importDefault(require("passport"));
 const router = (0, express_1.Router)();
 router.post('/', signin_controller_1.signInController);
+// Google sign in
 router.get('/google', passport_1.default.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'], session: false }));
-router.get('/google/failure', signin_controller_1.signInGoogleFailureController);
-router.get('/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/signin/google/failure' }), signin_controller_1.signInGoogleCallBackController);
+router.get('/google/failure', signin_controller_1.signInSocialFailureController);
+router.get('/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/signin/google/failure' }), signin_controller_1.signInSocialCallBackController);
+// Facebook sign in
+router.get('/facebook', passport_1.default.authenticate('facebook', { scope: ['email', 'public_profile'], session: false }));
+router.get('/facebook/failure', signin_controller_1.signInSocialFailureController);
+router.get('/facebook/callback', passport_1.default.authenticate('facebook', { failureRedirect: '/signin/facebook/failure' }), signin_controller_1.signInSocialCallBackController);
 exports.default = router;

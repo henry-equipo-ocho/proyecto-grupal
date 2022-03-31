@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signInGoogleCallBackController = exports.signInGoogleFailureController = exports.signInGoogleController = exports.signInController = void 0;
+exports.signInSocialCallBackController = exports.signInSocialFailureController = exports.signInController = void 0;
 const signin_services_1 = require("../services/signin.services");
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
@@ -32,16 +32,11 @@ const signInController = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.signInController = signInController;
-// Google sign in controller on development
-const signInGoogleController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.send(req.user);
-});
-exports.signInGoogleController = signInGoogleController;
-const signInGoogleFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const signInSocialFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(400).redirect('http://localhost:3000/register/');
 });
-exports.signInGoogleFailureController = signInGoogleFailureController;
-const signInGoogleCallBackController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.signInSocialFailureController = signInSocialFailureController;
+const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const email = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a._json) === null || _b === void 0 ? void 0 : _b.email;
     try {
@@ -55,4 +50,4 @@ const signInGoogleCallBackController = (req, res) => __awaiter(void 0, void 0, v
         return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
     }
 });
-exports.signInGoogleCallBackController = signInGoogleCallBackController;
+exports.signInSocialCallBackController = signInSocialCallBackController;

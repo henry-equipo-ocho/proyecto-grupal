@@ -25,17 +25,11 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
     }
 };
 
-// Google sign in controller on development
-
-export const signInGoogleController: RequestHandler = async (req: Request, res: Response) => {
-    return res.send(req.user);
-};
-
-export const signInGoogleFailureController: RequestHandler = async (req: Request, res: Response) => {
+export const signInSocialFailureController: RequestHandler = async (req: Request, res: Response) => {
     return res.status(400).redirect('http://localhost:3000/register/');
 };
 
-export const signInGoogleCallBackController: RequestHandler = async (req: Request, res: Response) => {
+export const signInSocialCallBackController: RequestHandler = async (req: Request, res: Response) => {
     const email = req.user?._json?.email;
 
     try {
@@ -49,4 +43,4 @@ export const signInGoogleCallBackController: RequestHandler = async (req: Reques
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
-}
+};

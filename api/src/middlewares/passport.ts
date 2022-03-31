@@ -4,6 +4,7 @@ import User from '../models/User.models';
 import passport from 'passport';
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 dotenv.config();
 
@@ -28,15 +29,31 @@ export const signInGoogleService = new GoogleStrategy({
     callbackURL: "http://localhost:3001/signin/google/callback"
   },
   async function(accessToken: any, refreshToken: any, profile: any, done: Function) {
-    console.log(profile);
     try {
-        const user = await User.findOne({email: profile._json.email});
+        const user = await User.findOne({email: profile._json?.email});
         if(user) {return done(null, profile)}
         return done(null, false);
     } catch (e) {
         throw e
     }
   }
+);
+
+export const signInFacebookService = new FacebookStrategy({ 
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/signin/facebook/callback",
+    profileFields: ['id', 'displayName', 'email']
+    },
+    async function(accessToken: any, refreshToken: any, profile: any, cb: Function) {
+        try {
+            const user = await User.findOne({email: profile._json?.email});
+            if(user) {return cb(null, profile)}
+            return cb(null, false);
+        } catch (e) {
+            throw e
+        }
+    }
 );
 
 passport.serializeUser((user, done) => {
