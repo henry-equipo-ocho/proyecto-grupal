@@ -7,6 +7,15 @@ const itinerarySchema = new mongoose.Schema({
     activities: { type: [String], required: [true, 'Missing activities attribute'] }
 });
 
+const paymentSchema = new mongoose.Schema({
+    id: { type: String, required: [true, 'Missing id attribute'] },
+    status: { type: String, required: [true, 'Missing status attribute'] },
+    description: { type: String, required: [true, 'Missing description attribute'] },
+    tier: { type: Number, required: [true, 'Missing tier attribute'] },
+}, {
+    timestamps: true
+});
+
 const userSchema = new mongoose.Schema<User>({
     name: { type: String, required: [true, 'Missing name attribute'] },
     surname: { type: String, required: [true, 'Missing surname attribute'] },
@@ -14,7 +23,9 @@ const userSchema = new mongoose.Schema<User>({
     country: { type: String, required: [true, 'Missing country attribute'] },
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
-    favActivities: [itinerarySchema]
+    favActivities: [itinerarySchema],
+    payments: [paymentSchema],
+    activeSubscription: { type: Boolean, default: false }
 });
 
 userSchema.pre<User>('save', async function (next) {
