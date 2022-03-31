@@ -12,6 +12,7 @@ import Estadisticas from './Pages/Estadisticas';
 import Users from './Pages/Users';
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -141,6 +142,11 @@ export default function AdminDashboard() {
         { page === 'estadisticas' ? <Estadisticas /> : null }
         { page === 'users' ? <Users /> : null }
       </ProviderContext>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
+        Admin dashboard 0.0.1 - <strong>Eztinerary</strong>
+      </Typography>
       </Box>
     </Box>
   );

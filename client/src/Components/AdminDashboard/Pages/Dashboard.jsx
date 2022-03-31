@@ -110,11 +110,6 @@ export default function Dashboard() {
           </CardActions>
         </Card>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
-        Admin dashboard 0.0.1 - <strong>Eztinerary</strong>
-      </Typography>
-      </Box>
     </Container>
   )
 }
