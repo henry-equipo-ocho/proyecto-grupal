@@ -2,9 +2,13 @@ import { Router } from "express";
 import { signInController, signInSocialFailureController, signInSocialCallBackController } from "../controllers/signin.controller";
 import passport from 'passport';
 
+
+//
+import verifyEmail from '../middlewares/verification';
+
 const router: Router = Router();
 
-router.post('/', signInController);
+router.post('/', verifyEmail, signInController);
 
 // Google sign in
 
