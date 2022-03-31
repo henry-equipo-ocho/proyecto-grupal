@@ -1,13 +1,16 @@
 .filterContainer{
+
+    padding: 20px;
     display: flex;
-    flex-direction: column;
-    margin: 1em;
-    justify-content: center;
+    flex-direction: wrap;
+    justify-content: flex-end;
     align-items: center;
-    height: 120px;
-    border-radius: 50px;
+    gap: 40px;
+    height: auto ;
+    width: auto;
+    border-radius: 25px;
     font-family: 'Roboto';
-    font-size: medium;
+    font-size: large;
     font-weight: 800;
     color: white;
 
@@ -18,20 +21,20 @@
     background-color:#a9e8bc;
     width: 300px;
     text-align: center;
-    border-radius: 50px;
-    
+    border-radius: 5px;
+    height: 25px;
+    font-size: medium;    
 }
 
 .filterButton{
-    margin: auto;
-    font-size: 20x;
+    font-size: medium;
     font-style:normal;
     font-weight:550;
-    border-radius: 50px;
-    margin: 1em;
+    border-radius: 10px;
     background-color: #062554;
     color: white;
     border-style: none;
     width: 70px;
+    height: 30px;
 }
 

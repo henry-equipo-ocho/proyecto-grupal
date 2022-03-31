@@ -67,9 +67,6 @@ export default function Home() {
 
           <div className='bodyContainer'>
             <div className='filter'>
-              <center>
-                <h3>Search Options</h3>
-              </center>
               <Filter
                 handleChangeCurrentPage={setCurrentPage} />
             </div>

@@ -1,35 +1,30 @@
 .bodyContainer{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content:space-around;
     gap:30px 
 }
 .filter{
     display: flex;
-    flex-direction: column;
-    width: 1000px;
-    height: 250px;
+    flex-direction: row;
+    justify-content: space-around;
     background-color: #00498b;
-    border-radius: 50px;
-
-    font-family: 'Roboto';
+    border-radius: 10px;
     color:#24c59c;
-    font-size: larger;
-    font-weight: 900;
+    
+
 }
 
-.filter h3{
-    margin: 1em;
-    
-}
 .searchImage {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 50px;
-    background-image: url('../Css/search.jpg');
+    border-radius: 10px;
+    background-image: url('../Css/banner7.jpg');
     background-size: cover;
-    height: 800px;
+    background-position:10px ;
+    
+    height: 500px;
     align-items: center;
     margin: 1em;
 }

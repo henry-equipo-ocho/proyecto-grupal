@@ -43,7 +43,7 @@ export default function Filter({ handleChangeCurrentPage }) {
     return (
         <div className='filterContainer'>
                     <div>
-                        <label>Select Country </label> {'\n'}
+                        <label>Select Country: </label> {'\n'}
                         <select onChange={(e) => handleCountries(e)}>
                             <option value=''></option>
                             {countries?.map((c) => (
@@ -55,7 +55,7 @@ export default function Filter({ handleChangeCurrentPage }) {
                     </div>
 
                     <div>
-                        <label>Select City </label>
+                        <label>Select City:  </label>
                         <select onChange={(e) => handleCities(e)}>
                             <option value=''></option>
                             {citys?.map((c) => (
@@ -67,7 +67,7 @@ export default function Filter({ handleChangeCurrentPage }) {
                     </div>
 
                     <div>
-                        <label>Price</label>
+                        <label>Price:   </label>
                         <select onChange={e => handleOrderPrice(e)}>
                             <option value='Nada'></option>
                             <option value='Ascendent'>Lowest price first</option>
