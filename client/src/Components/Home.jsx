@@ -7,9 +7,11 @@ import Footer from './Footer';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
+import SearchBarCopy from './SearchBar/SearchBarCopy';
 import { getActivities, setLoading, getCountries, getCities } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
 import './Css/Home.css'
+//import search from '../Media/search.jpg'
 import Loading from './Loading/Loading';
 
 export default function Home() {
@@ -46,8 +48,7 @@ export default function Home() {
       ) : (
         <div>
           <NavBar
-            handleLoginForm={setLoginForm}
-          />
+            handleLoginForm={setLoginForm} />
 
           <div className='userName'>
             <label style={{ fontSize: '30px' }}>
@@ -55,13 +56,22 @@ export default function Home() {
             </label>
           </div>
 
+          <div className='searchImage'>
+           
+            <div className='searchBarContainer'>
+              <SearchBarCopy />
+            </div>
+            
+          </div>
+
+
           <div className='bodyContainer'>
             <div className='filter'>
               <center>
-                <label>Search Options</label>
+                <h3>Search Options</h3>
               </center>
               <Filter
-              handleChangeCurrentPage={setCurrentPage}/>
+                handleChangeCurrentPage={setCurrentPage} />
             </div>
 
             <div className='cardsContainer'>
@@ -81,10 +91,8 @@ export default function Home() {
             allActivities={activities.length}
             paginado={(pageNumber) => setCurrentPage(pageNumber)}
           />
-           <Footer />
+          <Footer />
         </div>
-       
-
       )}
 
       {loginForm &&

@@ -5,28 +5,24 @@ import { getActivities, setAllActivities } from "../Redux/Actions/actions";
 import "./SearchBar.css";
 
 function SearchBarCopy() {
-  
-  const [input, setInput]= useState('');
 
-  
-
+  const [input, setInput] = useState('');
   const dispatch = useDispatch();
 
   const handleInput = (e) => {
     e.preventDefault();
     setInput(e.target.value);
   };
- 
+
   const findActivities = (input, e) => {
     e.preventDefault();
     e.target.value = "";
     dispatch(setAllActivities(input));
   };
 
-  
   return (
-    <form 
-      onSubmit={(e) => findActivities(input,e)}
+    <form
+      onSubmit={(e) => findActivities(input, e)}
     >
       <input
         className="input"
@@ -38,8 +34,6 @@ function SearchBarCopy() {
       <button
         type="submit"
         className="button"
-      
-        
       >
         Search..
       </button>

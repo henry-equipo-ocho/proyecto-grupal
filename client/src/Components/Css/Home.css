@@ -1,11 +1,36 @@
 .bodyContainer{
     display: flex;
+    flex-direction: row;
     justify-content:space-around;
     gap:30px 
 }
 .filter{
+    display: flex;
+    flex-direction: column;
     width: 1000px;
-    background-color: aqua;
+    height: 250px;
+    background-color: #00498b;
+    border-radius: 50px;
 
-    gap:50px;
+    font-family: 'Roboto';
+    color:#24c59c;
+    font-size: larger;
+    font-weight: 900;
 }
+
+.filter h3{
+    margin: 1em;
+    
+}
+.searchImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 50px;
+    background-image: url('../Css/search.jpg');
+    background-size: cover;
+    height: 800px;
+    align-items: center;
+    margin: 1em;
+}
+

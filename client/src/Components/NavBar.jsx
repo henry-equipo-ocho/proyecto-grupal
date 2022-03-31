@@ -42,7 +42,7 @@ export default function NavBar({ handleLoginForm }) {
 
                     {/* <SearchBar /> */}
 
-                    <SearchBarCopy />
+                    {/* <SearchBarCopy /> */}
 
                     {isLogged ? 
                     <>

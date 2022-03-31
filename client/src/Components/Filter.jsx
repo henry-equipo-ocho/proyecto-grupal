@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import './Css/Filter.css'
+import './Css/Filter.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderActivitiesByCity, orderActivitiesByPrice } from './Redux/Actions/actions';
+import { orderActivitiesByPrice } from './Redux/Actions/actions';
 
 export default function Filter({ handleChangeCurrentPage }) {
     const dispatch = useDispatch();
     const countries = useSelector((state) => state.countries);
-    const cities = useSelector((state) => state.cities)
+    const cities = useSelector((state) => state.cities);
     const [input, setInput] = useState({
         type: '',
         country: '',
         city: ''
     });
-
-    const citys = cities.filter(p => p.country === input.country)
+    const citys = cities.filter(p => p.country === input.country);
 
     function handleCountries(e) {
         setInput({
@@ -42,14 +41,11 @@ export default function Filter({ handleChangeCurrentPage }) {
     };
 
     return (
-        <div className='formContainer'>
-            <div>
-                <form className='form2'>
-                    <label>Filter</label>
+        <div className='filterContainer'>
                     <div>
-                        <label>Select Country </label>
+                        <label>Select Country </label> {'\n'}
                         <select onChange={(e) => handleCountries(e)}>
-                            <option value=''>---</option>
+                            <option value=''></option>
                             {countries?.map((c) => (
                                 <option
                                     value={c.name} key={c._id}
@@ -61,7 +57,7 @@ export default function Filter({ handleChangeCurrentPage }) {
                     <div>
                         <label>Select City </label>
                         <select onChange={(e) => handleCities(e)}>
-                            <option value=''>---</option>
+                            <option value=''></option>
                             {citys?.map((c) => (
                                 <option
                                     value={c.name} key={c._id}
@@ -73,14 +69,15 @@ export default function Filter({ handleChangeCurrentPage }) {
                     <div>
                         <label>Price</label>
                         <select onChange={e => handleOrderPrice(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='Ascendent'>Lowest Price</option>
-                            <option value='Descendent'>Highest Price</option>
+                            <option value='Nada'></option>
+                            <option value='Ascendent'>Lowest price first</option>
+                            <option value='Descendent'>Highest price first</option>
                         </select>
                     </div>
-                    <button type='Submit' onClick={(e) => handlseSumbit(e)}>Filter</button>
-                </form>
-            </div >
+                    <button
+                    type='Submit'
+                    className='filterButton'
+                    onClick={(e) => handlseSumbit(e)}>Filter</button>
         </div >
     );
 };
