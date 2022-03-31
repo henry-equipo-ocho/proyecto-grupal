@@ -16,11 +16,8 @@ function App() {
         <Route exact path='/home' element={<Home />} />
         <Route exact path='/register' element={<Register />} />
         <Route exact path='/dashboard' element={<UserDashboard />} />
-<<<<<<< HEAD
         <Route exact path='/admin' element={<AdminDashboard />} />
-=======
         <Route exact path='/plans' element={<BussinesPackage />}/>
->>>>>>> Development
       </Routes>
 
     </div>
