@@ -1,6 +1,9 @@
 import { Request, Response, RequestHandler } from 'express';
 import { signUpService } from '../services/signup.services';
 import ServerResponse from '../interfaces/ServerResponse.interface';
+import { getMaxListeners } from 'process';
+import { userInfo } from 'os';
+
 
 export const signUpController: RequestHandler = async (req: Request, res: Response) => {
 
