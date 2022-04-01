@@ -46,7 +46,7 @@ export const createUserController = async (req: Request, res: Response) => {
     }
 }
 
-export const delateUserController = async (req: Request, res: Response) => {
+export const deleteUserController = async (req: Request, res: Response) => {
     try {
         const { id } = req.body;
 

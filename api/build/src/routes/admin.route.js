@@ -11,7 +11,7 @@ router.post('/token', admin_controller_1.tokenVerifyController);
 // User
 router.put('/update/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.userUpdateController);
 router.post('/create/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.createUserController);
-router.delete('/delete/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.delateUserController);
+router.delete('/delete/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.deleteUserController);
 router.get('/users', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.getAllUsersController);
 // Activity
 router.put('/update/activity', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.activityUpdateController);

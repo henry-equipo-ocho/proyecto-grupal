@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createActivityController = exports.activityUpdateController = exports.userUpdateController = exports.getAllActivitiesController = exports.deleteActivityController = exports.getAllUsersController = exports.delateUserController = exports.createUserController = exports.tokenVerifyController = exports.roleVerify = void 0;
+exports.createActivityController = exports.activityUpdateController = exports.userUpdateController = exports.getAllActivitiesController = exports.deleteActivityController = exports.getAllUsersController = exports.deleteUserController = exports.createUserController = exports.tokenVerifyController = exports.roleVerify = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const signup_services_1 = require("../services/signup.services");
 const admin_services_1 = require("../services/admin.services");
@@ -55,7 +55,7 @@ const createUserController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.createUserController = createUserController;
-const delateUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.body;
         yield (0, admin_services_1.deleteUserService)(id);
@@ -65,7 +65,7 @@ const delateUserController = (req, res) => __awaiter(void 0, void 0, void 0, fun
         return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
     }
 });
-exports.delateUserController = delateUserController;
+exports.deleteUserController = deleteUserController;
 const getAllUsersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield (0, admin_services_1.getAllUserService)();
