@@ -24,5 +24,6 @@ export default interface User extends Document {
     favActivities: Array<Itinerary>,
     payments: Array<Payment>,
     activeSubscription: boolean,
+    isVerified: Boolean,
     comparePassword: (password: string) => Promise<boolean>
 }
