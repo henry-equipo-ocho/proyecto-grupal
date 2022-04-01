@@ -14,6 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const nodemailer = require('nodemailer');
+dotenv_1.default.config();
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.CREATOR,
+        pass: process.env.PASS
+    },
+    tls: {
+        rejectUnanthorized: false
+    }
+});
 const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findOne({ email: req.body.email });
@@ -21,6 +34,23 @@ const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error();
         const newUser = new User_models_1.default(req.body);
         yield newUser.save();
+        var mailOptions = {
+            from: ` "Verify your email" <${process.env.CREATOR}>`,
+            to: newUser.email,
+            subject: 'Verify your email',
+            html: `<h2> ${newUser.name}! Thanks for registering on our site </h2>
+                    <h4>Please verify your email to continue...</h4>
+                    <a href="http://${req.headers.host}/signup/verify-email?id=${newUser.id}">Verify Your Email</a>`
+        };
+        // sending email
+        yield transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log('Verification email is send to gmail account');
+            }
+        });
         // TODO: is it necessary to return the new user?
         return newUser;
     }

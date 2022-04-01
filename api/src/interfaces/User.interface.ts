@@ -21,5 +21,8 @@ export default interface User extends Document {
     password: string,
     role: UserRoles,
     favActivities: Array<Itinerary>,
-    comparePassword: (password: string) => Promise<boolean>
+    comparePassword: (password: string) => Promise<boolean>,
+
+    
+    isVerified: Boolean
 }
