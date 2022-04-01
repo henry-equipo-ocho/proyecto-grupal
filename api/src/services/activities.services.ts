@@ -27,6 +27,10 @@ export const getAPIActivitiesService = async (req: Request): Promise<any> => {
 
 export const saveActivitiesService = async (activity: ActivityInterface): Promise<any> => {
     try {
+
+        const found = await Activity.findOne({name: activity.name});
+        if(found) throw new Error('Activity already exists');
+
         const newActivity = new Activity(activity);
         await newActivity.save();
     } catch (e) {
@@ -66,5 +70,19 @@ export const getActivitiesFromArray = async (activitiesID: Array<string>): Promi
         return await Activity.find({ '_id': { $in: activitiesID } });
     } catch (error) {
         throw error;
+    }
+}
+
+export const updateActivityInfo = async (req: Request, id: string) => {
+    try {
+        const condictions = {_id: id}
+        const update = req.body;
+
+        Activity.findOneAndUpdate(condictions, update, (error: any, result: any) => {
+            if(error) return error
+            else return result;
+        });
+    } catch (e) {
+        throw e
     }
 }

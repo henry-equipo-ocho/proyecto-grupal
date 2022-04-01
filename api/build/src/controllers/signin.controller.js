@@ -8,13 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signInGoogleCallBackController = exports.signInGoogleFailureController = exports.signInGoogleController = exports.signInController = void 0;
+exports.signInSocialCallBackController = exports.signInSocialFailureController = exports.signInController = void 0;
 const signin_services_1 = require("../services/signin.services");
-const passport_1 = __importDefault(require("passport"));
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password)
@@ -36,14 +32,22 @@ const signInController = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.signInController = signInController;
-// Google sign in controller on development
-exports.signInGoogleController = passport_1.default.authenticate('google', { scope: ['profile'] });
-const signInGoogleFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.status(401).send({ success: false, message: 'Error' });
+const signInSocialFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return res.status(400).redirect('http://localhost:3000/register/');
 });
-exports.signInGoogleFailureController = signInGoogleFailureController;
-exports.signInGoogleCallBackController = passport_1.default.authenticate('google', {
-    // TODO: set up this URLs
-    successRedirect: 'http://localhost:3000/',
-    failureRedirect: '/google/failure'
+exports.signInSocialFailureController = signInSocialFailureController;
+const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const email = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a._json) === null || _b === void 0 ? void 0 : _b.email;
+    try {
+        const user = yield (0, signin_services_1.getUserService)(email);
+        const token = (0, signin_services_1.createUserTokenService)(user);
+        if (!token)
+            return res.status(400).json(({ status: 'failed', errors: { message: `Couldn't create token` } }));
+        return res.status(200).json({ status: 'success', data: token });
+    }
+    catch (e) {
+        return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
+    }
 });
+exports.signInSocialCallBackController = signInSocialCallBackController;

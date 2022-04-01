@@ -246,3 +246,162 @@ Allows the client to modify his personal password.
 | Parameter | Type     | Description  |
 | :-------- | :------- | :----------- |
 | `password` | `string` | **Required** |
+
+---
+### ADMIN
+
+### UPDATE USER'S PERSONAL INFO AND/OR PASSWORD
+
+Allows the admin to modify personal info of users
+
+```http
+    PUT admin/update/user
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `name` | `string` | **Optional** |
+| `surname`    | `string` | **Optional** |
+| `email`    | `string` | **Optional** |
+| `country`    | `string` | **Optional** |
+| `password`    | `string` | **Optional** |
+| `role`    | `number` | **Optional** |
+| `activeSubscription`    | `boolean` | **Optional** |
+
+
+**- At least one parameter should be sent.**
+
+---
+
+### CREATE USER
+
+Allows the admin to create users
+
+```http
+    POST admin/create/user
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `name` | `string` | **Required** |
+| `surname`    | `string` | **Required** |
+| `email`    | `string` | **Required** |
+| `country`    | `string` | **Required** |
+| `password`    | `string` | **Required** |
+| `role`    | `number` | **Required** |
+
+---
+
+### DELETE USER
+
+Allows the admin to delete a user by id
+
+```http
+    DELETE admin/delete/user
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `id` | `string` | **Required** |
+
+---
+
+### GET ALL USERS
+
+Allows the admin to get all users
+
+```http
+    GET admin/users
+```
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: users,
+        errors?: errorMessage
+    }
+```
+
+---
+
+### UPDATE AN ACTIVITY
+
+Allows the admin to modify an activity by id
+
+```http
+    PUT admin/update/activity
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `id`    | `string` | **Required** |
+| `name` | `string` | **Optional** |
+| `description`    | `string` | **Optional** |
+| `picture`    | `string` | **Optional** |
+| `city`    | `string` | **Optional** |
+| `country`    | `string` | **Optional** |
+| `price_currency`    | `string` | **Optional** |
+| `price_amount`    | `number` | **Optional** |
+| `booking`    | `string` | **Optional** |
+
+
+**- At least one parameter should be sent.**
+
+---
+
+### CREATE USER
+
+Allows the admin to create users
+
+```http
+    POST admin/create/activity
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `name` | `string` | **Required** |
+| `description`    | `string` | **Required** |
+| `picture`    | `string` | **Required** |
+| `city`    | `string` | **Required** |
+| `country`    | `string` | **Required** |
+| `price_currency`    | `string` | **Required** |
+| `price_amount`    | `number` | **Required** |
+| `booking`    | `string` | **Required** |
+
+---
+
+### DELETE ACTIVITY
+
+Allows the admin to delete a activity by id
+
+```http
+    DELETE admin/delete/activity
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `id` | `string` | **Required** |
+
+---
+
+### GET ALL ACTIVITIES
+
+Allows the admin to get all activities
+
+```http
+    GET admin/activities
+```
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: activities,
+        errors?: errorMessage
+    }
+```
