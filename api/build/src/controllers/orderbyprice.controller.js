@@ -19,57 +19,46 @@ dotenv_1.default.config();
 const getOrderedPrice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { country, city, type } = req.body;
     const noactivities = { status: 'success', message: 'Activities not found' };
-    if (type === 'Ascendent') {
-        try {
-            if (city) {
-                const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+    if (country) {
+        if (type && city) {
+            const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+            if (type === 'Ascendent') {
                 const orderedActivities = activities.sort(function (a, b) {
                     return a.price_amount - b.price_amount;
                 });
                 return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
             }
-            if (country) {
-                const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+            else {
+                const orderedActivities = activities.sort(function (a, b) {
+                    return b.price_amount - a.price_amount;
+                });
+                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+            }
+        }
+        ;
+        if (city) {
+            const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
+        }
+        ;
+        if (type) {
+            const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+            if (type === 'Ascendent') {
                 const orderedActivities = activities.sort(function (a, b) {
                     return a.price_amount - b.price_amount;
                 });
                 return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
             }
-            const activities = yield (0, activities_services_1.getAllDBActivities)();
-            const orderedActivities = activities.sort(function (a, b) {
-                return a.price_amount - b.price_amount;
-            });
-            return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
-        }
-        catch (e) {
-            return res.status(e.status || 400).json(({ status: 'error', message: 'Invalid Request' }));
-        }
-    }
-    if (type === 'Descendent') {
-        try {
-            if (city) {
-                const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+            else {
                 const orderedActivities = activities.sort(function (a, b) {
                     return b.price_amount - a.price_amount;
                 });
                 return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
             }
-            if (country) {
-                const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
-                const orderedActivities = activities.sort(function (a, b) {
-                    return b.price_amount - a.price_amount;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
-            }
-            const activities = yield (0, activities_services_1.getAllDBActivities)();
-            const orderedActivities = activities.sort(function (a, b) {
-                return b.price_amount - a.price_amount;
-            });
-            return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
         }
-        catch (e) {
-            return res.status(e.status || 400).json(({ status: 'error', message: 'Invalid Request' }));
-        }
+        ;
+        const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
     }
 });
 exports.getOrderedPrice = getOrderedPrice;

@@ -27,7 +27,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import StarIcon from '@mui/icons-material/Star';
 
 import countries from './countries';
-import NavBar from '../NavBar'
 
 const validationSchema = yup.object({
   name: yup

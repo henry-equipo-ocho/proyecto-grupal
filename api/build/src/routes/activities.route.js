@@ -9,6 +9,6 @@ const router = (0, express_1.Router)();
 router.post('/', activities_controller_1.getActivitiesController);
 router.post('/amadeus', activities_controller_1.apiActivitiesController);
 router.post('/orderByCity', orderbycity_controller_1.getOrderedCities);
-router.post('/orderByPrice', orderbyprice_controller_1.getOrderedPrice);
 router.get('/match/:word', match_controller_1.getMatchActivitiesController);
+router.post('/orderByPrice', orderbyprice_controller_1.getOrderedPrice);
 exports.default = router;

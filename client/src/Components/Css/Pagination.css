@@ -3,11 +3,11 @@
     flex-wrap: wrap;
     justify-content: center;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #244eda);
+
   }
-  .paginado .but{
+.but{
     width: 30px;
-    height: 30px;
+    height: 20px;
     font-size: 15px;
     font-family: Calibri; 
     font-style:normal;
@@ -19,20 +19,26 @@
     border: 1px solid;
     transition-duration: 0.3s;
     cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+    text-align: center;
+    vertical-align:bottom;
+    position: relative;
+    
   }
   .but:hover{
     background-color: #244eda;
     color: white;
   }
   
-  .but:focus{
+  .focus{
     background-color: #24c59c;
     color: white;
   }
 
-  .paginado .buttonPag{
+.buttonPag{
     width: 40px;
-    height: 30px;
+    height: 20px;
     font-size: 15px;
     font-family: Calibri; 
     font-style:normal;
@@ -44,6 +50,9 @@
     border: 1px solid;
     transition-duration: 0.3s;
     cursor: pointer;
+    list-style: none;
+    text-align: center;
+    top: 50px;
   }
   .buttonPag:hover{
     background-color: #244eda;

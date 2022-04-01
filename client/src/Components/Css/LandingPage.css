@@ -27,7 +27,13 @@
     display: column;
     justify-content: center;
     align-items: center;
-
+}
+.textContainer p{
+    text-align: center;
+    font-family: Roboto;
+}
+.parrafo {
+    white-space: pre;
 }
 
 .landingButton{
