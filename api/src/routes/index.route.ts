@@ -7,7 +7,7 @@ import activities from './activities.route';
 import userFavorites from './userFavorites.route';
 import userUpdate from './userUpdate.route';
 import locations from './locations.route';
-
+import admin from './admin.route';
 
 const router: Router = Router();
 
@@ -20,5 +20,6 @@ router.use('/activities', activities);
 router.use('/favorites', userFavorites);
 router.use('/update', userUpdate);
 router.use('/locations', locations);
+router.use('/admin', admin);
 
 export default router;

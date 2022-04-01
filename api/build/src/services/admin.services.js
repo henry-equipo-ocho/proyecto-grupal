@@ -12,38 +12,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePassword = exports.updatePersonalInfo = void 0;
+exports.deleteActivityService = exports.getAllUserService = exports.deleteUserService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
-const updatePersonalInfo = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
+const Activity_models_1 = __importDefault(require("../models/Activity.models"));
+const deleteUserService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const condictions = { _id: id };
-        const update = req.body;
-        update.password && delete update.password;
-        User_models_1.default.findOneAndUpdate(condictions, update, (error, result) => {
-            if (error)
-                return error;
-            else
-                return result;
-        });
+        const user = yield User_models_1.default.findByIdAndDelete(id);
+        return user;
     }
     catch (e) {
         throw e;
     }
 });
-exports.updatePersonalInfo = updatePersonalInfo;
-const updatePassword = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.deleteUserService = deleteUserService;
+const getAllUserService = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        User_models_1.default.findById(id, function (err, result) {
-            return __awaiter(this, void 0, void 0, function* () {
-                if (err)
-                    return false;
-                result.password = req.body.password;
-                yield result.save();
-            });
-        });
+        const users = yield User_models_1.default.find();
+        return users;
     }
     catch (e) {
         throw e;
     }
 });
-exports.updatePassword = updatePassword;
+exports.getAllUserService = getAllUserService;
+const deleteActivityService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const activity = yield Activity_models_1.default.findByIdAndDelete(id);
+        return activity;
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.deleteActivityService = deleteActivityService;
