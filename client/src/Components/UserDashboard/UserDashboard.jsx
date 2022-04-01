@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Favorites from './Favorites';
 import EditProfile from './EditProfile';
@@ -15,9 +15,10 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Favorites', 'Edit profile'];
+const pages = ['Favorites', 'Edit profile', 'Plans'];
 
 const ResponsiveAppBar = () => {
+  const history = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
 
@@ -93,7 +94,7 @@ const ResponsiveAppBar = () => {
                 </Link>
               </MenuItem>
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}>
                   {page}
                 </MenuItem>
               ))}
@@ -119,7 +120,7 @@ const ResponsiveAppBar = () => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}
                 sx={{ my: 2, color: 'white !important', display: 'block' }}
               >
                 {page}

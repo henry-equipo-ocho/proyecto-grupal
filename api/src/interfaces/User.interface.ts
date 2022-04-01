@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import Payment from './Payment.interface';
 
 export enum UserRoles {
     Client,
@@ -21,8 +22,8 @@ export default interface User extends Document {
     password: string,
     role: UserRoles,
     favActivities: Array<Itinerary>,
-    comparePassword: (password: string) => Promise<boolean>,
-
-    
-    isVerified: Boolean
+    payments: Array<Payment>,
+    activeSubscription: boolean,
+    isVerified: Boolean,
+    comparePassword: (password: string) => Promise<boolean>
 }

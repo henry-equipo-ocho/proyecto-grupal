@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-import './Css/Filter.css'
+import './Css/Filter.css';
+import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderActivitiesByCity, orderActivitiesByPrice } from './Redux/Actions/actions';
+import { orderActivitiesByPrice } from './Redux/Actions/actions';
 
 export default function Filter({ handleChangeCurrentPage }) {
     const dispatch = useDispatch();
     const countries = useSelector((state) => state.countries);
-    const cities = useSelector((state) => state.cities)
+    const cities = useSelector((state) => state.cities);
     const [input, setInput] = useState({
-        type: '',
-        country: '',
-        city: ''
+        country:'',
+        city:'',
+        type:'',
     });
-
-    const prueba = cities.filter(p => p.country === input.country)
-    console.log(prueba)
+    const citys = cities.filter(p => p.country === input.country);
 
     function handleCountries(e) {
         setInput({
@@ -30,14 +29,6 @@ export default function Filter({ handleChangeCurrentPage }) {
         });
     };
 
-    function handleOrderName(e) {
-        setInput({
-            ...input,
-            type: e.target.value
-        });
-        console.log(input)
-    };
-
     function handleOrderPrice(e) {
         setInput({
             ...input,
@@ -46,89 +37,57 @@ export default function Filter({ handleChangeCurrentPage }) {
     };
 
     function handlseSumbit() {
-        dispatch(orderActivitiesByPrice(input));
-        //dispatch(orderActivitiesByCity(input));
-        handleChangeCurrentPage(1);
+        if (!input.country && !input.city ) {
+            swal('Sorry', 'There are nothing to filter', 'info')
+        } else {
+            dispatch(orderActivitiesByPrice(input));
+            setInput({
+                country:'',
+                city:'',
+                type: '',
+            });
+            handleChangeCurrentPage(1);
+        };
     };
 
     return (
-        <div className='formContainer'>
+        <div className='filterContainer'>
             <div>
-                <form className='form1'>
-                    <label>Order</label>
-                    <div>
-                        <label>Order by name</label>
-                        <select onChange={e => handleOrderName(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='A-Z'>A-Z</option>
-                            <option value='Z-A'>Z-A</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Order by price</label>
-                        <select onChange={e => handleOrderPrice(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='Ascendent'>Lowest Price</option>
-                            <option value='Descendent'>Highest Price</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Order by countries </label>
-                        <select onChange={(e) => handleCountries(e)}>
-                            <option value=''>---</option>
-                            {countries?.map((c) => (
-                                <option
-                                    value={c.name} key={c._id}
-                                >{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <button type='Submit' onClick={(e) => handlseSumbit(e)}>Order</button>
-
-                </form>
+                <label>Select Country: </label> 
+                <select onChange={(e) => handleCountries(e)}>
+                    <option value=''></option>
+                    {countries?.map((c) => (
+                        <option
+                            value={c.name} key={c._id}
+                        >{c.name}</option>
+                    ))}
+                </select>
             </div>
 
             <div>
-                <form className='form2'>
-                    <label>Filter</label>
-                    <div>
-                        <label>Select Country </label>
-                        <select onChange={(e) => handleCountries(e)}>
-                            <option value=''>---</option>
-                            {countries?.map((c) => (
-                                <option
-                                    value={c.name} key={c._id}
-                                >{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
+                <label>Select City:  </label>
+                <select onChange={(e) => handleCities(e)}>
+                    <option value=''></option>
+                    {citys?.map((c) => (
+                        <option
+                            value={c.name} key={c._id}
+                        >{c.name}</option>
+                    ))}
+                </select>
+            </div>
 
-                    <div>
-                        <label>Select City </label>
-                        <select onChange={(e) => handleCities(e)}>
-                            <option value=''>---</option>
-                            {prueba?.map((c) => (
-                                <option
-                                    value={c.name} key={c._id}
-                                >{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>type</label>
-                        <select onChange={e => handleOrderPrice(e)}>
-                            <option value='Nada'>---</option>
-                            <option value='Ascendent'>Lowest Price</option>
-                            <option value='Descendent'>Highest Price</option>
-                        </select>
-                    </div>
-                    <button type='Submit' onClick={(e) => handlseSumbit(e)}>Filter</button>
-                </form>
-            </div >
+            <div>
+                <label>Price:   </label>
+                <select onChange={e => handleOrderPrice(e)}>
+                    <option value='Nada'></option>
+                    <option value='Ascendent'>Lowest price first</option>
+                    <option value='Descendent'>Highest price first</option>
+                </select>
+            </div>
+            <button
+                type='Submit'
+                className='filterButton'
+                onClick={(e) => handlseSumbit(e)}>Filter</button>
         </div >
     );
 };

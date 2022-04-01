@@ -1,14 +1,40 @@
-.formContainer{
-    flex-direction: column;
-    gap:20px;
+.filterContainer{
+
+    padding: 20px;
+    display: flex;
+    flex-direction: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+    height: auto ;
+    width: auto;
+    border-radius: 25px;
+    font-family: 'Roboto';
+    font-size: large;
+    font-weight: 800;
+    color: white;
+
 }
 
-.form1{
-    background-color: blueviolet;
-    margin: 1em;
+
+.filterContainer select{
+    background-color:#a9e8bc;
+    width: 300px;
+    text-align: center;
+    border-radius: 5px;
+    height: 25px;
+    font-size: medium;    
 }
 
-.form2{
-    background-color: brown;
-    margin: 1em;
+.filterButton{
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
+    border-radius: 10px;
+    background-color: #062554;
+    color: white;
+    border-style: none;
+    width: 70px;
+    height: 30px;
 }
+

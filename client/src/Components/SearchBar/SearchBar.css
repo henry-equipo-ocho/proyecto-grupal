@@ -1,34 +1,30 @@
 .input {
-    position: fixed;
+
     top: 95px;
     right: 100px;
     background-color: white;
-    z-index: 999;
+    z-index: 1000;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    width: 250px;
+    height: 50px;
+    width: 500px;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
+    border-style: none;
+    font-size: medium;
 
 }
 
 .button {
-    position: fixed;
-    top: 95px;
-    right: 33px;
-    background-color: white;
-    z-index: 999;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    height: 50px;
+    margin: auto;
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
+    border-radius: 10px;
+    margin: 1em;
+    background-color: #062554;
+    color: white;
+    border-style: none;
     width: 70px;
-    padding: 5px;
-    border-radius: 5px;
 }
 
-.span {
-    position: fixed;
-    top: 95px;
-    right: 380px;
-
-}
-.span:hover {
-    cursor: pointer;
-}

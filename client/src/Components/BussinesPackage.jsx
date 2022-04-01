@@ -1,93 +1,157 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import swal from 'sweetalert';
+import logo from '../Media/Logo.png'
+import './Css/BussinesPackage.css'
+import Footer from './Footer';
+import PaymentForm from './PaymentForm';
 
 export default function BussinesPackage() {
+    const isLogged = window.localStorage.getItem('token') ? true : false;
+
+    function handleClickLogout() {
+        swal('Sorry!', 'Please login to continue', 'info');
+    };
     return (
-        <div>
-            <Button href='/home' >Volver a home</Button>
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Basic
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            3 Activities for $10
-                            -
-                            -
-                            -
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+        <div className='pageB'>
+            <header className='header'>
+                <div>
+                    <img src={logo} alt='Not found' />
+                </div>
+                <div>
+                    <button><a href='/home'>HOME</a></button>
+                </div>
+            </header>
 
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Standard
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            5 Activities for $35
-                            -
-                            -
-                            -
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+            {isLogged ?
+                <>
 
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Profesional
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            No limits Activities for $50
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Shop Now
-                    </Button>
-                </CardActions>
-            </Card>
+                    <PaymentForm />
+                    <div className='plansContainer'>
+                        <div className='card_container'>
+                            <div className='cardBasic'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Basic</h1>
+                                        <li>3 Activities</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$10 US</h2>
+                                </center>
+                            </div>
+                        </div>
 
+
+                        <div className='card_container'>
+                            <div className='cardStandard'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Standard</h1>
+                                        <li>5 Activities</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                        <li>Descripción corta</li>
+                                        <li>Informe de estadisticas</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$30 US</h2>
+                                </center>
+                            </div>
+                        </div>
+
+                        <div className='card_container'>
+                            <div className='cardPremium'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Premium</h1>
+                                        <li>Sin limite de actividades</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                        <li>Descripción corta</li>
+                                        <li>Informe de estadisticas</li>
+                                        <li>Pin en google maps</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$50 US</h2>
+                                </center>
+
+                            </div>
+                        </div>
+                    </div>
+                </>
+                :
+                <>
+                    <div className='plansContainer'>
+                        <div className='card_container'>
+                            <div className='cardBasic'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Basic</h1>
+                                        <li>3 Activities</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$10 US</h2>
+                                </center>
+                                <button
+                                    className='shopButton'
+                                    onClick={() => handleClickLogout()}>Buy Now</button>
+                            </div>
+                        </div>
+
+
+                        <div className='card_container'>
+                            <div className='cardStandard'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Standard</h1>
+                                        <li>5 Activities</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                        <li>Descripción corta</li>
+                                        <li>Informe de estadisticas</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$30 US</h2>
+                                </center>
+                                <button
+                                    className='shopButton'
+                                    onClick={() => handleClickLogout()}>Buy Now</button>
+                            </div>
+                        </div>
+
+                        <div className='card_container'>
+                            <div className='cardPremium'>
+                                <div className='cover'>
+                                    <ul>
+                                        <h1>Premium</h1>
+                                        <li>Sin limite de actividades</li>
+                                        <li>Imagen promocional</li>
+                                        <li>Link directo</li>
+                                        <li>Descripción corta</li>
+                                        <li>Informe de estadisticas</li>
+                                        <li>Pin en google maps</li>
+                                    </ul>
+                                </div>
+                                <center>
+                                    <h2>$50 US</h2>
+                                </center>
+                                <button
+                                    className='shopButton'
+                                    onClick={() => handleClickLogout()}>Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </>}
+            <Footer />
         </div>
-
     );
 }
