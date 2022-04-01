@@ -1,5 +1,5 @@
 {
-  "name": "proyecto-grupal-CLIENT",
+  "name": "proyecto-grupal-client",
   "version": "0.1.0",
   "description": "App eztinerary",
   "dependencies": {
@@ -30,6 +30,7 @@
     "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
+   
   },
   "scripts": {
     "start": "react-scripts start",

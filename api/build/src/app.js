@@ -49,5 +49,6 @@ app.use((req, res, next) => {
 app.use(passport_1.default.initialize());
 passport_1.default.use(passport_2.default);
 passport_1.default.use(passport_2.signInGoogleService);
+passport_1.default.use(passport_2.signInFacebookService);
 app.use('/', index_route_1.default);
 exports.default = app;

@@ -15,11 +15,11 @@ export const updatePersonalInfo = async (req: Request, id: string) => {
     }
 }
 
-export const updatePassword = async (req: Request, id: string) => {
+export const updatePassword = async (password: string, id: string) => {
    try {
         User.findById(id, async function(err: any, result: any) {
             if (err) return false;
-            result.password = req.body.password;
+            result.password = password;
             await result.save();
         });
     } catch (e) {

@@ -31,7 +31,7 @@ const signUpService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findOne({ email: req.body.email });
         if (user)
-            throw new Error();
+            throw new Error('User already exists');
         const newUser = new User_models_1.default(req.body);
         yield newUser.save();
         var mailOptions = {

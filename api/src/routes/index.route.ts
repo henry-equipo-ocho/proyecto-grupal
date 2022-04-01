@@ -7,6 +7,7 @@ import activities from './activities.route';
 import userFavorites from './userFavorites.route';
 import userUpdate from './userUpdate.route';
 import locations from './locations.route';
+import admin from './admin.route';
 import createOrder from './payment.route';
 
 
@@ -21,6 +22,7 @@ router.use('/activities', activities);
 router.use('/favorites', userFavorites);
 router.use('/update', userUpdate);
 router.use('/locations', locations);
+router.use('/admin', admin);
 router.use('/payment', createOrder);
 
 export default router;

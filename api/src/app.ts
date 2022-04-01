@@ -3,7 +3,7 @@ import cors from 'cors';
 import routes from './routes/index.route';
 import express, { Application } from "express";
 import passport from 'passport';
-import passportMiddleware, { signInGoogleService } from './middlewares/passport';
+import passportMiddleware, { signInGoogleService, signInFacebookService } from './middlewares/passport';
 
 import connectToDB from "./db";
 
@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 app.use(passport.initialize());
 passport.use(passportMiddleware);
 passport.use(signInGoogleService);
+passport.use(signInFacebookService);
 
 app.use('/', routes);
 
