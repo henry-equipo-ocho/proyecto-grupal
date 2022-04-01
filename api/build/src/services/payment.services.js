@@ -15,8 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.capturePayPalOrder = exports.createPayPalOrder = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const User_models_1 = __importDefault(require("../models/User.models"));
+const User_interface_1 = require("../interfaces/User.interface");
 dotenv_1.default.config();
-const createPayPalOrder = (cart) => __awaiter(void 0, void 0, void 0, function* () {
+const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("start", cart);
     const order = {
         intent: 'CAPTURE',
@@ -35,30 +38,36 @@ const createPayPalOrder = (cart) => __awaiter(void 0, void 0, void 0, function* 
             user_action: 'PAY_NOW',
             return_url: 'http://localhost:3001/payment/capture',
             cancel_url: 'http://localhost:3001/payment/cancel',
-        }
+        },
+        custom_user_id: userID
     };
     console.log("created order");
     // const paypalAuthToken = createAuthToken();
     try {
-        console.log("try axios");
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders`, order, {
             auth: {
                 username: process.env.PAYPAL_CLIENT_ID,
                 password: process.env.PAYPAL_CLIENT_SECRET,
             }
         });
-        console.log("response.data:", response.data);
+        yield createPaymentInUserDB(userID, response, cart);
+        console.log("response.data:", response.data, response.data.custom_user_id);
         return response.data;
     }
     catch (error) {
-        console.log("error in axios", error);
+        console.error("error:", error);
         throw error;
     }
 });
 exports.createPayPalOrder = createPayPalOrder;
-const capturePayPalOrder = (token, PayerID) => __awaiter(void 0, void 0, void 0, function* () {
+const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    // https://developer.paypal.com/api/rest/reference/orders/v2/errors/
     try {
-        console.log(token);
+        if (!mongoose_1.default.Types.ObjectId.isValid(userID)) {
+            console.log(mongoose_1.default.Types.ObjectId.isValid(userID));
+            throw new Error(`Invalid user ID: ${userID}`);
+        }
+        console.log("boutta ask paypal");
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders/${token}/capture`, {}, {
             auth: {
                 username: process.env.PAYPAL_CLIENT_ID,
@@ -66,6 +75,24 @@ const capturePayPalOrder = (token, PayerID) => __awaiter(void 0, void 0, void 0,
             }
         });
         console.log("response.data:", response.data);
+        if (response.data.status === 'COMPLETED') {
+            let user = yield User_models_1.default.findById(userID);
+            if (user === null) {
+                throw new Error(`User (${userID}) not found`);
+            }
+            else {
+                let payment = user.payments.find((payment) => payment.id === response.data.id);
+                if (!payment) {
+                    throw new Error(`Payment (${response.data.id}) not found`);
+                }
+                payment.status = "COMPLETED";
+                user.role = User_interface_1.UserRoles.Business;
+                user.activeSubscription = true;
+                user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
+                yield user.save();
+                return true;
+            }
+        }
     }
     catch (error) {
         console.log("capture error:");
@@ -73,3 +100,26 @@ const capturePayPalOrder = (token, PayerID) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.capturePayPalOrder = capturePayPalOrder;
+function createPaymentInUserDB(userID, response, cart) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield User_models_1.default.findById(userID);
+        if (user === null) {
+            throw new Error(`User (${userID}) not found`);
+        }
+        else if (!user.payments.find((payment) => payment.id === response.data.id)) {
+            user.payments.push({
+                id: response.data.id,
+                status: response.data.status,
+                description: cart.description,
+                tier: cart.tier,
+            });
+            user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
+            yield user.save();
+            console.log("created payment");
+        }
+        else {
+            console.log("found:", user.payments.find((payment) => payment.id === response.data.id));
+            throw new Error(`Payment (${response.data.id}) already exists`);
+        }
+    });
+}

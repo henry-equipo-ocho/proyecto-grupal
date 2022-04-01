@@ -16,7 +16,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         return res.status(400).json(({ status: 'failed', errors: { message: 'Missing cart' } }));
     }
     try {
-        const order = yield (0, payment_services_1.createPayPalOrder)(req.body.cart);
+        const order = yield (0, payment_services_1.createPayPalOrder)(req.body.cart, req.user.id);
         if (order) {
             return res.status(201).json(({ status: 'success', data: order }));
         }
@@ -29,19 +29,18 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.createOrder = createOrder;
 const captureOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.query.token === undefined || req.query.PayerID === undefined) {
+    if (req.query.token === undefined) {
         return res.status(400).json(({ status: 'failed', errors: { message: 'Missing payment info' } }));
     }
     try {
-        console.log(req.query);
-        const captured = (0, payment_services_1.capturePayPalOrder)(req.query.token, req.query.PayerID);
+        const captured = yield (0, payment_services_1.capturePayPalOrder)(req.query.token, "6245f427efea8b10cd71e615"); // ! erroring ID
         if (captured) {
             return res.status(200).json(({ status: 'success', data: captured }));
         }
         return res.status(500).json(({ status: 'failed', errors: { message: 'there was an error' } }));
     }
     catch (error) {
-        return res.status(500).json(({ status: 'failed', errors: { error } }));
+        return res.status(500).json(({ status: 'failed', errors: { serverError: error.message } }));
     }
 });
 exports.captureOrder = captureOrder;

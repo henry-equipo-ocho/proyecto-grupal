@@ -27,23 +27,19 @@ export const createOrder = async (req: Request, res: Response) => {
 }
 
 export const captureOrder = async (req: Request, res: Response) => {
-    if (req.query.token === undefined || req.query.PayerID === undefined) {
+    if (req.query.token === undefined) {
         return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing payment info' } }));
     }
 
     try {
-        // TODO: see how to pass the payer-associated User ID (redirect al front after success?)
-
-        const captured = capturePayPalOrder(req.query.token as string, req.query.PayerID as string, "erroringID"); // ! erroring ID
+        const captured = await capturePayPalOrder(req.query.token as string, req.user._id);
 
         if (captured) {
             return res.status(200).json(<ServerResponse>({ status: 'success', data: captured }));
         }
 
-        // TODO: redirect al front
-        // return res.redirect("http://localhost:3000/rutadecamilo");
         return res.status(500).json(<ServerResponse>({ status: 'failed', errors: { message: 'there was an error' } }));
-    } catch (error) {
-        return res.status(500).json(<ServerResponse>({ status: 'failed', errors: { error } }));
+    } catch (error: any) {
+        return res.status(500).json(<ServerResponse>({ status: 'error', errors: { serverError: error.message } }));
     }
 }
