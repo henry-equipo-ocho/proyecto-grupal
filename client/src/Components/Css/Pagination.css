@@ -1,0 +1,60 @@
+.paginado {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #ff880000;
+
+  }
+.but{
+    width: 30px;
+    height: 20px;
+    font-size: 15px;
+    font-family: Calibri; 
+    font-style:normal;
+    font-weight:550;
+    border-radius: 10px;
+    margin: 1em;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+    text-align: center;
+    vertical-align:bottom;
+    position: relative;
+    
+  }
+  .but:hover{
+    background-color: #244eda;
+    color: white;
+  }
+  
+  .focus{
+    background-color: #24c59c;
+    color: white;
+  }
+
+.buttonPag{
+    width: 40px;
+    height: 20px;
+    font-size: 15px;
+    font-family: Calibri; 
+    font-style:normal;
+    font-weight:550;
+    border-radius: 10px;
+    margin: 1em;
+    background-color: #24c59c;
+    color: black;
+    border: 1px solid;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    list-style: none;
+    text-align: center;
+    top: 50px;
+  }
+  .buttonPag:hover{
+    background-color: #244eda;
+    color: black;
+  }

@@ -1,0 +1,31 @@
+.bodyContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    gap:30px 
+}
+.filter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #00498b;
+    border-radius: 10px;
+    color:#24c59c;
+    
+
+}
+
+.searchImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-image: url('../Css/banner7.jpg');
+    background-size: cover;
+    background-position:10px ;
+    
+    height: 500px;
+    align-items: center;
+    margin: 1em;
+}
+
