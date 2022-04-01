@@ -19,17 +19,16 @@ import { Profile } from './Profile/Profile';
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function NavBar({ handleLoginForm }) {
-    // const dispatch = useDispatch();
-    // const isLogged = window.localStorage.getItem('token') ? true : false;
+    const dispatch = useDispatch();
+    const isLogged = window.localStorage.getItem('token') ? true : false;
 
-    // const logout = (e) => {
-    //     e.preventDefault();
-    //     window.localStorage.clear();
-    //     dispatch(setUserName('Viajero'));
-    //     window.location.reload();
-    // }
+    const logout = (e) => {
+        e.preventDefault();
+        window.localStorage.clear();
+        dispatch(setUserName('Viajero'));
+        window.location.reload();
+    }
 
-    const { isAuthenticated } = useAuth0()
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -44,24 +43,14 @@ export default function NavBar({ handleLoginForm }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
-                    {
-                        isAuthenticated ?
-                        <LogoutButton />
-                        :
-                        <LoginButton />
-
-                        
-                    }
                     
-                    
-                    <Profile  />
 
                     {/* <SearchBar /> */}
 
                     <SearchBarCopy />
 
 
-                    {/* {isLogged ? 
+                    {isLogged ? 
                     <>
                     <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
                     <Button
@@ -93,8 +82,8 @@ export default function NavBar({ handleLoginForm }) {
                     href='/register'>
                         Signup
                     </Button> 
-                    {/* </> */}
-                    {/* } */}
+                    </>
+                    }
                 </Toolbar>
             </AppBar>
         </Box>
