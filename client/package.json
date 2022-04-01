@@ -1,9 +1,8 @@
 {
-  "name": "proyecto-grupal-CLIENT",
+  "name": "proyecto-grupal-client",
   "version": "0.1.0",
   "description": "App eztinerary",
   "dependencies": {
-    "@auth0/auth0-react": "^1.9.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",

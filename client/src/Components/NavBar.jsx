@@ -7,16 +7,11 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Logo from '../Media/Logo.png';
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
-
+import SearchBar from './SearchBar/SearchBar.jsx';
 import SearchBarCopy from './SearchBar/SearchBarCopy';
-import LoginButton from './LoginButton/LoginButton';
-import { LogoutButton } from './LogoutButton/LogoutButton';
-import { Profile } from './Profile/Profile';
-
-import { useAuth0 } from '@auth0/auth0-react'
 
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();

@@ -13,9 +13,7 @@ import './Css/ActivityCard.css';
 import './Css/Home.css'
 //import search from '../Media/search.jpg'
 import Loading from './Loading/Loading';
-import LoginButton from './LoginButton/LoginButton';
-import { Profile } from './Profile/Profile';
-import { useAuth0 } from '@auth0/auth0-react';
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -41,22 +39,6 @@ export default function Home() {
 
   return (
     <div>
-<<<<<<< HEAD
-      {loading ? (
-        <>
-          <center>
-            <p className='loader' style={{ fontSize: '50px' }}></p>
-            {/* <Loading /> */}
-          </center>
-        </>
-      ) : (
-        <div>
-          <NavBar handleLoginForm={setLoginForm}/>
-          <div className='userName'>
-            <label style={{ fontSize: '30px' }}>
-              Hola {userName.split('@')[0]}  ¿A donde quieres ir?
-            </label>
-=======
 
       <div>
         <NavBar
@@ -66,7 +48,6 @@ export default function Home() {
 
           <div className='searchBarContainer'>
             <SearchBarCopy />
->>>>>>> Development
           </div>
 
         </div>
