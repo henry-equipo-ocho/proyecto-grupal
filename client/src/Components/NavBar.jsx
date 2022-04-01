@@ -16,7 +16,6 @@ import SearchBarCopy from './SearchBar/SearchBarCopy';
 export default function NavBar({ handleLoginForm }) {
     const dispatch = useDispatch();
     const isLogged = window.localStorage.getItem('token') ? true : false;
-    const activities = useSelector((state) => state.currentActivities)
 
     const logout = (e) => {
         e.preventDefault();
@@ -24,57 +23,54 @@ export default function NavBar({ handleLoginForm }) {
         dispatch(setUserName('Viajero'));
         window.location.reload();
     }
-    
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
                     <Button
-                    color="inherit"
-                    variant='none'
-                    href='/home'
-                    size='large'>
+                        color="inherit"
+                        variant='none'
+                        href='/home'
+                        size='large'>
                         <img src={Logo} alt='img notfound' width="65" height="50" />
                     </Button>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
 
-                    {/* <SearchBar /> */}
 
-                    <SearchBarCopy />
-
-                    {isLogged ? 
-                    <>
-                    <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
-                    <Button
-                    color="inherit"
-                    variant='outlined'
-                    startIcon={<PersonIcon />} >Dashboard</Button>
-                    </Link>
-                    <Button
-                    color="inherit"
-                    variant='outlined'
-                    href="javascript:location.reload()"
-                    onClick={(e) => logout(e)}
-                    startIcon={<PersonIcon />} >Logout</Button>
-                    </>
-                    :
-                    <>                    
-                    <Button
-                    color="inherit"
-                    href='/plans'
-                    >Plans</Button>
-                    <Button
-                    color="inherit"
-                    onClick={handleLoginForm}
-                    startIcon={<PersonIcon />}>Login</Button>
-                    <Button
-                    color="inherit"
-                    variant='outlined'
-                    startIcon={<AppRegistrationIcon />}
-                    href='/register'>Signup</Button> 
-                    </>
+                    {isLogged ?
+                        <>
+                            <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
+                                <Button
+                                    color="inherit"
+                                    variant='outlined'
+                                    startIcon={<PersonIcon />} >Dashboard</Button>
+                            </Link>
+                            <Button
+                                color="inherit"
+                                variant='outlined'
+                                href="javascript:location.reload()"
+                                onClick={(e) => logout(e)}
+                                startIcon={<PersonIcon />} >Logout</Button>
+                        </>
+                        :
+                        <>
+                            <Button
+                                color="inherit"
+                                href='/plans'
+                            >Plans</Button>
+                            <Button
+                                color="inherit"
+                                onClick={handleLoginForm}
+                                startIcon={<PersonIcon />}>Login</Button>
+                            <Button
+                                color="inherit"
+                                variant='outlined'
+                                startIcon={<AppRegistrationIcon />}
+                                href='/register'>Signup</Button>
+                        </>
                     }
                 </Toolbar>
             </AppBar>

@@ -1,0 +1,45 @@
+.formPaymentContainer{
+padding: 10px;
+background-color: #00498b;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: larger;
+font-family: 'Roboto';
+font-weight: 800;
+color: white;
+margin: auto;
+border-radius: 10px
+}
+.form{
+    padding: 10px;
+}
+
+.form select {
+    border-radius: 5px;
+    width: 200px;
+
+}
+
+.form select option{
+    text-align: center;
+    font-size: medium;
+    background-color: #a9e8bc;
+}
+
+.buyBtn{
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
+    border-radius: 10px;
+    background-color: #062554;
+    color: white;
+    border-style: none;
+    width: 70px;
+    height: 30px;
+}
+
+.buyBtn:hover {
+    background-color: #24c59c;
+
+}

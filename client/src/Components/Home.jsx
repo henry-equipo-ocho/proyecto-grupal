@@ -7,9 +7,11 @@ import Footer from './Footer';
 import ActivityCard from './ActivityCard';
 import ActivityDetail from './ActivityDetail';
 import Pagination from './Pagination';
+import SearchBarCopy from './SearchBar/SearchBarCopy';
 import { getActivities, setLoading, getCountries, getCities } from './Redux/Actions/actions';
 import './Css/ActivityCard.css';
 import './Css/Home.css'
+//import search from '../Media/search.jpg'
 import Loading from './Loading/Loading';
 
 export default function Home() {
@@ -36,56 +38,55 @@ export default function Home() {
 
   return (
     <div>
-      {loading ? (
-        <>
-          <center>
-            <p className='loader' style={{ fontSize: '50px' }}></p>
-            {/* <Loading /> */}
-          </center>
-        </>
-      ) : (
-        <div>
-          <NavBar
-            handleLoginForm={setLoginForm}
-          />
 
-          <div className='userName'>
-            <label style={{ fontSize: '30px' }}>
-              Hola {userName.split('@')[0]}  ¿A donde quieres ir?
-            </label>
+      <div>
+        <NavBar
+          handleLoginForm={setLoginForm} />
+
+        <div className='searchImage'>
+
+          <div className='searchBarContainer'>
+            <SearchBarCopy />
           </div>
 
-          <div className='bodyContainer'>
-            <div className='filter'>
-              <center>
-                <label>Search Options</label>
-              </center>
-              <Filter
-              handleChangeCurrentPage={setCurrentPage}/>
-            </div>
-
-            <div className='cardsContainer'>
-              {currentActivities.length ? currentActivities.map((a) => (
-                <ActivityCard
-                  handleDetail={() => setDetail(a)}
-                  nombre={a.name}
-                  imagen={a.picture}
-                  id={a._id}
-                  key={a._id}
-                />
-              )) : <p className='loader' style={{ fontSize: '50px' }}> </p>}
-            </div>
-          </div>
-          <Pagination
-            activitiesPerPage={10}
-            allActivities={activities.length}
-            paginado={(pageNumber) => setCurrentPage(pageNumber)}
-          />
-           <Footer />
         </div>
-       
 
-      )}
+
+        <div className='bodyContainer'>
+          <div className='filter'>
+            <Filter
+              handleChangeCurrentPage={setCurrentPage} />
+          </div>
+
+          {loading ?
+            <center>
+              <p className='loader' style={{ fontSize: '50px' }}></p>
+            </center> :
+            <>
+
+              <div className='cardsContainer'>
+                {currentActivities.length ? currentActivities.map((a) => (
+                  <ActivityCard
+                    handleDetail={() => setDetail(a)}
+                    nombre={a.name}
+                    imagen={a.picture}
+                    id={a._id}
+                    key={a._id}
+                  />
+                )) : <p className='loader' style={{ fontSize: '50px' }}> </p>}
+              </div>
+            </>}
+        </div>
+
+        <Pagination
+          activitiesPerPage={10}
+          allActivities={activities.length}
+          paginado={(pageNumber) => setCurrentPage(pageNumber)}
+        />
+
+        <Footer />
+      </div>
+
 
       {loginForm &&
         <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
