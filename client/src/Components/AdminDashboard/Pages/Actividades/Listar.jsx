@@ -118,11 +118,11 @@ export default function Listar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setActivities([...activities, { 
+    setActivities([...activities, {
       _id: Math.random() * 10000,
-      name: 'Viaje de 10 dias por toda Capital Federal', 
-      description: 'Un viaje increíble visitando los lugares turísticos mas importantes de Capital Federal', 
-      picture: 'https://via.placeholder.com/600/771796', 
+      name: 'Viaje de 10 dias por toda Capital Federal',
+      description: 'Un viaje increíble visitando los lugares turísticos mas importantes de Capital Federal',
+      picture: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/07/87/aa/2f.jpg',
       country: 'Argentina',
       city: 'Buenos Aires',
       price_currency: 'ARS',
@@ -131,12 +131,26 @@ export default function Listar() {
     }])
   };
 
-  const handleDetail = (_id, name, description, picture, city, country, pice_currency, price_amount, booking ) => {
-    alert(`Detail of ${name.slice(0, 15)}...`, `ID: ${_id}
-    <img src={picture} alt='activity'/>
-    Name: ${name}
-    Description: ${description}
-    `)
+  const handleDetail = (_id, name, description, picture, city, country, price_currency, price_amount, booking) => {
+    alert({
+      title: name,
+      text: `ID: ${_id}
+      Description: ${description}
+      Country: ${country}
+      City: ${city}
+      Currency: ${price_currency}
+      Price: ${price_amount}`,
+      icon: picture,
+      buttons: [
+        'Back',
+        'Visit site'
+      ],
+    })
+    .then(function (isConfirm) {
+      if (isConfirm) {
+        window.open(booking, '_blank');
+      }
+    });
   };
 
   return (
@@ -201,16 +215,16 @@ export default function Listar() {
                                   )
                                 }}><EditIcon /></Button>
                                 <Button onClick={() => handleDetail(
-                                  act._id, 
-                                  act.name, 
-                                  act.description, 
-                                  act.picture, 
+                                  act._id,
+                                  act.name,
+                                  act.description,
+                                  act.picture,
                                   act.city,
                                   act.country,
                                   act.price_currency,
                                   act.price_amount,
                                   act.booking
-                                  )}><VisibilityIcon /></Button>
+                                )}><VisibilityIcon /></Button>
                               </TableCell>
                             </TableRow>
                           ))
@@ -239,122 +253,122 @@ export default function Listar() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit data from {formik.values.name}</DialogTitle>
         <DialogContent>
-        <form onSubmit={formik.handleSubmit}>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="name"
-            name="name"
-            label="Activiy name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="desc"
-            name="desc"
-            label="Description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={formik.touched.description && Boolean(formik.errors.description)}
-            helperText={formik.touched.description && formik.errors.description}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="pic"
-            name="pic"
-            label="Picture link"
-            value={formik.values.picture}
-            onChange={formik.handleChange}
-            error={formik.touched.picture && Boolean(formik.errors.picture)}
-            helperText={formik.touched.picture && formik.errors.picture}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="city"
-            name="city"
-            label="City"
-            value={formik.values.city}
-            onChange={formik.handleChange}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
-          />
-        </Box>
-        <FormControl sx={{ my: 1, width: '100%' }}>
-          <InputLabel id="country-select-label">Select country</InputLabel>
-          <Select labelId="country-select-label"
-            id="country"
-            name="country"
-            value={formik.values.country}
-            defaultValue="Select country"
-            label="Select country"
-            onChange={formik.handleChange}
-            error={formik.touched.country && Boolean(formik.errors.country)}
-          >
-            {countries.map(option => {
-              return (<MenuItem key={option.code} value={option.label}>
-                <img
-                  width="20"
-                  src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                  srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                  alt=""
-                />
-                {option.label}
-              </MenuItem>)
-            })}
-          </Select>
-        </FormControl>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="currency"
-            name="currency"
-            label="Currency"
-            value={formik.values.price_currency}
-            onChange={formik.handleChange}
-            error={formik.touched.price_currency && Boolean(formik.errors.price_currency)}
-            helperText={formik.touched.price_currency && formik.errors.price_currency}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="price"
-            name="price"
-            label="Price"
-            value={formik.values.price_amount}
-            onChange={formik.handleChange}
-            error={formik.touched.price_amount && Boolean(formik.errors.price_amount)}
-            helperText={formik.touched.price_amount && formik.errors.price_amount}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="link"
-            name="link"
-            label="Link to Activity"
-            value={formik.values.booking}
-            onChange={formik.handleChange}
-            error={formik.touched.booking && Boolean(formik.errors.booking)}
-            helperText={formik.touched.booking && formik.errors.booking}
-          />
-        </Box>
-        <Button
-          sx={{ my: 1, width: '100%' }}
-          color="primary"
-          variant="contained"
-          type="submit"
-        >
-          Create activity
-        </Button>
-      </form>
+          <form onSubmit={formik.handleSubmit}>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="name"
+                name="name"
+                label="Activiy name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="desc"
+                name="desc"
+                label="Description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                error={formik.touched.description && Boolean(formik.errors.description)}
+                helperText={formik.touched.description && formik.errors.description}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="pic"
+                name="pic"
+                label="Picture link"
+                value={formik.values.picture}
+                onChange={formik.handleChange}
+                error={formik.touched.picture && Boolean(formik.errors.picture)}
+                helperText={formik.touched.picture && formik.errors.picture}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="city"
+                name="city"
+                label="City"
+                value={formik.values.city}
+                onChange={formik.handleChange}
+                error={formik.touched.city && Boolean(formik.errors.city)}
+                helperText={formik.touched.city && formik.errors.city}
+              />
+            </Box>
+            <FormControl sx={{ my: 1, width: '100%' }}>
+              <InputLabel id="country-select-label">Select country</InputLabel>
+              <Select labelId="country-select-label"
+                id="country"
+                name="country"
+                value={formik.values.country}
+                defaultValue="Select country"
+                label="Select country"
+                onChange={formik.handleChange}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+              >
+                {countries.map(option => {
+                  return (<MenuItem key={option.code} value={option.label}>
+                    <img
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label}
+                  </MenuItem>)
+                })}
+              </Select>
+            </FormControl>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="currency"
+                name="currency"
+                label="Currency"
+                value={formik.values.price_currency}
+                onChange={formik.handleChange}
+                error={formik.touched.price_currency && Boolean(formik.errors.price_currency)}
+                helperText={formik.touched.price_currency && formik.errors.price_currency}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="price"
+                name="price"
+                label="Price"
+                value={formik.values.price_amount}
+                onChange={formik.handleChange}
+                error={formik.touched.price_amount && Boolean(formik.errors.price_amount)}
+                helperText={formik.touched.price_amount && formik.errors.price_amount}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="link"
+                name="link"
+                label="Link to Activity"
+                value={formik.values.booking}
+                onChange={formik.handleChange}
+                error={formik.touched.booking && Boolean(formik.errors.booking)}
+                helperText={formik.touched.booking && formik.errors.booking}
+              />
+            </Box>
+            <Button
+              sx={{ my: 1, width: '100%' }}
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
+              Create activity
+            </Button>
+          </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
