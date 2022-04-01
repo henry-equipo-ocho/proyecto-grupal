@@ -18,6 +18,14 @@ const itinerarySchema = new mongoose_1.default.Schema({
     name: { type: String, required: [true, 'Missing name attribute'] },
     activities: { type: [String], required: [true, 'Missing activities attribute'] }
 });
+const paymentSchema = new mongoose_1.default.Schema({
+    id: { type: String, required: [true, 'Missing id attribute'] },
+    status: { type: String, required: [true, 'Missing status attribute'] },
+    description: { type: String, required: [true, 'Missing description attribute'] },
+    tier: { type: Number, required: [true, 'Missing tier attribute'] },
+}, {
+    timestamps: true
+});
 const userSchema = new mongoose_1.default.Schema({
     name: { type: String, required: [true, 'Missing name attribute'] },
     surname: { type: String, required: [true, 'Missing surname attribute'] },
@@ -26,6 +34,8 @@ const userSchema = new mongoose_1.default.Schema({
     password: { type: String, required: [true, 'Missing password attribute'] },
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
     favActivities: [itinerarySchema],
+    payments: [paymentSchema],
+    activeSubscription: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: false }
 });
 userSchema.pre('save', function (next) {
