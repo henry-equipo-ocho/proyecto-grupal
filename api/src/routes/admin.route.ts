@@ -6,7 +6,7 @@ const router: Router = Router();
 
 router.post('/token', tokenVerifyController);
 
-// User
+// User 
 router.put('/update/user', passport.authenticate('jwt', {session: false}), roleVerify, userUpdateController);
 router.post('/create/user', passport.authenticate('jwt', {session: false}), roleVerify, createUserController);
 router.delete('/delete/user', passport.authenticate('jwt', {session: false}), roleVerify, deleteUserController);
