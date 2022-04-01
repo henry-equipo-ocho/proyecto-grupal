@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import axios from 'axios';
 
 import { ProviderContext } from './Context/context'
 
@@ -32,6 +34,28 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function AdminDashboard() {
   const history = useNavigate();
+  
+  const verify = async () => {
+    try{
+      const token = JSON.parse(localStorage.getItem('token'));
+      await axios.post('http://localhost:3001/admin/token', {
+        token
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      console.log('hola admin!')
+    }
+    catch(e){
+      history('/home');
+    }
+  };
+
+  useEffect(() => {
+    verify();
+  }, []);
 
   const [state, setState] = useState(false);
 

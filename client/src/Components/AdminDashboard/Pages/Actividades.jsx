@@ -28,7 +28,7 @@ export default function Actividades() {
         {page === 'index' ?
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Alert severity="warning" sx={{ width: '100%' }}>
-              <AlertTitle>Users Panel</AlertTitle>
+              <AlertTitle>Activities Panel</AlertTitle>
               Here you will have control of <strong>all activities</strong> on the platform, <strong>be careful what you do.</strong>
             </Alert>
             <Typography variant='h5' sx={{ my: 2 }}>Available Actions</Typography>

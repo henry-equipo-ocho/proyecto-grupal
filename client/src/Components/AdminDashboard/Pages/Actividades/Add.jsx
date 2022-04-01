@@ -66,7 +66,12 @@ export default function Add() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post('http://localhost:3001/signup', values);
+        const token = JSON.parse(localStorage.getItem('token'));
+        await axios.post('http://localhost:3001/admin/create/user', values,  {
+            headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         alert("Success", "User succesfully added!", "success");
       }
       catch (e) {

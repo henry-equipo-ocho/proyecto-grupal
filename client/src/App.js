@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import NavBar from './Components/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import Register from './Components/Register/Register'
