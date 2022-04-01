@@ -31,7 +31,7 @@ export default function Dashboard() {
       </Box>
       <Typography variant='h5' sx={{ my: 1 }}>What do you want to do?</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', padding: '10px' }}>
-        <Card sx={{ margin: '10px' }}>
+        <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'users')}>
           <CardContent>
             <Typography color="text.secondary" gutterBottom>
               <GroupIcon sx={{ fontSize: '35px' }}/>
@@ -51,7 +51,7 @@ export default function Dashboard() {
             <Button size="small" onClick={ () => reducer("SET_PAGE", 'users')}>View Panel</Button>
           </CardActions>
         </Card>
-        <Card sx={{ margin: '10px' }}>
+        <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'actividades')}>
           <CardContent>
             <Typography color="text.secondary" gutterBottom>
               <LocalActivityIcon sx={{ fontSize: '35px' }} />
@@ -71,7 +71,7 @@ export default function Dashboard() {
           <Button size="small" onClick={ () => reducer("SET_PAGE", 'actividades')}>View Panel</Button>
           </CardActions>
         </Card>
-        <Card sx={{ margin: '10px' }}>
+        <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'business')}>
           <CardContent>
             <Typography color="text.secondary" gutterBottom>
               <StoreIcon sx={{ fontSize: '35px' }} />
@@ -91,7 +91,7 @@ export default function Dashboard() {
           <Button size="small" onClick={ () => reducer("SET_PAGE", 'business')}>View Panel</Button>
           </CardActions>
         </Card>
-        <Card sx={{ margin: '10px' }}>
+        <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'estadisticas')}>
           <CardContent>
             <Typography color="text.secondary" gutterBottom>
               <BarChartIcon sx={{ fontSize: '35px' }} />

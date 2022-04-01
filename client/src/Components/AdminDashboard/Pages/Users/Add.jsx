@@ -55,7 +55,7 @@ export default function Add() {
     onSubmit: async (values) => {
         try {
           await axios.post('http://localhost:3001/signup', values);
-          alert("Success", "Succesfully registered!", "success");
+          alert("Success", "User succesfully added!", "success");
         }
         catch (e) {
           console.log(e)

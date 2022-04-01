@@ -29,11 +29,11 @@ export default function Users() {
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Alert severity="warning" sx={{ width: '100%' }}>
               <AlertTitle>Users Panel</AlertTitle>
-              Here you will have control of all the users of the platform, <strong>be careful what you do.</strong>
+              Here you will have control of <strong>all users</strong> on the platform, <strong>be careful what you do.</strong>
             </Alert>
             <Typography variant='h5' sx={{ my: 2 }}>Available Actions</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', padding: '10px' }}>
-              <Card sx={{ margin: '10px' }}>
+              <Card sx={{ margin: '10px' }} onClick={() => setPage('add')}>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
                     <PersonAddAltIcon sx={{ fontSize: '35px' }} />
@@ -51,7 +51,7 @@ export default function Users() {
                   <Button size="small" onClick={() => setPage('add')}>Add user</Button>
                 </CardActions>
               </Card>
-              <Card sx={{ margin: '10px' }}>
+              <Card sx={{ margin: '10px' }} onClick={() => setPage('remove')}>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
                     <GroupRemoveIcon sx={{ fontSize: '35px' }} />
@@ -69,7 +69,7 @@ export default function Users() {
                   <Button size="small" onClick={() => setPage('remove')}>Remove user</Button>
                 </CardActions>
               </Card>
-              <Card sx={{ margin: '10px' }}>
+              <Card sx={{ margin: '10px' }} onClick={() => setPage('list')}>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
                     <SupervisedUserCircleIcon sx={{ fontSize: '35px' }} />
