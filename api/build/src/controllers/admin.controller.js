@@ -101,11 +101,12 @@ const userUpdateController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const { id } = req.body;
         if (req.body.password)
-            yield (0, userUpdate_services_1.updatePassword)(req, id);
+            yield (0, userUpdate_services_1.updatePassword)(req.body.password, id);
         if (Object.entries(req.body).length === 1 && req.body.password)
             return res.status(200).send(({ status: 'success' }));
         if (Object.entries(req.body).length === 0)
             return res.status(400).send(({ status: 'error', errors: { message: 'No values to modified' } }));
+        req.body.password && delete req.body.password;
         yield (0, userUpdate_services_1.updatePersonalInfo)(req, id);
         return res.status(200).send(({ status: 'success' }));
     }
@@ -126,8 +127,8 @@ const activityUpdateController = (req, res) => __awaiter(void 0, void 0, void 0,
 });
 exports.activityUpdateController = activityUpdateController;
 const createActivityController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
-    if (!id || !name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
+    const { name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
+    if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
         return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
     }
     const activitiesFormat = { name, description, picture, city, country, price_currency, price_amount, booking };

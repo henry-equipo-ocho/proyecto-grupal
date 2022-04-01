@@ -96,11 +96,13 @@ export const userUpdateController = async (req: Request, res: Response) => {
 
         const { id } = req.body;
 
-        if(req.body.password) await updatePassword(req, id);
+        if(req.body.password) await updatePassword(req.body.password, id);
 
         if(Object.entries(req.body).length === 1 && req.body.password) return res.status(200).send(<ServerResponse>({status: 'success'}));
 
         if(Object.entries(req.body).length === 0 ) return res.status(400).send(<ServerResponse>({status: 'error', errors: {message: 'No values to modified'}}));
+
+        req.body.password && delete req.body.password;
         
         await updatePersonalInfo(req, id);
         
@@ -124,9 +126,9 @@ export const activityUpdateController = async (req: Request, res: Response) => {
 }
 
 export const createActivityController = async (req: Request, res: Response) => {
-    const {id, name, description, picture, city, country, price_currency, price_amount, booking} = req.body;
+    const {name, description, picture, city, country, price_currency, price_amount, booking} = req.body;
 
-    if(!id || !name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
+    if(!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
         return res.status(400).send(<ServerResponse>({status: 'failed', errors: {message: `Missing values`}}));
     }
 

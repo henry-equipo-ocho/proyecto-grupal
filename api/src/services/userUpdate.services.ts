@@ -6,8 +6,6 @@ export const updatePersonalInfo = async (req: Request, id: string) => {
         const condictions = {_id: id}
         const update = req.body;
 
-        update.password && delete update.password;
-
         User.findOneAndUpdate(condictions, update, (error: any, result: any) => {
             if(error) return error
             else return result;
@@ -17,11 +15,11 @@ export const updatePersonalInfo = async (req: Request, id: string) => {
     }
 }
 
-export const updatePassword = async (req: Request, id: string) => {
+export const updatePassword = async (password: string, id: string) => {
    try {
         User.findById(id, async function(err: any, result: any) {
             if (err) return false;
-            result.password = req.body.password;
+            result.password = password;
             await result.save();
         });
     } catch (e) {

@@ -18,7 +18,6 @@ const updatePersonalInfo = (req, id) => __awaiter(void 0, void 0, void 0, functi
     try {
         const condictions = { _id: id };
         const update = req.body;
-        update.password && delete update.password;
         User_models_1.default.findOneAndUpdate(condictions, update, (error, result) => {
             if (error)
                 return error;
@@ -31,13 +30,13 @@ const updatePersonalInfo = (req, id) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.updatePersonalInfo = updatePersonalInfo;
-const updatePassword = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
+const updatePassword = (password, id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         User_models_1.default.findById(id, function (err, result) {
             return __awaiter(this, void 0, void 0, function* () {
                 if (err)
                     return false;
-                result.password = req.body.password;
+                result.password = password;
                 yield result.save();
             });
         });
