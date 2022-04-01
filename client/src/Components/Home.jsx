@@ -12,7 +12,8 @@ import LoginButton from './LoginButton/LoginButton';
 import { Profile } from './Profile/Profile';
 import { useAuth0 } from '@auth0/auth0-react'
 export default function Home() {
-    const { user } = useAuth0();
+    const { user } = Profile();
+    console.log("user:", user)
 
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
@@ -61,7 +62,7 @@ export default function Home() {
 
                 <div className='userName'>
                     <label style={{ fontSize: '30px' }}>
-                      Hola
+                      Hola 
                         {/* Hola {userName.split('@')[0]}  ¿A donde quieres ir? */}
                     </label>
                 </div>

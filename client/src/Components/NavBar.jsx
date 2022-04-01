@@ -45,6 +45,8 @@ export default function NavBar({ handleLoginForm }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Eztinerary
                     </Typography>
+                    <Profile  />
+
                     {
                         isAuthenticated ?
                         <LogoutButton />
@@ -55,7 +57,7 @@ export default function NavBar({ handleLoginForm }) {
                     }
                     
                     
-                    <Profile  />
+                    
 
                     {/* <SearchBar /> */}
 
