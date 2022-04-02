@@ -1,17 +1,16 @@
 .input {
-
     top: 95px;
     right: 100px;
     background-color: white;
     z-index: 1000;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    height: 50px;
+    height: 40px;
     width: 500px;
     padding: 5px;
     border-radius: 10px;
     border-style: none;
     font-size: medium;
-
+    font-family: 'Roboto';
 }
 
 .button {
@@ -20,11 +19,12 @@
     font-size: medium;
     font-style:normal;
     font-weight:550;
-    border-radius: 10px;
+    border-radius: 8px;
     margin: 1em;
     background-color: #062554;
     color: white;
     border-style: none;
     width: 70px;
+    cursor: pointer;
 }
 

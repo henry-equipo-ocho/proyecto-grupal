@@ -7,6 +7,8 @@ import {
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
     GET_CITIES,
+    PAYMENT_ORDER,
+    SUCCESS
 
 } from '../Actions/actions_types';
 
@@ -17,6 +19,7 @@ const initialState = {
     countries: [],
     cities: [],
     loading: true,
+    payment: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -68,6 +71,13 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 cities: action.payload,
             };
+        case PAYMENT_ORDER:
+            return {
+                ...state,
+                payment: action.payload
+            }
+        case SUCCESS:
+            return
 
         default:
             return state;

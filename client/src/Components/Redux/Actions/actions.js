@@ -7,7 +7,9 @@ import {
     ORDER_ACTIVITIES_BY_CITY,
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
-    GET_CITIES
+    GET_CITIES,
+    PAYMENT_ORDER,
+    SUCCESS,
 } from './actions_types'
 
 import swal from 'sweetalert';
@@ -82,7 +84,7 @@ export function orderActivitiesByCity(payload) {
 
 export function orderActivitiesByPrice(payload) {
     return async function (dispatch) {
-        dispatch(setLoading(true))
+        dispatch(setLoading(true));
         const prices = await axios.post('http://localhost:3001/activities/orderByPrice', payload);
         return dispatch({
             type: ORDER_ACTIVITIES_BY_PRICE,
@@ -90,6 +92,49 @@ export function orderActivitiesByPrice(payload) {
         });
     };
 };
+
+export function paymentOrder(payload) {
+    console.log(payload)
+    return async function (dispatch) {
+        try {
+            const token = JSON.parse(localStorage.getItem('token'));
+            const payment = await axios.post('http://localhost:3001/payment/create',{cart:payload}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            console.log(payment.data)
+            window.open(payment.data.data.href, '_blank')
+            const success = await axios.get('http://localhost:3001/payment/capture', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }});
+            
+            return dispatch({
+                type: PAYMENT_ORDER,
+                payload: payment.data.data,
+            });
+            
+        } catch (response) {
+
+            console.log(response.request)
+        }
+
+    };
+};
+
+export function successORDER() {
+    return async function(dispatch){
+        const success = await axios.get('http://localhost:3001/payment/capture');
+        return dispatch({
+            type: SUCCESS,
+            payload: success,
+        })
+    }
+}
+
+
+
 
 export const setLoading = (Boolean) => {
     return {

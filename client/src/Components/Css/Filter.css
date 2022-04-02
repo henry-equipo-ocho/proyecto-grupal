@@ -30,11 +30,12 @@
     font-size: medium;
     font-style:normal;
     font-weight:550;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #062554;
     color: white;
     border-style: none;
     width: 70px;
     height: 30px;
+    cursor: pointer;
 }
 
