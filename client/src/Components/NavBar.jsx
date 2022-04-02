@@ -21,7 +21,7 @@ export default function NavBar({ handleLoginForm }) {
     const axiosPrivate = useAxiosPrivate();
 
     const dispatch = useDispatch();
-    const isLogged = useSelector(state => state.token) ? true : false;
+    const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
 
     const logout = (e) => {
         e.preventDefault();
