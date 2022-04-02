@@ -92,14 +92,15 @@ export default function Listar() {
     }
   };
 
-  const handleDetail = (_id, name, surname, email, country, subscribed, verified) => {
+  const handleDetail = (_id, name, surname, email, country, subscribed, verified, role) => {
     alert(`Detail of ${name} ${surname}`, `ID: ${_id}
     Name: ${name}
     Surname: ${surname}
     Email: ${email}
     Country: ${country}
     Subscribed: ${subscribed}
-    Verified: ${verified}`)
+    Verified: ${verified}
+    Role: ${role === 0 ? 'User': role === 1 ? 'Business' : role === 2 ? 'Helper' : role === 3 ? 'Admin' : 'Unknown'}`)
   };
 
   const handleDelete = (_id) => {
@@ -127,13 +128,14 @@ export default function Listar() {
             alert("Success", "User succesfully deleted!", "success");
             setOpen(false);
             setLoading(true);
+            setPage(0);
             loadUsers();
           }
           catch (e) {
             console.log(e)
             alert("Error", "" + e, "error")
           }
-      } else {
+        } else {
         alert("Cancelled", "Action cancelled", "error");
       }
     });
@@ -153,7 +155,17 @@ export default function Listar() {
     onSubmit: async (values) => {
       try {
         const token = JSON.parse(localStorage.getItem('token'));
-        await axios.put('http://localhost:3001/admin/update/user', values, {
+        let datos;
+        if(values.password){
+          datos = values;
+        }
+        else{
+          delete formik.values.password;
+          datos = values;
+        }
+
+        console.log(values)
+        await axios.put('http://localhost:3001/admin/update/user', datos, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -161,6 +173,7 @@ export default function Listar() {
         alert("Success", "User succesfully edited!", "success");
         setOpen(false);
         setLoading(true);
+        setPage(0);
         loadUsers();
       }
       catch (e) {
@@ -251,7 +264,7 @@ export default function Listar() {
                                       }
                                     )
                                   }}><EditIcon /></Button>
-                                  <Button onClick={() => handleDetail(user._id, user.name, user.surname, user.email, user.country, user.activeSubscription, user.isVerified)}><VisibilityIcon /></Button>
+                                  <Button onClick={() => handleDetail(user._id, user.name, user.surname, user.email, user.country, user.activeSubscription, user.isVerified, user.role)}><VisibilityIcon /></Button>
                                   <Button onClick={() => handleDelete(user._id)}><DeleteOutlineIcon /></Button>
                                 </TableCell>
                               </TableRow>

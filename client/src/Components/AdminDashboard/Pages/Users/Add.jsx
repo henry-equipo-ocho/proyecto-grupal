@@ -62,6 +62,7 @@ export default function Add() {
           }
         });
         alert("Success", "User succesfully added!", "success");
+        formik.resetForm();
       }
       catch (e) {
         console.log(e)
@@ -156,7 +157,7 @@ export default function Add() {
             onChange={formik.handleChange}
             error={formik.touched.role && Boolean(formik.errors.role)}
           >
-            <MenuItem value={1}>
+            <MenuItem value={0}>
               Client
             </MenuItem>
             <MenuItem value={1}>

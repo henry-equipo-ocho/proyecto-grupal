@@ -73,6 +73,7 @@ export default function Add() {
           }
         });
         alert("Success", "Activity succesfully added!", "success");
+        formik.resetForm();
       }
       catch (e) {
         console.log(e)
