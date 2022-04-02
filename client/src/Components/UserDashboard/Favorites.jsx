@@ -130,7 +130,10 @@ export default function Favorites() {
               )
             })
             :
-            <Typography variant='h4' sx={{ marginTop: '45px', marginBottom: '10px' }}>No itineraries</Typography>
+            <Alert severity="error" sx={{ width: '100%', my: 1 }}>
+              <AlertTitle>Activities</AlertTitle>
+              No activities to display — <strong><Link to='/home' style={{ textDecoration: 'none' }}><Button>Try add activities here!</Button></Link></strong>
+            </Alert>
         }
       </Box>
     </Box>

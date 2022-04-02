@@ -71,26 +71,6 @@ export default function Dashboard() {
           <Button size="small" onClick={ () => reducer("SET_PAGE", 'actividades')}>View Panel</Button>
           </CardActions>
         </Card>
-        <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'business')}>
-          <CardContent>
-            <Typography color="text.secondary" gutterBottom>
-              <StoreIcon sx={{ fontSize: '35px' }} />
-            </Typography>
-            <Typography variant="h5" component="div">
-              Business
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              In this panel you can edit view or delete
-              <br />
-              one or many business,
-              <br />
-              depending on the need.
-            </Typography>
-          </CardContent>
-          <CardActions>
-          <Button size="small" onClick={ () => reducer("SET_PAGE", 'business')}>View Panel</Button>
-          </CardActions>
-        </Card>
         <Card sx={{ margin: '10px' }} onClick={ () => reducer("SET_PAGE", 'estadisticas')}>
           <CardContent>
             <Typography color="text.secondary" gutterBottom>

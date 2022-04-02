@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import sweetAlert from 'sweetalert';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -71,7 +72,7 @@ export default function Register() {
         console.log(values)
         try {
           await axios.post('http://localhost:3001/signup', values);
-          alert("Succesfully registered!");
+          sweetAlert('Congrats', 'Succesfully registered! You can now verify your email for activate account!', 'success')
           history('/home');
         }
         catch (e) {

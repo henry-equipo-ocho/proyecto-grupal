@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import Add from './Users/Add'; 
+import Add from './Users/Add';
 import Listar from './Users/Listar';
-import Remove from './Users/Remove';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -14,7 +13,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
-import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
@@ -26,7 +24,7 @@ export default function Users() {
       <Typography variant='h4' sx={{ mb: 1 }}>Users Dashboard</Typography>
       <Box>
         {page === 'index' ?
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Alert severity="warning" sx={{ width: '100%' }}>
               <AlertTitle>Users Panel</AlertTitle>
               Here you will have control of <strong>all users</strong> on the platform, <strong>be careful what you do.</strong>
@@ -49,24 +47,6 @@ export default function Users() {
                 </CardContent>
                 <CardActions>
                   <Button size="small" onClick={() => setPage('add')}>Add user</Button>
-                </CardActions>
-              </Card>
-              <Card sx={{ margin: '10px' }} onClick={() => setPage('remove')}>
-                <CardContent>
-                  <Typography color="text.secondary" gutterBottom>
-                    <GroupRemoveIcon sx={{ fontSize: '35px' }} />
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    Remove user
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    If you want remove a user in the database,
-                    <br />
-                    click on the link.
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => setPage('remove')}>Remove user</Button>
                 </CardActions>
               </Card>
               <Card sx={{ margin: '10px' }} onClick={() => setPage('list')}>
@@ -96,19 +76,13 @@ export default function Users() {
               <Add />
             </Box>
             :
-            page === 'remove' ?
+            page === 'list' ?
               <Box>
                 <Button variant='contained' onClick={() => setPage('index')}>Back</Button>
-                <Remove />
+                <Listar />
               </Box>
               :
-              page === 'list' ?
-                <Box>
-                  <Button variant='contained' onClick={() => setPage('index')}>Back</Button>
-                  <Listar />
-                </Box>
-                :
-                null
+              null
         }
       </Box>
     </Container>

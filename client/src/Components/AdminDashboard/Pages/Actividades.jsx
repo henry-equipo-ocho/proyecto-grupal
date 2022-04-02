@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import Add from './Actividades/Add'; 
 import Listar from './Actividades/Listar';
-import Remove from './Actividades/Remove';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -15,7 +14,6 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export default function Actividades() {
@@ -51,24 +49,6 @@ export default function Actividades() {
                   <Button size="small" onClick={() => setPage('add')}>Add activity</Button>
                 </CardActions>
               </Card>
-              <Card sx={{ margin: '10px' }} onClick={() => setPage('remove')}>
-                <CardContent>
-                  <Typography color="text.secondary" gutterBottom>
-                    <RemoveCircleIcon sx={{ fontSize: '35px' }} />
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    Remove activity
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    If you want remove an activity 
-                    <br />
-                    click on the link.
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => setPage('remove')}>Remove activity</Button>
-                </CardActions>
-              </Card>
               <Card sx={{ margin: '10px' }} onClick={() => setPage('list')}>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
@@ -96,12 +76,6 @@ export default function Actividades() {
               <Add />
             </Box>
             :
-            page === 'remove' ?
-              <Box>
-                <Button variant='contained' onClick={() => setPage('index')}>Back</Button>
-                <Remove />
-              </Box>
-              :
               page === 'list' ?
                 <Box>
                   <Button variant='contained' onClick={() => setPage('index')}>Back</Button>

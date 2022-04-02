@@ -67,12 +67,12 @@ export default function Add() {
     onSubmit: async (values) => {
       try {
         const token = JSON.parse(localStorage.getItem('token'));
-        await axios.post('http://localhost:3001/admin/create/user', values,  {
+        await axios.post('http://localhost:3001/admin/create/activity', values,  {
             headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-        alert("Success", "User succesfully added!", "success");
+        alert("Success", "Activity succesfully added!", "success");
       }
       catch (e) {
         console.log(e)
@@ -98,8 +98,8 @@ export default function Add() {
           />
           <TextField
             sx={{ my: 1, width: '100%' }}
-            id="desc"
-            name="desc"
+            id="description"
+            name="description"
             label="Description"
             value={formik.values.description}
             onChange={formik.handleChange}
@@ -110,8 +110,8 @@ export default function Add() {
         <Box>
           <TextField
             sx={{ my: 1, width: '100%' }}
-            id="pic"
-            name="pic"
+            id="picture"
+            name="picture"
             label="Picture link"
             value={formik.values.picture}
             onChange={formik.handleChange}
@@ -158,8 +158,8 @@ export default function Add() {
         <Box>
           <TextField
             sx={{ my: 1, width: '100%' }}
-            id="currency"
-            name="currency"
+            id="price_currency"
+            name="price_currency"
             label="Currency"
             value={formik.values.price_currency}
             onChange={formik.handleChange}
@@ -170,8 +170,8 @@ export default function Add() {
         <Box>
           <TextField
             sx={{ my: 1, width: '100%' }}
-            id="price"
-            name="price"
+            id="price_amount"
+            name="price_amount"
             label="Price"
             value={formik.values.price_amount}
             onChange={formik.handleChange}
@@ -182,8 +182,8 @@ export default function Add() {
         <Box>
           <TextField
             sx={{ my: 1, width: '100%' }}
-            id="link"
-            name="link"
+            id="booking"
+            name="booking"
             label="Link to Activity"
             value={formik.values.booking}
             onChange={formik.handleChange}

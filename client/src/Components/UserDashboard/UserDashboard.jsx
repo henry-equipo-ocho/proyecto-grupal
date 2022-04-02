@@ -137,6 +137,11 @@ const ResponsiveAppBar = () => {
         :
           <EditProfile />
       }
+      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
+        User dashboard 0.0.1 - <strong>Eztinerary</strong>
+      </Typography>
+      </Box>
     </Box>
     </>
   );

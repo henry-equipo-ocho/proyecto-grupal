@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard';
 import About from './Pages/About';
 import Actividades from './Pages/Actividades';
-import Business from './Pages/Business';
 import Estadisticas from './Pages/Estadisticas';
 import Users from './Pages/Users';
 
@@ -29,7 +28,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import StoreIcon from '@mui/icons-material/Store';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function AdminDashboard() {
@@ -119,12 +117,6 @@ export default function AdminDashboard() {
           </ListItemIcon>
           <ListItemText primary='Activities' />
         </ListItem>
-        <ListItem button onClick={() => setPage('business')}>
-          <ListItemIcon>
-            <StoreIcon />
-          </ListItemIcon>
-          <ListItemText primary='Business' />
-        </ListItem>
         <ListItem button onClick={() => setPage('estadisticas')}>
           <ListItemIcon>
             <BarChartIcon />
@@ -162,7 +154,6 @@ export default function AdminDashboard() {
         { page === 'dashboard' ? <Dashboard /> : null }
         { page === 'about' ? <About /> : null }
         { page === 'actividades' ? <Actividades /> : null }
-        { page === 'business' ? <Business /> : null }
         { page === 'estadisticas' ? <Estadisticas /> : null }
         { page === 'users' ? <Users /> : null }
       </ProviderContext>

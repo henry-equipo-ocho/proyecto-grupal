@@ -114,7 +114,7 @@ export default function EditProfile() {
             }
           });
           
-          sweetAlert('Congrats', 'Activity added succesfully!', 'success')
+          sweetAlert('Congrats', 'User edited succesfully!', 'success')
         }
         catch (e) {
           console.log(e)
