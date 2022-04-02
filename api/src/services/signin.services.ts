@@ -25,7 +25,7 @@ export const matchUserPasswordService = async (user: UserInterface, password: st
 
 export const createUserTokenService = (user: UserInterface): string => {
     return jwt.sign({id: user.id, email: user.email, name: user.name, role: user.role}, process.env.JWT_SECRET as string, {
-        expiresIn: '5s'
+        expiresIn: '15m'
     })
 };
 
