@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const signin_controller_1 = require("../controllers/signin.controller");
 const passport_1 = __importDefault(require("passport"));
-//
 const verification_1 = __importDefault(require("../middlewares/verification"));
 const router = (0, express_1.Router)();
 router.post('/', verification_1.default, signin_controller_1.signInController);

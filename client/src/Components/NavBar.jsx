@@ -12,15 +12,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
 import SearchBar from './SearchBar/SearchBar.jsx';
 import SearchBarCopy from './SearchBar/SearchBarCopy';
+import { SET_TOKEN } from './Redux/Actions/actions_types';
+
+import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 export default function NavBar({ handleLoginForm }) {
+
+    const axiosPrivate = useAxiosPrivate();
+
     const dispatch = useDispatch();
-    const isLogged = window.localStorage.getItem('token') ? true : false;
+    const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
 
     const logout = (e) => {
         e.preventDefault();
         window.localStorage.clear();
         dispatch(setUserName('Viajero'));
+        axiosPrivate.get('/token/clear');
+        dispatch({ type: SET_TOKEN, payload: '' });
         window.location.reload();
     }
 
