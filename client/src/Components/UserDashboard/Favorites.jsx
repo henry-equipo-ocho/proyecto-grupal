@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import sweetAlert from 'sweetalert';
 
-import axios from 'axios';
-
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -20,23 +18,27 @@ import { Link } from 'react-router-dom';
 
 import FavCard from './FavCard';
 
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
+
+
 export default function Favorites() {
+
+  const axiosPrivate = useAxiosPrivate();
+
   const [iti, setIti] = useState([]);
 
   const [itiName, setItiname] = useState('');
 
   const remove = async (itineraryName) => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      await axios.delete('http://localhost:3001/favorites',
+      
+      await axiosPrivate.delete('/favorites',
         {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
           data: {
             itineraryName,
           }
-        });
+        }
+      );
       sweetAlert('Congrats', `Itinerary "${itineraryName}" deleted!`, 'success')
     }
     catch (e) {
@@ -47,13 +49,8 @@ export default function Favorites() {
 
   const getFavorites = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      const response = await axios.get('http://localhost:3001/favorites/',
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+      
+      const response = await axiosPrivate.get('/favorites');
       setIti([...response.data.data]);
     }
     catch (e) {

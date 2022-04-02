@@ -18,6 +18,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 import countries from '../Register/countries';
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
 const validationSchema = yup.object({
   name: yup
@@ -44,19 +45,14 @@ const validationSchema = yup.object({
 
 export default function EditProfile() {
 
+  const axiosPrivate = useAxiosPrivate();
+
   const datosIniciales = {};
 
   useEffect(() => {
     (async function cargarData (){
       try{
-        const token = JSON.parse(localStorage.getItem('token'));
-        const response = await axios.get('http://localhost:3001/update', 
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
+        const response = await axiosPrivate.get('/update');
         datosIniciales.name = response.data.data.name;
         datosIniciales.surname = response.data.data.surname;
         datosIniciales.email = response.data.data.email;
@@ -92,27 +88,16 @@ export default function EditProfile() {
     onSubmit: async (values) => {
       console.log(values)
         try {
-          const token = JSON.parse(localStorage.getItem('token'));
           const data = {
             name: values.name,
             surname: values.surname,
             email: values.email,
             country: values.country
           }
-          await axios.post('http://localhost:3001/update', data, 
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-
-          await axios.post('http://localhost:3001/update/password', {
-            password: values.password
-          },{
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
+          await axiosPrivate.post('/update', data)
+          
+          await axiosPrivate.post('update/password', { password: values.password });
+          
           
           sweetAlert('Congrats', 'User edited succesfully!', 'success')
         }

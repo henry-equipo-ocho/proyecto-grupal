@@ -1,5 +1,5 @@
 import { Request, Response, RequestHandler } from 'express';
-import { createUserTokenService, getUserService, matchUserPasswordService } from '../services/signin.services';
+import { createUserTokenService, getUserService, matchUserPasswordService, createRefreshTokenService } from '../services/signin.services';
 import ServerResponse from '../interfaces/ServerResponse.interface';
 import passport from 'passport';
 
@@ -19,6 +19,10 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
       const token = createUserTokenService(user);
       if(!token) return res.status(400).json(<ServerResponse>({status: 'failed', errors: {message: `Couldn't create token`}}));
 
+      const refreshToken = createRefreshTokenService(user);
+      if(!refreshToken) return res.status(400).json(<ServerResponse>({status: 'failed', errors: {message: `Couldn't create refresh token`}}));
+      
+      res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000});
       return res.status(200).json(<ServerResponse>{status: 'success', data: token});
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
