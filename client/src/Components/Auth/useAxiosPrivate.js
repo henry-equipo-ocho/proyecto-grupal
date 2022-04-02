@@ -3,6 +3,7 @@ import { useRefreshToken } from "./useRefreshToken";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../Redux/Actions/actions";
+import jwtDecode from "jwt-decode";
 
 export const useAxiosPrivate = () => {
 
@@ -29,6 +30,7 @@ export const useAxiosPrivate = () => {
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     dispatch(setToken(newAccessToken));
+                    !localStorage.getItem('data') && localStorage.setItem('data', JSON.stringify(jwtDecode(newAccessToken)));
                     return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);
