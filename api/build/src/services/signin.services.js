@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
+exports.createRefreshTokenService = exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -39,7 +39,13 @@ const matchUserPasswordService = (user, password) => __awaiter(void 0, void 0, v
 exports.matchUserPasswordService = matchUserPasswordService;
 const createUserTokenService = (user) => {
     return jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
+        expiresIn: '5s'
     });
 };
 exports.createUserTokenService = createUserTokenService;
+const createRefreshTokenService = (user) => {
+    return jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: '7d'
+    });
+};
+exports.createRefreshTokenService = createRefreshTokenService;

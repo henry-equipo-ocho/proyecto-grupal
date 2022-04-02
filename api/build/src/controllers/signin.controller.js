@@ -25,6 +25,10 @@ const signInController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const token = (0, signin_services_1.createUserTokenService)(user);
         if (!token)
             return res.status(400).json(({ status: 'failed', errors: { message: `Couldn't create token` } }));
+        const refreshToken = (0, signin_services_1.createRefreshTokenService)(user);
+        if (!refreshToken)
+            return res.status(400).json(({ status: 'failed', errors: { message: `Couldn't create refresh token` } }));
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
         return res.status(200).json({ status: 'success', data: token });
     }
     catch (e) {
