@@ -7,7 +7,7 @@ import {
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
     GET_CITIES,
-
+    SET_TOKEN
 } from '../Actions/actions_types';
 
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
     countries: [],
     cities: [],
     loading: true,
+    token: ''
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -68,7 +69,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 cities: action.payload,
             };
-
+        case SET_TOKEN:
+            return {
+                ...state,
+                token: action.payload
+            };
         default:
             return state;
     };

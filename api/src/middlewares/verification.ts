@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/User.models';
 
 
-const verifyEmail = async(req: Request, res: Response, next) => {
+const verifyEmail = async(req: Request, res: Response, next: any) => {
 
     try {
         const user = await User.findOne({ email: req.body.email});

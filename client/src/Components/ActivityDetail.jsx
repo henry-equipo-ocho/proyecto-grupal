@@ -17,9 +17,10 @@ import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 
 import { imageListItemClasses, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import sweetAlert from 'sweetalert';
-import axios from 'axios';
+
+import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 const style = {
   position: 'absolute',
@@ -35,12 +36,16 @@ const style = {
 };
 
 export default function ActivityDetail({ activity, close, id }) {
+
+  const axiosPrivate = useAxiosPrivate();
+
   console.log(activity.price_amount)
   const usDollar = Math.round(parseInt(activity.price_amount) * 1.10);
-  const isLogged = window.localStorage.getItem('token') ? true : false;
+  // const isLogged = window.localStorage.getItem('token') ? true : false;
+  const isLogged = useSelector(state => state.token) ? true : false;
   const theme = useTheme();
   const dispatch = useDispatch();
-  const token = JSON.parse(localStorage.getItem('token'));
+  // const token = JSON.parse(localStorage.getItem('token'));
   const userID = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).id : false;
 
   const [showIti, setShowIti] = useState(false);
@@ -50,12 +55,7 @@ export default function ActivityDetail({ activity, close, id }) {
 
   const checkIfHasItineraries = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/favorites',
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+      const response = await axiosPrivate.get('/favorites');
       setItis(response.data.data.map(el => el.name));
     } catch (e) {
       console.log(e);
@@ -67,7 +67,7 @@ export default function ActivityDetail({ activity, close, id }) {
       close(e);
       setItis([]);
       try {
-        await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : itiID }, { headers: { 'Authorization': `Bearer ${token}` } })
+        await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : itiID });
         sweetAlert('Congrats', `Activity added succesfully in itinerary "${itiID}"!`, 'success');
       }
       catch (err) {
@@ -78,7 +78,7 @@ export default function ActivityDetail({ activity, close, id }) {
     else {
       close(e);
       setItis([]);
-      await axios.post('http://localhost:3001/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : 'New itinerary' }, { headers: { 'Authorization': `Bearer ${token}` } })
+      await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : 'New itinerary' });
       sweetAlert('Congrats', `Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`, 'success')
     }
   };

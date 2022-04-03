@@ -9,11 +9,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 // import { formLabelClasses, Link } from '@mui/material';
-import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
-import { setUserName } from './Redux/Actions/actions';
+import { setToken, setUserName } from './Redux/Actions/actions';
 import { useNavigate } from 'react-router-dom';
+import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 const style = {
   position: 'absolute',
@@ -38,6 +38,9 @@ const validationSchema = yup.object({
 });
 
 const FormDialog = ({ abierto, close }) => {
+
+  const axiosPrivate = useAxiosPrivate();
+
   const [open, setOpen] = React.useState(abierto);
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -51,11 +54,12 @@ const FormDialog = ({ abierto, close }) => {
     onSubmit: async (values) => {
       try {
         //console.log(values)
-        const datos = await axios.post('http://localhost:3001/signin', values)
+        const datos = await axiosPrivate.post('/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage
-        miStorage.setItem('token', JSON.stringify(datos.data.data))
+        dispatch(setToken(datos.data.data))
         miStorage.setItem('data', JSON.stringify(decoded))
+        miStorage.setItem('loggedIn', 'true')
         dispatch(setUserName(decoded.email))
         formik.resetForm()
         alert('Sesión iniciada con éxito');
