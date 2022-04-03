@@ -11,6 +11,8 @@ declare module "express" {
 }
 
 export const createOrder = async (req: Request, res: Response) => {
+    console.log(req.body.cart)
+    console.log(req.user)
     if (!req.body.cart) {
         return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing cart' } }));
     }
@@ -21,8 +23,10 @@ export const createOrder = async (req: Request, res: Response) => {
         }
         return res.status(500).json(<ServerResponse>({ status: 'failed', errors: { message: 'there was an error' } }));
     } catch (error) {
+        
         console.log("catch en el controller");
         return res.status(500).json(<ServerResponse>({ status: 'error', errors: { error } }));
+        
     }
 }
 

@@ -25,8 +25,7 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
-        },
-        custom_user_id: userID
+        }
     };
 
     try {
@@ -42,7 +41,7 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
         );
 
         await createPaymentInUserDB(userID, response, cart);
-        return response.data.links.filter((link:any) => link.rel === "approve");
+        return response.data.links.filter((link:any) => link.rel === "approve")[0];
     } catch (error) {
         throw error;
     }
