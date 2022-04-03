@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Footer from '../Footer';
 import Favorites from './Favorites';
 import EditProfile from './EditProfile';
 
@@ -19,8 +21,16 @@ const pages = ['Favorites', 'Edit profile', 'Plans'];
 
 const ResponsiveAppBar = () => {
   const history = useNavigate();
+  const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
+
+  useEffect(() => {
+    if(!isLogged){
+      history('/home');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -142,6 +152,7 @@ const ResponsiveAppBar = () => {
         User dashboard 0.0.1 - <strong>Eztinerary</strong>
       </Typography>
       </Box>
+      <Footer />
     </Box>
     </>
   );

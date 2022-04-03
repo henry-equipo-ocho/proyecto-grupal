@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
-import { ProviderContext } from './Context/context'
+import { ProviderContext } from './Context/context';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -32,18 +32,11 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function AdminDashboard() {
   const history = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
   
   const verify = async () => {
     try{
-      const token = JSON.parse(localStorage.getItem('token'));
-      await axios.post('http://localhost:3001/admin/token', {
-        token
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      await axiosPrivate.post('http://localhost:3001/admin/token')
       console.log('hola admin!')
     }
     catch(e){
@@ -53,6 +46,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     verify();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [state, setState] = useState(false);

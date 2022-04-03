@@ -53,7 +53,7 @@ const FormDialog = ({ abierto, close }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        //console.log(values)
+        console.log(values)
         const datos = await axiosPrivate.post('/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage

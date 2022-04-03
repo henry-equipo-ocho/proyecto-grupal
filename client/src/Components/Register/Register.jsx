@@ -72,7 +72,7 @@ export default function Register() {
         console.log(values)
         try {
           await axios.post('http://localhost:3001/signup', values);
-          sweetAlert('Congrats', 'Succesfully registered! You can now verify your email for activate account!', 'success')
+          sweetAlert('Succesfully registered!', 'You can now verify your email for activate account!', 'success')
           history('/home');
         }
         catch (e) {
