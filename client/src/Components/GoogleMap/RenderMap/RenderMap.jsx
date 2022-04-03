@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { getPlacesData, getWeatherData } from "../EndPoint/EndPoint";
+import { getPlacesData } from "../EndPoint/EndPoint";
 import Header from "../Header/Header";
 import List from "../List/List";
 import Map from "../Map/Map";
@@ -40,11 +40,12 @@ const RenderMap = () => {
     if (bounds) {
       setIsLoading(true);
 
-      getWeatherData(coords.lat, coords.lng)
-        .then((data) => setWeatherData(data));
+      // getWeatherData(coords.lat, coords.lng)
+      //   .then((data) => setWeatherData(data));
 
       getPlacesData(type, bounds.sw, bounds.ne)
         .then((data) => {
+          console.log("data:", data)
           setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
           setFilteredPlaces([]);
           setRating('');
@@ -85,7 +86,7 @@ const RenderMap = () => {
             setCoords={setCoords}
             coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
-            weatherData={weatherData}
+            // weatherData={weatherData}
           />
         </Grid>
       </Grid>
