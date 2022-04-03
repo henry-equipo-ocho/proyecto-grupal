@@ -101,15 +101,9 @@ export function paymentOrder(payload) {
             const payment = await axios.post('http://localhost:3001/payment/create',{cart:payload}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
             });
-            console.log(payment.data)
             window.open(payment.data.data.href, '_blank')
-            const success = await axios.get('http://localhost:3001/payment/capture', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }});
-            
             return dispatch({
                 type: PAYMENT_ORDER,
                 payload: payment.data.data,
@@ -123,18 +117,20 @@ export function paymentOrder(payload) {
     };
 };
 
-export function successORDER() {
+export function successOrder(paypalorder) {
     return async function(dispatch){
-        const success = await axios.get('http://localhost:3001/payment/capture');
+        const token = JSON.parse(localStorage.getItem('token'));
+        const success = await axios.get(`http://localhost:3001/payment/capture?token=${paypalorder}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         return dispatch({
             type: SUCCESS,
             payload: success,
         })
     }
-}
-
-
-
+};
 
 export const setLoading = (Boolean) => {
     return {

@@ -28,3 +28,7 @@
     cursor: pointer;
 }
 
+.button:hover{
+    background-color: #00498b;
+}
+
