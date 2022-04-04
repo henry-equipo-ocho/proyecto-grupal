@@ -109,7 +109,7 @@ export default function Estadisticas() {
       console.log(e);
     }
   };
-  
+
   const cargarActivities = async () => {
     try {
       const token = JSON.parse(localStorage.getItem('token'));
@@ -137,9 +137,9 @@ export default function Estadisticas() {
         }
       })
       setTotalBusiness(datos.data.data.filter(busi => busi.activeSubscription).length);
-      setBusinessBasic(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length-1].tier === 1).length);
-      setBusinessPro(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length-1].tier === 2).length);
-      setBusinessPremium(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length-1].tier === 3).length);
+      setBusinessBasic(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 1).length);
+      setBusinessPro(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 2).length);
+      setBusinessPremium(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 3).length);
       setLoadBusiness(false);
     }
     catch (e) {
@@ -154,46 +154,48 @@ export default function Estadisticas() {
   }, []);
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column', paddingTop: '30px' }}>
-      <Typography variant='h4' sx={{ mb: 1 }}>Statistics Dashboard</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <Box sx={{ width: '25vw' }}>
-          <Typography variant='h6' sx={{ mb: 1 }}>Users</Typography>
-          {
-            !loadUsers ?
-            <Box>
-              <Pie data={dataUsers} />
-              <Typography variant='h6' sx={{ mb: 1 }}>Total users: {totalUsers}</Typography>
-            </Box>
-              :
-              <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-          }
+    <center>
+      <Container sx={{ display: 'flex', flexDirection: 'column', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
+        <Typography variant='h4' sx={{ mb: 1 }}>Statistics Dashboard</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Box sx={{ width: '25vw' }}>
+            <Typography variant='h6' sx={{ mb: 1 }}>Users</Typography>
+            {
+              !loadUsers ?
+                <Box>
+                  <Pie data={dataUsers} />
+                  <Typography variant='h6' sx={{ mb: 1 }}>Total users: {totalUsers}</Typography>
+                </Box>
+                :
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+            }
+          </Box>
+          <Box sx={{ width: '25vw' }}>
+            <Typography variant='h6' sx={{ mb: 1 }}>Activities</Typography>
+            {
+              !loadActivities ?
+                <Box>
+                  <Pie data={dataActivities} />
+                  <Typography variant='h6' sx={{ mb: 1 }}>Total activities: {totalActivities}</Typography>
+                </Box>
+                :
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+            }
+          </Box>
+          <Box sx={{ width: '25vw' }}>
+            <Typography variant='h6' sx={{ mb: 1 }}>Business</Typography>
+            {
+              !loadBusiness ?
+                <Box>
+                  <Pie data={dataBusiness} />
+                  <Typography variant='h6' sx={{ mb: 1 }}>Total business: {totalBusiness}</Typography>
+                </Box>
+                :
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+            }
+          </Box>
         </Box>
-        <Box sx={{ width: '25vw' }}>
-          <Typography variant='h6' sx={{ mb: 1 }}>Activities</Typography>
-          {
-            !loadActivities ?
-            <Box>
-              <Pie data={dataActivities} />
-              <Typography variant='h6' sx={{ mb: 1 }}>Total activities: {totalActivities}</Typography>
-            </Box>
-              :
-              <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-          }
-        </Box>
-        <Box sx={{ width: '25vw' }}>
-          <Typography variant='h6' sx={{ mb: 1 }}>Business</Typography>
-          {
-            !loadBusiness ?
-            <Box>
-              <Pie data={dataBusiness} />
-              <Typography variant='h6' sx={{ mb: 1 }}>Total business: {totalBusiness}</Typography>
-            </Box>
-              :
-              <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-          }
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+    </center>
   )
 }

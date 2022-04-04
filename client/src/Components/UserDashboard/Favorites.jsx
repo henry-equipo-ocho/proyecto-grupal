@@ -64,7 +64,7 @@ export default function Favorites() {
   }, [])
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
       <Typography variant='h4' sx={{ marginTop: '15px', marginBottom: '10px' }}>Itineraries</Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'column' }}>
         {

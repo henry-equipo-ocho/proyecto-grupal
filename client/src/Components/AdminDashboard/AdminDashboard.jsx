@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
+import axios from 'axios';
+
+import './back.css';
 
 import { ProviderContext } from './Context/context';
 
@@ -13,6 +15,7 @@ import Estadisticas from './Pages/Estadisticas';
 import Users from './Pages/Users';
 
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
@@ -32,11 +35,11 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function AdminDashboard() {
   const history = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
-  
+
   const verify = async () => {
     try{
-      await axiosPrivate.post('http://localhost:3001/admin/token')
+      const token = JSON.parse(localStorage.getItem('token'));
+      await axios.post('http://localhost:3001/admin/token', { token }, { headers: { "Authorization": 'Bearer ' + token }});
       console.log('hola admin!')
     }
     catch(e){
@@ -131,9 +134,9 @@ export default function AdminDashboard() {
   );
 
   return (
-    <Box>
+    <Container maxWidth={false}>
       <Box>
-        <Button onClick={toggleDrawer(true)} sx={{ position: 'absolute' }} color='inherit'><MenuIcon /></Button>
+        <Button onClick={toggleDrawer(true)} sx={{ position: 'fixed', left: '0', margin: '5px' }} color='inherit' variant='contained'><MenuIcon /></Button>
         <SwipeableDrawer
           anchor='left'
           open={state}
@@ -153,10 +156,10 @@ export default function AdminDashboard() {
       </ProviderContext>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
+      <Typography className='footer' color="text.secondary">
         Admin dashboard 0.0.1 - <strong>Eztinerary</strong>
       </Typography>
       </Box>
-    </Box>
+    </Container>
   );
 }

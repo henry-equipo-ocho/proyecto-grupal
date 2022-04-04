@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { SET_TOKEN } from '../Redux/Actions/actions_types';
+import { setUserName } from '../Redux/Actions/actions';
+
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
 import Footer from '../Footer';
 import Favorites from './Favorites';
@@ -17,10 +22,13 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Favorites', 'Edit profile', 'Plans'];
+const pages = ['Favorites', 'Edit profile', 'Plans', 'Logout'];
 
-const ResponsiveAppBar = () => {
+const UserDashboard = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
+
   const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
@@ -36,14 +44,29 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(event.currentTarget);
   };
 
+  const logout = (e) => {
+    console.log('3')
+    window.localStorage.clear();
+    dispatch(setUserName('Viajero'));
+    axiosPrivate.get('/token/clear');
+    dispatch({ type: SET_TOKEN, payload: '' });
+    history('/home');
+  }
+
   const handleCloseNavMenu = (e) => {
+    console.log("entra")
     switch(e.target.innerText.toLowerCase()){
+      case 'logout':{
+        console.log('2')
+        logout(e);
+        break;
+      }
       case 'favorites':{
-        setCurrentPage('favorites')
+        setCurrentPage('favorites');
         break;
       }
       case 'edit profile':{
-        setCurrentPage('edit profile')
+        setCurrentPage('edit profile');
         break;
       }
       default: {
@@ -147,14 +170,9 @@ const ResponsiveAppBar = () => {
         :
           <EditProfile />
       }
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
-        User dashboard 0.0.1 - <strong>Eztinerary</strong>
-      </Typography>
-      </Box>
       <Footer />
     </Box>
     </>
   );
 };
-export default ResponsiveAppBar;
+export default UserDashboard;

@@ -20,7 +20,8 @@ export default function Actividades() {
   const [page, setPage] = useState('index');
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: '30px' }}>
+    <center>
+    <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
       <Typography variant='h4' sx={{ mb: 1 }}>Activities Dashboard</Typography>
       <Box>
         {page === 'index' ?
@@ -86,5 +87,6 @@ export default function Actividades() {
         }
       </Box>
     </Container>
+    </center>
   )
 }

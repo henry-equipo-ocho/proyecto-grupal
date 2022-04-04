@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import sweetAlert from 'sweetalert';
 
+import Footer from '../Footer';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -28,6 +30,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import StarIcon from '@mui/icons-material/Star';
 
 import countries from './countries';
+import { Typography } from '@mui/material';
 
 const validationSchema = yup.object({
   name: yup
@@ -91,37 +94,37 @@ export default function Register() {
 
   return (
     <>
-    <Button onClick={ () => history('/home') } >Volver a home</Button>
-    <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
+    <Button onClick={ () => history('/home') } color='inherit'>Volver a home</Button>
+    <center>
+    <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>
-          <h1 style={{ fontWeight: '300', fontSize: '60px' }}>
+          <Typography style={{ fontWeight: '300', fontSize: '60px' }}>
             Register at <br />
             <span style={{ fontWeight: '400', fontSize: '29px', position: 'relative', top: '-45px', left: '0px' }}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eztinerary</span>
-          </h1>
+          </Typography>
           <Box style={{ position: 'relative', top: '-50px', left: '0px', fontSize: '18px' }}>
-            Disfrutarás de beneficios como:
+            You will enjoy benefits such as:
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} aria-label="beneficios">
               <ListItem disablePadding>
                 <ListItemIcon>
                   <StarIcon color='success' />
                 </ListItemIcon>
-                <ListItemText primary="Tener una lista de itinerarios favoritos" />
+                <ListItemText primary="Have a list of favorite itineraries" />
               </ListItem>
               <ListItem disablePadding>
                 <ListItemIcon>
                   <StarIcon color='success' />
                 </ListItemIcon>
-                <ListItemText primary="Búsqueda más personalizada en base a tus preferencias" />
+                <ListItemText primary="Personalized search based on your preferences" />
               </ListItem>
               <ListItem disablePadding>
                 <ListItemIcon>
                   <StarIcon color='success' />
                 </ListItemIcon>
-                <ListItemText primary="¡Entre muchos más!" />
+                <ListItemText primary="and many more!" />
               </ListItem>
             </List>
-            <Button variant='contained' color='primary'>Conocer más beneficios</Button>
           </Box>
         </Box>
         <Box>
@@ -234,6 +237,8 @@ export default function Register() {
         </DialogActions>
       </Dialog>
     </Container >
+    </center>
+    <Footer />
     </>
   );
 };
