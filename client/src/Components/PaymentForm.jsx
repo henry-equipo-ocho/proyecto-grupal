@@ -7,7 +7,7 @@ import { paymentOrder } from './Redux/Actions/actions.js'
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 
-export default async function PaymentForm() {
+export default function PaymentForm() {
     const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch()
     const [cart, setCart] = useState({
@@ -15,7 +15,6 @@ export default async function PaymentForm() {
         tier: '',
         description: '',
     });
-    const payment = await axiosPrivate.post('http://localhost:3001/payment/create', {cart})
 
     function paymentInfo(e) {
         if (e.target.value === '1') {
@@ -47,7 +46,14 @@ export default async function PaymentForm() {
         if(!cart.price){
             swal('Sorry!', 'You havent chosen anything', 'info')
         };
-        dispatch(paymentOrder(payment))
+        try {
+            const payment = await axiosPrivate.post('/payment/create', { 
+                cart: cart
+            });
+            dispatch(paymentOrder(payment));
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (

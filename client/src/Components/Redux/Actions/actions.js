@@ -94,43 +94,27 @@ export function orderActivitiesByPrice(payload) {
     };
 };
 
-export function paymentOrder(payload) {
-    console.log(payload)
+export function paymentOrder(payment) {
     return async function (dispatch) {
         try {
-            const token = JSON.parse(localStorage.getItem('token'));
-            const payment = await axios.post('http://localhost:3001/payment/create',{cart:payload}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            });
             window.open(payment.data.data.href, '_blank')
             return dispatch({
                 type: PAYMENT_ORDER,
                 payload: payment.data.data,
             });
-            
         } catch (response) {
-
             console.log(response.request)
-        }
-
+        };
     };
 };
 
 export function successOrder(paypalorder) {
-    return async function(dispatch){
-        const token = JSON.parse(localStorage.getItem('token'));
-        const success = await axios.get(`http://localhost:3001/payment/capture?token=${paypalorder}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+    return async function (dispatch) {
         return dispatch({
             type: SUCCESS,
-            payload: success,
-        })
-    }
+            payload: paypalorder,
+        });
+    };
 };
 
 export const setLoading = (Boolean) => {
