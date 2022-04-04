@@ -7,7 +7,8 @@ import {
     ORDER_ACTIVITIES_BY_CITY,
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
-    GET_CITIES
+    GET_CITIES,
+    SET_TOKEN
 } from './actions_types'
 
 import swal from 'sweetalert';
@@ -97,5 +98,12 @@ export const setLoading = (Boolean) => {
     return {
         type: SET_LOADING,
         payload: Boolean,
+    }
+}
+
+export const setToken = (token) => {
+    return {
+        type: SET_TOKEN,
+        payload: token,
     }
 }

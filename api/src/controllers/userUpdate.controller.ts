@@ -37,7 +37,7 @@ export const passwordUpdateController: RequestHandler = async (req: Request, res
         
         if(!req.body.password) return res.status(400).send(<ServerResponse>({status: 'error', errors: {message: 'Missing new password value'}}));
 
-        await updatePassword(req, user.id);
+        await updatePassword(req.body.password, user.id);
 
         return res.status(200).send(<ServerResponse>({status: 'success'}))
         

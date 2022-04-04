@@ -33,14 +33,14 @@ const captureOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(400).json(({ status: 'failed', errors: { message: 'Missing payment info' } }));
     }
     try {
-        const captured = yield (0, payment_services_1.capturePayPalOrder)(req.query.token, "6245f427efea8b10cd71e615"); // ! erroring ID
+        const captured = yield (0, payment_services_1.capturePayPalOrder)(req.query.token, req.user._id);
         if (captured) {
             return res.status(200).json(({ status: 'success', data: captured }));
         }
         return res.status(500).json(({ status: 'failed', errors: { message: 'there was an error' } }));
     }
     catch (error) {
-        return res.status(500).json(({ status: 'failed', errors: { serverError: error.message } }));
+        return res.status(500).json(({ status: 'error', errors: { serverError: error.message } }));
     }
 });
 exports.captureOrder = captureOrder;

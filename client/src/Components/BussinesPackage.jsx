@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import logo from '../Media/Logo.png'
 import './Css/BussinesPackage.css'
@@ -7,7 +7,7 @@ import Footer from './Footer';
 import PaymentForm from './PaymentForm';
 
 export default function BussinesPackage() {
-    const isLogged = window.localStorage.getItem('token') ? true : false;
+    const isLogged = useSelector(state => state.token) ? true : false;
 
     function handleClickLogout() {
         swal('Sorry!', 'Please login to continue', 'info');
