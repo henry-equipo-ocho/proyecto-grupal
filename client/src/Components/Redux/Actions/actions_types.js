@@ -8,6 +8,7 @@ const GET_COUNTRIES = "GET_COUNTRIES";
 const GET_CITIES = "GET_CITIES";
 const PAYMENT_ORDER = "PAYMENT_ORDER";
 const SUCCESS = 'SUCCESS';
+const SET_TOKEN = "SET_TOKEN";
 
 module.exports = {
     SET_USER_NAME,
@@ -20,4 +21,5 @@ module.exports = {
     GET_CITIES,
     PAYMENT_ORDER,
     SUCCESS,
+    SET_TOKEN
 }

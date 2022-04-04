@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
+exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -36,6 +36,9 @@ const getAPIActivitiesService = (req) => __awaiter(void 0, void 0, void 0, funct
 exports.getAPIActivitiesService = getAPIActivitiesService;
 const saveActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const found = yield Activity_models_1.default.findOne({ name: activity.name });
+        if (found)
+            throw new Error('Activity already exists');
         const newActivity = new Activity_models_1.default(activity);
         yield newActivity.save();
     }
@@ -83,3 +86,19 @@ const getActivitiesFromArray = (activitiesID) => __awaiter(void 0, void 0, void 
     }
 });
 exports.getActivitiesFromArray = getActivitiesFromArray;
+const updateActivityInfo = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const condictions = { _id: id };
+        const update = req.body;
+        Activity_models_1.default.findOneAndUpdate(condictions, update, (error, result) => {
+            if (error)
+                return error;
+            else
+                return result;
+        });
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.updateActivityInfo = updateActivityInfo;

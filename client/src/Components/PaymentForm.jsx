@@ -4,14 +4,18 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import './Css/PaymentForm.css'
 import { paymentOrder } from './Redux/Actions/actions.js'
+import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
-export default function PaymentForm() {
+
+export default async function PaymentForm() {
+    const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch()
     const [cart, setCart] = useState({
         price: '',
         tier: '',
         description: '',
     });
+    const payment = await axiosPrivate.post('http://localhost:3001/payment/create', {cart})
 
     function paymentInfo(e) {
         if (e.target.value === '1') {
@@ -43,7 +47,7 @@ export default function PaymentForm() {
         if(!cart.price){
             swal('Sorry!', 'You havent chosen anything', 'info')
         };
-        dispatch(paymentOrder(cart))
+        dispatch(paymentOrder(payment))
     };
 
     return (

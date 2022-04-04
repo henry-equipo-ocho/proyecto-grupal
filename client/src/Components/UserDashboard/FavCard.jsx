@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import sweetAlert from 'sweetalert';
 
 import Card from '@mui/material/Card';
@@ -9,15 +8,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
+
 export default function ActivityCard({ name, pictures, shorTDescription, price, currency, link, loadFavs, actID, itName }) {
+
+  const axiosPrivate = useAxiosPrivate();
+
   const remove = async (activityID, itineraryName) => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      await axios.delete('http://localhost:3001/favorites',
+      
+      await axiosPrivate.delete('/favorites', 
         {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
           data: {
             activityID,
             itineraryName,

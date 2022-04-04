@@ -37,7 +37,12 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+<<<<<<< HEAD
         }
+=======
+        },
+        custom_user_id: userID
+>>>>>>> Development
     };
     try {
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders`, order, {
@@ -47,7 +52,11 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             }
         });
         yield createPaymentInUserDB(userID, response, cart);
+<<<<<<< HEAD
         return response.data.links.filter((link) => link.rel === "approve")[0];
+=======
+        return response.data.links.filter((link) => link.rel === "approve");
+>>>>>>> Development
     }
     catch (error) {
         throw error;

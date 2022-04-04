@@ -10,6 +10,7 @@ import {
     GET_CITIES,
     PAYMENT_ORDER,
     SUCCESS,
+    SET_TOKEN
 } from './actions_types'
 
 import swal from 'sweetalert';
@@ -136,5 +137,12 @@ export const setLoading = (Boolean) => {
     return {
         type: SET_LOADING,
         payload: Boolean,
+    }
+}
+
+export const setToken = (token) => {
+    return {
+        type: SET_TOKEN,
+        payload: token,
     }
 }
