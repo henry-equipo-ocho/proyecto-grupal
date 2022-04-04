@@ -18,8 +18,8 @@ export default function Pagination({ activitiesPerPage, allActivities, paginado 
                     previousClassName='buttonPag'
                     nextClassName='buttonPag'
                     breakClassName='but'
-                    previousLabel={'prev'}
-                    nextLabel={'next'}
+                    previousLabel={'Prev'}
+                    nextLabel={'Next'}
                     breakLabel={'...'}
                     pageCount={pagecount}
                     marginPagesDisplayed={5}

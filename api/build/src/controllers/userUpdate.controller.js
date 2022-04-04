@@ -44,7 +44,7 @@ const passwordUpdateController = (req, res) => __awaiter(void 0, void 0, void 0,
         const user = req.user;
         if (!req.body.password)
             return res.status(400).send(({ status: 'error', errors: { message: 'Missing new password value' } }));
-        yield (0, userUpdate_services_1.updatePassword)(req, user.id);
+        yield (0, userUpdate_services_1.updatePassword)(req.body.password, user.id);
         return res.status(200).send(({ status: 'success' }));
     }
     catch (e) {

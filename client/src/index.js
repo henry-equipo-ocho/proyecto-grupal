@@ -5,12 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { store } from './Components/Redux/Store'
+import { store } from './Components/Redux/Store';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      
+        <App />
+     
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

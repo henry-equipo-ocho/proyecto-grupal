@@ -1,19 +1,24 @@
 {
-  "name": "proyecto-grupal-CLIENT",
+  "name": "proyecto-grupal-client",
   "version": "0.1.0",
   "description": "App eztinerary",
   "dependencies": {
+    "@auth0/auth0-react": "^1.9.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
     "@mui/styles": "^5.5.1",
+    "@react-google-maps/api": "^2.7.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "alert": "^5.0.10",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
+    "google-map-react": "^2.1.10",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
@@ -30,6 +35,7 @@
     "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
+   
   },
   "scripts": {
     "start": "react-scripts start",

@@ -20,7 +20,6 @@ const User_models_1 = __importDefault(require("../models/User.models"));
 const User_interface_1 = require("../interfaces/User.interface");
 dotenv_1.default.config();
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("start", cart);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -36,13 +35,15 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             brand_name: 'eztinerary',
             landing_page: 'NO_PREFERENCE',
             user_action: 'PAY_NOW',
-            return_url: 'http://localhost:3001/payment/capture',
-            cancel_url: 'http://localhost:3001/payment/cancel',
+            return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
+            cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+<<<<<<< HEAD
+        }
+=======
         },
         custom_user_id: userID
+>>>>>>> Development
     };
-    console.log("created order");
-    // const paypalAuthToken = createAuthToken();
     try {
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders`, order, {
             auth: {
@@ -51,11 +52,13 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             }
         });
         yield createPaymentInUserDB(userID, response, cart);
-        console.log("response.data:", response.data, response.data.custom_user_id);
-        return response.data;
+<<<<<<< HEAD
+        return response.data.links.filter((link) => link.rel === "approve")[0];
+=======
+        return response.data.links.filter((link) => link.rel === "approve");
+>>>>>>> Development
     }
     catch (error) {
-        console.error("error:", error);
         throw error;
     }
 });
@@ -95,7 +98,6 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
         }
     }
     catch (error) {
-        console.log("capture error:");
         throw error;
     }
 });
@@ -115,10 +117,8 @@ function createPaymentInUserDB(userID, response, cart) {
             });
             user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
             yield user.save();
-            console.log("created payment");
         }
         else {
-            console.log("found:", user.payments.find((payment) => payment.id === response.data.id));
             throw new Error(`Payment (${response.data.id}) already exists`);
         }
     });

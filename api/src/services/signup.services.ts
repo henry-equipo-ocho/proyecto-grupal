@@ -21,7 +21,7 @@ var transporter = nodemailer.createTransport({
 export const signUpService = async (req: Request): Promise<any> => {
     try {
         const user = await User.findOne({email: req.body.email});
-        if(user) throw new Error();
+        if(user) throw new Error('User already exists');
 
         const newUser = new User(req.body);
         await newUser.save();
