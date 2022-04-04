@@ -5,22 +5,42 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import logo from '../Media/Logo.png';
+import Footer from './Footer';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
-export default async function Success() {
+export default function Success() {
     const axiosPrivate = useAxiosPrivate();
-    const [searchParams] = useSearchParams();
-    const paypalorder = searchParams.get('token')
-    const success = await axiosPrivate.get(`http://localhost:3001/payment/capture?token=${paypalorder}`)
-
     const dispatch = useDispatch();
-    useEffect(() => dispatch(successOrder(success)),[])
+    const detail = useSelector(state => state.payment)
+    console.log(detail)
+    const [searchParams] = useSearchParams();
+    const paypalToken = searchParams.get('token');
 
-    console.log('hola que tal')
+    async function getPaypalOrder() {
+        const paypalorder = await axiosPrivate.get(`/payment/capture?token=${paypalToken}`)
+        return paypalorder;
+    };
+
+    useEffect(() => dispatch(successOrder(getPaypalOrder())), []);
+
     return (
+        <div>
+            <header className='header'>
+                <div>
+                    <img src={logo} alt='Not found' />
+                </div>
+                <div>
+                    <button><a href='/home'>HOME</a></button>
+                </div>
+            </header>
 
-        <div>Gracias por la compra este es tu compra {success} </div>
 
+            <div>
+                <h1>Gracias por la compra tu compra {paypalToken} </h1>
+            </div>
 
+            <Footer />
+        </div>
     )
 }

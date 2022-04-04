@@ -7,7 +7,7 @@ import Footer from './Footer';
 import PaymentForm from './PaymentForm';
 
 export default function BussinesPackage() {
-    const isLogged = useSelector(state => state.token) ? true : false;
+    const isLogged = useSelector(state => state.token) ? true : false || localStorage.getItem('loggedIn') ? true : false;
 
     function handleClickLogout() {
         swal('Sorry!', 'Please login to continue', 'info');
