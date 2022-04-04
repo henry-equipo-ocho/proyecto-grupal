@@ -38,8 +38,8 @@ const RenderMap = () => {
   }, [rating]);
 
   useEffect(() => {
-    if (bounds.ne && bounds.sw) {
-      console.log("bounds:", bounds.ne)
+    if (bounds) {
+      console.log("bounds:", bounds)
       setIsLoading(true);
 
       getWeatherData(coords.lat, coords.lng)

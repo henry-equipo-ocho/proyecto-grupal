@@ -1,10 +1,11 @@
 import axios from "axios";
 
+const axiosMpap = axios.create({ withCredentials: false })
 
 export const getPlacesData = async(type, sw, ne) => {
   const URL = `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`;
     try {
-        const { data: { data }} = await axios.get(URL,  {
+        const { data: { data }} = await  axiosMpap.get(URL,  {
           params: {
             bl_latitude: sw.lat,
             tr_latitude: ne.lat,
@@ -28,7 +29,7 @@ export const getPlacesData = async(type, sw, ne) => {
 export const getWeatherData = async (lat, lng) => {
   try {
     if (lat && lng) {
-      const { data } = await axios.get('https://community-open-weather-map.p.rapidapi.com/find', {
+      const { data } = await  axiosMpap.get('https://community-open-weather-map.p.rapidapi.com/find', {
         params: { lat, lon: lng },
         headers: {
           'x-rapidapi-key': 'bb9ca29e52msh245d1f031917545p1cb8f0jsn473209b523da',
