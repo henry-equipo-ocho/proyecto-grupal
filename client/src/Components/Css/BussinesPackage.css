@@ -30,6 +30,7 @@
     font-size: medium;
     font-weight: 800;
     color: white;
+    cursor: pointer;
 }
 
 
@@ -186,11 +187,12 @@
     font-size: 20x;
     font-style:normal;
     font-weight:550;
-    border-radius: 5px;
+    border-radius: 3px;
     margin: 1em;
     background-color: #062554;
     color: white;
     border-style: none;
+    cursor: pointer;
 }
 .shopButton a{
     color: white;

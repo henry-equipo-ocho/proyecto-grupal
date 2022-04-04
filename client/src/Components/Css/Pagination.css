@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
     background-color: #ff880000;
+    font-family: 'Roboto';
 
   }
 .but{
@@ -12,10 +13,10 @@
     font-family: Calibri; 
     font-style:normal;
     font-weight:550;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 1em;
     background-color: white;
-    color: black;
+    
     border: 1px solid;
     transition-duration: 0.3s;
     cursor: pointer;
@@ -24,6 +25,7 @@
     text-align: center;
     vertical-align:bottom;
     position: relative;
+    padding: 5px;
     
   }
   .but:hover{
@@ -43,9 +45,9 @@
     font-family: Calibri; 
     font-style:normal;
     font-weight:550;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 1em;
-    background-color: #24c59c;
+    background-color: #062554;
     color: black;
     border: 1px solid;
     transition-duration: 0.3s;
@@ -53,8 +55,10 @@
     list-style: none;
     text-align: center;
     top: 50px;
+    padding: 5px;
+    color: white
   }
   .buttonPag:hover{
-    background-color: #244eda;
-    color: black;
+    background-color: #00498b;
+    color: white;
   }

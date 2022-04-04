@@ -28,7 +28,7 @@ function SearchBarCopy() {
         className="input"
         type="text"
         onChange={(e) => handleInput(e)}
-        placeholder="Search Activities..."
+        placeholder="  Search Activities..."
       ></input>
 
       <button

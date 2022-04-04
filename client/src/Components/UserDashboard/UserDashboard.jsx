@@ -22,7 +22,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Favorites', 'Edit profile', 'Plans', 'Logout'];
+
+const pages = ['Favorites', 'Edit profile', 'Plans'];
 
 const UserDashboard = () => {
   const history = useNavigate();
@@ -171,8 +172,10 @@ const UserDashboard = () => {
           <EditProfile />
       }
       <Footer />
+
     </Box>
     </>
   );
 };
+
 export default UserDashboard;
