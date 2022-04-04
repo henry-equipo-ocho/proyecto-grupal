@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { SET_TOKEN } from '../Redux/Actions/actions_types';
+import { setUserName } from '../Redux/Actions/actions';
+
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
+
+import Footer from '../Footer';
 import Favorites from './Favorites';
 import EditProfile from './EditProfile';
 
@@ -18,23 +25,50 @@ import MenuItem from '@mui/material/MenuItem';
 
 const pages = ['Favorites', 'Edit profile', 'Plans'];
 
-const ResponsiveAppBar = () => {
+const UserDashboard = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
+
+  const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
+
+  useEffect(() => {
+    if(!isLogged){
+      history('/home');
+    }
+    document.title = 'Eztinerary - User Dashboard';
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
+  const logout = (e) => {
+    console.log('3')
+    window.localStorage.clear();
+    dispatch(setUserName('Viajero'));
+    axiosPrivate.get('/token/clear');
+    dispatch({ type: SET_TOKEN, payload: '' });
+    history('/home');
+  }
+
   const handleCloseNavMenu = (e) => {
+    console.log("entra")
     switch(e.target.innerText.toLowerCase()){
+      case 'logout':{
+        console.log('2')
+        logout(e);
+        break;
+      }
       case 'favorites':{
-        setCurrentPage('favorites')
+        setCurrentPage('favorites');
         break;
       }
       case 'edit profile':{
-        setCurrentPage('edit profile')
+        setCurrentPage('edit profile');
         break;
       }
       default: {
@@ -138,9 +172,11 @@ const ResponsiveAppBar = () => {
         :
           <EditProfile />
       }
+      <Footer />
 
     </Box>
     </>
   );
 };
-export default ResponsiveAppBar;
+
+export default UserDashboard;

@@ -84,5 +84,4 @@ export default function NavBar({ handleLoginForm }) {
                 </Toolbar>
             </AppBar>
         </Box>
-    );
-};
+    )};

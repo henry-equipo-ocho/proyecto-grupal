@@ -26,7 +26,7 @@ const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
             if (err)
                 return res.status(400).send({ status: 'failed', errors: { message: `Invalid refresh token` } });
             const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.JWT_SECRET, {
-                expiresIn: '5s'
+                expiresIn: '15m'
             });
             console.log('handleRefreshToken: token', token);
             return res.status(200).send({ status: 'success', data: token });
