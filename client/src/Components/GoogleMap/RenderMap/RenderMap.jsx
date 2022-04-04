@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { getPlacesData } from "../EndPoint/EndPoint";
+import { getPlacesData, getWeatherData } from "../EndPoint/EndPoint";
 import Header from "../Header/Header";
 import List from "../List/List";
 import Map from "../Map/Map";
@@ -13,6 +13,7 @@ const RenderMap = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
 
+  
   const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState(null);
 
@@ -20,7 +21,7 @@ const RenderMap = () => {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [places, setPlaces] = useState([]);
 
-  const [autocomplete, setAutocomplete] = useState(null);
+  
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,15 +38,15 @@ const RenderMap = () => {
   }, [rating]);
 
   useEffect(() => {
-    if (bounds) {
+    if (bounds.ne && bounds.sw) {
+      console.log("bounds:", bounds.ne)
       setIsLoading(true);
 
-      // getWeatherData(coords.lat, coords.lng)
-      //   .then((data) => setWeatherData(data));
+      getWeatherData(coords.lat, coords.lng)
+        .then((data) => setWeatherData(data));
 
       getPlacesData(type, bounds.sw, bounds.ne)
         .then((data) => {
-          console.log("data:", data)
           setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
           setFilteredPlaces([]);
           setRating('');
@@ -54,19 +55,11 @@ const RenderMap = () => {
     }
   }, [bounds, type]);
 
-  const onLoad = (autoC) => setAutocomplete(autoC);
-
-  const onPlaceChanged = () => {
-    const lat = autocomplete.getPlace().geometry.location.lat();
-    const lng = autocomplete.getPlace().geometry.location.lng();
-
-    setCoords({ lat, lng });
-  };
-
+ 
   return (
     <>
       <CssBaseline />
-      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+      <Header setCoords={setCoords} />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List
@@ -86,7 +79,7 @@ const RenderMap = () => {
             setCoords={setCoords}
             coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
-            // weatherData={weatherData}
+            weatherData={weatherData}
           />
         </Grid>
       </Grid>
