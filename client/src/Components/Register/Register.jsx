@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import logo from '../../Media/Logo.png';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -90,7 +90,14 @@ export default function Register() {
 
   return (
     <>
-    <Button onClick={ () => history('/home') } >Volver a home</Button>
+                <header className='header'>
+                <div>
+                    <img src={logo} alt='Not found' />
+                </div>
+                <div>
+                    <button><a href='/home'>HOME</a></button>
+                </div>
+            </header>
     <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>

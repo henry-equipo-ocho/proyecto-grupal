@@ -65,7 +65,7 @@
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #a9e8bc);
+    background-image: linear-gradient(#ebebeb05, #24c59c);
 }
 .cardBasic h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
@@ -106,7 +106,7 @@
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #9bfb73);
+    background-image: linear-gradient(#ebebeb05, #00498b);
 }
 .cardStandard h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
@@ -148,7 +148,7 @@
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #24c59c);
+    background-image: linear-gradient(#ebebeb05, #9bfb73);
 }
 .cardPremium h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
