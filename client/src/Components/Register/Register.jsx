@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../Media/Logo.png';
 import sweetAlert from 'sweetalert';
-
 import Footer from '../Footer';
 
 import Box from '@mui/material/Box';
@@ -94,9 +94,19 @@ export default function Register() {
 
   return (
     <>
-    <Button onClick={ () => history('/home') } color='inherit'>Volver a home</Button>
-    <center>
+
+                <header className='header'>
+                <div>
+                    <img src={logo} alt='Not found' />
+                </div>
+                <div>
+                    <button><a href='/home'>HOME</a></button>
+                </div>
+            </header>
+    <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
+
     <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
+
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
         <Box>
           <Typography style={{ fontWeight: '300', fontSize: '60px' }}>
