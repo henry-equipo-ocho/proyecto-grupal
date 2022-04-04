@@ -48,6 +48,7 @@ export default function EditProfile() {
   const datosIniciales = {};
 
   useEffect(() => {
+    document.title = 'Eztinerary - User Dashboard - Edit profile';
     (async function cargarData (){
       try{
         const response = await axiosPrivate.get('/update');

@@ -59,6 +59,7 @@ export default function Favorites() {
   };
 
   useEffect(() => {
+    document.title = 'Eztinerary - User Dashboard - Itineraries';
     getFavorites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

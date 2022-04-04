@@ -38,6 +38,7 @@ const UserDashboard = () => {
     if(!isLogged){
       history('/home');
     }
+    document.title = 'Eztinerary - User Dashboard';
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
