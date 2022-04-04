@@ -22,7 +22,8 @@ export default function Success() {
         return paypalorder;
     };
 
-    useEffect(() => dispatch(successOrder(getPaypalOrder())), []);
+    useEffect(() => getPaypalOrder(), []);
+
 
     return (
         <div>

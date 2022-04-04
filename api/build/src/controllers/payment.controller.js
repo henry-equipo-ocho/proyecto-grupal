@@ -39,6 +39,7 @@ const captureOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (captured) {
             return res.status(200).json(({ status: 'success', data: captured }));
         }
+        console.log('return 500');
         return res.status(500).json(({ status: 'failed', errors: { message: 'there was an error' } }));
     }
     catch (error) {
