@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+}
+
+.footer {
+    position: sticky;
+    margin: '5px';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white !important;
+    text-align: center;
+  }

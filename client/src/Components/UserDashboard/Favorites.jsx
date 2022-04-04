@@ -59,12 +59,13 @@ export default function Favorites() {
   };
 
   useEffect(() => {
+    document.title = 'Eztinerary - User Dashboard - Itineraries';
     getFavorites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
       <Typography variant='h4' sx={{ marginTop: '15px', marginBottom: '10px' }}>Itineraries</Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'column' }}>
         {
@@ -127,7 +128,10 @@ export default function Favorites() {
               )
             })
             :
-            <Typography variant='h4' sx={{ marginTop: '45px', marginBottom: '10px' }}>No itineraries</Typography>
+            <Alert severity="error" sx={{ width: '100%', my: 1 }}>
+              <AlertTitle>Activities</AlertTitle>
+              No activities to display — <strong><Link to='/home' style={{ textDecoration: 'none' }}><Button>Try add activities here!</Button></Link></strong>
+            </Alert>
         }
       </Box>
     </Box>

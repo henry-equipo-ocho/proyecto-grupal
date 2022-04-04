@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 
 import sweetAlert from 'sweetalert';
 
-import axios from 'axios';
-
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -18,7 +17,6 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 import countries from '../Register/countries';
-import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
 const validationSchema = yup.object({
   name: yup
@@ -50,6 +48,7 @@ export default function EditProfile() {
   const datosIniciales = {};
 
   useEffect(() => {
+    document.title = 'Eztinerary - User Dashboard - Edit profile';
     (async function cargarData (){
       try{
         const response = await axiosPrivate.get('/update');
@@ -99,7 +98,7 @@ export default function EditProfile() {
           await axiosPrivate.post('update/password', { password: values.password });
           
           
-          sweetAlert('Congrats', 'Activity added succesfully!', 'success')
+          sweetAlert('Congrats', 'User edited succesfully!', 'success')
         }
         catch (e) {
           console.log(e)
@@ -109,7 +108,7 @@ export default function EditProfile() {
   });
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
       <Typography variant='h4' sx={{ marginTop: '15px' }}>Edit profile</Typography>
       <Alert severity="info" sx={{ my: 1 }}>Change all fields if you need</Alert>
       <form onSubmit={formik.handleSubmit}>

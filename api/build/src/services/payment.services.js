@@ -18,7 +18,19 @@ const axios_1 = __importDefault(require("axios"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_models_1 = __importDefault(require("../models/User.models"));
 const User_interface_1 = require("../interfaces/User.interface");
+var cron = require('node-cron');
+const nodemailer = require('nodemailer');
 dotenv_1.default.config();
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.CREATOR,
+        pass: process.env.PASS
+    },
+    tls: {
+        rejectUnanthorized: false
+    }
+});
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
     const order = {
         intent: 'CAPTURE',
@@ -84,6 +96,9 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
                 user.activeSubscription = true;
                 user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
                 yield user.save();
+                console.log('llamando a end');
+                endSubscriptionUser(userID);
+                console.log('terminado end');
                 return true;
             }
         }
@@ -112,5 +127,33 @@ function createPaymentInUserDB(userID, response, cart) {
         else {
             throw new Error(`Payment (${response.data.id}) already exists`);
         }
+    });
+}
+function endSubscriptionUser(userID) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield User_models_1.default.findById(userID);
+        var date = new Date();
+        // date.setMonth(date.getMonth() + 1);
+        date.setMinutes(date.getMinutes() + 2);
+        cron.schedule(`${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`, () => __awaiter(this, void 0, void 0, function* () {
+            user.activeSubscription = false;
+            yield user.save();
+            var mailOptions = {
+                from: ` "Subscription" <${process.env.CREATOR}>`,
+                to: user.email,
+                subject: "User's subscription",
+                html: `<h2> ${user.name}! your subscription has ended </h2>
+                    <h4>Please renew it to continue enjoying the benefits...</h4>`
+            };
+            // sending email
+            yield transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log("The user's subscription has ended");
+                }
+            });
+        }));
     });
 }

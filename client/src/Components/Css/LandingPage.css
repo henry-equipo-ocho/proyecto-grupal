@@ -28,6 +28,12 @@
     border-radius: 5px;
     font-size: larger;
 }
+
+.textContainer img {
+
+    width: 150px;
+
+}
 .textContainer p{
     text-align: center;
     font-family: 'Roboto';

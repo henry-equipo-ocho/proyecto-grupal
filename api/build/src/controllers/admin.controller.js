@@ -41,7 +41,7 @@ const tokenVerifyController = (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.tokenVerifyController = tokenVerifyController;
 const createUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, name, surname, country, role } = req.body;
-    if (!email || !password || !name || !surname || !country || !role) {
+    if (!email || !password || !name || !surname || !country || role === undefined) {
         return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
     }
     try {

@@ -5,7 +5,27 @@ import User from '../models/User.models';
 import { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
 
+var cron = require('node-cron');
+const nodemailer = require('nodemailer');
+
 dotenv.config();
+
+
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.CREATOR,
+        pass: process.env.PASS
+    },
+    tls: {
+        rejectUnanthorized: false
+
+    }
+})
+
+
+
 
 export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any> => {
     const order = {
@@ -86,6 +106,9 @@ export const capturePayPalOrder = async (token: string, userID: string): Promise
 
                 user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
                 await user.save();
+
+                endSubscriptionUser(userID);
+                
                 return true
             }
         }
@@ -112,4 +135,43 @@ async function createPaymentInUserDB(userID: string, response: AxiosResponse<any
     } else {
         throw new Error(`Payment (${response.data.id}) already exists`);
     }
+}
+
+
+
+async function endSubscriptionUser(userID:string) {
+
+    let user = await User.findById(userID);
+
+    var date = new Date();
+    // date.setMonth(date.getMonth() + 1);
+    date.setMinutes(date.getMinutes() + 2);
+
+    cron.schedule(`${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`, async () => {
+        
+        user.activeSubscription = false;
+        await user.save()
+
+
+        var mailOptions = {
+            from: ` "Subscription" <${process.env.CREATOR}>`,
+            to: user.email,
+            subject: "User's subscription",
+            html: `<h2> ${user.name}! your subscription has ended </h2>
+                    <h4>Please renew it to continue enjoying the benefits...</h4>`
+        };
+
+        // sending email
+        await transporter.sendMail(mailOptions, function(error: any, info: any) {
+            if(error) {
+                console.log(error)
+            }
+            else {
+                console.log("The user's subscription has ended")
+            }
+        });
+
+        
+    });
+
 }
