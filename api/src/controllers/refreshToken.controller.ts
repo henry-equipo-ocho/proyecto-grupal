@@ -17,7 +17,7 @@ export const handleRefreshToken = async (req: Request, res: Response) => {
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err: any, user: any) => {
             if(err) return res.status(400).send({status: 'failed', errors: {message: `Invalid refresh token`}});
             const token = jwt.sign({id: user.id, email: user.email, name: user.name, role: user.role}, process.env.JWT_SECRET as string, {
-                expiresIn: '5s'
+                expiresIn: '15m'
             });
             console.log('handleRefreshToken: token', token);
             return res.status(200).send({status: 'success', data: token});

@@ -10,11 +10,12 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      
+        <App />
+     
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
