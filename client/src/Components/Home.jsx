@@ -64,7 +64,7 @@ export default function Home() {
               <p className='loader' style={{ fontSize: '50px' }}></p>
             </center> :
             <>
-
+              <div className='cardsDisplay'>
               <div className='cardsContainer'>
                 {currentActivities.length ? currentActivities.map((a) => (
                   <ActivityCard
@@ -76,6 +76,9 @@ export default function Home() {
                   />
                 )) : <p className='loader' style={{ fontSize: '50px' }}> </p>}
               </div>
+
+              </div>
+              
             </>}
         </div>
 

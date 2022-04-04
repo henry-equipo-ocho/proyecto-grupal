@@ -8,6 +8,8 @@ import {
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
     GET_CITIES,
+    PAYMENT_ORDER,
+    SUCCESS,
     SET_TOKEN
 } from './actions_types'
 
@@ -85,13 +87,52 @@ export function orderActivitiesByCity(payload) {
 
 export function orderActivitiesByPrice(payload) {
     return async function (dispatch) {
-        dispatch(setLoading(true))
+        dispatch(setLoading(true));
         const prices = await axios.post('http://localhost:3001/activities/orderByPrice', payload);
         return dispatch({
             type: ORDER_ACTIVITIES_BY_PRICE,
             payload: prices.data.data,
         });
     };
+};
+
+export function paymentOrder(payload) {
+    console.log(payload)
+    return async function (dispatch) {
+        try {
+            const token = JSON.parse(localStorage.getItem('token'));
+            const payment = await axios.post('http://localhost:3001/payment/create',{cart:payload}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            window.open(payment.data.data.href, '_blank')
+            return dispatch({
+                type: PAYMENT_ORDER,
+                payload: payment.data.data,
+            });
+            
+        } catch (response) {
+
+            console.log(response.request)
+        }
+
+    };
+};
+
+export function successOrder(paypalorder) {
+    return async function(dispatch){
+        const token = JSON.parse(localStorage.getItem('token'));
+        const success = await axios.get(`http://localhost:3001/payment/capture?token=${paypalorder}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return dispatch({
+            type: SUCCESS,
+            payload: success,
+        })
+    }
 };
 
 export const setLoading = (Boolean) => {

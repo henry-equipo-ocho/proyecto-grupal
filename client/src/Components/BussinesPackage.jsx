@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
-import logo from '../Media/Logo.png'
-import './Css/BussinesPackage.css'
+import logo from '../Media/Logo.png';
+import './Css/BussinesPackage.css';
 import Footer from './Footer';
 import PaymentForm from './PaymentForm';
 

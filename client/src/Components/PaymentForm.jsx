@@ -1,49 +1,54 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert';
 import './Css/PaymentForm.css'
+import { paymentOrder } from './Redux/Actions/actions.js'
+import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
-export default function PaymentForm() {
+
+export default async function PaymentForm() {
+    const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch()
-    const [shop, setShop] = useState({
+    const [cart, setCart] = useState({
         price: '',
         tier: '',
         description: '',
     });
+    const payment = await axiosPrivate.post('http://localhost:3001/payment/create', {cart})
 
     function paymentInfo(e) {
         if (e.target.value === '1') {
-            setShop({
+            setCart({
                 price: 10,
                 tier: 1,
                 description: 'Basic Plan'
             });
         }
         if (e.target.value === '2') {
-            setShop({
+            setCart({
                 price: 35,
                 tier: 2,
                 description: 'Standard Plan'
             });
         }
         if (e.target.value === '3') {
-            setShop({
+            setCart({
                 price: 50,
                 tier: 3,
                 description: 'Premium Plan'
             });
         };
     }
-    console.log(shop)
+    console.log(cart)
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if(!shop.price){
+        if(!cart.price){
             swal('Sorry!', 'You havent chosen anything', 'info')
-        }
-        dispatch(await axios.post('http://localhost:3001/create', shop))
-    }
+        };
+        dispatch(paymentOrder(payment))
+    };
 
     return (
 
