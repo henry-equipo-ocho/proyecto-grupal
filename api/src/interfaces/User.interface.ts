@@ -23,7 +23,8 @@ export default interface User extends Document {
     role: UserRoles,
     favActivities: Array<Itinerary>,
     payments: Array<Payment>,
-    activeSubscription: boolean,
+    activeSubscription?: boolean,
+    subscriptionTier?: number,
     isVerified: Boolean,
     comparePassword: (password: string) => Promise<boolean>
 }
