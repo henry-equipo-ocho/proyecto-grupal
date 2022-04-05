@@ -11,22 +11,24 @@ declare module "express" {
 }
 
 export const createOrder = async (req: Request, res: Response) => {
-    console.log(req.body.cart)
-    console.log(req.user)
+
     if (!req.body.cart) {
+        console.log('1')
         return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing cart' } }));
     }
     try {
+        console.log('2')
         const order = await createPayPalOrder(req.body.cart, req.user.id);
         if (order) {
+            
             return res.status(201).json(<ServerResponse>({ status: 'success', data: order }));
         }
+        console.log('3')
         return res.status(500).json(<ServerResponse>({ status: 'failed', errors: { message: 'there was an error' } }));
     } catch (error) {
-        
         console.log("catch en el controller");
+        console.log(error)
         return res.status(500).json(<ServerResponse>({ status: 'error', errors: { error } }));
-        
     }
 }
 

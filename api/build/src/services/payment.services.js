@@ -21,7 +21,7 @@ const User_interface_1 = require("../interfaces/User.interface");
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
 dotenv_1.default.config();
-var transporter = nodemailer.createTransport({ 
+var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.CREATOR,
@@ -32,6 +32,8 @@ var transporter = nodemailer.createTransport({
     }
 });
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(cart);
+    console.log(userID);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -73,16 +75,17 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
             console.log(mongoose_1.default.Types.ObjectId.isValid(userID));
             throw new Error(`Invalid user ID: ${userID}`);
         }
-        console.log("boutta ask paypal");
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders/${token}/capture`, {}, {
             auth: {
                 username: process.env.PAYPAL_CLIENT_ID,
                 password: process.env.PAYPAL_CLIENT_SECRET
             }
         });
-        console.log("response.data:", response.data);
         if (response.data.status === 'COMPLETED') {
             return updatePaymentInUserDB(userID, response.data.id);
+        }
+        else {
+            throw new Error(`Payment (${response.data.id}) is not completed`);
         }
     }
     catch (error) {
@@ -133,7 +136,7 @@ function updatePaymentInUserDB(userID, orderID) {
                 // return true;
                 let paymentCreationDate = payment.createdAt;
                 let subscriptionExpiry = new Date(paymentCreationDate.getTime());
-                subscriptionExpiry.setMonth(paymentCreationDate.getMonth() + 1);
+                subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
                 console.log(paymentCreationDate, subscriptionExpiry.toString());
                 return {
                     name: user.name,
