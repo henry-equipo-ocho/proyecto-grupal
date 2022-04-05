@@ -33,6 +33,8 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
     // see src/interfaces/User.interface.ts
 ```
 
+---
+
 ### Sign In
 
 #### "native" user
@@ -59,6 +61,8 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         errors?: errorMessage
     }
 ```
+
+---
 
 ### Activities
 
@@ -100,6 +104,8 @@ Activities return a object like this:
     }
 ```
 
+---
+
 #### Google user
 
 Allows the user to sign in to their account using their Google account
@@ -109,6 +115,8 @@ Allows the user to sign in to their account using their Google account
 ```
 
 This endpoint is under development.
+
+---
 
 ### User favorites
 
@@ -186,6 +194,7 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         errors?: errorMessage
     }
 ```
+
 ### GET USER CURRENT PERSONAL INFO
 
 Allows the client to get his current personal info (Name, surname, country, email)
@@ -217,6 +226,7 @@ user return a object like this:
     }
 ```
 
+---
 
 ### UPDATE USER'S PERSONAL INFO
 
@@ -228,12 +238,14 @@ Allows the client to modify his personal info (Name, surname, country, email)
 
 | Parameter | Type     | Description  |
 | :-------- | :------- | :----------- |
-| `name` | `string` | **Optional** |
-| `surname`    | `string` | **Optional** |
-| `email`    | `string` | **Optional** |
-| `country`    | `string` | **Optional** |
+| `name`    | `string` | **Optional** |
+| `surname` | `string` | **Optional** |
+| `email`   | `string` | **Optional** |
+| `country` | `string` | **Optional** |
 
 **- Password can't be sent to this route, and at least one parameter should be sent.**
+
+---
 
 ### UPDATE USER'S PASSWORD
 
@@ -243,11 +255,12 @@ Allows the client to modify his personal password.
     POST /update/password
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
 | `password` | `string` | **Required** |
 
 ---
+
 ### ADMIN
 
 ### UPDATE USER'S PERSONAL INFO AND/OR PASSWORD
@@ -258,16 +271,15 @@ Allows the admin to modify personal info of users
     PUT admin/update/user
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
-| `name` | `string` | **Optional** |
-| `surname`    | `string` | **Optional** |
-| `email`    | `string` | **Optional** |
-| `country`    | `string` | **Optional** |
-| `password`    | `string` | **Optional** |
-| `role`    | `number` | **Optional** |
-| `activeSubscription`    | `boolean` | **Optional** |
-
+| Parameter            | Type      | Description  |
+| :------------------- | :-------- | :----------- |
+| `name`               | `string`  | **Optional** |
+| `surname`            | `string`  | **Optional** |
+| `email`              | `string`  | **Optional** |
+| `country`            | `string`  | **Optional** |
+| `password`           | `string`  | **Optional** |
+| `role`               | `number`  | **Optional** |
+| `activeSubscription` | `boolean` | **Optional** |
 
 **- At least one parameter should be sent.**
 
@@ -281,14 +293,14 @@ Allows the admin to create users
     POST admin/create/user
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
-| `name` | `string` | **Required** |
-| `surname`    | `string` | **Required** |
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `name`     | `string` | **Required** |
+| `surname`  | `string` | **Required** |
 | `email`    | `string` | **Required** |
-| `country`    | `string` | **Required** |
-| `password`    | `string` | **Required** |
-| `role`    | `number` | **Required** |
+| `country`  | `string` | **Required** |
+| `password` | `string` | **Required** |
+| `role`     | `number` | **Required** |
 
 ---
 
@@ -302,7 +314,7 @@ Allows the admin to delete a user by id
 
 | Parameter | Type     | Description  |
 | :-------- | :------- | :----------- |
-| `id` | `string` | **Required** |
+| `id`      | `string` | **Required** |
 
 ---
 
@@ -313,6 +325,7 @@ Allows the admin to get all users
 ```http
     GET admin/users
 ```
+
 #### Returns
 
 Alongside the HTTP response status code, the endpoint sends a JSON object
@@ -335,18 +348,17 @@ Allows the admin to modify an activity by id
     PUT admin/update/activity
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
-| `id`    | `string` | **Required** |
-| `name` | `string` | **Optional** |
+| Parameter        | Type     | Description  |
+| :--------------- | :------- | :----------- |
+| `id`             | `string` | **Required** |
+| `name`           | `string` | **Optional** |
 | `description`    | `string` | **Optional** |
-| `picture`    | `string` | **Optional** |
-| `city`    | `string` | **Optional** |
-| `country`    | `string` | **Optional** |
-| `price_currency`    | `string` | **Optional** |
-| `price_amount`    | `number` | **Optional** |
-| `booking`    | `string` | **Optional** |
-
+| `picture`        | `string` | **Optional** |
+| `city`           | `string` | **Optional** |
+| `country`        | `string` | **Optional** |
+| `price_currency` | `string` | **Optional** |
+| `price_amount`   | `number` | **Optional** |
+| `booking`        | `string` | **Optional** |
 
 **- At least one parameter should be sent.**
 
@@ -360,16 +372,16 @@ Allows the admin to create users
     POST admin/create/activity
 ```
 
-| Parameter | Type     | Description  |
-| :-------- | :------- | :----------- |
-| `name` | `string` | **Required** |
+| Parameter        | Type     | Description  |
+| :--------------- | :------- | :----------- |
+| `name`           | `string` | **Required** |
 | `description`    | `string` | **Required** |
-| `picture`    | `string` | **Required** |
-| `city`    | `string` | **Required** |
-| `country`    | `string` | **Required** |
-| `price_currency`    | `string` | **Required** |
-| `price_amount`    | `number` | **Required** |
-| `booking`    | `string` | **Required** |
+| `picture`        | `string` | **Required** |
+| `city`           | `string` | **Required** |
+| `country`        | `string` | **Required** |
+| `price_currency` | `string` | **Required** |
+| `price_amount`   | `number` | **Required** |
+| `booking`        | `string` | **Required** |
 
 ---
 
@@ -383,7 +395,7 @@ Allows the admin to delete a activity by id
 
 | Parameter | Type     | Description  |
 | :-------- | :------- | :----------- |
-| `id` | `string` | **Required** |
+| `id`      | `string` | **Required** |
 
 ---
 
@@ -394,6 +406,7 @@ Allows the admin to get all activities
 ```http
     GET admin/activities
 ```
+
 #### Returns
 
 Alongside the HTTP response status code, the endpoint sends a JSON object
@@ -404,4 +417,67 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         data?: activities,
         errors?: errorMessage
     }
+```
+
+---
+
+### Payment with PayPal
+
+#### Create an order
+
+Allows the front to create an order with PayPal API and create a Payment object in the given user's DB
+
+```http
+    POST /payment/create
+```
+
+| Parameter     | Type     | Description  |
+| :------------ | :------- | :----------- |
+| `price`       | `number` | **Required** |
+| `tier`        | `number` | **Required** |
+| `description` | `string` | **Required** |
+```js
+    // see src/interfaces/Cart.interface.ts
+```
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: PayPal link,
+        errors?: errorMessage
+    }
+```
+
+---
+
+#### Capture an order
+
+Allows the front to update a Payment object in the given user's DB, mark it as paid and retrieve meaningful data about the payment and the user
+
+```http
+    POST /payment/capture?token
+```
+
+| Parameter     | Type     | Description  |
+| :------------ | :------- | :----------- |
+| `token`       | `string` | **Required**. Given as query param via PayPal redirect |
+```js
+    // see src/services/payment.services.ts - createOrder for the redirect URL
+```
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: Payment info,
+        errors?: errorMessage
+    }
+    // see src/interfaces/Payment.interface.ts - FrontFacingPayment
 ```

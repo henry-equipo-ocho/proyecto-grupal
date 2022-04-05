@@ -45,7 +45,7 @@ const FormDialog = ({ abierto, close }) => {
   const [open, setOpen] = React.useState(abierto);
   const history = useNavigate();
   const dispatch = useDispatch();
-  
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -100,7 +100,6 @@ const FormDialog = ({ abierto, close }) => {
               helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
-              autoFocus
               fullWidth
               id="password"
               name="password"
