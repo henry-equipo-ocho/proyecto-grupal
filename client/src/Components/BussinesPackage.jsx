@@ -3,20 +3,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import logo from '../Media/Logo.png';
 import './Css/BussinesPackage.css';
+import NavBar from './NavBar';
 import Footer from './Footer';
 import PaymentForm from './PaymentForm';
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
 
 export default function BussinesPackage() {
     const isLogged = useSelector(state => state.token) ? true : false || localStorage.getItem('loggedIn') ? true : false;
+    const navigate = useNavigate();
+   
 
     function handleClickLogout() {
-        swal('Sorry!', 'Please login to continue', 'info');
+        Swal.fire({
+            title: 'Sorry!',
+            text:'Please Login to continue',
+            icon:'info',
+            color: 'white',
+            background:'#00498b',
+            confirmButtonText: '<a href="/home">Logueame</a>',
+            confirmButtonColor: '#24c59c'
+          });          
     };
+
     return (
         <div className='pageB'>
             <header className='header'>
                 <div>
                     <img src={logo} alt='Not found' />
+                </div>
+                <div>
+                    <h1>Planes para empresas</h1>
                 </div>
                 <div>
                     <button><a href='/home'>HOME</a></button>

@@ -1,23 +1,38 @@
 .header{
     background-color: #00498b;
-    height: 50px;
+    height: 70px;
     display: flex;
     border-radius: 10px;
+    align-items: center;
     justify-content: space-between;
+    padding: auto;
+
 }
 .header img{
-    margin-left: 10px;
-    width: 55px;
-    height: 44px;
+    margin-left: 20px;
+    width: 85px;
+    height: 64px;
+}
+
+.header h1{
+    color: white;
 }
 
 .header button{
-    margin-top: 13px;
-    margin-right: 10px;
-    margin-left: auto;
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
     border-radius: 5px;
-    background-color: #24c59c;
+    background-color: #24c59d9f;
+    color: white;
     border-style: none;
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+    margin: 5px;
+    line-height: 30px;
+    border-right: 10px;
+
 }
 .header button:hover{
     background-color: #a9e8bc

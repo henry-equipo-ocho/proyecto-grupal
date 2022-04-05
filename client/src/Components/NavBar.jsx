@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import Logo from '../Media/Logo.png';
+import logo from '../Media/Logo.png';
+import './Css/NavBar.css';
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserName } from './Redux/Actions/actions';
@@ -17,11 +18,10 @@ import { SET_TOKEN } from './Redux/Actions/actions_types';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 export default function NavBar({ handleLoginForm }) {
-
     const axiosPrivate = useAxiosPrivate();
-
     const dispatch = useDispatch();
     const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
+    const nombre = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).name : 'Viajero'
 
     const logout = (e) => {
         e.preventDefault();
@@ -30,58 +30,39 @@ export default function NavBar({ handleLoginForm }) {
         axiosPrivate.get('/token/clear');
         dispatch({ type: SET_TOKEN, payload: '' });
         window.location.reload();
-    }
+    };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Button
-                        color="inherit"
-                        variant='none'
-                        href='/home'
-                        size='large'>
-                        <img src={Logo} alt='img notfound' width="65" height="50" />
-                    </Button>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Eztinerary
-                    </Typography>
-                    
-
-
-                    {isLogged ?
-                        <>
-                            <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', marginRight: '10px' }}>
-                                <Button
-                                    color="inherit"
-                                    variant='outlined'
-                                    startIcon={<PersonIcon />} >Dashboard</Button>
-                            </Link>
-                            <Button
-                                color="inherit"
-                                variant='outlined'
-                                href="javascript:location.reload()"
-                                onClick={(e) => logout(e)}
-                                startIcon={<PersonIcon />} >Logout</Button>
-                        </>
-                        :
-                        <>
-                            <Button
-                                color="inherit"
-                                href='/plans'
-                            >Plans</Button>
-                            <Button
-                                color="inherit"
-                                onClick={handleLoginForm}
-                                startIcon={<PersonIcon />}>Login</Button>
-                            <Button
-                                color="inherit"
-                                variant='outlined'
-                                startIcon={<AppRegistrationIcon />}
-                                href='/register'>Signup</Button>
-                        </>
-                    }
-                </Toolbar>
-            </AppBar>
-        </Box>
-    )};
+        <header className='headerNav'>
+            <div>
+                <img src={logo} alt='Not found' />
+            </div>
+            {isLogged ?
+                <>
+                    <div>
+                        <h1>Hola {nombre} </h1>
+                    </div>
+                    <div className='buttonsLogin'>
+                        <button className='buttonNav'><a href='/dashboard'>Dashboard</a></button>
+                        <button
+                            className='buttonNav'
+                            href="javascript:location.reload()"
+                            onClick={(e) => logout(e)}
+                        >Logout</button>
+                    </div>
+                </>
+                :
+                <>
+                    <div>
+                        <h1>Hola {nombre} </h1>
+                    </div>
+                    <div className='buttonsLogOut'>
+                        <button className='buttonNav'><a href='/plans'>Plans</a></button>
+                        <button className='buttonNav' onClick={handleLoginForm}>Login</button>
+                        <button className='buttonNav' ><a href='/register'>SignUp</a></button>
+                    </div>
+                </>
+            }
+        </header>
+    )
+};

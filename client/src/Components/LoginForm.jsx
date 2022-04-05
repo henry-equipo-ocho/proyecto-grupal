@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUserName } from './Redux/Actions/actions';
 import { useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute',
@@ -62,8 +64,16 @@ const FormDialog = ({ abierto, close }) => {
         miStorage.setItem('loggedIn', 'true')
         miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
+        const nombre = JSON.parse(localStorage.getItem('data')).name
         formik.resetForm()
-        alert('Sesión iniciada con éxito');
+        Swal.fire({
+          title:`${nombre}`,
+          text:'Bienvenido a Eztinerary',
+          icon:'success',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+        });
         history('/dashboard');
       } catch (error) {
         console.log(error)

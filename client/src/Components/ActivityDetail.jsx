@@ -207,6 +207,11 @@ export default function ActivityDetail({ activity, close, id }) {
                 autoFocus
                 color="inherit"
                 variant='outlined'
+                href='/Register'>Conoce mas</Button>
+              <Button
+                autoFocus
+                color="inherit"
+                variant='outlined'
                 onClick={close}>Cancel</Button>
             </>
           }
