@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import './loader.css';
+import '../AdminDashboard/Pages/loader.css';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
@@ -156,7 +156,7 @@ export default function Estadisticas() {
   return (
     <center>
       <Container sx={{ display: 'flex', flexDirection: 'column', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
-        <Typography variant='h4' sx={{ mb: 1 }}>Statistics Dashboard</Typography>
+        <Typography variant='h4' sx={{ mb: 1 }}>Statistics of Activities</Typography>
         <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
           <Box sx={{ width: '25vw' }}>
             <Typography variant='h6' sx={{ mb: 1 }}>Users</Typography>

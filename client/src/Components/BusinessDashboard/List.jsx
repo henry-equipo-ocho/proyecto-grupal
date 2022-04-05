@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import '../loader.css';
-import '../table.css';
+import '../AdminDashboard/Pages/loader.css';
+import '../AdminDashboard/Pages/table.css';
 
 import alert from 'sweetalert';
 
@@ -38,7 +38,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-import countries from '../../../Register/countries';
+import countries from '../Register/countries';
 
 const validationSchema = yup.object({
   name: yup
@@ -72,7 +72,7 @@ const validationSchema = yup.object({
     .required('Link is required')
 });
 
-export default function Listar() {
+export default function List() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
@@ -117,25 +117,25 @@ export default function Listar() {
       dangerMode: true,
     }).then(async function (isConfirm) {
       if (isConfirm) {
-          try {
-            const token = JSON.parse(localStorage.getItem('token'));
-            await axios.delete('http://localhost:3001/admin/delete/activity', {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              },
-              data: {
-                id: _id
-              }
-            });
-            alert("Success", "Activity succesfully deleted!", "success");
-            setOpen(false);
-            setLoading(true);
-            loadActivities();
-          }
-          catch (e) {
-            console.log(e)
-            alert("Error", "" + e, "error")
-          }
+        try {
+          const token = JSON.parse(localStorage.getItem('token'));
+          await axios.delete('http://localhost:3001/admin/delete/activity', {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            },
+            data: {
+              id: _id
+            }
+          });
+          alert("Success", "Activity succesfully deleted!", "success");
+          setOpen(false);
+          setLoading(true);
+          loadActivities();
+        }
+        catch (e) {
+          console.log(e)
+          alert("Error", "" + e, "error")
+        }
       } else {
         alert("Cancelled", "Action cancelled", "error");
       }
@@ -213,16 +213,16 @@ export default function Listar() {
         'Visit site'
       ],
     })
-    .then(function (isConfirm) {
-      if (isConfirm) {
-        window.open(booking, '_blank');
-      }
-    });
+      .then(function (isConfirm) {
+        if (isConfirm) {
+          window.open(booking, '_blank');
+        }
+      });
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 2 }}>
-      <Typography variant='h5' sx={{ my: 2 }}>List activities</Typography>
+      <Typography variant='h5' sx={{ my: 2 }}>List of Activities</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <form method='POST' onSubmit={handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -240,95 +240,95 @@ export default function Listar() {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap' }}>
           {
             !loading ?
-            activities.length ?
-              <Paper>
-                <TableContainer>
-                  <Table sx={{ minWidth: '83.6vw' }} size="small" aria-label="activities list table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="left">ID</TableCell>
-                        <TableCell align="right">Name</TableCell>
-                        <TableCell align="right">City</TableCell>
-                        <TableCell align="right">Currency</TableCell>
-                        <TableCell align="right">Price</TableCell>
-                        <TableCell align="right">Booking</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        activities
-                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((act) => (
-                            <TableRow key={act._id} hover>
-                              <TableCell align="left">{act._id}</TableCell>
-                              <TableCell align="right">{act.name.slice(0, 20)}...</TableCell>
-                              <TableCell align="right">{act.city}</TableCell>
-                              <TableCell align="right">{act.price_currency}</TableCell>
-                              <TableCell align="right">{act.price_amount}</TableCell>
-                              <TableCell align="right">{act.booking}</TableCell>
-                              <TableCell align="right">
-                                <Button onClick={() => {
-                                  setOpen(true)
-                                  formik.setValues(
-                                    {
-                                      id: act._id,
-                                      name: act.name,
-                                      description: act.description,
-                                      picture: act.picture,
-                                      city: act.city,
-                                      country: act.country,
-                                      price_currency: act.price_currency,
-                                      price_amount: act.price_amount,
-                                      booking: act.booking
-                                    }
-                                  )
-                                }}><EditIcon /></Button>
-                                <Button onClick={() => handleDetail(
-                                  act._id,
-                                  act.name,
-                                  act.description,
-                                  act.picture,
-                                  act.city,
-                                  act.country,
-                                  act.price_currency,
-                                  act.price_amount,
-                                  act.booking
-                                )}><VisibilityIcon /></Button>
-                                <Button onClick={() => handleDelete(act._id)}><DeleteOutlineIcon /></Button>
-                              </TableCell>
-                            </TableRow>
-                          ))
-                      }
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  component="div"
-                  count={activities.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              activities.length ?
+                <Paper>
+                  <TableContainer>
+                    <Table sx={{ minWidth: '83.6vw' }} size="small" aria-label="activities list table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">ID</TableCell>
+                          <TableCell align="right">Name</TableCell>
+                          <TableCell align="right">City</TableCell>
+                          <TableCell align="right">Currency</TableCell>
+                          <TableCell align="right">Price</TableCell>
+                          <TableCell align="right">Booking</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {
+                          activities
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((act) => (
+                              <TableRow key={act._id} hover>
+                                <TableCell align="left">{act._id}</TableCell>
+                                <TableCell align="right">{act.name.slice(0, 20)}...</TableCell>
+                                <TableCell align="right">{act.city}</TableCell>
+                                <TableCell align="right">{act.price_currency}</TableCell>
+                                <TableCell align="right">{act.price_amount}</TableCell>
+                                <TableCell align="right">{act.booking}</TableCell>
+                                <TableCell align="right">
+                                  <Button onClick={() => {
+                                    setOpen(true)
+                                    formik.setValues(
+                                      {
+                                        id: act._id,
+                                        name: act.name,
+                                        description: act.description,
+                                        picture: act.picture,
+                                        city: act.city,
+                                        country: act.country,
+                                        price_currency: act.price_currency,
+                                        price_amount: act.price_amount,
+                                        booking: act.booking
+                                      }
+                                    )
+                                  }}><EditIcon /></Button>
+                                  <Button onClick={() => handleDetail(
+                                    act._id,
+                                    act.name,
+                                    act.description,
+                                    act.picture,
+                                    act.city,
+                                    act.country,
+                                    act.price_currency,
+                                    act.price_amount,
+                                    act.booking
+                                  )}><VisibilityIcon /></Button>
+                                  <Button onClick={() => handleDelete(act._id)}><DeleteOutlineIcon /></Button>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                        }
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={activities.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button onClick={() => {
                       setLoading(true);
                       loadActivities();
                     }}>Reload activities</Button>
                   </Box>
-              </Paper>
+                </Paper>
+                :
+                <Alert severity="info" sx={{ width: '100%', my: 2 }}>
+                  <AlertTitle>Found activities</AlertTitle>
+                  All activities will appear here.
+                  <Button onClick={() => {
+                    setLoading(true);
+                    loadActivities();
+                  }}>Reload activities</Button>
+                </Alert>
               :
-              <Alert severity="info" sx={{ width: '100%', my: 2 }}>
-                <AlertTitle>Found activities</AlertTitle>
-                All activities will appear here.
-                <Button onClick={() => {
-                  setLoading(true);
-                  loadActivities();
-                }}>Reload activities</Button>
-              </Alert>
-            :
-            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+              <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
           }
         </Box>
       </Box>

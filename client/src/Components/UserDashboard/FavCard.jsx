@@ -34,28 +34,29 @@ export default function ActivityCard({ name, pictures, shorTDescription, price, 
   }
 
   return (
-    <Card sx={{ maxWidth: 245, margin: '10px', padding: '10px' }}>
+    <Card sx={{ maxWidth: 300, margin: '10px', padding: '10px', border: 'solid 1px #CAE5CB' }}>
       <CardMedia
         component="img"
-        height="140"
+        height="130"
         alt="Turismo"
+        sx={{ borderRadius: '5px' }}
         image={pictures}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Typography gutterBottom variant="h6" component="div">
           {name}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography color="text.secondary">
           {shorTDescription.slice(0, 50)}... <a href={link} target='_blank' rel="noreferrer">read more</a>
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="body1">
           Price: {price} {currency}
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: 'center' }} >
         <Button
-          color="inherit"
-          variant='outlined'
+          color='error'
+          variant='contained'
           size="small"
           onClick={() => remove(actID, itName)}
           >Remove from itinerary</Button>

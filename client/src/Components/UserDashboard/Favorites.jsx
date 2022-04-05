@@ -25,8 +25,8 @@ export default function Favorites() {
 
   const axiosPrivate = useAxiosPrivate();
 
+  const [loading, setLoading] = useState(true);
   const [iti, setIti] = useState([]);
-
   const [itiName, setItiname] = useState('');
 
   const remove = async (itineraryName) => {
@@ -52,9 +52,10 @@ export default function Favorites() {
       
       const response = await axiosPrivate.get('/favorites');
       setIti([...response.data.data]);
+      setLoading(false);
     }
     catch (e) {
-      console.log(e)
+      sweetAlert('Error', "Error to loading data, please try", 'error')
     }
   };
 
@@ -69,18 +70,19 @@ export default function Favorites() {
       <Typography variant='h4' sx={{ marginTop: '15px', marginBottom: '10px' }}>Itineraries</Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'column' }}>
         {
+          !loading ?
           iti.length
             ?
             iti.map((itinerary) => {
               return (
-                <Accordion key={itinerary.name} sx={{ my: 1, width: '100vw', border: '1px solid black' }}>
+                <Accordion key={itinerary.name} sx={{ my: 1, width: '90vw', border: '1px solid #CAE5CB' }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                   >
                     <Typography>{itinerary.name}</Typography>
                   </AccordionSummary>
                   <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Accordion key={itinerary.name + 1} sx={{ my: 1, width: '50vw', border: '1px solid black' }}>
+                    <Accordion key={itinerary.name + 1} sx={{ my: 1, width: '50vw', border: '1px solid #CAE5CB' }}>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                       >
@@ -100,7 +102,7 @@ export default function Favorites() {
                         </Box>
                       </AccordionDetails>
                     </Accordion>
-                    <Button variant="outlined" size="small" sx={{ display: 'inline-block' }} onClick={() => remove(itinerary.name)}>Remove itinerary</Button>
+                    <Button variant="outlined" color='error' size="small" sx={{ display: 'inline-block' }} onClick={() => remove(itinerary.name)}>Remove itinerary</Button>
                     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                       {
                         itinerary.activities.length ?
@@ -132,6 +134,8 @@ export default function Favorites() {
               <AlertTitle>Activities</AlertTitle>
               No activities to display — <strong><Link to='/home' style={{ textDecoration: 'none' }}><Button>Try add activities here!</Button></Link></strong>
             </Alert>
+            :
+            <p className='loader' style={{ fontSize: '15px !important' }}> </p>
         }
       </Box>
     </Box>
