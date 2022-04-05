@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
+exports.setWatchedTimesService = exports.updateCopyActivitiesService = exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.updateActivitiesService = exports.saveCopyActivitiesService = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
+const Activity_Copy_models_1 = __importDefault(require("../models/Activity.Copy.models"));
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -25,7 +26,8 @@ const getAPIActivitiesService = (req) => __awaiter(void 0, void 0, void 0, funct
         });
         const activities = yield amadeus.shopping.activities.get({
             latitude: req.body.lat,
-            longitude: req.body.lon
+            longitude: req.body.lon,
+            radius: 20
         }).then((response) => response.data).catch((error) => error.code);
         return activities;
     }
@@ -47,6 +49,32 @@ const saveActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.saveActivitiesService = saveActivitiesService;
+const saveCopyActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // const found = await ActivityCopyModels.findOne({name: activity.name});
+        // if(found) throw new Error('Activity already exists');
+        const newActivity = new Activity_Copy_models_1.default(activity);
+        yield newActivity.save();
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.saveCopyActivitiesService = saveCopyActivitiesService;
+const updateActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const found = yield Activity_models_1.default.findOne({ name: activity.name });
+        if (!found)
+            throw new Error('Activity not found');
+        const update = { price_currency: activity.price_currency, price_amount: activity.price_amount };
+        yield found.update(update);
+        yield found.save();
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.updateActivitiesService = updateActivitiesService;
 const getAllDBActivities = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const activities = yield Activity_models_1.default.find();
@@ -102,3 +130,33 @@ const updateActivityInfo = (req, id) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.updateActivityInfo = updateActivityInfo;
+const updateCopyActivitiesService = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield Activity_models_1.default.updateMany([{ $addFields: { 'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7' } }]);
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.updateCopyActivitiesService = updateCopyActivitiesService;
+const setWatchedTimesService = (type, id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const found = yield Activity_models_1.default.findOne({ _id: id });
+        if (!found)
+            throw new Error('Activity not found');
+        if (type === 'watched') {
+            found.watchedTimes = found.watchedTimes + 1;
+            yield found.save();
+            return found;
+        }
+        if (type === 'booked') {
+            found.bookedTimes = found.bookedTimes + 1;
+            yield found.save();
+            return found;
+        }
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.setWatchedTimesService = setWatchedTimesService;

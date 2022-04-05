@@ -20,6 +20,7 @@ import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import sweetAlert from 'sweetalert';
 
+import axios from 'axios';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 const style = {
@@ -82,6 +83,14 @@ export default function ActivityDetail({ activity, close, id }) {
       sweetAlert('Congrats', `Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`, 'success')
     }
   };
+
+  async function watchedOrBookeedTimes(id) {
+    try {
+      await axios.post('http://localhost:3001/activities/watched', {type: 'booked', id: id})
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   useEffect(() => {
     checkIfHasItineraries();
@@ -193,6 +202,7 @@ export default function ActivityDetail({ activity, close, id }) {
                   variant='outlined'
                   href={activity.booking}
                   target='_blank'
+                  onClick={() => watchedOrBookeedTimes(activity._id)}
                 >Reserve</Button>
                 <Button
                   autoFocus
