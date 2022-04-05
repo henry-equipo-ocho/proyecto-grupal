@@ -96,9 +96,7 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
                 user.activeSubscription = true;
                 user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
                 yield user.save();
-                console.log('llamando a end');
                 endSubscriptionUser(userID);
-                console.log('terminado end');
                 return true;
             }
         }
