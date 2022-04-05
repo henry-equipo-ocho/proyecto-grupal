@@ -364,9 +364,9 @@ Allows the admin to modify an activity by id
 
 ---
 
-### CREATE USER
+### CREATE ACTIVITY
 
-Allows the admin to create users
+Allows the admin to create an activity
 
 ```http
     POST admin/create/activity
@@ -480,4 +480,87 @@ Alongside the HTTP response status code, the endpoint sends a JSON object
         errors?: errorMessage
     }
     // see src/interfaces/Payment.interface.ts - FrontFacingPayment
+```
+
+---
+
+### BUSINESS
+
+### UPDATE AN ACTIVITY
+
+Allows the admin to modify an activity by id
+
+```http
+    PUT business/activities
+```
+
+| Parameter        | Type     | Description  |
+| :--------------- | :------- | :----------- |
+| `id`             | `string` | **Required** |
+| `name`           | `string` | **Optional** |
+| `description`    | `string` | **Optional** |
+| `picture`        | `string` | **Optional** |
+| `city`           | `string` | **Optional** |
+| `country`        | `string` | **Optional** |
+| `price_currency` | `string` | **Optional** |
+| `price_amount`   | `number` | **Optional** |
+| `booking`        | `string` | **Optional** |
+
+**- At least one parameter should be sent.**
+
+---
+
+### CREATE ACTIVITY
+
+Allows the admin to create an activity
+
+```http
+    POST business/activities
+```
+
+| Parameter        | Type     | Description  |
+| :--------------- | :------- | :----------- |
+| `name`           | `string` | **Required** |
+| `description`    | `string` | **Required** |
+| `picture`        | `string` | **Required** |
+| `city`           | `string` | **Required** |
+| `country`        | `string` | **Required** |
+| `price_currency` | `string` | **Required** |
+| `price_amount`   | `number` | **Required** |
+| `booking`        | `string` | **Required** |
+
+---
+
+### DELETE ACTIVITY
+
+Allows the business to delete a activity by id
+
+```http
+    DELETE business/activities
+```
+
+| Parameter | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `id`      | `string` | **Required** |
+
+---
+
+### GET ALL ACTIVITIES
+
+Allows the business to get all of his activities
+
+```http
+    GET business/activities
+```
+
+#### Returns
+
+Alongside the HTTP response status code, the endpoint sends a JSON object
+
+```js
+    {
+        status: "success" || "failed" || "error",
+        data?: activities,
+        errors?: errorMessage
+    }
 ```

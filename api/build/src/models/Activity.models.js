@@ -15,7 +15,7 @@ const activitySchema = new mongoose_1.default.Schema({
     booking: { type: String, required: [true, 'Missing booking atribute'] },
     watchedTimes: { type: Number, default: 0 },
     bookedTimes: { type: Number, default: 0 },
-    created: { type: Boolean, default: false },
+    created: { type: Boolean, default: true },
     ownerId: { type: String }
 });
 exports.default = mongoose_1.default.model('Activity', activitySchema);
