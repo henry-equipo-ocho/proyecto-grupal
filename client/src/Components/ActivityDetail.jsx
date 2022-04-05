@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
+import Swal from 'sweetalert2'
 
 import { imageListItemClasses, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,10 +69,24 @@ export default function ActivityDetail({ activity, close, id }) {
       setItis([]);
       try {
         await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : itiID });
-        sweetAlert('Congrats', `Activity added succesfully in itinerary "${itiID}"!`, 'success');
+        Swal.fire({
+          title: 'Congrats!',
+          text:`Activity added succesfully in itinerary "${itiID}"!`,
+          icon:'success',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+          })
       }
       catch (err) {
-        sweetAlert('Error', 'Error to add in itinerary, try add in another itinerary!', 'error');
+        Swal.fire({
+          title: 'Sorry!',
+          text:'Error to add in itinerary, try add in another itinerary!',
+          icon:'error',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+          })
         console.log(err);
       }
     }
@@ -79,7 +94,14 @@ export default function ActivityDetail({ activity, close, id }) {
       close(e);
       setItis([]);
       await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : 'New itinerary' });
-      sweetAlert('Congrats', `Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`, 'success')
+      Swal.fire({
+        title: 'Congrats!',
+        text:`Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`,
+        icon:'success',
+        color: 'white',
+        background:'#00498b',
+        confirmButtonColor: '#24c59c'
+        })
     }
   };
 
@@ -107,7 +129,7 @@ export default function ActivityDetail({ activity, close, id }) {
           </DialogContentText>
           <DialogContentText>
             <Typography variant="h5" color='black'>
-              ${usDollar}
+              ${usDollar} US
             </Typography>
           </DialogContentText>
           {
@@ -150,13 +172,9 @@ export default function ActivityDetail({ activity, close, id }) {
                         value={itiName}
                         onChange={(e) => setItiname(prev => prev = e.target.value)}
                       />
-                      <Button
-                        autoFocus
-                        color="inherit"
-                        variant='outlined'
-                        sx={{ my: 1 }}
-                        onClick={addItiFav}
-                      >Create new itinerary</Button>
+                    <button 
+                    className='shopButton'
+                    onClick={addItiFav}>Create new itinerary</button>
                     </Box>
                     :
                     null
@@ -164,12 +182,9 @@ export default function ActivityDetail({ activity, close, id }) {
                 {
                   itiID !== 'new'
                     ?
-                    <Button
-                      autoFocus
-                      color="inherit"
-                      variant='outlined'
-                      onClick={addItiFav}
-                    >Add to Itinerary</Button>
+                    <button 
+                    className='shopButton'
+                    onClick={addItiFav}>Add to Itinerary</button>
                     :
                     null
                 }
@@ -182,37 +197,25 @@ export default function ActivityDetail({ activity, close, id }) {
           {isLogged ?
             <Box>
               <Box>
-                <Button
-                  color="inherit"
-                  variant='outlined'
-                  onClick={() => setShowIti(true)}
-                >Add to...</Button>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  href={activity.booking}
-                  target='_blank'
-                >Reserve</Button>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  onClick={close}>Cancel</Button>
+
+              <button 
+              className='shopButton'
+              onClick={() => setShowIti(true)}>Add to...</button>
+              <button 
+              className='shopButton'><a href={activity.booking} target='_blank'>Reserve</a></button>
+              <button 
+              className='shopButton'
+              onClick={close} >Cancel</button>
               </Box>
             </Box>
             :
             <>
-              <Button
-                autoFocus
-                color="inherit"
-                variant='outlined'
-                href='/Register'>Conoce mas</Button>
-              <Button
-                autoFocus
-                color="inherit"
-                variant='outlined'
-                onClick={close}>Cancel</Button>
+              <button 
+              className='shopButton'
+              onClick={close} ><a href='/Register'>More info</a></button>
+              <button 
+              className='shopButton'
+              onClick={close} >Cancel</button>
             </>
           }
         </DialogActions>

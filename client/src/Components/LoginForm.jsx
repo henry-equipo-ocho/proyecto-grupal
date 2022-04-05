@@ -25,6 +25,7 @@ const style = {
   width: 400,
   height: 400,
   p: 4,
+  border
 };
 
 const validationSchema = yup.object({
@@ -93,7 +94,7 @@ const FormDialog = ({ abierto, close }) => {
           },
         }}
       >
-        <form style={{ border: 'solid 1px black' }} onSubmit={formik.handleSubmit}>
+        <form style={{ border: 'solid 1px black', 'border-radius': 10px;  }} onSubmit={formik.handleSubmit}>
           <DialogTitle>Iniciar Sesión</DialogTitle>
           <DialogContent >
             <TextField
@@ -122,18 +123,13 @@ const FormDialog = ({ abierto, close }) => {
             />
 
             <DialogContentText>
-              <Button>
-                Olvidaste tu Contraseña?
-              </Button>
               <DialogActions>
-                <Button
-                  onClick={close}
-                  variant="outlined"
-                >Cancel
-                </Button>
-                <Button onClick={() => setOpen(!open)} color="primary" variant="contained" fullWidth type="submit">
-                  Submit
-                </Button>
+                <button
+                  className='shopButton'
+                  onClick={close} >Cancel</button>
+                <button
+                  className='shopButton'
+                  onClick={() => setOpen(!open)} >Submit</button>
               </DialogActions>
             </DialogContentText>
           </DialogContent>

@@ -12,6 +12,7 @@ import { getActivities, setLoading, getCountries, getCities } from './Redux/Acti
 import './Css/ActivityCard.css';
 import './Css/Home.css'
 //import search from '../Media/search.jpg'
+import RenderMap from './GoogleMap/RenderMap/RenderMap.jsx';
 import Loading from './Loading/Loading';
 
 
@@ -39,32 +40,38 @@ export default function Home() {
 
   return (
     <div className='page'>
+      <NavBar handleLoginForm={setLoginForm} />
 
-      <div>
-        <NavBar
-          handleLoginForm={setLoginForm} />
+      <div className='searchImage'>
+        <div className='searchBarContainer'>
+          <SearchBarCopy />
+        </div>
+      </div>
 
-        <div className='searchImage'>
-
-          <div className='searchBarContainer'>
-            <SearchBarCopy />
-          </div>
-
+      <div className='bodyContainer'>
+        <div className='filter'>
+          <Filter handleChangeCurrentPage={setCurrentPage} />
         </div>
 
-
-        <div className='bodyContainer'>
-          <div className='filter'>
-            <Filter
-              handleChangeCurrentPage={setCurrentPage} />
+        {loading ?
+          <center>
+            <p className='loader' style={{ fontSize: '50px' }}></p>
+          </center> :
+          <>
+          <div className='tier1'>
+            Actividades top
           </div>
 
-          {loading ?
-            <center>
-              <p className='loader' style={{ fontSize: '50px' }}></p>
-            </center> :
-            <>
-              <div className='cardsDisplay'>
+          <div className='tier2'>
+            nuestros recomendados
+          </div>
+
+          <div className='tier3'>
+            ultimas agregadas
+          </div>
+
+
+            <div className='cardsDisplay'>
               <div className='cardsContainer'>
                 {currentActivities.length ? currentActivities.map((a) => (
                   <ActivityCard
@@ -76,27 +83,21 @@ export default function Home() {
                   />
                 )) : <p className='loader' style={{ fontSize: '50px' }}> </p>}
               </div>
-
-              </div>
-              
-            </>}
-        </div>
-
-        <Pagination
-          activitiesPerPage={10}
-          allActivities={activities.length}
-          paginado={(pageNumber) => setCurrentPage(pageNumber)}
-        />
-
-        <Footer />
+            </div>
+          </>}
       </div>
-
+      <Pagination
+        activitiesPerPage={10}
+        allActivities={activities.length}
+        paginado={(pageNumber) => setCurrentPage(pageNumber)}
+      />
 
       {loginForm &&
         <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
 
       {detail &&
         <ActivityDetail activity={detail} close={() => setDetail(null)} />}
+    <Footer />
     </div>
   );
 };

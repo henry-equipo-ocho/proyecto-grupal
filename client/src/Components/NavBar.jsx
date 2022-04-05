@@ -40,7 +40,7 @@ export default function NavBar({ handleLoginForm }) {
             {isLogged ?
                 <>
                     <div>
-                        <h1>Hola {nombre} </h1>
+                        <h1>Hello {nombre} </h1>
                     </div>
                     <div className='buttonsLogin'>
                         <button className='buttonNav'><a href='/dashboard'>Dashboard</a></button>
@@ -54,7 +54,7 @@ export default function NavBar({ handleLoginForm }) {
                 :
                 <>
                     <div>
-                        <h1>Hola {nombre} </h1>
+                        <h1>Hello Traveler</h1>
                     </div>
                     <div className='buttonsLogOut'>
                         <button className='buttonNav'><a href='/google-map'>Maps</a></button>

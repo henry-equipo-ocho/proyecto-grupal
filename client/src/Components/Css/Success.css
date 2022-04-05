@@ -1,0 +1,22 @@
+.detailShop{
+    display:column;
+    background-color: #24c59c;
+    width: auto;
+    margin: 3em;
+    padding: 1px;
+    color:white;
+    font-family: 'Roboto';
+    flex-wrap: wrap;
+    font-size: xx-large;
+    border-radius: 10px;
+}
+
+.detailShop ul li{
+    list-style: none;
+}
+
+.tag{
+    color: black;
+    font-weight: 800;
+}
+
