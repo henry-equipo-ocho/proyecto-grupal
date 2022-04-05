@@ -1,3 +1,4 @@
+import { Document, Types } from "mongoose"
 import Activity from "../models/Activity.models";
 import ActivityInterface from "../interfaces/Activity.interface";
 import { Request } from "express";
@@ -28,8 +29,8 @@ export const getAPIActivitiesService = async (req: Request): Promise<any> => {
 export const saveActivitiesService = async (activity: ActivityInterface): Promise<any> => {
     try {
 
-        const found = await Activity.findOne({name: activity.name});
-        if(found) throw new Error('Activity already exists');
+        const found = await Activity.findOne({ name: activity.name });
+        if (found) throw new Error('Activity already exists');
 
         const newActivity = new Activity(activity);
         await newActivity.save();
@@ -40,7 +41,14 @@ export const saveActivitiesService = async (activity: ActivityInterface): Promis
 
 export const getAllDBActivities = async () => {
     try {
-        const activities = await Activity.find();
+        const rawActivities = await Activity.find();
+        const activities: Array<Array<ActivityInterface>> = [
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
+        console.log(activities);
         return activities;
     } catch (e) {
         throw e;
@@ -75,14 +83,30 @@ export const getActivitiesFromArray = async (activitiesID: Array<string>): Promi
 
 export const updateActivityInfo = async (req: Request, id: string) => {
     try {
-        const condictions = {_id: id}
+        const condictions = { _id: id }
         const update = req.body;
 
         Activity.findOneAndUpdate(condictions, update, (error: any, result: any) => {
-            if(error) return error
+            if (error) return error
             else return result;
         });
     } catch (e) {
         throw e
+    }
+}
+
+function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, ActivityInterface> & ActivityInterface & { _id: Types.ObjectId; })>, tier: number | undefined, onlyThirdParty: boolean | undefined): ActivityInterface[] {
+    if (onlyThirdParty) {
+        return rawActivities.filter((activity) => !activity.ownerID);
+    } else {
+        return rawActivities.filter(async (activity) => {
+            const populatedActivity = await activity.populate({
+                path: 'ownerID',
+                match: { activeSubscription: true },
+                select: 'payments'
+            });
+            console.log(activity, populatedActivity);
+            return populatedActivity.ownerID && populatedActivity.ownerID.payments.at(-1).tier === tier;
+        });
     }
 }
