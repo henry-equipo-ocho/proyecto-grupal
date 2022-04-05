@@ -63,12 +63,10 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
     }
 }
 
-export const capturePayPalOrder = async (token: string, userID: string): Promise<any> => {
+export const capturePayPalOrder = async (token: string, userID: string): Promise<FrontFacingPayment> => {
     // https://developer.paypal.com/api/rest/reference/orders/v2/errors/
     try {
         if (!mongoose.Types.ObjectId.isValid(userID)) {
-            console.log(mongoose.Types.ObjectId.isValid(userID));
-
             throw new Error(`Invalid user ID: ${userID}`);
         }
 
@@ -88,7 +86,6 @@ export const capturePayPalOrder = async (token: string, userID: string): Promise
         } else {
             throw new Error(`Payment (${response.data.id}) is not completed`);
         }
-
     } catch (error) {
         throw error;
     }
@@ -146,6 +143,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
                 email: user.email,
                 tier: payment.tier,
                 price: payment.price,
+                description: payment.description,
                 buyDate: payment.createdAt as Date,
                 expireDate: subscriptionExpiry as Date
             }
