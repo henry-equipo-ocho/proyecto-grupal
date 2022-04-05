@@ -93,22 +93,19 @@ export default function Register() {
   };
 
   return (
-    <>
-
-                <header className='header'>
-                <div>
-                    <img src={logo} alt='Not found' />
-                </div>
-                <div>
-                    <button><a href='/home'>HOME</a></button>
-                </div>
-            </header>
-    <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
-
-    <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
-
-      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
-        <Box>
+    <div>
+      <header className='header'>
+        <div>
+          <img src={logo} alt='Not found' />
+        </div>
+        <div>
+          <button><a href='/home'>HOME</a></button>
+        </div>
+      </header>
+      <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
+        <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} ><Box>
+            
           <Typography style={{ fontWeight: '300', fontSize: '60px' }}>
             Register at <br />
             <span style={{ fontWeight: '400', fontSize: '29px', position: 'relative', top: '-45px', left: '0px' }}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eztinerary</span>
@@ -245,10 +242,10 @@ export default function Register() {
         <DialogActions>
           <Button onClick={handleClose}>Check</Button>
         </DialogActions>
-      </Dialog>
-    </Container >
-    </center>
-    <Footer />
-    </>
+        </Dialog>
+        </Container >
+      </Container >
+      <Footer />
+    </div>
   );
 };
