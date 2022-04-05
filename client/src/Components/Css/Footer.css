@@ -5,6 +5,7 @@
     border-radius: 10px;
     position: relative;
     background-color: #00498b;
+ 
 }
 
 @media all and (min-width:1024px) and (max-width:1280px){}
@@ -17,17 +18,17 @@
 }
 .div1 h3 {
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }
 
 .div2 ul{
     font-family: 'Roboto';
-    color: #24c59c;
+    color:white;
     list-style: none;
 }
 .div2 h3{
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }
 
 
@@ -37,5 +38,5 @@
 }
 .div3 h3{
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }

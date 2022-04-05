@@ -8,6 +8,7 @@ import Footer from './Footer';
 import PaymentForm from './PaymentForm';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import LoginForm from './LoginForm';
 
 export default function BussinesPackage() {
     const isLogged = useSelector(state => state.token) ? true : false || localStorage.getItem('loggedIn') ? true : false;
@@ -168,6 +169,8 @@ export default function BussinesPackage() {
                         </div>
                     </div>
                 </>}
+
+                <LoginForm/>
             <Footer />
         </div>
     );

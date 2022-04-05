@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert';
 import './Css/PaymentForm.css'
+import Swal from 'sweetalert2'
 import { paymentOrder } from './Redux/Actions/actions.js'
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
+
 
 
 export default function PaymentForm() {
@@ -44,12 +46,20 @@ export default function PaymentForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         if(!cart.price){
-            swal('Sorry!', 'You havent chosen anything', 'info')
+            Swal.fire({
+                title: 'Sorry!',
+                text:'You havent chosen anything',
+                icon:'info',
+                color: 'white',
+                background:'#00498b',
+                confirmButtonColor: '#24c59c'
+                })
         };
         try {
             const payment = await axiosPrivate.post('/payment/create', { 
                 cart: cart
             });
+            console.log(payment)
             dispatch(paymentOrder(payment));
         } catch (e) {
             console.log(e)

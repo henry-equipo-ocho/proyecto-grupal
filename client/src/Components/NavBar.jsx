@@ -57,6 +57,7 @@ export default function NavBar({ handleLoginForm }) {
                         <h1>Hola {nombre} </h1>
                     </div>
                     <div className='buttonsLogOut'>
+                        <button className='buttonNav'><a href='/google-map'>Maps</a></button>
                         <button className='buttonNav'><a href='/plans'>Plans</a></button>
                         <button className='buttonNav' onClick={handleLoginForm}>Login</button>
                         <button className='buttonNav' ><a href='/register'>SignUp</a></button>

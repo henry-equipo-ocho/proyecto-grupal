@@ -9,11 +9,10 @@ import {
     GET_COUNTRIES,
     GET_CITIES,
     PAYMENT_ORDER,
-    SUCCESS,
     SET_TOKEN
 } from './actions_types'
 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 //import { SET_USER_NAME } from './actions_types';
 
 export function setUserName(payload) {
@@ -30,7 +29,7 @@ export function getActivities() {
         const activity = await axios.post('http://localhost:3001/activities');
         dispatch({
             type: GET_ACTIVITIES,
-            payload:data
+            payload: data
         });
     };
 };
@@ -66,21 +65,18 @@ export function setAllActivities(value) {
             });
         } catch (error) {
             console.log(error)
-            swal("Sorry!!", "Activity not Found", "error")
+            Swal.fire({
+                title: 'Sorry!',
+                text: 'Activity not found',
+                icon: 'error',
+                color: 'white',
+                background: '#00498b',
+                confirmButtonColor: '#24c59c'
+            })
             dispatch(setLoading(true))
 
             return dispatch(getActivities())
         };
-    };
-};
-
-export function orderActivitiesByCity(payload) {
-    return async function (dispatch) {
-        const cities = await axios.post('http://localhost:3001/activities/orderByCity', payload);
-        return dispatch({
-            type: ORDER_ACTIVITIES_BY_CITY,
-            payload: cities.data.data,
-        });
     };
 };
 
@@ -109,21 +105,12 @@ export function paymentOrder(payment) {
     };
 };
 
-export function successOrder(paypalorder) {
-    return async function (dispatch) {
-        return dispatch({
-            type: SUCCESS,
-            payload: paypalorder,
-        });
-    };
-};
-
 export const setLoading = (Boolean) => {
     return {
         type: SET_LOADING,
         payload: Boolean,
-    }
-}
+    };
+};
 
 export const setToken = (token) => {
     return {
