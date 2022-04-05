@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import Activity from "../interfaces/Activity.interface";
-
+import Activity from "../interfaces/ActivityCopy.interface";
 
 const activitySchema = new mongoose.Schema<Activity>({
     name: { type: String, required: [true, 'Missing name attribute'] },
@@ -17,4 +16,4 @@ const activitySchema = new mongoose.Schema<Activity>({
     ownerId: {  type: String }
 });
 
-export default mongoose.model<Activity>('Activity', activitySchema);
+export default mongoose.model<Activity>('ActivityCopy', activitySchema);
