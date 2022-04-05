@@ -19,7 +19,8 @@ export default function Success() {
 
     async function getPaypalOrder() {
         const paypalorder = await axiosPrivate.get(`/payment/capture?token=${paypalToken}`)
-        return paypalorder;
+        console.log(paypalorder)
+        return paypalorder;        
     };
 
     useEffect(() => getPaypalOrder(), []);
