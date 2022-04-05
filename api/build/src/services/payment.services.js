@@ -82,23 +82,7 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
         });
         console.log("response.data:", response.data);
         if (response.data.status === 'COMPLETED') {
-            let user = yield User_models_1.default.findById(userID);
-            if (user === null) {
-                throw new Error(`User (${userID}) not found`);
-            }
-            else {
-                let payment = user.payments.find((payment) => payment.id === response.data.id);
-                if (!payment) {
-                    throw new Error(`Payment (${response.data.id}) not found`);
-                }
-                payment.status = "COMPLETED";
-                user.role = User_interface_1.UserRoles.Business;
-                user.activeSubscription = true;
-                user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
-                yield user.save();
-                endSubscriptionUser(userID);
-                return true;
-            }
+            return updatePaymentInUserDB(userID, response.data.id);
         }
     }
     catch (error) {
@@ -118,12 +102,51 @@ function createPaymentInUserDB(userID, response, cart) {
                 status: response.data.status,
                 description: cart.description,
                 tier: cart.tier,
+                price: cart.price
             });
             user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
             yield user.save();
         }
         else {
             throw new Error(`Payment (${response.data.id}) already exists`);
+        }
+    });
+}
+function updatePaymentInUserDB(userID, orderID) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield User_models_1.default.findById(userID);
+        if (user === null) {
+            throw new Error(`User (${userID}) not found`);
+        }
+        else {
+            let payment = user.payments.find((payment) => payment.id === orderID);
+            if (!payment) {
+                throw new Error(`Payment (${orderID}) not found`);
+            }
+            if (payment.status !== "COMPLETED") {
+                payment.status = "COMPLETED";
+                user.role = User_interface_1.UserRoles.Business;
+                user.activeSubscription = true;
+                user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
+                yield user.save();
+                endSubscriptionUser(userID);
+                // return true;
+                let paymentCreationDate = payment.createdAt;
+                let subscriptionExpiry = new Date(paymentCreationDate.getTime());
+                subscriptionExpiry.setMonth(paymentCreationDate.getMonth() + 1);
+                console.log(paymentCreationDate, subscriptionExpiry.toString());
+                return {
+                    name: user.name,
+                    email: user.email,
+                    tier: payment.tier,
+                    price: payment.price,
+                    buyDate: payment.createdAt,
+                    expireDate: subscriptionExpiry
+                };
+            }
+            else {
+                throw new Error(`Payment ${orderID} is already completed`);
+            }
         }
     });
 }
@@ -134,24 +157,29 @@ function endSubscriptionUser(userID) {
         // date.setMonth(date.getMonth() + 1);
         date.setMinutes(date.getMinutes() + 2);
         cron.schedule(`${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`, () => __awaiter(this, void 0, void 0, function* () {
-            user.activeSubscription = false;
-            yield user.save();
-            var mailOptions = {
-                from: ` "Subscription" <${process.env.CREATOR}>`,
-                to: user.email,
-                subject: "User's subscription",
-                html: `<h2> ${user.name}! your subscription has ended </h2>
+            if (user === null) {
+                throw new Error(`User (${userID}) not found`);
+            }
+            else {
+                user.activeSubscription = false;
+                yield user.save();
+                var mailOptions = {
+                    from: ` "Subscription" <${process.env.CREATOR}>`,
+                    to: user.email,
+                    subject: "User's subscription",
+                    html: `<h2> ${user.name}! your subscription has ended </h2>
                     <h4>Please renew it to continue enjoying the benefits...</h4>`
-            };
-            // sending email
-            yield transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                }
-                else {
-                    console.log("The user's subscription has ended");
-                }
-            });
+                };
+                // sending email
+                yield transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log("The user's subscription has ended");
+                    }
+                });
+            }
         }));
     });
 }
