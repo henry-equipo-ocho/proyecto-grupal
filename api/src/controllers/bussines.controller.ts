@@ -56,7 +56,7 @@ export const updateBusinessActivities: RequestHandler = async (req: Request, res
 
         const activity = await getActivityById(id);
 
-        if(activity.ownerId !== req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
+        if(activity.ownerId != req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
         
         await updateActivityInfo(req, id);
         
@@ -72,7 +72,7 @@ export const deleteBusinessActivity = async (req: Request, res: Response) => {
 
         const activity = await getActivityById(id);
 
-        if(activity.ownerId !== req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
+        if(activity.ownerId != req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
 
         await deleteActivityService(id);
 

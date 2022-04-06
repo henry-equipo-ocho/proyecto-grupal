@@ -64,7 +64,7 @@ const updateBusinessActivities = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const { id } = req.body;
         const activity = yield (0, activities_services_1.getActivityById)(id);
-        if (activity.ownerId !== ((_e = req.user) === null || _e === void 0 ? void 0 : _e.id)) {
+        if (activity.ownerId != ((_e = req.user) === null || _e === void 0 ? void 0 : _e.id)) {
             return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } });
         }
         ;
@@ -81,7 +81,7 @@ const deleteBusinessActivity = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         const { id } = req.body;
         const activity = yield (0, activities_services_1.getActivityById)(id);
-        if (activity.ownerId !== ((_f = req.user) === null || _f === void 0 ? void 0 : _f.id)) {
+        if (activity.ownerId != ((_f = req.user) === null || _f === void 0 ? void 0 : _f.id)) {
             return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } });
         }
         ;
