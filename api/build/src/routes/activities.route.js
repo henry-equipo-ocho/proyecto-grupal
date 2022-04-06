@@ -11,6 +11,5 @@ router.post('/amadeus', activities_controller_1.apiActivitiesController);
 router.post('/orderByCity', orderbycity_controller_1.getOrderedCities);
 router.get('/match/:word', match_controller_1.getMatchActivitiesController);
 router.post('/orderByPrice', orderbyprice_controller_1.getOrderedPrice);
-router.post('/update', activities_controller_1.updateFieldController);
 router.post('/watched', activities_controller_1.setWatchedorBookedTimesController);
 exports.default = router;
