@@ -1,9 +1,9 @@
-import { Document, Types } from "mongoose"
-import Activity from "../models/Activity.models";
-import ActivityInterface from "../interfaces/Activity.interface";
-import { Request } from "express";
-const Amadeus = require('amadeus');
 import dotenv from 'dotenv';
+import { Request } from "express";
+import { Document, Types } from "mongoose";
+import ActivityInterface from "../interfaces/Activity.interface";
+import Activity from "../models/Activity.models";
+const Amadeus = require('amadeus');
 
 dotenv.config();
 
@@ -56,7 +56,7 @@ export const updateActivitiesService = async (activity: ActivityInterface): Prom
 export const getActivityById = async (id: string): Promise<any> => {
     try {
         const found = await Activity.findById(id);
-        if(!found) throw new Error('Activity not found');
+        if (!found) throw new Error('Activity not found');
         return found;
     } catch (e) {
         throw e;
@@ -177,7 +177,7 @@ export const setWatchedTimesService = async (type: string, id: string) => {
 
 export const getUserActivities = async (id: string) => {
     try {
-        const activities = await Activity.find({ownerId: id});
+        const activities = await Activity.find({ ownerId: id });
         return activities;
     } catch (e) {
         throw e;

@@ -1,29 +1,34 @@
-@media all and (min-width:1024px) and (max-width:1280px){}
-@media all and (min-width:768px) and (max-width:1024px){}
-@media all and (min-width:480px) and (max-width:768px){}
-@media all and (max-width:480px){}
+@media all and (min-width:1024px) and (max-width:1280px) {}
 
-.bodyContainer{
+@media all and (min-width:768px) and (max-width:1024px) {}
+
+@media all and (min-width:480px) and (max-width:768px) {}
+
+@media all and (max-width:480px) {}
+
+.bodyContainer {
     display: flex;
     flex-direction: column;
-    justify-content:space-around;
-    gap:30px;
+    justify-content: space-around;
+    gap: 30px;
 
 }
-.tier1{
+
+.tier1 {
     background-color: goldenrod;
     padding: 10px;
 }
 
-.tier2{
+.tier2 {
     background-color: grey;
     padding: 10px;
 }
 
-.tier3{
-    background-color:burlywood;
+.tier3 {
+    background-color: burlywood;
     padding: 10px;
 }
+
 .searchImage {
     display: flex;
     flex-direction: column;
@@ -31,22 +36,22 @@
     border-radius: 10px;
     background-image: url('../Css/banner7.jpg');
     background-size: cover;
-    background-position:10px ;
+    background-position: 10px;
     height: 500px;
     align-items: center;
     margin: 1em;
 }
 
-.filter{
+.filter {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     background-color: #00498b;
     border-radius: 10px;
-    color:#24c59c;
+    color: #24c59c;
 }
 
-.cardsDisplay{
+.cardsDisplay {
     padding: 30px;
     display: flex;
     flex-direction: row;
@@ -56,4 +61,3 @@
 
 
 }
-

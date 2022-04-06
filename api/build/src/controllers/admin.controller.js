@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createActivityController = exports.activityUpdateController = exports.userUpdateController = exports.getAllActivitiesController = exports.deleteActivityController = exports.getAllUsersController = exports.deleteUserController = exports.createUserController = exports.tokenVerifyController = exports.roleVerify = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const signup_services_1 = require("../services/signup.services");
-const admin_services_1 = require("../services/admin.services");
 const activities_services_1 = require("../services/activities.services");
+const admin_services_1 = require("../services/admin.services");
+const signup_services_1 = require("../services/signup.services");
 const userUpdate_services_1 = require("../services/userUpdate.services");
 const roleVerify = (req, res, next) => {
     if (!req.user) {

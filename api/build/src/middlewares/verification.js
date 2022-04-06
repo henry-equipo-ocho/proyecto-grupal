@@ -20,11 +20,12 @@ const verifyEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             next();
         }
         else {
+            // TODO: que deberia suceder aca?
             console.log('must verify the gmail account');
         }
     }
     catch (error) {
-        console.log(error);
+        throw error;
     }
 });
 exports.default = verifyEmail;

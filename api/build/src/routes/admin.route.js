@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const admin_controller_1 = require("../controllers/admin.controller");
 const passport_1 = __importDefault(require("passport"));
+const admin_controller_1 = require("../controllers/admin.controller");
 const router = (0, express_1.Router)();
 router.post('/token', admin_controller_1.tokenVerifyController);
-// User 
+// User
 router.put('/update/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.userUpdateController);
 router.post('/create/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.createUserController);
 router.delete('/delete/user', passport_1.default.authenticate('jwt', { session: false }), admin_controller_1.roleVerify, admin_controller_1.deleteUserController);

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import User, { Itinerary } from "../interfaces/User.interface";
 import bcrypt from 'bcrypt';
+import mongoose from "mongoose";
+import User from "../interfaces/User.interface";
 
 const itinerarySchema = new mongoose.Schema({
     name: { type: String, required: [true, 'Missing name attribute'] },

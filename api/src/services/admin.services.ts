@@ -1,5 +1,5 @@
-import User from '../models/User.models';
 import Activity from '../models/Activity.models';
+import User from '../models/User.models';
 
 export const deleteUserService = async (id: string): Promise<any> => {
     try {

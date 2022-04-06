@@ -1,8 +1,7 @@
-import City from "../models/City.models";
-import Country from "../models/Country.models"
-import { Request } from 'express';
 import CityInterface from '../interfaces/City.interface';
 import CountryInterface from '../interfaces/Country.interface';
+import City from "../models/City.models";
+import Country from "../models/Country.models";
 
 export const getCitiesService = async (): Promise<any> => {
     try {
@@ -25,7 +24,7 @@ export const getCountriesService = async (): Promise<any> => {
 export const saveCityService = async (city: CityInterface): Promise<any> => {
     try {
         const newCity = new City(city);
-        await newCity.save();       
+        await newCity.save();
     } catch (e) {
         throw e
     }
@@ -35,7 +34,7 @@ export const saveCityService = async (city: CityInterface): Promise<any> => {
 export const saveCountryService = async (country: CountryInterface): Promise<any> => {
     try {
         const newCountry = new Country(country);
-        await newCountry.save();       
+        await newCountry.save();
     } catch (e) {
         throw e
     }
@@ -43,7 +42,7 @@ export const saveCountryService = async (country: CountryInterface): Promise<any
 
 export const getCountryByNameService = async (name: string): Promise<any> => {
     try {
-        const country = await Country.findOne({name: name});
+        const country = await Country.findOne({ name: name });
         return country;
     } catch (e) {
         throw e
@@ -52,7 +51,7 @@ export const getCountryByNameService = async (name: string): Promise<any> => {
 
 export const getCityByNameService = async (name: string): Promise<any> => {
     try {
-        const city = await City.findOne({name: name});
+        const city = await City.findOne({ name: name });
         return city;
     } catch (e) {
         throw e

@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const itinerarySchema = new mongoose_1.default.Schema({
     name: { type: String, required: [true, 'Missing name attribute'] },
     activities: { type: [String], required: [true, 'Missing activities attribute'] }
