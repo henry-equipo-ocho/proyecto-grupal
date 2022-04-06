@@ -93,7 +93,6 @@ export default function Register() {
 
   return (
     <>
-
       <header className='header'>
         <div>
           <img src={logo} alt='Not found' />
@@ -248,4 +247,4 @@ export default function Register() {
       <Footer />
     </>
   );
-};
+}; 

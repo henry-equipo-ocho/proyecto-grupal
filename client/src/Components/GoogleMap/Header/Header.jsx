@@ -24,6 +24,7 @@ const Header = ({ setCoords }) => {
         Eztenirary corp.
      </Typography>
      <Box display="flex">
+     <button className='buttonNav' ><a href='/home'>Home</a></button>
        <Typography variant='h6' className={classes.title}>
          Explore New Places
        </Typography>

@@ -21,18 +21,18 @@ const getOrderedPrice = (req, res) => __awaiter(void 0, void 0, void 0, function
     const noactivities = { status: 'success', message: 'Activities not found' };
     if (country) {
         if (type && city) {
-            const activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
+            let activities = yield (0, activities_services_1.getDBCityActivities)(country, city);
             if (type === 'Ascendent') {
-                const orderedActivities = activities.sort(function (a, b) {
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     return a.price_amount - b.price_amount;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
             else {
-                const orderedActivities = activities.sort(function (a, b) {
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     return b.price_amount - a.price_amount;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
         }
         ;
@@ -42,22 +42,22 @@ const getOrderedPrice = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
         ;
         if (type) {
-            const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+            let activities = yield (0, activities_services_1.getDBCountryActivities)(country);
             if (type === 'Ascendent') {
-                const orderedActivities = activities.sort(function (a, b) {
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     return a.price_amount - b.price_amount;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
             else {
-                const orderedActivities = activities.sort(function (a, b) {
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     return b.price_amount - a.price_amount;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
         }
         ;
-        const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
+        let activities = yield (0, activities_services_1.getDBCountryActivities)(country);
         return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
     }
 });

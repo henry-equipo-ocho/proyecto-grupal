@@ -3,8 +3,12 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     border-radius: 10px;
-    position: relative;
+    position: absolute;
     background-color: #00498b;
+    width: 100%;
+
+
+ 
 }
 
 @media all and (min-width:1024px) and (max-width:1280px){}
@@ -17,17 +21,17 @@
 }
 .div1 h3 {
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }
 
 .div2 ul{
     font-family: 'Roboto';
-    color: #24c59c;
+    color:white;
     list-style: none;
 }
 .div2 h3{
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }
 
 
@@ -37,5 +41,5 @@
 }
 .div3 h3{
     font-family: 'Roboto';
-    color: #24c59c
+    color:white;
 }

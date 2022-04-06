@@ -3,29 +3,49 @@ import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import logo from '../Media/Logo.png';
 import './Css/BussinesPackage.css';
+import NavBar from './NavBar';
 import Footer from './Footer';
 import PaymentForm from './PaymentForm';
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
+import LoginForm from './LoginForm';
+import benefits from '../Media/benefits.png'
 
 export default function BussinesPackage() {
     const isLogged = useSelector(state => state.token) ? true : false || localStorage.getItem('loggedIn') ? true : false;
+    const navigate = useNavigate();
+
 
     function handleClickLogout() {
-        swal('Sorry!', 'Please login to continue', 'info');
+        Swal.fire({
+            title: 'Sorry!',
+            text: 'Please Login to continue',
+            icon: 'info',
+            color: 'white',
+            background: '#00498b',
+            confirmButtonText: '<a href="/home">Logueame</a>',
+            confirmButtonColor: '#24c59c'
+        });
     };
+
     return (
         <div className='pageB'>
-            <header className='header'>
-                <div>
-                    <img src={logo} alt='Not found' />
-                </div>
-                <div>
-                    <button><a href='/home'>HOME</a></button>
-                </div>
-            </header>
+
 
             {isLogged ?
                 <>
-
+                    <header className='header'>
+                        <div>
+                            <img src={logo} alt='Not found' />
+                        </div>
+                        <div>
+                            <h1>Planes para empresas</h1>
+                        </div>
+                        <div>
+                            <button className='buttonNav'><a href='/dashboard'>Dashboard</a></button>
+                            <button><a href='/home'>Home</a></button>
+                        </div>
+                    </header>
                     <PaymentForm />
                     <div className='plansContainer'>
                         <div className='card_container'>
@@ -58,7 +78,7 @@ export default function BussinesPackage() {
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$30 US</h2>
+                                    <h2>$30 US </h2>
                                 </center>
                             </div>
                         </div>
@@ -82,10 +102,27 @@ export default function BussinesPackage() {
 
                             </div>
                         </div>
+                        <div className='benefits'>
+                            <center><h1>What plan is better for you bussines?</h1>
+                                <img src={benefits} alt='Not found' height='400px' />
+                            </center>
+                        </div>
                     </div>
                 </>
                 :
                 <>
+                    <header className='header'>
+                        <div>
+                            <img src={logo} alt='Not found' />
+                        </div>
+                        <div>
+                            <h1>Business Plans</h1>
+                        </div>
+                        <div>
+                            <button><a href='/home'>Home</a></button>
+                        </div>
+                    </header>
+
                     <div className='plansContainer'>
                         <div className='card_container'>
                             <div className='cardBasic'>
@@ -98,11 +135,12 @@ export default function BussinesPackage() {
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$10 US</h2>
+                                    <h2>$10 US Per Month</h2>
+
+                                    <button
+                                        className='shopButton'
+                                        onClick={() => handleClickLogout()}>Buy Now</button>
                                 </center>
-                                <button
-                                    className='shopButton'
-                                    onClick={() => handleClickLogout()}>Buy Now</button>
                             </div>
                         </div>
 
@@ -120,11 +158,11 @@ export default function BussinesPackage() {
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$30 US</h2>
+                                    <h2>$30 US Per Month</h2>
+                                    <button
+                                        className='shopButton'
+                                        onClick={() => handleClickLogout()}>Buy Now</button>
                                 </center>
-                                <button
-                                    className='shopButton'
-                                    onClick={() => handleClickLogout()}>Buy Now</button>
                             </div>
                         </div>
 
@@ -142,15 +180,22 @@ export default function BussinesPackage() {
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$50 US</h2>
+                                    <h2>$50 US Per Month</h2>
+                                    <button
+                                        className='shopButton'
+                                        onClick={() => handleClickLogout()}>Buy Now</button>
                                 </center>
-                                <button
-                                    className='shopButton'
-                                    onClick={() => handleClickLogout()}>Buy Now</button>
                             </div>
                         </div>
                     </div>
+
+                    <div className='benefits'>
+                        <center><h1>What plan is better for you bussines?</h1>
+                            <img src={benefits} alt='Not found' height='400px' />
+                        </center>
+                    </div>
                 </>}
+            <LoginForm />
             <Footer />
         </div>
     );
