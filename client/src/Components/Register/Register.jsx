@@ -91,7 +91,7 @@ export default function Register() {
   const handleClose = () => {
     setOpen(false);
   };
-/* 
+
   return (
  <div>
 
@@ -247,10 +247,8 @@ export default function Register() {
             </DialogActions>
           </Dialog>
         </Container >
-
+        </Container >
         <Footer />
     </div>
   );
 }; 
- */
-}

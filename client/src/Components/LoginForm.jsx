@@ -25,7 +25,6 @@ const style = {
   width: 400,
   height: 400,
   p: 4,
-  border
 };
 
 const validationSchema = yup.object({
@@ -94,7 +93,7 @@ const FormDialog = ({ abierto, close }) => {
           },
         }}
       >
-        <form style={{ border: 'solid 1px black', 'border-radius': 10px;  }} onSubmit={formik.handleSubmit}>
+        <form style={{ border: 'solid 1px black' }} onSubmit={formik.handleSubmit}>
           <DialogTitle>Iniciar Sesión</DialogTitle>
           <DialogContent >
             <TextField
