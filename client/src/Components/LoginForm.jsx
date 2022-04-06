@@ -9,7 +9,8 @@ import { useFormik } from "formik";
 // import { formLabelClasses, Link } from '@mui/material';
 import jwt_decode from "jwt-decode";
 import * as React from "react";
-import GoogleButton from "react-google-button";
+// import GoogleButton from "react-google-button";
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -87,10 +88,14 @@ const FormDialog = ({ abierto, close }) => {
         },
     });
 
-    const responseSucess = async () => {
+    const googleLogin = async () => {
         const googleLoginURL = "http://localhost:3001/signin/google";
+        window.open(googleLoginURL, '_self');
+    };
 
-        const datos = window.open(googleLoginURL, "width=500,height=600");
+    const facebookLogin = async () => {
+        const facebookLoginURL = "http://localhost:3001/signin/facebook";
+        window.open(facebookLoginURL, '_self');
     };
 
     return (
@@ -163,9 +168,16 @@ const FormDialog = ({ abierto, close }) => {
                                     Submit
                                 </Button>
                             </DialogActions>
-                            <GoogleButton onClick={responseSucess} />
+                            <FacebookLoginButton 
+                                onClick={facebookLogin} 
+                                style={{marginTop: "10px"}}
+                            />
+                            <GoogleLoginButton 
+                                onClick={googleLogin} 
+                                style={{marginTop: "10px"}}
+                            />
                         </DialogContentText>
-                        <DialogContent>
+                        {/* <DialogContent>
                             <DialogActions>
                                 <button className="shopButton" onClick={close}>
                                     Cancel
@@ -177,7 +189,7 @@ const FormDialog = ({ abierto, close }) => {
                                     Submit
                                 </button>
                             </DialogActions>
-                        </DialogContent>
+                        </DialogContent> */}
                     </DialogContent>
                     {/* <GoogleLoginComponent /> */}
                 </form>

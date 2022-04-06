@@ -9,6 +9,7 @@ import LandingPage from './Components/LandingPage';
 import Register from './Components/Register/Register';
 import Success from './Components/Success';
 import UserDashboard from './Components/UserDashboard/UserDashboard';
+import SocialLogin from './Components/SocialLogin';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 <Route exact path='/plans' element={<BussinesPackage />} />
                 <Route path='/success' element={<Success />} />
                 <Route exact path='/mybusiness' element={<BusinessDashboard />} />
+                <Route exact path='/social-login' element={<SocialLogin />} />
             </Routes>
 
         </div>

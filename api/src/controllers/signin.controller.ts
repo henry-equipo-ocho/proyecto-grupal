@@ -33,16 +33,18 @@ export const signInSocialFailureController: RequestHandler = async (req: Request
 };
 
 export const signInSocialCallBackController: RequestHandler = async (req: Request, res: Response) => {
+    
     const email = req.user?._json?.email;
 
     try {
         const user = await getUserService(email);
+        const refreshToken = createRefreshTokenService(user);
+        
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-        const token = createUserTokenService(user);
+        res.redirect('http://localhost:3000/social-login/');
 
-        if (!token) return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: `Couldn't create token` } }));
-
-        return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
+        // return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }

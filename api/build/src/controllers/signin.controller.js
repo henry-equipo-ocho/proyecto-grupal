@@ -45,10 +45,10 @@ const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, v
     const email = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a._json) === null || _b === void 0 ? void 0 : _b.email;
     try {
         const user = yield (0, signin_services_1.getUserService)(email);
-        const token = (0, signin_services_1.createUserTokenService)(user);
-        if (!token)
-            return res.status(400).json(({ status: 'failed', errors: { message: `Couldn't create token` } }));
-        return res.status(200).json({ status: 'success', data: token });
+        const refreshToken = (0, signin_services_1.createRefreshTokenService)(user);
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        res.redirect('http://localhost:3000/social-login/');
+        // return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     }
     catch (e) {
         return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
