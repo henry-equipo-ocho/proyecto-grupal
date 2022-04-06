@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
-
 import './back.css';
 
 import { ProviderContext } from './Context/context';
@@ -40,8 +38,6 @@ export default function AdminDashboard() {
 
   const verify = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      await axios.post('http://localhost:3001/admin/token', { token }, { headers: { "Authorization": 'Bearer ' + token } });
       const data = JSON.parse(localStorage.getItem('data')).role;
       if (data !== 3) {
         history('/home');

@@ -61,7 +61,7 @@ const FormDialog = ({ abierto, close }) => {
         dispatch(setToken(datos.data.data))
         miStorage.setItem('data', JSON.stringify(decoded))
         miStorage.setItem('loggedIn', 'true')
-        // miStorage.setItem('token',  JSON.stringify(datos.data.data));
+        //miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
         formik.resetForm()
         sweetAlert('Successfully logged in');

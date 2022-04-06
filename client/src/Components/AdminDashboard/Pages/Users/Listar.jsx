@@ -5,7 +5,7 @@ import '../table.css';
 
 import alert from 'sweetalert';
 
-import axios from 'axios';
+import { useAxiosPrivate } from '../../../Auth/useAxiosPrivate';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -60,6 +60,8 @@ const validationSchema = yup.object({
 });
 
 export default function Listar() {
+  const axios = useAxiosPrivate();
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
@@ -73,16 +75,12 @@ export default function Listar() {
   useEffect(() => {
     setLoading(true);
     loadUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadUsers = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      const datos = await axios.get('http://localhost:3001/admin/users', {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
+      const datos = await axios.get('/admin/users')
       setUsers(datos.data.data);
       setUsersBackup(datos.data.data);
       setLoading(false);
@@ -116,15 +114,7 @@ export default function Listar() {
     }).then(async function (isConfirm) {
       if (isConfirm) {
           try {
-            const token = JSON.parse(localStorage.getItem('token'));
-            await axios.delete('http://localhost:3001/admin/delete/user', {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              },
-              data: {
-                id: _id
-              }
-            });
+            await axios.delete('/admin/delete/user', { data: { id: _id }});
             alert("Success", "User succesfully deleted!", "success");
             setOpen(false);
             setLoading(true);
@@ -154,7 +144,6 @@ export default function Listar() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const token = JSON.parse(localStorage.getItem('token'));
         let datos;
         if(values.password){
           datos = values;
@@ -165,11 +154,7 @@ export default function Listar() {
         }
 
         console.log(values)
-        await axios.put('http://localhost:3001/admin/update/user', datos, {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
+        await axios.put('/admin/update/user', datos);
         alert("Success", "User succesfully edited!", "success");
         setOpen(false);
         setLoading(true);

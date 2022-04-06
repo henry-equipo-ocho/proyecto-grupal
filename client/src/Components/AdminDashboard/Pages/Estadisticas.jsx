@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
+import { useAxiosPrivate } from '../../Auth/useAxiosPrivate';
 
 import './loader.css';
 
@@ -15,6 +15,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export default function Estadisticas() {
+  
+  const axiosPrivate = useAxiosPrivate();
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [usersVer, setUsersVer] = useState(0);
@@ -94,12 +96,7 @@ export default function Estadisticas() {
 
   const cargarUsers = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      const datos = await axios.get('http://localhost:3001/admin/users', {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
+      const datos = await axiosPrivate.get('/admin/users');
       setTotalUsers(datos.data.data.length);
       setUsersVer(datos.data.data.filter(user => user.isVerified).length);
       setUsersNotVer(datos.data.data.filter(user => !user.isVerified).length);
@@ -112,12 +109,7 @@ export default function Estadisticas() {
 
   const cargarActivities = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      const datos = await axios.get('http://localhost:3001/admin/activities', {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
+      const datos = await axiosPrivate.get('/admin/activities');
       setTotalActivities(datos.data.data.length);
       setActivitiesBusiness(datos.data.data.filter(act => !act.booking.includes('https://b2c.mla.cloud/')).length);
       setActivitiesAmadeus(datos.data.data.filter(act => act.booking.includes('https://b2c.mla.cloud/')).length);
@@ -130,16 +122,11 @@ export default function Estadisticas() {
 
   const cargarBusiness = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      const datos = await axios.get('http://localhost:3001/admin/users', {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
-      setTotalBusiness(datos.data.data.filter(busi => busi.activeSubscription).length);
-      setBusinessBasic(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 1).length);
-      setBusinessPro(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 2).length);
-      setBusinessPremium(datos.data.data.filter(busi => busi.activeSubscription && busi.payments[busi.payments.length - 1].tier === 3).length);
+      const datos = await axiosPrivate.get('/admin/users');
+      setTotalBusiness(datos.data.data.filter(busi => busi.role === 1).length);
+      setBusinessBasic(datos.data.data.filter(busi => busi.role === 1 && busi.payments[busi.payments.length - 1].tier === 1).length);
+      setBusinessPro(datos.data.data.filter(busi => busi.role === 1 && busi.payments[busi.payments.length - 1].tier === 2).length);
+      setBusinessPremium(datos.data.data.filter(busi => busi.role === 1 && busi.payments[busi.payments.length - 1].tier === 3).length);
       setLoadBusiness(false);
     }
     catch (e) {
@@ -151,6 +138,7 @@ export default function Estadisticas() {
     cargarUsers();
     cargarActivities();
     cargarBusiness();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
