@@ -164,8 +164,6 @@ function filterActivitiesByTier(rawActivities, tier, onlyThirdParty) {
         return rawActivities.filter((activity) => {
             var _a, _b;
             if (typeof activity.ownerId !== 'undefined' && typeof activity.ownerId !== 'string' && ((_a = activity.ownerId) === null || _a === void 0 ? void 0 : _a.payments)) {
-                console.log("activity.ownerId");
-                console.log(activity.ownerId);
                 return activity.ownerId && ((_b = activity.ownerId.payments.at(-1)) === null || _b === void 0 ? void 0 : _b.tier) === tier;
             }
             return false;

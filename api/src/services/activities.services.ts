@@ -145,8 +145,6 @@ function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, Act
     } else {
         return rawActivities.filter((activity) => {
             if (typeof activity.ownerId !== 'undefined' && typeof activity.ownerId !== 'string' && activity.ownerId?.payments) {
-                console.log("activity.ownerId");
-                console.log(activity.ownerId);
                 return activity.ownerId && activity.ownerId.payments.at(-1)?.tier === tier;
             }
             return false;
