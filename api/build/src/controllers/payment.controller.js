@@ -27,7 +27,6 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         console.log("catch en el controller");
-        console.log(error);
         return res.status(500).json(({ status: 'error', errors: { error } }));
     }
 });

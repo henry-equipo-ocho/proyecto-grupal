@@ -5,11 +5,20 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 export default function ActivityCard({
   nombre, imagen, handleDetail, id
 }) {
 
+  async function watchedOrBookeedTimes(id) {
+    try {
+      await axios.post('http://localhost:3001/activities/watched', {type: 'watched', id: id})
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
   return (
     <Card sx={{ maxWidth: 400, border: 1 }}>
       <CardMedia

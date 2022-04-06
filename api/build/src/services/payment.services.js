@@ -51,6 +51,7 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+            shipping_preference: "NO_SHIPPING"
         }
     };
     try {
@@ -72,7 +73,6 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
     // https://developer.paypal.com/api/rest/reference/orders/v2/errors/
     try {
         if (!mongoose_1.default.Types.ObjectId.isValid(userID)) {
-            console.log(mongoose_1.default.Types.ObjectId.isValid(userID));
             throw new Error(`Invalid user ID: ${userID}`);
         }
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders/${token}/capture`, {}, {
@@ -143,6 +143,7 @@ function updatePaymentInUserDB(userID, orderID) {
                     email: user.email,
                     tier: payment.tier,
                     price: payment.price,
+                    description: payment.description,
                     buyDate: payment.createdAt,
                     expireDate: subscriptionExpiry
                 };

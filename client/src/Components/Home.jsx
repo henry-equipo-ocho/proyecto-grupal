@@ -85,13 +85,13 @@ export default function Home() {
               </div>
             </div>
           </>}
-      </div>
-      <Pagination
-        activitiesPerPage={10}
-        allActivities={activities.length}
-        paginado={(pageNumber) => setCurrentPage(pageNumber)}
-      />
+        </div>
 
+        <Pagination
+          activitiesPerPage={10}
+          allActivities={activities.length}
+          paginado={(pageNumber) => setCurrentPage(pageNumber)}
+        />
       {loginForm &&
         <LoginForm activity={loginForm} close={() => setLoginForm(null)} abierto={true} />}
 

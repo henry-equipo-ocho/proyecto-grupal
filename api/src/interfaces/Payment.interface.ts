@@ -8,6 +8,7 @@ export interface FrontFacingPayment {
     email: string,
     tier: number,
     price: number,
+    description: string,
     buyDate: Date,
     expireDate: Date
 }

@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 import axios, { AxiosResponse } from 'axios';
 import mongoose from 'mongoose';
 import User from '../models/User.models';
-import { UserRoles } from '../interfaces/User.interface';
+import UserInterface, { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
-import { FrontFacingPayment } from "../interfaces/Payment.interface";
+import Payment, { FrontFacingPayment } from "../interfaces/Payment.interface";
 
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
@@ -43,6 +43,7 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+            shipping_preference: "NO_SHIPPING"
         }
     };
 
@@ -65,12 +66,10 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
     }
 }
 
-export const capturePayPalOrder = async (token: string, userID: string): Promise<any> => {
+export const capturePayPalOrder = async (token: string, userID: string): Promise<FrontFacingPayment> => {
     // https://developer.paypal.com/api/rest/reference/orders/v2/errors/
     try {
         if (!mongoose.Types.ObjectId.isValid(userID)) {
-            console.log(mongoose.Types.ObjectId.isValid(userID));
-
             throw new Error(`Invalid user ID: ${userID}`);
         }
 
@@ -90,7 +89,6 @@ export const capturePayPalOrder = async (token: string, userID: string): Promise
         } else {
             throw new Error(`Payment (${response.data.id}) is not completed`);
         }
-
     } catch (error) {
         throw error;
     }
@@ -122,7 +120,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
     if (user === null) {
         throw new Error(`User (${userID}) not found`);
     } else {
-        let payment = user.payments.find((payment) => payment.id === orderID);
+        let payment: Payment | undefined = user.payments.find((payment) => payment.id === orderID);
         if (!payment) {
             throw new Error(`Payment (${orderID}) not found`);
         }
@@ -148,6 +146,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
                 email: user.email,
                 tier: payment.tier,
                 price: payment.price,
+                description: payment.description,
                 buyDate: payment.createdAt as Date,
                 expireDate: subscriptionExpiry as Date
             }
@@ -159,7 +158,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
 
 async function endSubscriptionUser(userID: string) {
 
-    let user = await User.findById(userID);
+    let user: any = await User.findById(userID);
 
     var date = new Date();
     // date.setMonth(date.getMonth() + 1);

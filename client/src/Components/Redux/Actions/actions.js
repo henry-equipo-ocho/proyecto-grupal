@@ -26,7 +26,6 @@ export function getActivities() {
     return async function (dispatch) {
         dispatch(setLoading(true))
         const { data: { data } } = await axios.post('http://localhost:3001/activities')
-        const activity = await axios.post('http://localhost:3001/activities');
         dispatch({
             type: GET_ACTIVITIES,
             payload: data

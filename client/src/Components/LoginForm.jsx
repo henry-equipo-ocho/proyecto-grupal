@@ -55,17 +55,18 @@ const FormDialog = ({ abierto, close }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        console.log(values)
+        // console.log(values)
         const datos = await axiosPrivate.post('/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage
         dispatch(setToken(datos.data.data))
         miStorage.setItem('data', JSON.stringify(decoded))
         miStorage.setItem('loggedIn', 'true')
-        miStorage.setItem('token',  JSON.stringify(datos.data.data));
+        // miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
         const nombre = JSON.parse(localStorage.getItem('data')).name
         formik.resetForm()
+
         Swal.fire({
           title:`${nombre}`,
           text:'Bienvenido a Eztinerary',
@@ -76,7 +77,7 @@ const FormDialog = ({ abierto, close }) => {
         });
         history('/dashboard');
       } catch (error) {
-        console.log(error)
+        sweetAlert('Oops...', 'User or password incorrect', 'error');
       }
     },
   });
@@ -120,7 +121,6 @@ const FormDialog = ({ abierto, close }) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-
             <DialogContentText>
               <DialogActions>
                 <button
@@ -130,7 +130,7 @@ const FormDialog = ({ abierto, close }) => {
                   className='shopButton'
                   onClick={() => setOpen(!open)} >Submit</button>
               </DialogActions>
-            </DialogContentText>
+            </DialogContent>
           </DialogContent>
         </form>
       </Dialog>
