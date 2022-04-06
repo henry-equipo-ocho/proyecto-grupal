@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { ProviderContext } from './Context/context'
+import './back.css';
+
+import { ProviderContext } from './Context/context';
 
 import { useNavigate } from 'react-router-dom';
 
 import Dashboard from './Pages/Dashboard';
 import About from './Pages/About';
 import Actividades from './Pages/Actividades';
-import Business from './Pages/Business';
 import Estadisticas from './Pages/Estadisticas';
 import Users from './Pages/Users';
 
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
@@ -27,11 +29,31 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import StoreIcon from '@mui/icons-material/Store';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function AdminDashboard() {
   const history = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+
+  const verify = async () => {
+    try {
+      const data = JSON.parse(localStorage.getItem('data')).role;
+      if (data !== 3) {
+        history('/home');
+      }
+      setLoading(false);
+    }
+    catch (e) {
+      history('/home');
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    verify();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [state, setState] = useState(false);
 
@@ -95,12 +117,6 @@ export default function AdminDashboard() {
           </ListItemIcon>
           <ListItemText primary='Activities' />
         </ListItem>
-        <ListItem button onClick={() => setPage('business')}>
-          <ListItemIcon>
-            <StoreIcon />
-          </ListItemIcon>
-          <ListItemText primary='Business' />
-        </ListItem>
         <ListItem button onClick={() => setPage('estadisticas')}>
           <ListItemIcon>
             <BarChartIcon />
@@ -121,33 +137,39 @@ export default function AdminDashboard() {
   );
 
   return (
-    <Box>
-      <Box>
-        <Button onClick={toggleDrawer(true)} sx={{ position: 'absolute' }} color='inherit'><MenuIcon /></Button>
-        <SwipeableDrawer
-          anchor='left'
-          open={state}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-        >
-          {list()}
-        </SwipeableDrawer>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <ProviderContext value={{ page, reducer }} >
-        { page === 'dashboard' ? <Dashboard /> : null }
-        { page === 'about' ? <About /> : null }
-        { page === 'actividades' ? <Actividades /> : null }
-        { page === 'business' ? <Business /> : null }
-        { page === 'estadisticas' ? <Estadisticas /> : null }
-        { page === 'users' ? <Users /> : null }
-      </ProviderContext>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Typography sx={{ paddingTop: '30px' }} color="text.secondary">
-        Admin dashboard 0.0.1 - <strong>Eztinerary</strong>
-      </Typography>
-      </Box>
-    </Box>
+    <Container maxWidth={false}>
+      {
+        !loading ?
+          <>
+            <Box>
+              <Button onClick={toggleDrawer(true)} sx={{ position: 'fixed', left: '0', margin: '5px' }} color='inherit' variant='contained'><MenuIcon /></Button>
+              <SwipeableDrawer
+                anchor='left'
+                open={state}
+                onClose={toggleDrawer(false)}
+                onOpen={toggleDrawer(true)}
+              >
+                {list()}
+              </SwipeableDrawer>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <ProviderContext value={{ page, reducer }} >
+                {page === 'dashboard' ? <Dashboard /> : null}
+                {page === 'about' ? <About /> : null}
+                {page === 'actividades' ? <Actividades /> : null}
+                {page === 'estadisticas' ? <Estadisticas /> : null}
+                {page === 'users' ? <Users /> : null}
+              </ProviderContext>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Typography className='footer'>
+                <span style={{ color: 'black' }}>Admin dashboard 0.0.1 - <strong>Eztinerary</strong></span>
+              </Typography>
+            </Box>
+          </>
+          :
+          null
+      }
+    </Container>
   );
 }

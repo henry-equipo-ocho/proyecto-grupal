@@ -12,6 +12,7 @@ const paymentSchema = new mongoose.Schema({
     status: { type: String, required: [true, 'Missing status attribute'] },
     description: { type: String, required: [true, 'Missing description attribute'] },
     tier: { type: Number, required: [true, 'Missing tier attribute'] },
+    price: { type: Number, required: [true, 'Missing price attribute'] },
 }, {
     timestamps: true
 });
@@ -25,8 +26,9 @@ const userSchema = new mongoose.Schema<User>({
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
     favActivities: [itinerarySchema],
     payments: [paymentSchema],
-    activeSubscription: { type: Boolean, default: false },
-    isVerified: { type: Boolean, default: false}
+    activeSubscription: { type: Boolean },
+    subscriptionTier: { type: Number },
+    isVerified: { type: Boolean, default: false }
 });
 
 userSchema.pre<User>('save', async function (next) {

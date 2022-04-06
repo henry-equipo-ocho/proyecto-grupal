@@ -14,8 +14,13 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUserName } from './Redux/Actions/actions';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
+
 import GoogleButton from 'react-google-button'
 import GoogleLoginComponent from './GoogleLogin/GoogleLoginComponent';
+
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+
 
 const style = {
   position: 'absolute',
@@ -46,7 +51,7 @@ const FormDialog = ({ abierto, close }) => {
   const [open, setOpen] = React.useState(abierto);
   const history = useNavigate();
   const dispatch = useDispatch();
-  
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -55,19 +60,36 @@ const FormDialog = ({ abierto, close }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        //console.log(values)
+        // console.log(values)
         const datos = await axiosPrivate.post('/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage
         dispatch(setToken(datos.data.data))
         miStorage.setItem('data', JSON.stringify(decoded))
         miStorage.setItem('loggedIn', 'true')
+        //miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
+        const nombre = JSON.parse(localStorage.getItem('data')).name
         formik.resetForm()
-        alert('Sesión iniciada con éxito');
+
+        Swal.fire({
+          title:`${nombre}`,
+          text:'Bienvenido a Eztinerary',
+          icon:'success',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+        });
         history('/dashboard');
       } catch (error) {
-        console.log(error)
+        Swal.fire({
+          title:`Oops...`,
+          text:'User or password incorrect',
+          icon:'error',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+        });
       }
     },
   });
@@ -153,6 +175,7 @@ const FormDialog = ({ abierto, close }) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
+
            
 
             <DialogContentText>
@@ -173,6 +196,17 @@ const FormDialog = ({ abierto, close }) => {
               </DialogActions>
                <GoogleButton onClick={responseSucess}/>
             </DialogContentText>
+    <DialogContent>
+              <DialogActions>
+                <button
+                  className='shopButton'
+                  onClick={close} >Cancel</button>
+                <button
+                  className='shopButton'
+                  onClick={() => setOpen(!open)} >Submit</button>
+              </DialogActions>
+            </DialogContent>
+
           </DialogContent>
                {/* <GoogleLoginComponent /> */}
         </form>

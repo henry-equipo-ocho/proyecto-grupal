@@ -7,7 +7,6 @@ const ORDER_ACTIVITIES_BY_PRICE = "ORDER_ACTIVITIES_BY_PRICE";
 const GET_COUNTRIES = "GET_COUNTRIES";
 const GET_CITIES = "GET_CITIES";
 const PAYMENT_ORDER = "PAYMENT_ORDER";
-const SUCCESS = 'SUCCESS';
 const SET_TOKEN = "SET_TOKEN";
 
 module.exports = {
@@ -20,6 +19,5 @@ module.exports = {
     GET_COUNTRIES,
     GET_CITIES,
     PAYMENT_ORDER,
-    SUCCESS,
-    SET_TOKEN
+    SET_TOKEN,
 }

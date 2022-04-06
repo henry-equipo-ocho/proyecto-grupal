@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import '../loader.css';
 import '../table.css';
 
 import alert from 'sweetalert';
 
-import axios from 'axios';
+import { useAxiosPrivate } from '../../../Auth/useAxiosPrivate';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -35,7 +36,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import countries from '../../../Register/countries';
 
@@ -59,26 +60,106 @@ const validationSchema = yup.object({
 });
 
 export default function Listar() {
+  const axios = useAxiosPrivate();
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [users, setUsers] = useState([]);
+  const [usersBackup, setUsersBackup] = useState([]);
   const [userToFind, setUserToFind] = useState('');
+ 
+  useEffect(() => {
+    setLoading(true);
+    loadUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      const datos = await axios.get('/admin/users')
+      setUsers(datos.data.data);
+      setUsersBackup(datos.data.data);
+      setLoading(false);
+    }
+    catch (e) {
+      alert("Error", `Error to load users (${e})`, "error");
+    }
+  };
+
+  const handleDetail = (_id, name, surname, email, country, subscribed, verified, role) => {
+    alert(`Detail of ${name} ${surname}`, `ID: ${_id}
+    Name: ${name}
+    Surname: ${surname}
+    Email: ${email}
+    Country: ${country}
+    Subscribed: ${subscribed}
+    Verified: ${verified}
+    Role: ${role === 0 ? 'User': role === 1 ? 'Business' : role === 2 ? 'Helper' : role === 3 ? 'Admin' : 'Unknown'}`)
+  };
+
+  const handleDelete = (_id) => {
+    alert({
+      title: "Are you sure?",
+      text: "You will not be able to recover this user!",
+      icon: "warning",
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!'
+      ],
+      dangerMode: true,
+    }).then(async function (isConfirm) {
+      if (isConfirm) {
+          try {
+            await axios.delete('/admin/delete/user', { data: { id: _id }});
+            alert("Success", "User succesfully deleted!", "success");
+            setOpen(false);
+            setLoading(true);
+            setPage(0);
+            loadUsers();
+          }
+          catch (e) {
+            console.log(e)
+            alert("Error", "" + e, "error")
+          }
+        } else {
+        alert("Cancelled", "Action cancelled", "error");
+      }
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       name: '',
       surname: '',
       country: '',
       email: '',
       password: '',
+      activeSubscription: false
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post('http://localhost:3001/signup', values);
+        let datos;
+        if(values.password){
+          datos = values;
+        }
+        else{
+          delete formik.values.password;
+          datos = values;
+        }
+
+        console.log(values)
+        await axios.put('/admin/update/user', datos);
         alert("Success", "User succesfully edited!", "success");
+        setOpen(false);
+        setLoading(true);
+        setPage(0);
+        loadUsers();
       }
       catch (e) {
         console.log(e)
@@ -102,15 +183,12 @@ export default function Listar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUsers([...users, { _id: '1232djkhasd' + Math.random() * 10000, name: 'pepe', surname: 'pepito', email: 'pepe@pepe.com', country: 'Argentina' }])
   };
 
-  const handleDetail = (_id, name, surname, email, country) => {
-    alert(`Detail of ${name} ${surname}`, `ID: ${_id}
-    Name: ${name}
-    Surname: ${surname}
-    Email: ${email}
-    Country: ${country}`)
+  const searchUser = () => {
+    handleChangePage(null, 0);
+    const users_data = usersBackup.filter((user) => (user.name + ' ' + user.surname).toLowerCase().includes(userToFind.toLowerCase()));
+    setUsers(users_data);
   };
 
   return (
@@ -123,74 +201,90 @@ export default function Listar() {
               sx={{ my: 1, width: '75vw' }}
               id="userToFind"
               name="userToFind"
-              label="User to find"
+              label="Find user by name"
               value={userToFind}
               onChange={(e) => setUserToFind(e.target.value)}
             />
-            <Button type='submit' size='large' variant='contained' sx={{ mx: 1 }}>Search</Button>
+            <Button type='submit' size='large' variant='contained' sx={{ mx: 1 }} onClick={searchUser}>Search</Button>
           </Box>
         </form>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap' }}>
           {
-            users.length ?
-              <Paper>
-                <TableContainer>
-                  <Table sx={{ minWidth: '83.6vw' }} size="small" aria-label="user list table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="left">ID</TableCell>
-                        <TableCell align="right">Name</TableCell>
-                        <TableCell align="right">Surname</TableCell>
-                        <TableCell align="right">Email</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        users
-                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((user) => (
-                            <TableRow key={user._id} hover>
-                              <TableCell align="left">{user._id}</TableCell>
-                              <TableCell align="right">{user.name}</TableCell>
-                              <TableCell align="right">{user.surname}</TableCell>
-                              <TableCell align="right">{user.email}</TableCell>
-                              <TableCell align="right">
-                                <Button onClick={() => {
-                                  setOpen(true)
-                                  formik.setValues(
-                                    {
-                                      name: user.name,
-                                      surname: user.surname,
-                                      country: user.country,
-                                      email: user.email,
-                                      password: '',
-                                    }
-                                  )
-                                }}><EditIcon /></Button>
-                                <Button onClick={() => handleDetail(user._id, user.name, user.surname, user.email, user.country)}><VisibilityIcon /></Button>
-                              </TableCell>
-                            </TableRow>
-                          ))
-                      }
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  component="div"
-                  count={users.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Paper>
+            !loading ?
+              users.length ?
+                <Paper>
+                  <TableContainer>
+                    <Table sx={{ minWidth: '83.6vw' }} size="small" aria-label="user list table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">ID</TableCell>
+                          <TableCell align="right">Name</TableCell>
+                          <TableCell align="right">Surname</TableCell>
+                          <TableCell align="right">Email</TableCell>
+                          <TableCell align="right">Actions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {
+                          users
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((user) => (
+                              <TableRow key={user._id} hover>
+                                <TableCell align="left">{user._id}</TableCell>
+                                <TableCell align="right">{user.name}</TableCell>
+                                <TableCell align="right">{user.surname}</TableCell>
+                                <TableCell align="right">{user.email}</TableCell>
+                                <TableCell align="right">
+                                  <Button onClick={() => {
+                                    setOpen(true)
+                                    formik.setValues(
+                                      {
+                                        id: user._id,
+                                        name: user.name,
+                                        surname: user.surname,
+                                        country: user.country,
+                                        email: user.email,
+                                        password: '',
+                                        activeSubscription: user.activeSubscription
+                                      }
+                                    )
+                                  }}><EditIcon /></Button>
+                                  <Button onClick={() => handleDetail(user._id, user.name, user.surname, user.email, user.country, user.activeSubscription, user.isVerified, user.role)}><VisibilityIcon /></Button>
+                                  <Button onClick={() => handleDelete(user._id)}><DeleteOutlineIcon /></Button>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                        }
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={users.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button onClick={() => {
+                      setLoading(true);
+                      loadUsers();
+                    }}>Reload users</Button>
+                  </Box>
+                </Paper>
+                :
+                <Alert severity="info" sx={{ width: '100%', my: 2 }}>
+                  <AlertTitle>Found users</AlertTitle>
+                  All users will appear here.
+                  <Button onClick={() => {
+                    setLoading(true);
+                    loadUsers();
+                  }}>Reload users</Button>
+                </Alert>
               :
-              <Alert severity="info" sx={{ width: '100%', my: 2 }}>
-                <AlertTitle>Found users</AlertTitle>
-                All users will appear here.
-              </Alert>
+              <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
           }
         </Box>
       </Box>
@@ -269,20 +363,39 @@ export default function Listar() {
                 })}
               </Select>
             </FormControl>
+            <FormControl sx={{ my: 1, width: '100%' }}>
+              <InputLabel id="subs-select-label">Select subscription type</InputLabel>
+              <Select labelId="subs-select-label"
+                id="activeSubscription"
+                name="activeSubscription"
+                value={formik.values.activeSubscription}
+                defaultValue={false}
+                label="Select subscription type"
+                onChange={formik.handleChange}
+                error={formik.touched.activeSubscription && Boolean(formik.errors.activeSubscription)}
+              >
+                <MenuItem value={false}>
+                  No
+                </MenuItem>
+                <MenuItem value={true}>
+                  Yes
+                </MenuItem>
+              </Select>
+            </FormControl>
             <Button
               sx={{ my: 1, width: '100%' }}
               color="primary"
               variant="contained"
               type="submit"
             >
-              Create user
+              Edit user
             </Button>
           </form>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-      </DialogActions>
-    </Dialog>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </Box >
   )
 }

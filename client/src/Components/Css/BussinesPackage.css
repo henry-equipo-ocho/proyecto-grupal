@@ -1,23 +1,38 @@
 .header{
     background-color: #00498b;
-    height: 50px;
+    height: 70px;
     display: flex;
     border-radius: 10px;
+    align-items: center;
     justify-content: space-between;
+    padding: auto;
+
 }
 .header img{
-    margin-left: 10px;
-    width: 55px;
-    height: 44px;
+    margin-left: 20px;
+    width: 85px;
+    height: 64px;
+}
+
+.header h1{
+    color: white;
 }
 
 .header button{
-    margin-top: 13px;
-    margin-right: 10px;
-    margin-left: auto;
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
     border-radius: 5px;
-    background-color: #24c59c;
+    background-color: #24c59d9f;
+    color: white;
     border-style: none;
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+    margin: 5px;
+    line-height: 30px;
+    border-right: 10px;
+
 }
 .header button:hover{
     background-color: #a9e8bc
@@ -38,13 +53,13 @@
     display: flex;
     flex-direction: column;
     gap:20px;
+    
 }
 
 
 .plansContainer{
     display: flex;
     flex-wrap: wrap;
- 
     flex-direction: row;
     justify-content: space-evenly;
 }
@@ -59,13 +74,13 @@
 
 
 .cardBasic{
-    width: 300px;
+    width: 400px;
     margin: 10px;
     margin: 1em;
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #a9e8bc);
+    background-image: linear-gradient(#ebebeb05, #24c59c);
 }
 .cardBasic h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
@@ -77,7 +92,7 @@
 
 .cardBasic .cover{
     width: 100%;
-    height: 250px;
+    height: 300px;
     position: relative;
     overflow: hidden;
 }
@@ -92,6 +107,8 @@
     z-index: 1;
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5));
     transition: all 400ms;
+    font-size: larger;
+    list-style: none;
 }
 
 .cardBasic:hover .cover ul{
@@ -100,13 +117,13 @@
 }
 
 .cardStandard{
-    width: 300px;
+    width: 400px;
     margin: 10px;
     margin: 1em;
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #9bfb73);
+    background-image: linear-gradient(#ebebeb05, #00498b);
 }
 .cardStandard h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
@@ -118,7 +135,7 @@
 
 .cardStandard .cover{
     width: 100%;
-    height: 250px;
+    height: 300px;
     position: relative;
     overflow: hidden;
 }
@@ -133,6 +150,8 @@
     z-index: 1;
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5));
     transition: all 400ms;
+    font-size: larger;
+    list-style: none;
 }
 
 .cardStandard:hover .cover ul{
@@ -142,13 +161,13 @@
 
 
 .cardPremium{
-    width: 300px;
+    width: 400px;
     margin: 10px;
     margin: 1em;
     transition: all 300ms;
     border-radius: 20px;
     background-color: #ff880000;
-    background-image: linear-gradient(#ebebeb05, #24c59c);
+    background-image: linear-gradient(#ebebeb05, #9bfb73);
 }
 .cardPremium h2{
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5))
@@ -160,7 +179,7 @@
 
 .cardPremium .cover{
     width: 100%;
-    height: 250px;
+    height: 300px;
     position: relative;
     overflow: hidden;
 }
@@ -175,6 +194,8 @@
     z-index: 1;
     filter: drop-shadow(5px 5px 4px rgba(0,0,0,0.5));
     transition: all 400ms;
+    font-size: larger;
+    list-style: none;
 }
 
 .cardPremium:hover .cover ul{
@@ -183,6 +204,7 @@
 }
 
 .shopButton{
+    padding: 10px;
     margin: auto;
     font-size: 20x;
     font-style:normal;
@@ -204,4 +226,22 @@
 .shopButton:hover{
     background-color: #00498b;
     color: white;
+}
+
+.benefits{
+    background-color: #9cfb7357;
+    padding: 10px;
+    display: column;
+    flex-wrap: wrap;   
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.benfitsPlan{
+    background-color: #00498b;
+    padding:10px;
+    margin: 1em;
+}
+.benefits img{
+    border-radius: 5px;
 }

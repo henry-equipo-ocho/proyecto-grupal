@@ -5,31 +5,38 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 export default function ActivityCard({
-    nombre, imagen, handleDetail, id
+  nombre, imagen, handleDetail, id
 }) {
 
-    return (
-        <Card sx={{ maxWidth: 400, border: 1 }}>
-        <CardMedia
-          component="img"
-          height="300"
-          alt="Turismo"
-          image ={imagen}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {nombre}
-          </Typography>
-        </CardContent>
-        <CardActions style={{justifyContent: 'center'}} >
-          <Button
-          color="inherit"
-          variant='outlined'
-          onClick={() => handleDetail(id)}
-          size="small">Conoce mas</Button>
-        </CardActions>
-      </Card>
-    );
+  async function watchedOrBookeedTimes(id) {
+    try {
+      await axios.post('http://localhost:3001/activities/watched', {type: 'watched', id: id})
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
+  return (
+    <Card sx={{ maxWidth: 400, border: 1 }}>
+      <CardMedia
+        component="img"
+        height="300"
+        alt="Turismo"
+        image={imagen}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {nombre}
+        </Typography>
+      </CardContent>
+      <CardActions style={{ justifyContent: 'center' }} >
+        <button
+          className='shopButton'
+          onClick={() => handleDetail(id)} >More Info</button>
+      </CardActions>
+    </Card>
+  );
 };
