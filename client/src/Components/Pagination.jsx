@@ -6,6 +6,7 @@ export default function Pagination({ activitiesPerPage, allActivities, paginado 
     const pagecount = Math.ceil((allActivities) / activitiesPerPage);
 
     function changePage({ selected }) {
+        console.log("selected", selected);
         paginado(selected + 1)
     };
 
