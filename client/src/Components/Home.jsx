@@ -25,11 +25,11 @@ export default function Home() {
   const loading = useSelector(((state) => state.loading));
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfFirstActivity = (currentPage - 1) * 10;
-  const currentActivities = activities.slice(
+  const currentActivities = activities[3]?.slice(
     (indexOfFirstActivity), indexOfFirstActivity + 12
   );
 
-  useEffect(() => dispatch(getActivities()), [dispatch]);
+  useEffect(() => dispatch(getActivities), [dispatch]);
   useEffect(() => dispatch(getCountries()), [dispatch]);
   useEffect(() => dispatch(getCities()), [dispatch])
   useEffect(() => {
@@ -55,25 +55,64 @@ export default function Home() {
 
         {loading ?
           <center>
-            <p className='loader' style={{ fontSize: '50px' }}></p>
+            <p className='' style={{ fontSize: '50px' }}></p>
           </center> :
           <>
           <div className='tier1'>
             Actividades top
+            <div className='cardsDisplay'>
+              <div className='cardsContainer'>
+                {activities[0].length ? activities[0].map((a) => (
+                  <ActivityCard
+                    handleDetail={() => setDetail(a)}
+                    nombre={a.name}
+                    imagen={a.picture}
+                    id={a._id}
+                    key={a._id}
+                  />
+                )) : <p className='' style={{ fontSize: '50px' }}> </p>}
+              </div>
+            </div>
           </div>
 
           <div className='tier2'>
             nuestros recomendados
+            <div className='cardsDisplay'>
+              <div className='cardsContainer'>
+                {activities[1].length ? activities[1].map((a) => (
+                  <ActivityCard
+                    handleDetail={() => setDetail(a)}
+                    nombre={a.name}
+                    imagen={a.picture}
+                    id={a._id}
+                    key={a._id}
+                  />
+                )) : <p className='' style={{ fontSize: '50px' }}> </p>}
+              </div>
+            </div>
           </div>
 
           <div className='tier3'>
             ultimas agregadas
+            <div className='cardsDisplay'>
+              <div className='cardsContainer'>
+                {activities[2].length ? activities[2].map((a) => (
+                  <ActivityCard
+                    handleDetail={() => setDetail(a)}
+                    nombre={a.name}
+                    imagen={a.picture}
+                    id={a._id}
+                    key={a._id}
+                  />
+                )) : <p className='' style={{ fontSize: '50px' }}> </p>}
+              </div>
+            </div>
           </div>
 
 
             <div className='cardsDisplay'>
               <div className='cardsContainer'>
-                {currentActivities.length ? currentActivities.map((a) => (
+                {currentActivities?.length ? currentActivities.map((a) => (
                   <ActivityCard
                     handleDetail={() => setDetail(a)}
                     nombre={a.name}
@@ -89,7 +128,7 @@ export default function Home() {
 
         <Pagination
           activitiesPerPage={10}
-          allActivities={activities.length}
+          allActivities={activities[3]?.length}
           paginado={(pageNumber) => setCurrentPage(pageNumber)}
         />
       {loginForm &&

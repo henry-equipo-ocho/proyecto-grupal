@@ -3,7 +3,7 @@ import './Css/Filter.css';
 
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
-import { orderActivitiesByPrice } from './Redux/Actions/actions';
+import { getActivities, orderActivitiesByPrice } from './Redux/Actions/actions';
 
 export default function Filter({ handleChangeCurrentPage }) {
     const dispatch = useDispatch();
@@ -58,9 +58,15 @@ export default function Filter({ handleChangeCurrentPage }) {
         };
     };
 
+    function handleHome(e) {
+        dispatch(getActivities());
+    }
 
     return (
         <div className='filterContainer'>
+                <button
+                className='filterButton'
+                onClick={(e) => handleHome(e)}>Reset</button>
             <div>
                 <label>Select Country: </label> 
                 <select

@@ -4,7 +4,6 @@ import {
     SET_USER_NAME,
     GET_ACTIVITIES,
     SET_LOADING,
-    ORDER_ACTIVITIES_BY_CITY,
     ORDER_ACTIVITIES_BY_PRICE,
     GET_COUNTRIES,
     GET_CITIES,
@@ -24,7 +23,7 @@ export function setUserName(payload) {
 
 export function getActivities() {
     return async function (dispatch) {
-        dispatch(setLoading(true))
+      
         const { data: { data } } = await axios.post('http://localhost:3001/activities')
         dispatch({
             type: GET_ACTIVITIES,
@@ -58,6 +57,7 @@ export function setAllActivities(value) {
         try {
             dispatch(setLoading(true))
             let res = await axios.get(`http://localhost:3001/activities/match/${value}`);
+            console.log(res.data.data[3])
             return dispatch({
                 type: SET_ALL_ACTIVITIES,
                 payload: res.data.data,
