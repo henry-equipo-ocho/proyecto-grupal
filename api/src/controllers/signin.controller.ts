@@ -6,11 +6,11 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
 
     const { email, password } = req.body;
 
-    if (!email || !password) return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing values` } }));
+    if (!email || !password) return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing info` } }));
 
     try {
         const user = await getUserService(email);
-        if (!user) return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: `User doesn't exists` } }));
+        if (!user) return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: `User doesn't exist` } }));
 
         const match = await matchUserPasswordService(user, password);
         if (!match) return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: `Invalid password` } }));

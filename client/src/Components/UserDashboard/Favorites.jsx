@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import sweetAlert from "sweetalert";
+import Swal from "sweetalert2";
 import { useAxiosPrivate } from "../Auth/useAxiosPrivate";
 import FavCard from "./FavCard";
 
@@ -22,21 +22,59 @@ export default function Favorites() {
     const [itiName, setItiname] = useState("");
 
     const remove = async (itineraryName) => {
-        try {
-            await axiosPrivate.delete("/favorites", {
-                data: {
-                    itineraryName,
-                },
-            });
-            sweetAlert(
-                "Congrats",
-                `Itinerary "${itineraryName}" deleted!`,
-                "success"
-            );
-        } catch (e) {
-            sweetAlert("Error", " " + e, "error");
-        }
-        getFavorites();
+        Swal.fire({
+            title: `Are you sure?`,
+            text: "You won't be able to recover this itinerary!",
+            icon: "warning",
+            color: "white",
+            background: "#00498b",
+            showCancelButton: true,
+            confirmButtonColor: "#a9e8bc",
+            cancelButtonColor: "#24c59c",
+            confirmButtonText: "Yes, I am sure!",
+            cancelButtonText: "No, cancel it!",
+            dangerMode: true,
+        }).then(async function (result) {
+            if (result.isConfirmed) {
+                try {
+                    axiosPrivate.delete("/favorites", {
+                        data: {
+                            itineraryName,
+                        },
+                    });
+
+                    Swal.fire({
+                        title: `Success`,
+                        text: "Successfully deleted the itinerary",
+                        icon: "success",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
+                    setLoading(true);
+                } catch (e) {
+                    Swal.fire({
+                        title: `Error`,
+                        text: `Something happened while deleting the itinerary (${e})`,
+                        icon: "error",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
+                } finally {
+                    getFavorites();
+                }
+            } else {
+                Swal.fire({
+                    title: `Canceled`,
+                    text: "Action canceled",
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
+            }
+        });
     };
 
     const getFavorites = async () => {
@@ -45,7 +83,14 @@ export default function Favorites() {
             setIti([...response.data.data]);
             setLoading(false);
         } catch (e) {
-            sweetAlert("Error", "Error to loading data, please try", "error");
+            Swal.fire({
+                title: `Error`,
+                text: `Something happened while loading the itineraries (${e})`,
+                icon: "error",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });
         }
     };
 
@@ -228,7 +273,7 @@ export default function Favorites() {
                                                             }}
                                                         >
                                                             <Button>
-                                                                Try add
+                                                                Go add some
                                                                 activities here!
                                                             </Button>
                                                         </Link>

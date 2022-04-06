@@ -25,7 +25,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import alert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import "../AdminDashboard/Pages/loader.css";
 import "../AdminDashboard/Pages/table.css";
@@ -53,9 +53,6 @@ const validationSchema = yup.object({
         .string("Enter city")
         .min(2, "City should be of minimum 2 characters length")
         .required("City is required"),
-    price_currency: yup
-        .string("Enter currency of Price")
-        .required("Currency is required"),
     price_amount: yup
         .string("Entre price of activity")
         .required("Price is required"),
@@ -88,36 +85,65 @@ export default function List() {
             setActivitiesBackup(datos.data.data);
             setLoading(false);
         } catch (e) {
-            alert("Error", `Error to load activities (${e})`, "error");
-        }
+            Swal.fire({
+                title: `Error`,
+                text: `Something happened while loading the activities (${e})`,
+                icon: "error",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });        }
     };
 
     const handleDelete = (_id) => {
-        alert({
-            title: "Are you sure?",
-            text: "You will not be able to recover this activity!",
+        Swal.fire({
+            title: `Are you sure?`,
+            text: "You won't be able to recover this activity!",
             icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
+            color: "white",
+            background: "#00498b",
+            showCancelButton: true,
+            confirmButtonColor: "#a9e8bc",
+            cancelButtonColor: "#24c59c",
+            confirmButtonText: "Yes, I am sure!",
+            cancelButtonText: "No, cancel it!",
             dangerMode: true,
-        }).then(async function (isConfirm) {
-            if (isConfirm) {
+        }).then(async function (result) {
+            if (result.isConfirmed) {
                 try {
                     await axios.delete("/business/activities", {
                         data: { id: _id },
                     });
-                    alert(
-                        "Success",
-                        "Activity succesfully deleted!",
-                        "success"
-                    );
+                    Swal.fire({
+                        title: `Success`,
+                        text: "Successfully deleted the activity",
+                        icon: "success",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                     setOpen(false);
                     setLoading(true);
                     loadActivities();
                 } catch (e) {
-                    alert("Error", "" + e, "error");
+                    Swal.fire({
+                        title: `Error`,
+                        text: `Something happened while deleting the activity (${e})`,
+                        icon: "error",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                 }
             } else {
-                alert("Cancelled", "Action cancelled", "error");
+                Swal.fire({
+                    title: `Canceled`,
+                    text: "Action canceled",
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             }
         });
     };
@@ -138,13 +164,26 @@ export default function List() {
         onSubmit: async (values) => {
             try {
                 await axios.put("/business/activities", values);
-                alert("Success", "Activity succesfully edited!", "success");
+                Swal.fire({
+                    title: `Success`,
+                    text: "Successfully edited the activity",
+                    icon: "success",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
                 setOpen(false);
                 setLoading(true);
                 loadActivities();
             } catch (e) {
-                alert("Error", "" + e, "error");
-            }
+                Swal.fire({
+                    title: `Error`,
+                    text: `${e}`,
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });            }
         },
     });
 
@@ -184,18 +223,24 @@ export default function List() {
         price_amount,
         booking
     ) => {
-        alert({
+        Swal.fire({
             title: name,
             text: `ID: ${_id}
-      Description: ${description}
-      Country: ${country}
-      City: ${city}
-      Currency: ${price_currency}
-      Price: ${price_amount}`,
+            Description: ${description}
+            Country: ${country}
+            City: ${city}
+            Currency: ${price_currency}
+            Price: ${price_amount}`,
             icon: picture,
-            buttons: ["Back", "Visit site"],
-        }).then(function (isConfirm) {
-            if (isConfirm) {
+            color: "white",
+            background: "#00498b",
+            showCancelButton: true,
+            confirmButtonColor: "#a9e8bc",
+            cancelButtonColor: "#24c59c",
+            confirmButtonText: "Visit site",
+            cancelButtonText: "Back",
+        }).then(function (result) {
+            if (result.isConfirmed) {
                 window.open(booking, "_blank");
             }
         });
@@ -446,7 +491,7 @@ export default function List() {
                                 sx={{ my: 1, width: "100%" }}
                                 id="name"
                                 name="name"
-                                label="Activiy name"
+                                label="Activity name"
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 error={
@@ -544,24 +589,6 @@ export default function List() {
                                 })}
                             </Select>
                         </FormControl>
-                        <Box>
-                            <TextField
-                                sx={{ my: 1, width: "100%" }}
-                                id="price_currency"
-                                name="price_currency"
-                                label="Currency"
-                                value={formik.values.price_currency}
-                                onChange={formik.handleChange}
-                                error={
-                                    formik.touched.price_currency &&
-                                    Boolean(formik.errors.price_currency)
-                                }
-                                helperText={
-                                    formik.touched.price_currency &&
-                                    formik.errors.price_currency
-                                }
-                            />
-                        </Box>
                         <Box>
                             <TextField
                                 sx={{ my: 1, width: "100%" }}

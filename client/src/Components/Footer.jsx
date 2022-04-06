@@ -8,7 +8,7 @@ export default function Footer() {
         <footer>
             <div className="footerContainer">
                 <div className="div1">
-                    <h3>Medios de pago</h3>
+                    <h3>Payment methods</h3>
                     <a
                         href="https://www.paypal.com"
                         target="_blank"
@@ -19,7 +19,7 @@ export default function Footer() {
                 </div>
 
                 <div className="div2">
-                    <h3>Contactanos</h3>
+                    <h3>Reach us!</h3>
                     <ul>
                         <li>info@ezintinerary.com</li>
                         <li>+000 111-222-333</li>
@@ -29,7 +29,7 @@ export default function Footer() {
 
                 <div className="div3">
                     <img src={Logo} alt="not found" />
-                    <h3>Around LatinoAmerica</h3>
+                    <h3>Around LatinAmerica</h3>
                 </div>
             </div>
         </footer>

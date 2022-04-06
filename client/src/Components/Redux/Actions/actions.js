@@ -56,7 +56,7 @@ export function setAllActivities(value) {
         } catch (error) {
             Swal.fire({
                 title: 'Sorry!',
-                text: 'Activity not found',
+                text: 'Nothing matched your search',
                 icon: 'error',
                 color: 'white',
                 background: '#00498b',

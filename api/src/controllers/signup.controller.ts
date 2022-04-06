@@ -8,7 +8,7 @@ export const signUpController: RequestHandler = async (req: Request, res: Respon
     const { email, password, name, surname, country } = req.body;
 
     if (!email || !password || !name || !surname || !country) {
-        return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing values` } }));
+        return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing info` } }));
     }
 
     try {

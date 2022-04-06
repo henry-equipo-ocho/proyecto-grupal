@@ -13,17 +13,17 @@ export default function LandingPage() {
                     <img src={logo} alt="not found" />
                 </center>
                 <center>
-                    <h1>¿Vamos a conocer Latinoamerica?</h1>
+                    <h1>Let's travel around Latin America!</h1>
                 </center>
                 <p className="parrafo">
-                    Conoce las principales ciudades de Latinoamerica creando un
-                    intinerario personalizado, donde podras {"\n"}
-                    agregar y quitar actividades a tu gusto, asi tu viaje sera
-                    unico e inolvidable.
+                    Browse through lots of activities in many countries, search for specific topics, and filter by location and/or price {"\n"}
+                    Create personalized itineraries before traveling around Latin America's main cities! {"\n"}
+                    Save activities you'd like to remember when being in Latin America,
+                    and have an unforgettable travel experience!
                 </p>
                 <center>
                     <Link to={"/home"}>
-                        <button className="landingButton">Ingresar</button>
+                        <button className="landingButton">Let's go!</button>
                     </Link>
                 </center>
             </div>

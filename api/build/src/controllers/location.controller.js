@@ -35,7 +35,7 @@ const saveCityController = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const { name, code, country, lat, lon } = req.body;
         if (!name || !code || !country || !lat || !lon) {
-            return res.status(400).send(({ status: 'failed', errors: { message: 'Missing values' } }));
+            return res.status(400).send(({ status: 'failed', errors: { message: 'Missing info' } }));
         }
         const city = yield (0, location_services_1.getCityByNameService)(name);
         if (city) {
@@ -53,7 +53,7 @@ const saveCountryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const { name } = req.body;
         if (!name) {
-            return res.status(400).send(({ status: 'failed', errors: { message: 'Missing values' } }));
+            return res.status(400).send(({ status: 'failed', errors: { message: 'Missing info' } }));
         }
         const country = yield (0, location_services_1.getCountryByNameService)(name);
         if (country) {

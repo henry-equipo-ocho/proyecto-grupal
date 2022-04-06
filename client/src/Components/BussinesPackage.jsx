@@ -19,11 +19,11 @@ export default function BussinesPackage() {
     function handleClickLogout() {
         Swal.fire({
             title: "Sorry!",
-            text: "Please Login to continue",
+            text: "Please log in to continue",
             icon: "info",
             color: "white",
             background: "#00498b",
-            confirmButtonText: '<a href="/home">Logueame</a>',
+            confirmButtonText: '<a href="/home">Login</a>',
             confirmButtonColor: "#24c59c",
         });
     }
@@ -37,7 +37,7 @@ export default function BussinesPackage() {
                             <img src={logo} alt="Not found" />
                         </div>
                         <div>
-                            <h1>Planes para empresas</h1>
+                            <h1>Business plans (monthly billed)</h1>
                         </div>
                         <div>
                             <button className="buttonNav">
@@ -56,12 +56,13 @@ export default function BussinesPackage() {
                                     <ul>
                                         <h1>Basic</h1>
                                         <li>3 Activities</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$10 US</h2>
+                                    <h2>U$D 10</h2>
                                 </center>
                             </div>
                         </div>
@@ -72,14 +73,14 @@ export default function BussinesPackage() {
                                     <ul>
                                         <h1>Standard</h1>
                                         <li>5 Activities</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
-                                        <li>Descripción corta</li>
-                                        <li>Informe de estadisticas</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
+                                        <li>Insights and statistics</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$30 US </h2>
+                                    <h2>U$D 30</h2>
                                 </center>
                             </div>
                         </div>
@@ -89,22 +90,21 @@ export default function BussinesPackage() {
                                 <div className="cover">
                                     <ul>
                                         <h1>Premium</h1>
-                                        <li>Sin limite de actividades</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
-                                        <li>Descripción corta</li>
-                                        <li>Informe de estadisticas</li>
-                                        <li>Pin en google maps</li>
+                                        <li>Unlimited activities</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
+                                        <li>Insights and statistics</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$50 US</h2>
+                                    <h2>U$D 50</h2>
                                 </center>
                             </div>
                         </div>
                         <div className="benefits">
                             <center>
-                                <h1>What plan is better for you bussines?</h1>
+                                <h1>Which plan is better for your bussines?</h1>
                                 <img
                                     src={benefits}
                                     alt="Not found"
@@ -121,7 +121,7 @@ export default function BussinesPackage() {
                             <img src={logo} alt="Not found" />
                         </div>
                         <div>
-                            <h1>Business Plans</h1>
+                            <h1>Business Plans (monthly billed)</h1>
                         </div>
                         <div>
                             <button>
@@ -137,12 +137,13 @@ export default function BussinesPackage() {
                                     <ul>
                                         <h1>Basic</h1>
                                         <li>3 Activities</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$10 US Per Month</h2>
+                                    <h2>U$D 10</h2>
 
                                     <button
                                         className="shopButton"
@@ -160,14 +161,14 @@ export default function BussinesPackage() {
                                     <ul>
                                         <h1>Standard</h1>
                                         <li>5 Activities</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
-                                        <li>Descripción corta</li>
-                                        <li>Informe de estadisticas</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
+                                        <li>Insights and statistics</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$30 US Per Month</h2>
+                                    <h2>U$D 30</h2>
                                     <button
                                         className="shopButton"
                                         onClick={() => handleClickLogout()}
@@ -183,16 +184,15 @@ export default function BussinesPackage() {
                                 <div className="cover">
                                     <ul>
                                         <h1>Premium</h1>
-                                        <li>Sin limite de actividades</li>
-                                        <li>Imagen promocional</li>
-                                        <li>Link directo</li>
-                                        <li>Descripción corta</li>
-                                        <li>Informe de estadisticas</li>
-                                        <li>Pin en google maps</li>
+                                        <li>Unlimited activities</li>
+                                        <li>Promotional image</li>
+                                        <li>Link to your website</li>
+                                        <li>Short description</li>
+                                        <li>Insights and statistics</li>
                                     </ul>
                                 </div>
                                 <center>
-                                    <h2>$50 US Per Month</h2>
+                                    <h2>U$D 50</h2>
                                     <button
                                         className="shopButton"
                                         onClick={() => handleClickLogout()}

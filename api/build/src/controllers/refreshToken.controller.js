@@ -51,7 +51,7 @@ const clearRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.clearRefreshToken = clearRefreshToken;
 const protectedRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send({ status: 'success', data: { message: 'You are authenticated' + ' data: ' + req.body.data } });
+        res.send({ status: 'success', data: { message: `You are authenticated, data: ${req.body.data}` } });
     }
     catch (e) {
         return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));

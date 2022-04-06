@@ -12,7 +12,7 @@ declare module "express" {
 
 export const createOrder = async (req: Request, res: Response) => {
     if (!req.body.cart) {
-        return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing cart' } }));
+        return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing info' } }));
     }
     try {
         const order = await createPayPalOrder(req.body.cart, req.user.id);
@@ -28,7 +28,7 @@ export const createOrder = async (req: Request, res: Response) => {
 
 export const captureOrder = async (req: Request, res: Response) => {
     if (req.query.token === undefined) {
-        return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing payment info' } }));
+        return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: 'Missing info' } }));
     }
 
     try {

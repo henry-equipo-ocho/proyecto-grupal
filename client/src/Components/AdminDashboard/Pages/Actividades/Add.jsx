@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import React from "react";
-import alert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useAxiosPrivate } from "../../../Auth/useAxiosPrivate";
 import countries from "../../../Register/countries";
@@ -34,9 +34,6 @@ const validationSchema = yup.object({
         .string("Enter city")
         .min(2, "City should be of minimum 2 characters length")
         .required("City is required"),
-    price_currency: yup
-        .string("Enter currency of Price")
-        .required("Currency is required"),
     price_amount: yup
         .string("Entre price of activity")
         .required("Price is required"),
@@ -53,7 +50,7 @@ export default function Add() {
             picture: "",
             city: "",
             country: "",
-            price_currency: "",
+            price_currency: "USD",
             price_amount: "",
             booking: "",
         },
@@ -61,10 +58,24 @@ export default function Add() {
         onSubmit: async (values) => {
             try {
                 await axios.post("/admin/create/activity", values);
-                alert("Success", "Activity succesfully added!", "success");
+                Swal.fire({
+                    title: `Success`,
+                    text: "Successfully added activity",
+                    icon: "success",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
                 formik.resetForm();
             } catch (e) {
-                alert("Error", "" + e, "error");
+                Swal.fire({
+                    title: `Error`,
+                    text: `${e}`,
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             }
         },
     });
@@ -86,7 +97,7 @@ export default function Add() {
                         sx={{ my: 1, width: "100%" }}
                         id="name"
                         name="name"
-                        label="Activiy name"
+                        label="Activity name"
                         value={formik.values.name}
                         onChange={formik.handleChange}
                         error={
@@ -177,24 +188,6 @@ export default function Add() {
                         })}
                     </Select>
                 </FormControl>
-                <Box>
-                    <TextField
-                        sx={{ my: 1, width: "100%" }}
-                        id="price_currency"
-                        name="price_currency"
-                        label="Currency"
-                        value={formik.values.price_currency}
-                        onChange={formik.handleChange}
-                        error={
-                            formik.touched.price_currency &&
-                            Boolean(formik.errors.price_currency)
-                        }
-                        helperText={
-                            formik.touched.price_currency &&
-                            formik.errors.price_currency
-                        }
-                    />
-                </Box>
                 <Box>
                     <TextField
                         sx={{ my: 1, width: "100%" }}

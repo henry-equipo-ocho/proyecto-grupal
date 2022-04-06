@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import React from "react";
-import alert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useAxiosPrivate } from "../../../Auth/useAxiosPrivate";
 import countries from "../../../Register/countries";
@@ -52,10 +52,24 @@ export default function Add() {
         onSubmit: async (values) => {
             try {
                 await axios.post("/admin/create/user", values);
-                alert("Success", "User succesfully added!", "success");
+                Swal.fire({
+                    title: `Success`,
+                    text: "Successfully added user!",
+                    icon: "success",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
                 formik.resetForm();
             } catch (e) {
-                alert("Error", "" + e, "error");
+                Swal.fire({
+                    title: `Error`,
+                    text: `${e}`,
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             }
         },
     });
