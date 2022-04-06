@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import sweetAlert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useAxiosPrivate } from "../Auth/useAxiosPrivate";
 import countries from "../Register/countries";
@@ -90,10 +90,23 @@ export default function EditProfile() {
                     password: values.password,
                 });
 
-                sweetAlert("Congrats", "User edited succesfully!", "success");
+                Swal.fire({
+                    title: `Success`,
+                    text: "Successfully edited your profile!",
+                    icon: "success",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             } catch (e) {
-                sweetAlert("Error", e, "error");
-            }
+                Swal.fire({
+                    title: `Error`,
+                    text: `${e}`,
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });            }
         },
     });
 
@@ -113,7 +126,7 @@ export default function EditProfile() {
                 Edit profile
             </Typography>
             <Alert severity="info" sx={{ my: 1 }}>
-                Change all fields if you need
+                Change all the fields if you need to
             </Alert>
             <form onSubmit={formik.handleSubmit}>
                 <Box>

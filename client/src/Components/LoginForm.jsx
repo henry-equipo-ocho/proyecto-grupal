@@ -22,8 +22,8 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
-    height: 400,
+    width: 500,
+    height: 500,
     p: 4,
 };
 
@@ -67,7 +67,7 @@ const FormDialog = ({ abierto, close }) => {
 
                 Swal.fire({
                     title: `${nombre}`,
-                    text: "Bienvenido a Eztinerary",
+                    text: "Welcome to Eztinerary",
                     icon: "success",
                     color: "white",
                     background: "#00498b",
@@ -77,7 +77,7 @@ const FormDialog = ({ abierto, close }) => {
             } catch (error) {
                 Swal.fire({
                     title: `Oops...`,
-                    text: "User or password incorrect",
+                    text: "Incorrect user or password",
                     icon: "error",
                     color: "white",
                     background: "#00498b",
@@ -89,8 +89,6 @@ const FormDialog = ({ abierto, close }) => {
 
     const responseSucess = async () => {
         const googleLoginURL = "http://localhost:3001/signin/google";
-
-        const datos = window.open(googleLoginURL, "width=500,height=600");
     };
 
     return (
@@ -109,7 +107,7 @@ const FormDialog = ({ abierto, close }) => {
                     style={{ border: "solid 1px black" }}
                     onSubmit={formik.handleSubmit}
                 >
-                    <DialogTitle>Iniciar Sesión</DialogTitle>
+                    <DialogTitle>Log in</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -147,37 +145,21 @@ const FormDialog = ({ abierto, close }) => {
                             }
                         />
 
-                        <DialogContentText>
-                            <Button>Olvidaste tu Contraseña?</Button>
-                            <DialogActions>
-                                <Button onClick={close} variant="outlined">
-                                    Cancel
-                                </Button>
-                                <Button
-                                    onClick={() => setOpen(!open)}
-                                    color="primary"
-                                    variant="contained"
-                                    fullWidth
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            </DialogActions>
-                            <GoogleButton onClick={responseSucess} />
-                        </DialogContentText>
                         <DialogContent>
-                            <DialogActions>
-                                <button className="shopButton" onClick={close}>
-                                    Cancel
-                                </button>
-                                <button
-                                    className="shopButton"
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    Submit
-                                </button>
-                            </DialogActions>
+                            <Button>Did you forget your password?</Button>{" "}
+                            <GoogleButton onClick={responseSucess} />
                         </DialogContent>
+                        <DialogActions>
+                            <button className="shopButton" onClick={close}>
+                                Cancel
+                            </button>
+                            <button
+                                className="shopButton"
+                                onClick={() => setOpen(!open)}
+                            >
+                                Submit
+                            </button>
+                        </DialogActions>
                     </DialogContent>
                     {/* <GoogleLoginComponent /> */}
                 </form>

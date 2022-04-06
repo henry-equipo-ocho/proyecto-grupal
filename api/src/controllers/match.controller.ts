@@ -17,7 +17,7 @@ export const getMatchActivitiesController: RequestHandler = async (req: Request,
             filteredActivities.push(byTier.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase())))
         });
 
-        return filteredActivities[3].length ?
+        return (filteredActivities[0].length || filteredActivities[1].length || filteredActivities[2].length || filteredActivities[3].length) ?
             res.status(200).json(<ServerResponse>({ status: 'success', data: filteredActivities }))
             : res.status(404).json(<ServerResponse>({ status: 'failed', message: 'Activities not found' }));
     } catch (e: any) {

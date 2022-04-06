@@ -24,7 +24,7 @@ export const saveCityController: RequestHandler = async (req: Request, res: Resp
     try {
         const { name, code, country, lat, lon } = req.body;
         if (!name || !code || !country || !lat || !lon) {
-            return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: 'Missing values' } }))
+            return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: 'Missing info' } }))
         }
 
         const city = await getCityByNameService(name);
@@ -42,7 +42,7 @@ export const saveCountryController: RequestHandler = async (req: Request, res: R
     try {
         const { name } = req.body;
         if (!name) {
-            return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: 'Missing values' } }))
+            return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: 'Missing info' } }))
         }
 
         const country = await getCountryByNameService(name);

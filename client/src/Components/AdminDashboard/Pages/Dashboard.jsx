@@ -47,8 +47,8 @@ export default function Dashboard() {
                         }}
                     >
                         <AlertTitle>Welcome to Admin Dashboard!</AlertTitle>
-                        Here you can edit, modify, view the statistics for the —{" "}
-                        <strong>entire site!</strong>
+                        Here you can see and modify the statistics of the —{" "}
+                        <strong>whole site!</strong>
                     </Alert>
                 </Box>
                 <Typography variant="h5" sx={{ my: 1 }}>
@@ -75,11 +75,10 @@ export default function Dashboard() {
                                 Users
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                In this panel you can edit view or delete
+                                In this panel you can see, edit or delete
                                 <br />
-                                one or many users,
+                                one or many users
                                 <br />
-                                depending on the need.
                             </Typography>
                         </CardContent>
                         <CardActions>
@@ -103,11 +102,10 @@ export default function Dashboard() {
                                 Activities
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                In this panel you can edit view or delete
+                                In this panel you can see, edit or delete
                                 <br />
-                                one or many activities,
+                                one or many activities
                                 <br />
-                                depending on the need.
                             </Typography>
                         </CardContent>
                         <CardActions>
@@ -133,9 +131,8 @@ export default function Dashboard() {
                                 Statistics
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                In this panel you can view statistics
+                                In this panel you can see the site's statistics
                                 <br />
-                                from page
                             </Typography>
                         </CardContent>
                         <CardActions>

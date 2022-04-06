@@ -24,7 +24,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import sweetAlert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import logo from "../../Media/Logo.png";
 import Footer from "../Footer";
@@ -72,18 +72,24 @@ export default function Register() {
             if (terms) {
                 try {
                     await axios.post("http://localhost:3001/signup", values);
-                    sweetAlert(
-                        "Succesfully registered!",
-                        "You can now verify your email for activate account!",
-                        "success"
-                    );
+                    Swal.fire({
+                        title: `Welcome to Eztinerary!`,
+                        text: "Please, check your email and confirm your account",
+                        icon: "success",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                     history("/home");
                 } catch (e) {
-                    sweetAlert(
-                        "User already registered!",
-                        "Please login!",
-                        "error"
-                    );
+                    Swal.fire({
+                        title: `Error when joining`,
+                        text: `A user with this email already exists`,
+                        icon: "error",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                 }
             } else {
                 setOpen(true);
@@ -346,7 +352,7 @@ export default function Register() {
                         <DialogTitle>{"Error"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                                You need accept terms and conditions.
+                                You must accept our terms and conditions.
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

@@ -44,9 +44,9 @@ export default function Actividades() {
                         >
                             <Alert severity="warning" sx={{ width: "100%" }}>
                                 <AlertTitle>Activities Panel</AlertTitle>
-                                Here you will have control of{" "}
-                                <strong>all activities</strong> on the platform,{" "}
-                                <strong>be careful what you do.</strong>
+                                Here you'll have control of{" "}
+                                <strong>all of the platform's activities,</strong>{" "}
+                                <strong>be careful!.</strong>
                             </Alert>
                             <Typography variant="h5" sx={{ my: 2 }}>
                                 Available Actions
@@ -82,7 +82,7 @@ export default function Actividades() {
                                             sx={{ mb: 1.5 }}
                                             color="text.secondary"
                                         >
-                                            If you want to add an activity in
+                                            If you want to add an activity to
                                             the database,
                                             <br />
                                             click on the link.
@@ -120,7 +120,7 @@ export default function Actividades() {
                                             sx={{ mb: 1.5 }}
                                             color="text.secondary"
                                         >
-                                            If you want view all activities in
+                                            If you want to see all the activities in
                                             the database,
                                             <br />
                                             click on the link.

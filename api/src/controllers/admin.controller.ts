@@ -32,7 +32,7 @@ export const createUserController = async (req: Request, res: Response) => {
     const { email, password, name, surname, country, role } = req.body;
 
     if (!email || !password || !name || !surname || !country || role === undefined) {
-        return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing values` } }));
+        return res.status(400).send(<ServerResponse>({ status: 'failed', errors: { message: `Missing info` } }));
     }
 
     try {

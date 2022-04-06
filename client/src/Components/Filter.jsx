@@ -40,7 +40,7 @@ export default function Filter({ handleChangeCurrentPage }) {
         if (!input.country && !input.city) {
             Swal.fire({
                 title: "Sorry!",
-                text: "There are nothing to filter",
+                text: "There is nothing to filter",
                 icon: "info",
                 color: "white",
                 background: "#00498b",

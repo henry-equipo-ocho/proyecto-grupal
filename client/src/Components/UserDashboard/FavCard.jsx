@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import sweetAlert from "sweetalert";
+import Swal from "sweetalert2";
 import { useAxiosPrivate } from "../Auth/useAxiosPrivate";
 
 export default function ActivityCard({
@@ -29,17 +29,26 @@ export default function ActivityCard({
                     itineraryName,
                 },
             });
-            sweetAlert(
-                "Congrats",
-                `Activity "${name.slice(
+            Swal.fire({
+                title: `Success`,
+                text: `Successfully deleted "${name.slice(
                     0,
                     15
-                )}..." deleted from itinerary "${itName}"`,
-                "success"
-            );
+                )}..." from itinerary "${itName}"`,
+                icon: "success",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });
         } catch (e) {
-            sweetAlert("Error", "" + e, "error");
-        }
+            Swal.fire({
+                title: `Error`,
+                text: `Something happened while deleting the activity (${e})`,
+                icon: "error",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });        }
         loadFavs();
     };
 
