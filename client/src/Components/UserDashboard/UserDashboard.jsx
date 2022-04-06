@@ -46,7 +46,7 @@ const UserDashboard = () => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const logout = () => {
+  const logout = (e) => {
     window.localStorage.clear();
     dispatch(setUserName('Viajero'));
     axiosPrivate.get('/token/clear');
@@ -55,10 +55,9 @@ const UserDashboard = () => {
   }
 
   const handleCloseNavMenu = (e) => {
-    console.log("entra")
-    switch (e.target.innerText.toLowerCase()) {
-      case 'logout': {
-        logout();
+    switch(e.target.innerText.toLowerCase()){
+      case 'logout':{
+        logout(e);
         break;
       }
       case 'favorites': {

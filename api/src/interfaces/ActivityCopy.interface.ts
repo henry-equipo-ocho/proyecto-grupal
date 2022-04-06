@@ -10,6 +10,6 @@ export default interface Activity {
     booking: string,
     watchedTimes: number,
     bookedTimes: number,
-    created?: boolean,
-    ownerId?: string
+    created: boolean,
+    ownerId: string
 }
