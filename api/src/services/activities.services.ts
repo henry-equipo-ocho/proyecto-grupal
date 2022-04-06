@@ -1,6 +1,5 @@
 import { Document, Types } from "mongoose"
 import Activity from "../models/Activity.models";
-import ActivityCopyModels from "../models/Activity.Copy.models";
 import ActivityInterface from "../interfaces/Activity.interface";
 import { Request } from "express";
 const Amadeus = require('amadeus');
@@ -41,19 +40,6 @@ export const saveActivitiesService = async (activity: ActivityInterface): Promis
     }
 }
 
-export const saveCopyActivitiesService = async (activity: ActivityInterface): Promise<any> => {
-    try {
-
-        // const found = await ActivityCopyModels.findOne({name: activity.name});
-        // if(found) throw new Error('Activity already exists');
-
-        const newActivity = new ActivityCopyModels(activity);
-        await newActivity.save();
-    } catch (e) {
-        throw e
-    }
-}
-
 export const updateActivitiesService = async (activity: ActivityInterface): Promise<any> => {
     try {
         const found = await Activity.findOne({ name: activity.name });
@@ -64,6 +50,16 @@ export const updateActivitiesService = async (activity: ActivityInterface): Prom
         await found.save();
     } catch (e) {
         throw e
+    }
+}
+
+export const getActivityById = async (id: string): Promise<any> => {
+    try {
+        const found = await Activity.findById(id);
+        if(!found) throw new Error('Activity not found');
+        return found;
+    } catch (e) {
+        throw e;
     }
 }
 
@@ -157,9 +153,10 @@ function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, Act
         });
     }
 }
-export const updateCopyActivitiesService = async (): Promise<any> => {
+export const updateFieldActivitiesService = async (): Promise<any> => {
     try {
-        await Activity.updateMany([{ $addFields: { 'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7' } }]);
+        // await Activity.updateMany([{$addFields: {'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7'}}]);
+        // await Activity.updateMany({}, {$unset: {ownerId: 1}});
     } catch (e) {
         throw e
     }
@@ -176,6 +173,15 @@ export const setWatchedTimesService = async (type: string, id: string) => {
         if (type === 'booked') { found.bookedTimes = found.bookedTimes + 1; await found.save(); return found }
 
     } catch (e: any) {
+        throw e;
+    }
+}
+
+export const getUserActivities = async (id: string) => {
+    try {
+        const activities = await Activity.find({ownerId: id});
+        return activities;
+    } catch (e) {
         throw e;
     }
 }
