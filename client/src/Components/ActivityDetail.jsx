@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
+// import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import useMediaQuery from '@mui/material/useMediaQuery';
+// import useMediaQuery from '@mui/material/useMediaQuery';
 import CardMedia from '@mui/material/CardMedia';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
+// import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 
-import { imageListItemClasses, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 import sweetAlert from 'sweetalert';
 
+import axios from 'axios';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 const style = {
@@ -43,8 +44,8 @@ export default function ActivityDetail({ activity, close, id }) {
   const usDollar = Math.round(parseInt(activity.price_amount) * 1.10);
   // const isLogged = window.localStorage.getItem('token') ? true : false;
   const isLogged = useSelector(state => state.token) ? true : false;
-  const theme = useTheme();
-  const dispatch = useDispatch();
+  // const theme = useTheme();
+  // const dispatch = useDispatch();
   // const token = JSON.parse(localStorage.getItem('token'));
   const userID = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).id : false;
 
@@ -83,6 +84,14 @@ export default function ActivityDetail({ activity, close, id }) {
     }
   };
 
+  async function watchedOrBookeedTimes(id) {
+    try {
+      await axios.post('http://localhost:3001/activities/watched', {type: 'booked', id: id})
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     checkIfHasItineraries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,11 +114,11 @@ export default function ActivityDetail({ activity, close, id }) {
           <DialogContentText>
             {activity.description}
           </DialogContentText>
-          <DialogContentText>
+          <DialogContent>
             <Typography variant="h5" color='black'>
               ${usDollar}
             </Typography>
-          </DialogContentText>
+          </DialogContent>
           {
             showIti ?
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', border: '1px solid black', padding: '10px' }}>
@@ -193,6 +202,7 @@ export default function ActivityDetail({ activity, close, id }) {
                   variant='outlined'
                   href={activity.booking}
                   target='_blank'
+                  onClick={() => watchedOrBookeedTimes(activity._id)}
                 >Reserve</Button>
                 <Button
                   autoFocus

@@ -35,7 +35,8 @@ const userSchema = new mongoose_1.default.Schema({
     role: { type: Number, required: [true, 'Missing role attribute'], default: 0 },
     favActivities: [itinerarySchema],
     payments: [paymentSchema],
-    activeSubscription: { type: Boolean, default: false },
+    activeSubscription: { type: Boolean },
+    subscriptionTier: { type: Number },
     isVerified: { type: Boolean, default: false }
 });
 userSchema.pre('save', function (next) {

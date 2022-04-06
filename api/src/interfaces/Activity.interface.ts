@@ -7,5 +7,9 @@ export default interface Activity {
     country: string,
     price_currency: string,
     price_amount: string,
-    booking: string
+    booking: string,
+    watchedTimes: number,
+    bookedTimes: number,
+    created?: boolean,
+    ownerId?: string
 }

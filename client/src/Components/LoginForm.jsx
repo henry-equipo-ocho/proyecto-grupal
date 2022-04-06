@@ -14,8 +14,7 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUserName } from './Redux/Actions/actions';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
-import GoogleButton from 'react-google-button'
-import GoogleLoginComponent from './GoogleLogin/GoogleLoginComponent';
+import sweetAlert from 'sweetalert';
 
 const style = {
   position: 'absolute',
@@ -46,7 +45,7 @@ const FormDialog = ({ abierto, close }) => {
   const [open, setOpen] = React.useState(abierto);
   const history = useNavigate();
   const dispatch = useDispatch();
-  
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -55,19 +54,20 @@ const FormDialog = ({ abierto, close }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        //console.log(values)
+        // console.log(values)
         const datos = await axiosPrivate.post('/signin', values)
         var decoded = jwt_decode(datos.data.data);
         const miStorage = window.localStorage
         dispatch(setToken(datos.data.data))
         miStorage.setItem('data', JSON.stringify(decoded))
         miStorage.setItem('loggedIn', 'true')
+        // miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
         formik.resetForm()
-        alert('Sesión iniciada con éxito');
+        sweetAlert('Successfully logged in');
         history('/dashboard');
       } catch (error) {
-        console.log(error)
+        sweetAlert('Oops...', 'User or password incorrect', 'error');
       }
     },
   });
@@ -155,7 +155,7 @@ const FormDialog = ({ abierto, close }) => {
             />
            
 
-            <DialogContentText>
+            <DialogContent>
               <Button>
                 Olvidaste tu Contraseña?
               </Button>
@@ -171,8 +171,7 @@ const FormDialog = ({ abierto, close }) => {
 
                 
               </DialogActions>
-               <GoogleButton onClick={responseSucess}/>
-            </DialogContentText>
+            </DialogContent>
           </DialogContent>
                {/* <GoogleLoginComponent /> */}
         </form>

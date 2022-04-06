@@ -3,7 +3,7 @@ import ServerResponse from '../interfaces/ServerResponse.interface';
 const Amadeus = require('amadeus');
 import dotenv from 'dotenv';
 import ActivityInterface from '../interfaces/Activity.interface';
-import { getAPIActivitiesService, saveActivitiesService, getAllDBActivities, getDBCountryActivities, getDBCityActivities } from '../services/activities.services'
+import { getAPIActivitiesService, saveActivitiesService, getAllDBActivities, getDBCountryActivities, getDBCityActivities, setWatchedTimesService, updateFieldActivitiesService } from '../services/activities.services'
 
 dotenv.config();
 
@@ -22,7 +22,9 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
                 country: req.body.country,
                 price_currency: activities[i]?.price?.currencyCode,
                 price_amount: activities[i]?.price?.amount,
-                booking: activities[i]?.bookingLink
+                booking: activities[i]?.bookingLink,
+                watchedTimes: 0,
+                bookedTimes: 0
             }
 
             const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
@@ -38,6 +40,35 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
 };
+
+export const updateAPIActivitiesController: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const activities = await getAPIActivitiesService(req);
+
+        for(let i: number = 0; i < activities.length; i++){
+            const activitiesFormat: ActivityInterface = {
+                name: activities[i].name,
+                description: activities[i].shortDescription,
+                picture: activities[i].pictures ? activities[i].pictures[0] : null,
+                city: req.body.city,
+                country: req.body.country,
+                price_currency: activities[i]?.price?.currencyCode,
+                price_amount: activities[i]?.price?.amount,
+                booking: activities[i]?.bookingLink,
+                watchedTimes: 0,
+                bookedTimes: 0
+            }
+
+            const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
+
+            if(!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {continue};
+
+            await saveActivitiesService(activitiesFormat);
+        }
+    } catch (e: any) {
+        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+    }
+}
 
 export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
     
@@ -60,3 +91,22 @@ export const getActivitiesController: RequestHandler = async (req: Request, res:
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
 };
+
+export const updateFieldController = async (req: Request, res: Response) => {
+    try {
+        await updateFieldActivitiesService();
+        return res.sendStatus(200);
+    } catch (e: any) {
+        return res.sendStatus(400);
+    }
+}
+
+export const setWatchedorBookedTimesController = async (req: Request, res: Response) => {
+    try {
+        const { type, id } = req.body;
+        await setWatchedTimesService(type, id);
+        return res.sendStatus(200);
+    } catch (e: any) {
+        res.sendStatus(400);
+    }
+}

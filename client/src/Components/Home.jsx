@@ -38,7 +38,7 @@ export default function Home() {
   }, [activities, dispatch]);
 
   return (
-    <div>
+    <div className='page'>
 
       <div>
         <NavBar
@@ -78,7 +78,7 @@ export default function Home() {
               </div>
 
               </div>
-              
+                    
             </>}
         </div>
 

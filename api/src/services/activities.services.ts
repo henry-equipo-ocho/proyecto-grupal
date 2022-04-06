@@ -15,7 +15,8 @@ export const getAPIActivitiesService = async (req: Request): Promise<any> => {
 
         const activities = await amadeus.shopping.activities.get({
             latitude: req.body.lat,
-            longitude: req.body.lon
+            longitude: req.body.lon,
+            radius: 20
         }).then((response: any) => response.data).catch((error: any) => error.code);
 
         return activities;
@@ -35,6 +36,29 @@ export const saveActivitiesService = async (activity: ActivityInterface): Promis
         await newActivity.save();
     } catch (e) {
         throw e
+    }
+}
+
+export const updateActivitiesService = async (activity: ActivityInterface): Promise<any> => {
+    try {
+        const found = await Activity.findOne({name: activity.name});
+        if(!found) throw new Error('Activity not found');
+
+        const update = {price_currency: activity.price_currency, price_amount: activity.price_amount};
+        await found.update(update);
+        await found.save();
+    } catch (e) {
+        throw e
+    }
+}
+
+export const getActivityById = async (id: string): Promise<any> => {
+    try {
+        const found = await Activity.findById(id);
+        if(!found) throw new Error('Activity not found');
+        return found;
+    } catch (e) {
+        throw e;
     }
 }
 
@@ -84,5 +108,38 @@ export const updateActivityInfo = async (req: Request, id: string) => {
         });
     } catch (e) {
         throw e
+    }
+}
+
+export const updateFieldActivitiesService = async (): Promise<any> => {
+    try {
+        // await Activity.updateMany([{$addFields: {'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7'}}]);
+        // await Activity.updateMany({}, {$unset: {ownerId: 1}});
+    } catch (e) {
+        throw e
+    }
+}
+
+export const setWatchedTimesService = async (type: string, id: string) => {
+    try {
+
+        const found = await Activity.findOne({_id: id});
+       
+        if(!found) throw new Error('Activity not found');
+
+        if(type === 'watched') {found.watchedTimes = found.watchedTimes + 1; await found.save(); return found}
+        if(type === 'booked') {found.bookedTimes = found.bookedTimes + 1; await found.save(); return found}
+
+    } catch (e: any) {
+        throw e;
+    }
+}
+
+export const getUserActivities = async (id: string) => {
+    try {
+        const activities = await Activity.find({ownerId: id});
+        return activities;
+    } catch (e) {
+        throw e;
     }
 }

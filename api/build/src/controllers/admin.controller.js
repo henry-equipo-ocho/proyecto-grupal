@@ -41,7 +41,7 @@ const tokenVerifyController = (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.tokenVerifyController = tokenVerifyController;
 const createUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, name, surname, country, role } = req.body;
-    if (!email || !password || !name || !surname || !country || !role) {
+    if (!email || !password || !name || !surname || !country || role === undefined) {
         return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
     }
     try {
@@ -131,7 +131,7 @@ const createActivityController = (req, res) => __awaiter(void 0, void 0, void 0,
     if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
         return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
     }
-    const activitiesFormat = { name, description, picture, city, country, price_currency, price_amount, booking };
+    const activitiesFormat = { name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0 };
     try {
         yield (0, activities_services_1.saveActivitiesService)(activitiesFormat);
         return res.status(200).json({ status: 'success' });

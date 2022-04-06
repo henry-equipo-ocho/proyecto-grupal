@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import '../loader.css';
 import '../table.css';
 
 import alert from 'sweetalert';
@@ -35,7 +36,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import countries from '../../../Register/countries';
 
@@ -76,11 +77,74 @@ export default function Listar() {
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [activities, setActivities] = useState([]);
+  const [activitiesBackup, setActivitiesBackup] = useState([]);
   const [activityToFind, setActivityToFind] = useState('');
+
+  useEffect(() => {
+    setLoading(true);
+    loadActivities();
+  }, []);
+
+  const loadActivities = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const datos = await axios.get('http://localhost:3001/admin/activities', {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      setActivities(datos.data.data);
+      setActivitiesBackup(datos.data.data);
+      setLoading(false);
+    }
+    catch (e) {
+      alert("Error", `Error to load users (${e})`, "error");
+    }
+  };
+
+  const handleDelete = (_id) => {
+    alert({
+      title: "Are you sure?",
+      text: "You will not be able to recover this activity!",
+      icon: "warning",
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!'
+      ],
+      dangerMode: true,
+    }).then(async function (isConfirm) {
+      if (isConfirm) {
+          try {
+            const token = JSON.parse(localStorage.getItem('token'));
+            await axios.delete('http://localhost:3001/admin/delete/activity', {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              },
+              data: {
+                id: _id
+              }
+            });
+            alert("Success", "Activity succesfully deleted!", "success");
+            setOpen(false);
+            setLoading(true);
+            loadActivities();
+          }
+          catch (e) {
+            console.log(e)
+            alert("Error", "" + e, "error")
+          }
+      } else {
+        alert("Cancelled", "Action cancelled", "error");
+      }
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       name: '',
       description: '',
       picture: '',
@@ -93,8 +157,16 @@ export default function Listar() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post('http://localhost:3001/signup', values);
-        alert("Success", "Activiry succesfully edited!", "success");
+        const token = JSON.parse(localStorage.getItem('token'));
+        await axios.put('http://localhost:3001/admin/update/activity', values, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        alert("Success", "Activity succesfully edited!", "success");
+        setOpen(false);
+        setLoading(true);
+        loadActivities();
       }
       catch (e) {
         console.log(e)
@@ -118,25 +190,34 @@ export default function Listar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setActivities([...activities, { 
-      _id: Math.random() * 10000,
-      name: 'Viaje de 10 dias por toda Capital Federal', 
-      description: 'Un viaje increíble visitando los lugares turísticos mas importantes de Capital Federal', 
-      picture: 'https://via.placeholder.com/600/771796', 
-      country: 'Argentina',
-      city: 'Buenos Aires',
-      price_currency: 'ARS',
-      price_amount: '30000',
-      booking: 'https://www.google.com/'
-    }])
   };
 
-  const handleDetail = (_id, name, description, picture, city, country, pice_currency, price_amount, booking ) => {
-    alert(`Detail of ${name.slice(0, 15)}...`, `ID: ${_id}
-    <img src={picture} alt='activity'/>
-    Name: ${name}
-    Description: ${description}
-    `)
+  const searchActivity = () => {
+    handleChangePage(null, 0);
+    const users_data = activitiesBackup.filter((act) => act.name.toLowerCase().includes(activityToFind.toLowerCase()));
+    setActivities(users_data);
+  };
+
+  const handleDetail = (_id, name, description, picture, city, country, price_currency, price_amount, booking) => {
+    alert({
+      title: name,
+      text: `ID: ${_id}
+      Description: ${description}
+      Country: ${country}
+      City: ${city}
+      Currency: ${price_currency}
+      Price: ${price_amount}`,
+      icon: picture,
+      buttons: [
+        'Back',
+        'Visit site'
+      ],
+    })
+    .then(function (isConfirm) {
+      if (isConfirm) {
+        window.open(booking, '_blank');
+      }
+    });
   };
 
   return (
@@ -153,11 +234,12 @@ export default function Listar() {
               value={activityToFind}
               onChange={(e) => setActivityToFind(e.target.value)}
             />
-            <Button type='submit' size='large' variant='contained' sx={{ mx: 1 }}>Search</Button>
+            <Button type='submit' size='large' variant='contained' sx={{ mx: 1 }} onClick={searchActivity}>Search</Button>
           </Box>
         </form>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap' }}>
           {
+            !loading ?
             activities.length ?
               <Paper>
                 <TableContainer>
@@ -189,6 +271,7 @@ export default function Listar() {
                                   setOpen(true)
                                   formik.setValues(
                                     {
+                                      id: act._id,
                                       name: act.name,
                                       description: act.description,
                                       picture: act.picture,
@@ -201,16 +284,17 @@ export default function Listar() {
                                   )
                                 }}><EditIcon /></Button>
                                 <Button onClick={() => handleDetail(
-                                  act._id, 
-                                  act.name, 
-                                  act.description, 
-                                  act.picture, 
+                                  act._id,
+                                  act.name,
+                                  act.description,
+                                  act.picture,
                                   act.city,
                                   act.country,
                                   act.price_currency,
                                   act.price_amount,
                                   act.booking
-                                  )}><VisibilityIcon /></Button>
+                                )}><VisibilityIcon /></Button>
+                                <Button onClick={() => handleDelete(act._id)}><DeleteOutlineIcon /></Button>
                               </TableCell>
                             </TableRow>
                           ))
@@ -227,134 +311,146 @@ export default function Listar() {
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button onClick={() => {
+                      setLoading(true);
+                      loadActivities();
+                    }}>Reload activities</Button>
+                  </Box>
               </Paper>
               :
               <Alert severity="info" sx={{ width: '100%', my: 2 }}>
-                <AlertTitle>Found users</AlertTitle>
-                All users will appear here.
+                <AlertTitle>Found activities</AlertTitle>
+                All activities will appear here.
+                <Button onClick={() => {
+                  setLoading(true);
+                  loadActivities();
+                }}>Reload activities</Button>
               </Alert>
+            :
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
           }
         </Box>
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit data from {formik.values.name}</DialogTitle>
         <DialogContent>
-        <form onSubmit={formik.handleSubmit}>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="name"
-            name="name"
-            label="Activiy name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="desc"
-            name="desc"
-            label="Description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={formik.touched.description && Boolean(formik.errors.description)}
-            helperText={formik.touched.description && formik.errors.description}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="pic"
-            name="pic"
-            label="Picture link"
-            value={formik.values.picture}
-            onChange={formik.handleChange}
-            error={formik.touched.picture && Boolean(formik.errors.picture)}
-            helperText={formik.touched.picture && formik.errors.picture}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="city"
-            name="city"
-            label="City"
-            value={formik.values.city}
-            onChange={formik.handleChange}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
-          />
-        </Box>
-        <FormControl sx={{ my: 1, width: '100%' }}>
-          <InputLabel id="country-select-label">Select country</InputLabel>
-          <Select labelId="country-select-label"
-            id="country"
-            name="country"
-            value={formik.values.country}
-            defaultValue="Select country"
-            label="Select country"
-            onChange={formik.handleChange}
-            error={formik.touched.country && Boolean(formik.errors.country)}
-          >
-            {countries.map(option => {
-              return (<MenuItem key={option.code} value={option.label}>
-                <img
-                  width="20"
-                  src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                  srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                  alt=""
-                />
-                {option.label}
-              </MenuItem>)
-            })}
-          </Select>
-        </FormControl>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="currency"
-            name="currency"
-            label="Currency"
-            value={formik.values.price_currency}
-            onChange={formik.handleChange}
-            error={formik.touched.price_currency && Boolean(formik.errors.price_currency)}
-            helperText={formik.touched.price_currency && formik.errors.price_currency}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="price"
-            name="price"
-            label="Price"
-            value={formik.values.price_amount}
-            onChange={formik.handleChange}
-            error={formik.touched.price_amount && Boolean(formik.errors.price_amount)}
-            helperText={formik.touched.price_amount && formik.errors.price_amount}
-          />
-        </Box>
-        <Box>
-          <TextField
-            sx={{ my: 1, width: '100%' }}
-            id="link"
-            name="link"
-            label="Link to Activity"
-            value={formik.values.booking}
-            onChange={formik.handleChange}
-            error={formik.touched.booking && Boolean(formik.errors.booking)}
-            helperText={formik.touched.booking && formik.errors.booking}
-          />
-        </Box>
-        <Button
-          sx={{ my: 1, width: '100%' }}
-          color="primary"
-          variant="contained"
-          type="submit"
-        >
-          Create activity
-        </Button>
-      </form>
+          <form onSubmit={formik.handleSubmit}>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="name"
+                name="name"
+                label="Activiy name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="description"
+                name="description"
+                label="Description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                error={formik.touched.description && Boolean(formik.errors.description)}
+                helperText={formik.touched.description && formik.errors.description}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="picture"
+                name="picture"
+                label="Picture link"
+                value={formik.values.picture}
+                onChange={formik.handleChange}
+                error={formik.touched.picture && Boolean(formik.errors.picture)}
+                helperText={formik.touched.picture && formik.errors.picture}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="city"
+                name="city"
+                label="City"
+                value={formik.values.city}
+                onChange={formik.handleChange}
+                error={formik.touched.city && Boolean(formik.errors.city)}
+                helperText={formik.touched.city && formik.errors.city}
+              />
+            </Box>
+            <FormControl sx={{ my: 1, width: '100%' }}>
+              <InputLabel id="country-select-label">Select country</InputLabel>
+              <Select labelId="country-select-label"
+                id="country"
+                name="country"
+                value={formik.values.country}
+                defaultValue="Select country"
+                label="Select country"
+                onChange={formik.handleChange}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+              >
+                {countries.map(option => {
+                  return (<MenuItem key={option.code} value={option.label}>
+                    <img
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label}
+                  </MenuItem>)
+                })}
+              </Select>
+            </FormControl>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="price_currency"
+                name="price_currency"
+                label="Currency"
+                value={formik.values.price_currency}
+                onChange={formik.handleChange}
+                error={formik.touched.price_currency && Boolean(formik.errors.price_currency)}
+                helperText={formik.touched.price_currency && formik.errors.price_currency}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="price_amount"
+                name="price_amount"
+                label="Price"
+                value={formik.values.price_amount}
+                onChange={formik.handleChange}
+                error={formik.touched.price_amount && Boolean(formik.errors.price_amount)}
+                helperText={formik.touched.price_amount && formik.errors.price_amount}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 1, width: '100%' }}
+                id="booking"
+                name="booking"
+                label="Link to Activity"
+                value={formik.values.booking}
+                onChange={formik.handleChange}
+                error={formik.touched.booking && Boolean(formik.errors.booking)}
+                helperText={formik.touched.booking && formik.errors.booking}
+              />
+            </Box>
+            <Button
+              sx={{ my: 1, width: '100%' }}
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
+              Edit activity
+            </Button>
+          </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
