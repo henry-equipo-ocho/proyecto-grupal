@@ -99,15 +99,7 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.getActivitiesController = getActivitiesController;
-const updateFieldController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, activities_services_1.updateFieldActivitiesService)();
-        return res.sendStatus(200);
-    }
-    catch (e) {
-        return res.sendStatus(400);
-    }
-});
+
 exports.updateFieldController = updateFieldController;
 const setWatchedorBookedTimesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

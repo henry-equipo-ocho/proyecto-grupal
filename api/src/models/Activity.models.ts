@@ -14,7 +14,7 @@ const activitySchema = new mongoose.Schema<Activity>({
     watchedTimes: { type: Number, default: 0 },
     bookedTimes: { type: Number, default: 0 },
     created: { type: Boolean, default: true },
-    ownerId: {  type: String }
+    ownerId: {  type: mongoose.Schema.Types.ObjectId, ref:'User' }
 });
 
 export default mongoose.model<Activity>('Activity', activitySchema);

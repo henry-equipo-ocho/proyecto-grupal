@@ -19,9 +19,9 @@ dotenv_1.default.config();
 const getMatchActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { word } = req.params;
     try {
-        const activities = yield (0, activities_services_1.getAllDBActivities)();
-        const matchactivities = activities.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase()));
-        return matchactivities.length ? res.status(200).json(({ status: 'success', data: matchactivities }))
+        let activities = yield (0, activities_services_1.getAllDBActivities)();
+        activities.forEach((byTier) => byTier.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase())));
+        return activities.length ? res.status(200).json(({ status: 'success', data: activities }))
             : res.status(404).json(({ status: 'failed', message: 'Activities not found' }));
     }
     catch (e) {

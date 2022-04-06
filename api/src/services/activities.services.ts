@@ -1,3 +1,4 @@
+import { Document, Types } from "mongoose"
 import Activity from "../models/Activity.models";
 import ActivityInterface from "../interfaces/Activity.interface";
 import { Request } from "express";
@@ -29,8 +30,8 @@ export const getAPIActivitiesService = async (req: Request): Promise<any> => {
 export const saveActivitiesService = async (activity: ActivityInterface): Promise<any> => {
     try {
 
-        const found = await Activity.findOne({name: activity.name});
-        if(found) throw new Error('Activity already exists');
+        const found = await Activity.findOne({ name: activity.name });
+        if (found) throw new Error('Activity already exists');
 
         const newActivity = new Activity(activity);
         await newActivity.save();
@@ -41,10 +42,10 @@ export const saveActivitiesService = async (activity: ActivityInterface): Promis
 
 export const updateActivitiesService = async (activity: ActivityInterface): Promise<any> => {
     try {
-        const found = await Activity.findOne({name: activity.name});
-        if(!found) throw new Error('Activity not found');
+        const found = await Activity.findOne({ name: activity.name });
+        if (!found) throw new Error('Activity not found');
 
-        const update = {price_currency: activity.price_currency, price_amount: activity.price_amount};
+        const update = { price_currency: activity.price_currency, price_amount: activity.price_amount };
         await found.update(update);
         await found.save();
     } catch (e) {
@@ -64,8 +65,17 @@ export const getActivityById = async (id: string): Promise<any> => {
 
 export const getAllDBActivities = async () => {
     try {
-        const activities = await Activity.find();
-        return activities;
+        const rawActivities = await Activity.find().populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     } catch (e) {
         throw e;
     }
@@ -73,8 +83,17 @@ export const getAllDBActivities = async () => {
 
 export const getDBCountryActivities = async (country: string) => {
     try {
-        const activities = await Activity.find({ country: country });
-        return activities;
+        const rawActivities = await Activity.find({ country: country }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     } catch (e) {
         throw e;
     }
@@ -82,8 +101,17 @@ export const getDBCountryActivities = async (country: string) => {
 
 export const getDBCityActivities = async (country: string, city: string) => {
     try {
-        const activities = await Activity.find({ country: country, city: city });
-        return activities;
+        const rawActivities = await Activity.find({ country: country, city: city }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     } catch (e) {
         throw e;
     }
@@ -99,11 +127,11 @@ export const getActivitiesFromArray = async (activitiesID: Array<string>): Promi
 
 export const updateActivityInfo = async (req: Request, id: string) => {
     try {
-        const condictions = {_id: id}
+        const condictions = { _id: id }
         const update = req.body;
 
         Activity.findOneAndUpdate(condictions, update, (error: any, result: any) => {
-            if(error) return error
+            if (error) return error
             else return result;
         });
     } catch (e) {
@@ -111,6 +139,20 @@ export const updateActivityInfo = async (req: Request, id: string) => {
     }
 }
 
+function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, ActivityInterface> & ActivityInterface & { _id: Types.ObjectId; })>, tier: number | undefined, onlyThirdParty: boolean | undefined): ActivityInterface[] {
+    if (onlyThirdParty) {
+        return rawActivities.filter((activity) => !activity.ownerId);
+    } else {
+        return rawActivities.filter((activity) => {
+            if (typeof activity.ownerId !== 'undefined' && typeof activity.ownerId !== 'string' && activity.ownerId?.payments) {
+                console.log("activity.ownerId");
+                console.log(activity.ownerId);
+                return activity.ownerId && activity.ownerId.payments.at(-1)?.tier === tier;
+            }
+            return false;
+        });
+    }
+}
 export const updateFieldActivitiesService = async (): Promise<any> => {
     try {
         // await Activity.updateMany([{$addFields: {'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7'}}]);
@@ -123,12 +165,12 @@ export const updateFieldActivitiesService = async (): Promise<any> => {
 export const setWatchedTimesService = async (type: string, id: string) => {
     try {
 
-        const found = await Activity.findOne({_id: id});
-       
-        if(!found) throw new Error('Activity not found');
+        const found = await Activity.findOne({ _id: id });
 
-        if(type === 'watched') {found.watchedTimes = found.watchedTimes + 1; await found.save(); return found}
-        if(type === 'booked') {found.bookedTimes = found.bookedTimes + 1; await found.save(); return found}
+        if (!found) throw new Error('Activity not found');
+
+        if (type === 'watched') { found.watchedTimes = found.watchedTimes + 1; await found.save(); return found }
+        if (type === 'booked') { found.bookedTimes = found.bookedTimes + 1; await found.save(); return found }
 
     } catch (e: any) {
         throw e;

@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { apiActivitiesController, getActivitiesController, setWatchedorBookedTimesController, updateFieldController } from "../controllers/activities.controller";
 import {getOrderedCities} from '../controllers/orderbycity.controller';
 import {getOrderedPrice}  from '../controllers/orderbyprice.controller';

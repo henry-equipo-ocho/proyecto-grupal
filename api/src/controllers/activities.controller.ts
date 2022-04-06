@@ -71,9 +71,9 @@ export const updateAPIActivitiesController: RequestHandler = async (req: Request
 }
 
 export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
-    
+
     const {country, city} = req.body;
-    const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'} 
+    const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'}
 
     try {
         if(city) {
@@ -87,19 +87,10 @@ export const getActivitiesController: RequestHandler = async (req: Request, res:
 
         const activities = await getAllDBActivities();
         return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
-    } catch (e: any) {  
+    } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
     }
 };
-
-export const updateFieldController = async (req: Request, res: Response) => {
-    try {
-        await updateFieldActivitiesService();
-        return res.sendStatus(200);
-    } catch (e: any) {
-        return res.sendStatus(400);
-    }
-}
 
 export const setWatchedorBookedTimesController = async (req: Request, res: Response) => {
     try {
