@@ -49,6 +49,7 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+            shipping_preference: "NO_SHIPPING"
         }
     };
     try {
@@ -79,23 +80,7 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
             }
         });
         if (response.data.status === 'COMPLETED') {
-            let user = yield User_models_1.default.findById(userID);
-            if (user === null) {
-                throw new Error(`User (${userID}) not found`);
-            }
-            else {
-                let payment = user.payments.find((payment) => payment.id === response.data.id);
-                if (!payment) {
-                    throw new Error(`Payment (${response.data.id}) not found`);
-                }
-                payment.status = "COMPLETED";
-                user.role = User_interface_1.UserRoles.Business;
-                user.activeSubscription = true;
-                user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
-                yield user.save();
-                endSubscriptionUser(userID);
-                return updatePaymentInUserDB(userID, response.data.id);
-            }
+            return updatePaymentInUserDB(userID, response.data.id);
         }
         else {
             throw new Error(`Payment (${response.data.id}) is not completed`);

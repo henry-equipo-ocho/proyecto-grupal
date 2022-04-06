@@ -69,15 +69,17 @@ export const updateActivitiesService = async (activity: ActivityInterface): Prom
 
 export const getAllDBActivities = async () => {
     try {
-        const rawActivities = await Activity.find();
-        const activities: Array<Array<ActivityInterface>> = [
-            filterActivitiesByTier(rawActivities, 1, undefined),
-            filterActivitiesByTier(rawActivities, 2, undefined),
+        const rawActivities = await Activity.find().populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
             filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
             filterActivitiesByTier(rawActivities, undefined, true),
         ];
-        console.log(activities);
-        return activities;
     } catch (e) {
         throw e;
     }
@@ -85,8 +87,17 @@ export const getAllDBActivities = async () => {
 
 export const getDBCountryActivities = async (country: string) => {
     try {
-        const activities = await Activity.find({ country: country });
-        return activities;
+        const rawActivities = await Activity.find({ country: country }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     } catch (e) {
         throw e;
     }
@@ -94,8 +105,17 @@ export const getDBCountryActivities = async (country: string) => {
 
 export const getDBCityActivities = async (country: string, city: string) => {
     try {
-        const activities = await Activity.find({ country: country, city: city });
-        return activities;
+        const rawActivities = await Activity.find({ country: country, city: city }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     } catch (e) {
         throw e;
     }
@@ -127,16 +147,13 @@ function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, Act
     if (onlyThirdParty) {
         return rawActivities.filter((activity) => !activity.ownerId);
     } else {
-        return rawActivities.filter(async (activity) => {
-            const populatedActivity = await activity.populate({
-                path: 'ownerID',
-                match: { activeSubscription: true },
-                select: 'payments'
-            });
-            console.log(activity, populatedActivity);
-            if (typeof populatedActivity.ownerId !== 'string' && populatedActivity.ownerId?.payments) {
-                return populatedActivity.ownerId && populatedActivity.ownerId.payments.at(-1)?.tier === tier;
+        return rawActivities.filter((activity) => {
+            if (typeof activity.ownerId !== 'undefined' && typeof activity.ownerId !== 'string' && activity.ownerId?.payments) {
+                console.log("activity.ownerId");
+                console.log(activity.ownerId);
+                return activity.ownerId && activity.ownerId.payments.at(-1)?.tier === tier;
             }
+            return false;
         });
     }
 }

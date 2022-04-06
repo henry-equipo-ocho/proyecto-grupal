@@ -8,20 +8,20 @@ dotenv.config();
 
 
 export const getMatchActivitiesController: RequestHandler = async (req: Request, res: Response) => {
-    
+
     const { word } = req.params;
 
     try {
-        const activities = await getAllDBActivities();
+        let activities = await getAllDBActivities();
 
 
-        const matchactivities = activities.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase()))
+        activities.forEach((byTier) => byTier.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase())))
 
 
-        return  matchactivities.length ? res.status(200).json(<ServerResponse>({status: 'success', data: matchactivities})) 
+        return  activities.length ? res.status(200).json(<ServerResponse>({status: 'success', data: activities}))
         : res.status(404).json(<ServerResponse>({ status: 'failed', message: 'Activities not found' }));
 
-    } catch (e: any) {  
+    } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({status: 'error', message: 'Invalid request' || e}));
     }
 };

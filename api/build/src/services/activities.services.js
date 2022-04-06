@@ -77,8 +77,17 @@ const updateActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, 
 exports.updateActivitiesService = updateActivitiesService;
 const getAllDBActivities = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const activities = yield Activity_models_1.default.find();
-        return activities;
+        const rawActivities = yield Activity_models_1.default.find().populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     }
     catch (e) {
         throw e;
@@ -87,8 +96,17 @@ const getAllDBActivities = () => __awaiter(void 0, void 0, void 0, function* () 
 exports.getAllDBActivities = getAllDBActivities;
 const getDBCountryActivities = (country) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const activities = yield Activity_models_1.default.find({ country: country });
-        return activities;
+        const rawActivities = yield Activity_models_1.default.find({ country: country }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     }
     catch (e) {
         throw e;
@@ -97,8 +115,17 @@ const getDBCountryActivities = (country) => __awaiter(void 0, void 0, void 0, fu
 exports.getDBCountryActivities = getDBCountryActivities;
 const getDBCityActivities = (country, city) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const activities = yield Activity_models_1.default.find({ country: country, city: city });
-        return activities;
+        const rawActivities = yield Activity_models_1.default.find({ country: country, city: city }).populate({
+            path: 'ownerId',
+            match: { activeSubscription: true },
+            select: 'payments'
+        });
+        return [
+            filterActivitiesByTier(rawActivities, 3, undefined),
+            filterActivitiesByTier(rawActivities, 2, undefined),
+            filterActivitiesByTier(rawActivities, 1, undefined),
+            filterActivitiesByTier(rawActivities, undefined, true),
+        ];
     }
     catch (e) {
         throw e;
@@ -130,6 +157,22 @@ const updateActivityInfo = (req, id) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.updateActivityInfo = updateActivityInfo;
+function filterActivitiesByTier(rawActivities, tier, onlyThirdParty) {
+    if (onlyThirdParty) {
+        return rawActivities.filter((activity) => !activity.ownerId);
+    }
+    else {
+        return rawActivities.filter((activity) => {
+            var _a, _b;
+            if (typeof activity.ownerId !== 'undefined' && typeof activity.ownerId !== 'string' && ((_a = activity.ownerId) === null || _a === void 0 ? void 0 : _a.payments)) {
+                console.log("activity.ownerId");
+                console.log(activity.ownerId);
+                return activity.ownerId && ((_b = activity.ownerId.payments.at(-1)) === null || _b === void 0 ? void 0 : _b.tier) === tier;
+            }
+            return false;
+        });
+    }
+}
 const updateCopyActivitiesService = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield Activity_models_1.default.updateMany([{ $addFields: { 'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7' } }]);
