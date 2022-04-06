@@ -77,7 +77,7 @@ const FormDialog = ({ abierto, close }) => {
         });
         history('/dashboard');
       } catch (error) {
-        sweetAlert('Oops...', 'User or password incorrect', 'error');
+        swal.Fire('Oops...', 'User or password incorrect', 'error');
       }
     },
   });
@@ -130,7 +130,7 @@ const FormDialog = ({ abierto, close }) => {
                   className='shopButton'
                   onClick={() => setOpen(!open)} >Submit</button>
               </DialogActions>
-            </DialogContent>
+            </DialogContentText>
           </DialogContent>
         </form>
       </Dialog>
