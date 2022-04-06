@@ -15,12 +15,12 @@ export default function NavBar({ handleLoginForm }) {
             : false;
     const nombre = JSON.parse(localStorage.getItem("data"))
         ? JSON.parse(localStorage.getItem("data")).name
-        : "Viajero";
+        : "Traveler";
 
     const logout = (e) => {
         e.preventDefault();
         window.localStorage.clear();
-        dispatch(setUserName("Viajero"));
+        dispatch(setUserName("Traveler"));
         axiosPrivate.get("/token/clear");
         dispatch({ type: SET_TOKEN, payload: "" });
         window.location.reload();
@@ -34,7 +34,7 @@ export default function NavBar({ handleLoginForm }) {
             {isLogged ? (
                 <>
                     <div>
-                        <h1>Hello {nombre} </h1>
+                        <h1>Hi there, {nombre}!</h1>
                     </div>
                     <div className="buttonsLogin">
                         <button className="buttonNav">
@@ -52,7 +52,7 @@ export default function NavBar({ handleLoginForm }) {
             ) : (
                 <>
                     <div>
-                        <h1>Hello Traveler</h1>
+                        <h1>Hi there, Traveler!</h1>
                     </div>
                     <div className="buttonsLogOut">
                         <button className="buttonNav">
@@ -62,7 +62,7 @@ export default function NavBar({ handleLoginForm }) {
                             <a href="/plans">Plans</a>
                         </button>
                         <button className="buttonNav" onClick={handleLoginForm}>
-                            Login
+                            LogIn
                         </button>
                         <button className="buttonNav">
                             <a href="/register">SignUp</a>

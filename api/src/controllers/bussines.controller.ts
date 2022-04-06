@@ -32,7 +32,7 @@ export const postBusinesActivities: RequestHandler = async (req: Request, res: R
 
         const { name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
 
-        if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) { res.status(400).send({ status: "failed", errors: { message: "Missing values" } }) }
+        if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) { res.status(400).send({ status: "failed", errors: { message: "Missing info" } }) }
 
         const activitiesFormat: ActivityInterface = { name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0, ownerId: id };
 

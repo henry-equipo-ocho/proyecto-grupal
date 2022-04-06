@@ -44,9 +44,9 @@ export default function Users() {
                         >
                             <Alert severity="warning" sx={{ width: "100%" }}>
                                 <AlertTitle>Users Panel</AlertTitle>
-                                Here you will have control of{" "}
-                                <strong>all users</strong> on the platform,{" "}
-                                <strong>be careful what you do.</strong>
+                                Here you'll have control of{" "}
+                                <strong>all of the platform's users,</strong>{" "}
+                                <strong>be careful!.</strong>
                             </Alert>
                             <Typography variant="h5" sx={{ my: 2 }}>
                                 Available Actions
@@ -82,7 +82,7 @@ export default function Users() {
                                             sx={{ mb: 1.5 }}
                                             color="text.secondary"
                                         >
-                                            If you want to add a user in the
+                                            If you want to add a user to the
                                             database,
                                             <br />
                                             click on the link.
@@ -120,7 +120,7 @@ export default function Users() {
                                             sx={{ mb: 1.5 }}
                                             color="text.secondary"
                                         >
-                                            If you want view all users in the
+                                            If you want to see all the users in the
                                             database,
                                             <br />
                                             click on the link.

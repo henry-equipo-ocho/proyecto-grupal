@@ -43,7 +43,7 @@ export default function PaymentForm() {
         if (!cart.price) {
             Swal.fire({
                 title: "Sorry!",
-                text: "You havent chosen anything",
+                text: "You haven't chosen a plan",
                 icon: "info",
                 color: "white",
                 background: "#00498b",
@@ -63,12 +63,12 @@ export default function PaymentForm() {
     return (
         <div className="formPaymentContainer">
             <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                <label>Select plan </label>
+                <label>Choose your plan </label>
                 <select onChange={(e) => paymentInfo(e)}>
                     <option value="">--</option>
-                    <option value="1">Plan Basic</option>
-                    <option value="2">Plan Standar</option>
-                    <option value="3">Plan Premium</option>
+                    <option value="1">Basic Plan</option>
+                    <option value="2">Standard Plan</option>
+                    <option value="3">Premium Plan</option>
                 </select>
                 <button type="Submit" className="buyBtn">
                     Buy

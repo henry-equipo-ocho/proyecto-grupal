@@ -30,7 +30,7 @@ export default function Estadisticas() {
     const [loadBusiness, setLoadBusiness] = useState(true);
 
     const dataUsers = {
-        labels: ["Users verified", "Users not verified"],
+        labels: ["Verified users", "Unverified users"],
         datasets: [
             {
                 label: "# of users",
@@ -46,7 +46,7 @@ export default function Estadisticas() {
     };
 
     const dataActivities = {
-        labels: ["Activities by business", "Own activities"],
+        labels: ["Businesses' activities", "Third-party activities"],
         datasets: [
             {
                 label: "# of activities",
@@ -62,7 +62,7 @@ export default function Estadisticas() {
     };
 
     const dataBusiness = {
-        labels: ["Business basic", "Business professional", "Business Premium"],
+        labels: ["Business Basic", "Business Standard", "Business Premium"],
         datasets: [
             {
                 label: "# of business",

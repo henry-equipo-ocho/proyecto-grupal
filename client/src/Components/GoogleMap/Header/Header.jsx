@@ -21,14 +21,14 @@ const Header = ({ setCoords }) => {
         <AppBar position="static">
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h5" className={classes.title}>
-                    Eztenirary corp.
+                    Eztinerary
                 </Typography>
                 <Box display="flex">
                     <button className="buttonNav">
                         <a href="/home">Home</a>
                     </button>
                     <Typography variant="h6" className={classes.title}>
-                        Explore New Places
+                        Explore new places
                     </Typography>
                     <Autocomplete
                         onLoad={onLoad}

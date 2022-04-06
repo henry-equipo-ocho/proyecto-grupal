@@ -42,7 +42,7 @@ export const clearRefreshToken = async (req: Request, res: Response) => {
 
 export const protectedRoute = async (req: Request, res: Response) => {
     try {
-        res.send({ status: 'success', data: { message: 'You are authenticated' + ' data: ' + req.body.data } });
+        res.send({ status: 'success', data: { message: `You are authenticated, data: ${req.body.data}` } });
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }

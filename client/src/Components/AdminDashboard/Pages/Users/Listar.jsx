@@ -25,7 +25,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import alert from "sweetalert";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useAxiosPrivate } from "../../../Auth/useAxiosPrivate";
 import countries from "../../../Register/countries";
@@ -77,7 +77,14 @@ export default function Listar() {
             setUsersBackup(datos.data.data);
             setLoading(false);
         } catch (e) {
-            alert("Error", `Error to load users (${e})`, "error");
+            Swal.fire({
+                title: `Error`,
+                text: `Something happened while loading the users (${e})`,
+                icon: "error",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });
         }
     };
 
@@ -91,52 +98,82 @@ export default function Listar() {
         verified,
         role
     ) => {
-        alert(
-            `Detail of ${name} ${surname}`,
-            `ID: ${_id}
-    Name: ${name}
-    Surname: ${surname}
-    Email: ${email}
-    Country: ${country}
-    Subscribed: ${subscribed}
-    Verified: ${verified}
-    Role: ${
-        role === 0
-            ? "User"
-            : role === 1
-            ? "Business"
-            : role === 2
-            ? "Helper"
-            : role === 3
-            ? "Admin"
-            : "Unknown"
-    }`
-        );
+        Swal.fire({
+            title: `Detail of ${name} ${surname}`,
+            text: `ID: ${_id}
+            Name: ${name}
+            Surname: ${surname}
+            Email: ${email}
+            Country: ${country}
+            Subscribed: ${subscribed}
+            Verified: ${verified}
+            Role: ${
+                role === 0
+                    ? "User"
+                    : role === 1
+                    ? "Business"
+                    : role === 2
+                    ? "Helper"
+                    : role === 3
+                    ? "Admin"
+                    : "Unknown"
+            }`,
+            color: "white",
+            background: "#00498b"
+        });
     };
 
     const handleDelete = (_id) => {
-        alert({
-            title: "Are you sure?",
-            text: "You will not be able to recover this user!",
+        Swal.fire({
+            title: `Are you sure?`,
+            text: "You won't be able to recover this user!",
             icon: "warning",
-            buttons: ["No, cancel it!", "Yes, I am sure!"],
+            color: "white",
+            background: "#00498b",
+            showCancelButton: true,
+            confirmButtonColor: "#a9e8bc",
+            cancelButtonColor: "#24c59c",
+            confirmButtonText: "Yes, I am sure!",
+            cancelButtonText: "No, cancel it!",
             dangerMode: true,
-        }).then(async function (isConfirm) {
-            if (isConfirm) {
+        }).then(async function (result) {
+            if (result.isConfirmed) {
                 try {
                     await axios.delete("/admin/delete/user", {
                         data: { id: _id },
                     });
-                    alert("Success", "User succesfully deleted!", "success");
+
+                    Swal.fire({
+                        title: `Success`,
+                        text: "Successfully deleted the user",
+                        icon: "success",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                     setOpen(false);
                     setLoading(true);
                     setPage(0);
                     loadUsers();
                 } catch (e) {
-                    alert("Error", "" + e, "error");
+                    Swal.fire({
+                        title: `Error`,
+                        text: `Something happened while deleting the user (${e})`,
+                        icon: "error",
+                        color: "white",
+                        background: "#00498b",
+                        confirmButtonColor: "#24c59c",
+                    });
                 }
             } else {
-                alert("Cancelled", "Action cancelled", "error");
+                Swal.fire({
+                    title: `Canceled`,
+                    text: "Action canceled",
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             }
         });
     };
@@ -163,13 +200,27 @@ export default function Listar() {
                 }
 
                 await axios.put("/admin/update/user", datos);
-                alert("Success", "User succesfully edited!", "success");
+                Swal.fire({
+                    title: `Success`,
+                    text: "Successfully edited the user",
+                    icon: "success",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
                 setOpen(false);
                 setLoading(true);
                 setPage(0);
                 loadUsers();
             } catch (e) {
-                alert("Error", "" + e, "error");
+                Swal.fire({
+                    title: `Error`,
+                    text: `${e}`,
+                    icon: "error",
+                    color: "white",
+                    background: "#00498b",
+                    confirmButtonColor: "#24c59c",
+                });
             }
         },
     });
@@ -420,7 +471,7 @@ export default function Listar() {
                 </Box>
             </Box>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Edit data from {formik.values.name}</DialogTitle>
+                <DialogTitle>Edit {formik.values.name}'s data</DialogTitle>
                 <DialogContent>
                     <form onSubmit={formik.handleSubmit}>
                         <Box>

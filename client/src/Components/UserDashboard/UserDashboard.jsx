@@ -48,7 +48,7 @@ const UserDashboard = () => {
 
     const logout = (e) => {
         window.localStorage.clear();
-        dispatch(setUserName("Viajero"));
+        dispatch(setUserName("Traveler"));
         axiosPrivate.get("/token/clear");
         dispatch({ type: SET_TOKEN, payload: "" });
         history("/home");

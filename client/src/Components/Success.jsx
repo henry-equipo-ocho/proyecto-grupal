@@ -16,6 +16,7 @@ export default function Success() {
         email: "",
         buydate: "",
         expira: "",
+        tier: 0,
     });
 
     async function getPaypalOrder() {
@@ -33,6 +34,7 @@ export default function Success() {
             email: paypalorder.data.data.email,
             buydate: buydate,
             expira: expdate,
+            tier: paypalorder.data.data.tier,
         });
     }
 
@@ -53,16 +55,26 @@ export default function Success() {
 
             <div className="detailShop">
                 <center>
-                    <h1>Gracias {detail.nombre}</h1>
-                    Estos son los detalles de tu compra:
+                    <h1>Thanks, {detail.nombre}!</h1>
+                    This are your purchase details:
                     <ul>
-                        <label className="tag">Nombre:</label>
+                        <label className="tag">Your name:</label>
                         <li>{detail.nombre}</li>
-                        <label className="tag">email:</label>{" "}
+                        <label className="tag">Your email:</label>
                         <li> {detail.email}</li>
-                        <label className="tag">fecha de compra: </label>
+                        <label className="tag">You subscribed to: </label>
+                        <li>
+                            {detail.tier === 1
+                                ? "Business Basic"
+                                : detail.tier === 2
+                                ? "Business Standard"
+                                : "Business Premium"}
+                        </li>
+                        <label className="tag">You subscribed on: </label>
                         <li>{detail.buydate}</li>
-                        <label className="tag">fecha de expiración:</label>
+                        <label className="tag">
+                            Your subscription ends on:
+                        </label>
                         <li> {detail.expira}</li>
                     </ul>
                 </center>

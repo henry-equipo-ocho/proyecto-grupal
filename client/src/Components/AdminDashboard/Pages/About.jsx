@@ -39,32 +39,32 @@ export default function About() {
                     </Typography>
 
                     <Typography sx={{ my: 1 }}>
-                        <strong>Federico Lahoz</strong>: Front end Develper.
+                        <strong>Federico Lahoz</strong>: Front end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
-                        <strong>Camilo Cuervo</strong>: Front end Develper.
+                        <strong>Camilo Cuervo</strong>: Front end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
-                        <strong>Carlos Alvarado</strong>: Front end Develper.
+                        <strong>Carlos Alvarado</strong>: Front end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
-                        <strong>Ignacio Ramos</strong>: Back end Develper.
+                        <strong>Ignacio Ramos</strong>: Back end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
-                        <strong>Alejo García</strong>: Back end Develper.
+                        <strong>Alejo García</strong>: Back end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
-                        <strong>Mario Hernández</strong>: Back end Develper.
+                        <strong>Mario Hernández</strong>: Back end Developer.
                     </Typography>
                     <Typography sx={{ my: 1 }}>
                         <strong>Axel Castillo</strong>: SCRUM Master.
                     </Typography>
 
                     <Typography variant="h5" sx={{ mt: 4 }}>
-                        Thanks for try our App!
+                        Thanks for using our App!
                     </Typography>
                     <Typography variant="h6" sx={{ mt: 4, mb: 4 }}>
-                        Then delight yourself with a beautiful creation!
+                        Now, delight yourself with a beautiful creation!
                     </Typography>
 
                     <iframe
@@ -82,7 +82,7 @@ export default function About() {
                         href="https://www.freepik.es/vectores/memphis"
                         style={{ margin: "20px" }}
                     >
-                        Créditos imagen de fondo
+                        Background image credits
                     </a>
                 </Box>
             </Container>

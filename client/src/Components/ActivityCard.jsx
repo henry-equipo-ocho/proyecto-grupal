@@ -33,7 +33,7 @@ export default function ActivityCard({ nombre, imagen, handleDetail, id }) {
             </CardContent>
             <CardActions style={{ justifyContent: "center" }}>
                 <button className="shopButton" onClick={() => {handleDetail(id); watchedOrBookeedTimes(id);}}>
-                    More Info
+                    More info
                 </button>
             </CardActions>
         </Card>

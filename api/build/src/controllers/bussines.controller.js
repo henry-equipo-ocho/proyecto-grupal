@@ -36,7 +36,7 @@ const postBusinesActivities = (req, res) => __awaiter(void 0, void 0, void 0, fu
         const tier = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.payments) === null || _d === void 0 ? void 0 : _d.pop().tier;
         const { name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
         if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
-            res.status(400).send({ status: "failed", errors: { message: "Missing values" } });
+            res.status(400).send({ status: "failed", errors: { message: "Missing info" } });
         }
         const activitiesFormat = { name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0, ownerId: id };
         if (tier === 3) {

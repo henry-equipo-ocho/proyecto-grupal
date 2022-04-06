@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import { useAxiosPrivate } from "./Auth/useAxiosPrivate";
 
 const style = {
-    position: "absolute",
+    position: "fixed",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -32,7 +32,7 @@ const style = {
 export default function ActivityDetail({ activity, close, id }) {
     const axiosPrivate = useAxiosPrivate();
 
-    const usDollar = Math.round(parseInt(activity.price_amount) * 1.1);
+    const usDollar = activity.ownerId ? activity.price_amount : Math.round(parseInt(activity.price_amount) * 1.1);
     // const isLogged = window.localStorage.getItem('token') ? true : false;
     const isLogged = useSelector((state) => state.token) ? true : false;
     // const theme = useTheme();
@@ -67,7 +67,7 @@ export default function ActivityDetail({ activity, close, id }) {
                 });
                 Swal.fire({
                     title: "Congrats!",
-                    text: `Activity added succesfully in itinerary "${itiID}"!`,
+                    text: `Succesfully added activity to itinerary "${itiID}"!`,
                     icon: "success",
                     color: "white",
                     background: "#00498b",
@@ -76,7 +76,7 @@ export default function ActivityDetail({ activity, close, id }) {
             } catch (err) {
                 Swal.fire({
                     title: "Sorry!",
-                    text: "Error to add in itinerary, try add in another itinerary!",
+                    text: `Error while adding to itinerary (${err})`,
                     icon: "error",
                     color: "white",
                     background: "#00498b",
@@ -92,7 +92,7 @@ export default function ActivityDetail({ activity, close, id }) {
             });
             Swal.fire({
                 title: "Congrats!",
-                text: `Activity added succesfully in new Itinerary (${
+                text: `Succesfully added activity to new Itinerary (${
                     itiName ? itiName : "New itinerary"
                 })`,
                 icon: "success",
@@ -137,7 +137,7 @@ export default function ActivityDetail({ activity, close, id }) {
                     </DialogContentText>
                     <DialogContent>
                         <Typography variant="h5" color="black">
-                            ${usDollar} US
+                            U$D {usDollar}
                         </Typography>
                     </DialogContent>
                     {showIti ? (
@@ -152,7 +152,7 @@ export default function ActivityDetail({ activity, close, id }) {
                             }}
                         >
                             <Typography variant="h6" color="black">
-                                Select itinerary to add Activity
+                                Select itinerary to add the Activity
                             </Typography>
                             <FormControl sx={{ my: 1, width: "100%" }}>
                                 <InputLabel id="itinerary-select-label">
@@ -168,7 +168,7 @@ export default function ActivityDetail({ activity, close, id }) {
                                     onChange={(e) => setItiID(e.target.value)}
                                 >
                                     <MenuItem value="new">
-                                        Create new itinerary
+                                        Create new Itinerary
                                     </MenuItem>
                                     {itis?.map((option) => {
                                         return (
@@ -208,7 +208,7 @@ export default function ActivityDetail({ activity, close, id }) {
                                         className="shopButton"
                                         onClick={addItiFav}
                                     >
-                                        Create new itinerary
+                                        Create new Itinerary
                                     </button>
                                 </Box>
                             ) : null}
@@ -233,9 +233,14 @@ export default function ActivityDetail({ activity, close, id }) {
                                 >
                                     Add to...
                                 </button>
-                                <button className="shopButton" onClick={() => watchedOrBookeedTimes(activity._id)}>
+                                <button
+                                    className="shopButton"
+                                    onClick={() =>
+                                        watchedOrBookeedTimes(activity._id)
+                                    }
+                                >
                                     <a href={activity.booking} target="_blank">
-                                        Reserve
+                                        Book
                                     </a>
                                 </button>
                                 <button className="shopButton" onClick={close}>

@@ -168,14 +168,14 @@ export default function Home() {
                                             key={a._id}
                                         />
                                     ))
-                                ) : (
+                                ) : activities[2] === undefined ? (
                                     <p
                                         className="loader"
                                         style={{ fontSize: "50px" }}
                                     >
                                         {" "}
                                     </p>
-                                )}
+                                ) : null}
                             </div>
                         </div>
                     </>

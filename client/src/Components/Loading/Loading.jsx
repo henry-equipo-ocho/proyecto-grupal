@@ -4,7 +4,7 @@ import style from "./Loading.module.css";
 const Loading = () => {
     return (
         <div>
-            <h1>Welcome, Please Wait</h1>
+            <h1>Welcome, please wait</h1>
 
             <div id={style.fountainG}>
                 <div id="fountainG_1" className={style.fountainG}></div>

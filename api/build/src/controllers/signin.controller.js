@@ -14,11 +14,11 @@ const signin_services_1 = require("../services/signin.services");
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password)
-        return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
+        return res.status(400).send(({ status: 'failed', errors: { message: `Missing info` } }));
     try {
         const user = yield (0, signin_services_1.getUserService)(email);
         if (!user)
-            return res.status(400).json(({ status: 'failed', errors: { message: `User doesn't exists` } }));
+            return res.status(400).json(({ status: 'failed', errors: { message: `User doesn't exist` } }));
         const match = yield (0, signin_services_1.matchUserPasswordService)(user, password);
         if (!match)
             return res.status(400).json(({ status: 'failed', errors: { message: `Invalid password` } }));
