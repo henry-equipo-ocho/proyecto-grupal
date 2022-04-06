@@ -16,8 +16,8 @@ function SearchBarCopy() {
 
   const findActivities = (input, e) => {
     e.preventDefault();
-    e.target.value = "";
     dispatch(setAllActivities(input));
+    setInput('')
   };
 
   return (
@@ -26,6 +26,7 @@ function SearchBarCopy() {
     >
       <input
         className="input"
+        value={input}
         type="text"
         onChange={(e) => handleInput(e)}
         placeholder="  Search Activities..."
@@ -34,7 +35,7 @@ function SearchBarCopy() {
       <button
         type="submit"
         className="button"
-      >
+        >
         Search
       </button>
 

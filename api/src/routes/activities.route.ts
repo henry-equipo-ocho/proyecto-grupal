@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { apiActivitiesController, getActivitiesController } from "../controllers/activities.controller";
+
+import { apiActivitiesController, getActivitiesController, setWatchedorBookedTimesController } from "../controllers/activities.controller";
 import {getOrderedCities} from '../controllers/orderbycity.controller';
 import {getOrderedPrice}  from '../controllers/orderbyprice.controller';
 import {getMatchActivitiesController} from '../controllers/match.controller';
@@ -11,5 +12,6 @@ router.post('/amadeus', apiActivitiesController);
 router.post('/orderByCity', getOrderedCities);
 router.get('/match/:word', getMatchActivitiesController);
 router.post('/orderByPrice', getOrderedPrice);
+router.post('/watched', setWatchedorBookedTimesController);
 
 export default router;

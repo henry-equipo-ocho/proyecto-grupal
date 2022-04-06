@@ -2,12 +2,16 @@ import React from 'react';
 import travel from '../Media/travel.m4v';
 import './Css/LandingPage.css';
 import { Link } from 'react-router-dom';
+import logo from '../Media/Logo.png';
 
 export default function LandingPage() {
     return (
         <div className='containerLanding' data-testid='title'>
             <video className='video' src={travel} autoPlay loop muted />
             <div className='textContainer'>
+                <center>
+                    <img src={logo} alt='not found' />
+                </center>
                 <center>
                     <h1>¿Vamos a conocer Latinoamerica?</h1>
                 </center>

@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
+// import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import useMediaQuery from '@mui/material/useMediaQuery';
+// import useMediaQuery from '@mui/material/useMediaQuery';
 import CardMedia from '@mui/material/CardMedia';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
+// import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
-import { useTheme } from '@mui/material/styles';
 
-import { imageListItemClasses, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
+import Swal from 'sweetalert2'
+
+// import { useTheme } from '@mui/material/styles';
+
+import { Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 import sweetAlert from 'sweetalert';
 
+import axios from 'axios';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 const style = {
@@ -43,8 +48,8 @@ export default function ActivityDetail({ activity, close, id }) {
   const usDollar = Math.round(parseInt(activity.price_amount) * 1.10);
   // const isLogged = window.localStorage.getItem('token') ? true : false;
   const isLogged = useSelector(state => state.token) ? true : false;
-  const theme = useTheme();
-  const dispatch = useDispatch();
+  // const theme = useTheme();
+  // const dispatch = useDispatch();
   // const token = JSON.parse(localStorage.getItem('token'));
   const userID = JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')).id : false;
 
@@ -68,10 +73,24 @@ export default function ActivityDetail({ activity, close, id }) {
       setItis([]);
       try {
         await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : itiID });
-        sweetAlert('Congrats', `Activity added succesfully in itinerary "${itiID}"!`, 'success');
+        Swal.fire({
+          title: 'Congrats!',
+          text:`Activity added succesfully in itinerary "${itiID}"!`,
+          icon:'success',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+          })
       }
       catch (err) {
-        sweetAlert('Error', 'Error to add in itinerary, try add in another itinerary!', 'error');
+        Swal.fire({
+          title: 'Sorry!',
+          text:'Error to add in itinerary, try add in another itinerary!',
+          icon:'error',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+          })
         console.log(err);
       }
     }
@@ -79,9 +98,24 @@ export default function ActivityDetail({ activity, close, id }) {
       close(e);
       setItis([]);
       await axiosPrivate.post('/favorites', { activityID: activity._id, itineraryName: itiName ? itiName : 'New itinerary' });
-      sweetAlert('Congrats', `Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`, 'success')
+      Swal.fire({
+        title: 'Congrats!',
+        text:`Activity added succesfully in new Itinerary (${itiName ? itiName : 'New itinerary'})`,
+        icon:'success',
+        color: 'white',
+        background:'#00498b',
+        confirmButtonColor: '#24c59c'
+        })
     }
   };
+
+  async function watchedOrBookeedTimes(id) {
+    try {
+      await axios.post('http://localhost:3001/activities/watched', {type: 'booked', id: id})
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   useEffect(() => {
     checkIfHasItineraries();
@@ -105,11 +139,11 @@ export default function ActivityDetail({ activity, close, id }) {
           <DialogContentText>
             {activity.description}
           </DialogContentText>
-          <DialogContentText>
+          <DialogContent>
             <Typography variant="h5" color='black'>
-              ${usDollar}
+              ${usDollar} US
             </Typography>
-          </DialogContentText>
+          </DialogContent>
           {
             showIti ?
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', border: '1px solid black', padding: '10px' }}>
@@ -150,13 +184,9 @@ export default function ActivityDetail({ activity, close, id }) {
                         value={itiName}
                         onChange={(e) => setItiname(prev => prev = e.target.value)}
                       />
-                      <Button
-                        autoFocus
-                        color="inherit"
-                        variant='outlined'
-                        sx={{ my: 1 }}
-                        onClick={addItiFav}
-                      >Create new itinerary</Button>
+                    <button 
+                    className='shopButton'
+                    onClick={addItiFav}>Create new itinerary</button>
                     </Box>
                     :
                     null
@@ -164,12 +194,9 @@ export default function ActivityDetail({ activity, close, id }) {
                 {
                   itiID !== 'new'
                     ?
-                    <Button
-                      autoFocus
-                      color="inherit"
-                      variant='outlined'
-                      onClick={addItiFav}
-                    >Add to Itinerary</Button>
+                    <button 
+                    className='shopButton'
+                    onClick={addItiFav}>Add to Itinerary</button>
                     :
                     null
                 }
@@ -182,32 +209,25 @@ export default function ActivityDetail({ activity, close, id }) {
           {isLogged ?
             <Box>
               <Box>
-                <Button
-                  color="inherit"
-                  variant='outlined'
-                  onClick={() => setShowIti(true)}
-                >Add to...</Button>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  href={activity.booking}
-                  target='_blank'
-                >Reserve</Button>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  variant='outlined'
-                  onClick={close}>Cancel</Button>
+              <button 
+              className='shopButton'
+              onClick={() => setShowIti(true)}>Add to...</button>
+              <button 
+              className='shopButton'><a href={activity.booking} target='_blank'>Reserve</a></button>
+              <button 
+              className='shopButton'
+              onClick={close} >Cancel</button>
+
               </Box>
             </Box>
             :
             <>
-              <Button
-                autoFocus
-                color="inherit"
-                variant='outlined'
-                onClick={close}>Cancel</Button>
+              <button 
+              className='shopButton'
+              onClick={close} ><a href='/Register'>More info</a></button>
+              <button 
+              className='shopButton'
+              onClick={close} >Cancel</button>
             </>
           }
         </DialogActions>

@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 import alert from 'sweetalert';
 
-import axios from 'axios';
+import { useAxiosPrivate } from '../../../Auth/useAxiosPrivate';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -43,6 +43,8 @@ const validationSchema = yup.object({
 
 export default function Add() {
 
+  const axios = useAxiosPrivate();
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -50,17 +52,19 @@ export default function Add() {
       country: '',
       email: '',
       password: '',
+      role: 0
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-        try {
-          await axios.post('http://localhost:3001/signup', values);
-          alert("Success", "User succesfully added!", "success");
-        }
-        catch (e) {
-          console.log(e)
-          alert("Error", ""+e, "error")
-        }
+      try {
+        await axios.post('/admin/create/user', values);
+        alert("Success", "User succesfully added!", "success");
+        formik.resetForm();
+      }
+      catch (e) {
+        console.log(e)
+        alert("Error", "" + e, "error")
+      }
     },
   });
 
@@ -137,6 +141,31 @@ export default function Add() {
                 {option.label}
               </MenuItem>)
             })}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ my: 1, width: '100%' }}>
+          <InputLabel id="role-select-label">Select role</InputLabel>
+          <Select labelId="role-select-label"
+            id="role"
+            name="role"
+            value={formik.values.role}
+            defaultValue={0}
+            label="Select role"
+            onChange={formik.handleChange}
+            error={formik.touched.role && Boolean(formik.errors.role)}
+          >
+            <MenuItem value={0}>
+              Client
+            </MenuItem>
+            <MenuItem value={1}>
+              Business
+            </MenuItem>
+            <MenuItem value={2}>
+              Helper
+            </MenuItem>
+            <MenuItem value={3}>
+              Admin
+            </MenuItem>
           </Select>
         </FormControl>
         <Button

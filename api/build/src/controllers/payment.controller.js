@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.captureOrder = exports.createOrder = void 0;
 const payment_services_1 = require("../services/payment.services");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body.cart);
-    console.log(req.user);
     if (!req.body.cart) {
         return res.status(400).json(({ status: 'failed', errors: { message: 'Missing cart' } }));
     }
