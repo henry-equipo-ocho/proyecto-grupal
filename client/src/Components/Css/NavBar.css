@@ -1,0 +1,51 @@
+
+.headerNav{
+    background-color: #00498b;
+    height: 70px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: auto;
+    font-family: 'Roboto';
+    color: white;
+}
+.headerNav img{
+    margin-left: 20px;
+    width: 85px;
+    height: 64px;
+}
+
+.buttonsLogOut, .buttonsLogin {
+    margin: 1em;
+}
+
+
+
+.buttonNav{
+    font-size: medium;
+    font-style:normal;
+    font-weight:550;
+    border-radius: 5px;
+    background-color: #24c59d9f;
+    color: white;
+    border-style: none;
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+    margin: 5px;
+    line-height: 30px;
+    border-right: 10px;
+}
+
+.buttonNav:hover{
+    background-color: #a9e8bc;
+}
+
+.buttonNav a{
+    font-family: 'Roboto';
+    text-decoration: none;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+}

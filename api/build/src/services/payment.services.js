@@ -32,6 +32,8 @@ var transporter = nodemailer.createTransport({
     }
 });
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(cart);
+    console.log(userID);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [

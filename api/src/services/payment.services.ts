@@ -24,6 +24,8 @@ var transporter = nodemailer.createTransport({
 })
 
 export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any> => {
+    console.log(cart)
+    console.log(userID)
     const order = {
         intent: 'CAPTURE',
         purchase_units: [

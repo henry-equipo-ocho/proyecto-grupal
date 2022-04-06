@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Css/Filter.css';
-import swal from 'sweetalert';
+
+import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { orderActivitiesByPrice } from './Redux/Actions/actions';
 
@@ -38,23 +39,33 @@ export default function Filter({ handleChangeCurrentPage }) {
 
     function handlseSumbit() {
         if (!input.country && !input.city ) {
-            swal('Sorry', 'There are nothing to filter', 'info')
+            Swal.fire({
+                title: 'Sorry!',
+                text:'There are nothing to filter',
+                icon:'info',
+                color: 'white',
+                background:'#00498b',
+                confirmButtonColor: '#24c59c'
+                })
         } else {
             dispatch(orderActivitiesByPrice(input));
             setInput({
                 country:'',
                 city:'',
-                type: '',
-            });
+                type:'',
+            })
             handleChangeCurrentPage(1);
         };
     };
+
 
     return (
         <div className='filterContainer'>
             <div>
                 <label>Select Country: </label> 
-                <select onChange={(e) => handleCountries(e)}>
+                <select
+                value={input.country}
+                onChange={(e) => handleCountries(e)}>
                     <option value=''></option>
                     {countries?.map((c) => (
                         <option
@@ -66,7 +77,9 @@ export default function Filter({ handleChangeCurrentPage }) {
 
             <div>
                 <label>Select City:  </label>
-                <select onChange={(e) => handleCities(e)}>
+                <select
+                value={input.city}
+                onChange={(e) => handleCities(e)}>
                     <option value=''></option>
                     {citys?.map((c) => (
                         <option
@@ -78,7 +91,9 @@ export default function Filter({ handleChangeCurrentPage }) {
 
             <div>
                 <label>Price:   </label>
-                <select onChange={e => handleOrderPrice(e)}>
+                <select
+                value={input.type}
+                onChange={e => handleOrderPrice(e)}>
                     <option value='Nada'></option>
                     <option value='Ascendent'>Lowest price first</option>
                     <option value='Descendent'>Highest price first</option>

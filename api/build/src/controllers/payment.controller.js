@@ -13,16 +13,20 @@ exports.captureOrder = exports.createOrder = void 0;
 const payment_services_1 = require("../services/payment.services");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.body.cart) {
+        console.log('1');
         return res.status(400).json(({ status: 'failed', errors: { message: 'Missing cart' } }));
     }
     try {
+        console.log('2');
         const order = yield (0, payment_services_1.createPayPalOrder)(req.body.cart, req.user.id);
         if (order) {
             return res.status(201).json(({ status: 'success', data: order }));
         }
+        console.log('3');
         return res.status(500).json(({ status: 'failed', errors: { message: 'there was an error' } }));
     }
     catch (error) {
+        console.log("catch en el controller");
         return res.status(500).json(({ status: 'error', errors: { error } }));
     }
 });

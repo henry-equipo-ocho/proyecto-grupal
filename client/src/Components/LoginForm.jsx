@@ -14,7 +14,8 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUserName } from './Redux/Actions/actions';
 import { useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
-import sweetAlert from 'sweetalert';
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute',
@@ -63,8 +64,17 @@ const FormDialog = ({ abierto, close }) => {
         miStorage.setItem('loggedIn', 'true')
         // miStorage.setItem('token',  JSON.stringify(datos.data.data));
         dispatch(setUserName(decoded.email))
+        const nombre = JSON.parse(localStorage.getItem('data')).name
         formik.resetForm()
-        sweetAlert('Successfully logged in');
+
+        Swal.fire({
+          title:`${nombre}`,
+          text:'Bienvenido a Eztinerary',
+          icon:'success',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+        });
         history('/dashboard');
       } catch (error) {
         sweetAlert('Oops...', 'User or password incorrect', 'error');
@@ -111,20 +121,14 @@ const FormDialog = ({ abierto, close }) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-
-            <DialogContent>
-              <Button>
-                Olvidaste tu Contraseña?
-              </Button>
+            <DialogContentText>
               <DialogActions>
-                <Button
-                  onClick={close}
-                  variant="outlined"
-                >Cancel
-                </Button>
-                <Button onClick={() => setOpen(!open)} color="primary" variant="contained" fullWidth type="submit">
-                  Submit
-                </Button>
+                <button
+                  className='shopButton'
+                  onClick={close} >Cancel</button>
+                <button
+                  className='shopButton'
+                  onClick={() => setOpen(!open)} >Submit</button>
               </DialogActions>
             </DialogContent>
           </DialogContent>
