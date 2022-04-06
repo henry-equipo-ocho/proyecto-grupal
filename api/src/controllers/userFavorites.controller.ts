@@ -1,7 +1,7 @@
-import { Request, Response, RequestHandler } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import ServerResponse from '../interfaces/ServerResponse.interface';
-import { getUserFavorites, addUserFavorite, deleteUserFavorite } from '../services/userFavorites.services';
 import { getActivitiesFromArray } from '../services/activities.services';
+import { addUserFavorite, deleteUserFavorite, getUserFavorites } from '../services/userFavorites.services';
 
 declare module "express" {
     // https://stackoverflow.com/a/58201879

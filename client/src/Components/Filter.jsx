@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./Css/Filter.css";
-
-import Swal from "sweetalert2";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { orderActivitiesByPrice, getActivities } from "./Redux/Actions/actions";
+import Swal from "sweetalert2";
+import "./Css/Filter.css";
+import { getActivities, orderActivitiesByPrice } from "./Redux/Actions/actions";
 
 export default function Filter({ handleChangeCurrentPage }) {
     const dispatch = useDispatch();

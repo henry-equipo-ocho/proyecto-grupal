@@ -1,7 +1,7 @@
-import { Request, Response, RequestHandler } from 'express';
+import { Request, Response } from 'express';
 import Cart from "../interfaces/Cart.interface";
 import ServerResponse from '../interfaces/ServerResponse.interface';
-import { createPayPalOrder, capturePayPalOrder } from '../services/payment.services';
+import { capturePayPalOrder, createPayPalOrder } from '../services/payment.services';
 
 declare module "express" {
     // https://stackoverflow.com/a/58201879
@@ -17,12 +17,11 @@ export const createOrder = async (req: Request, res: Response) => {
     try {
         const order = await createPayPalOrder(req.body.cart, req.user.id);
         if (order) {
-            
+
             return res.status(201).json(<ServerResponse>({ status: 'success', data: order }));
         }
         return res.status(500).json(<ServerResponse>({ status: 'failed', errors: { message: 'there was an error' } }));
     } catch (error) {
-        console.log("catch en el controller");
         return res.status(500).json(<ServerResponse>({ status: 'error', errors: { error } }));
     }
 }

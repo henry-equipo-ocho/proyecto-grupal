@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.protectedRoute = exports.clearRefreshToken = exports.handleRefreshToken = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 dotenv_1.default.config();
 const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -28,7 +28,6 @@ const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
             const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.JWT_SECRET, {
                 expiresIn: '15m'
             });
-            console.log('handleRefreshToken: token', token);
             return res.status(200).send({ status: 'success', data: token });
         });
     }

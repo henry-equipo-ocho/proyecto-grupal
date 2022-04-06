@@ -1,9 +1,9 @@
 import { Router } from "express";
-
 import { apiActivitiesController, getActivitiesController, setWatchedorBookedTimesController } from "../controllers/activities.controller";
-import {getOrderedCities} from '../controllers/orderbycity.controller';
-import {getOrderedPrice}  from '../controllers/orderbyprice.controller';
-import {getMatchActivitiesController} from '../controllers/match.controller';
+import { getMatchActivitiesController } from '../controllers/match.controller';
+import { getOrderedCities } from '../controllers/orderbycity.controller';
+import { getOrderedPrice } from '../controllers/orderbyprice.controller';
+
 
 const router: Router = Router();
 

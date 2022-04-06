@@ -1,6 +1,6 @@
-import User from '../models/User.models';
-import { Request } from 'express';
 import dotenv from 'dotenv';
+import { Request } from 'express';
+import User from '../models/User.models';
 const nodemailer = require('nodemailer');
 
 dotenv.config();
@@ -20,8 +20,8 @@ var transporter = nodemailer.createTransport({
 
 export const signUpService = async (req: Request): Promise<any> => {
     try {
-        const user = await User.findOne({email: req.body.email});
-        if(user) throw new Error('User already exists');
+        const user = await User.findOne({ email: req.body.email });
+        if (user) throw new Error('User already exists');
 
         const newUser = new User(req.body);
         await newUser.save();
@@ -36,8 +36,8 @@ export const signUpService = async (req: Request): Promise<any> => {
         };
 
         // sending email
-        await transporter.sendMail(mailOptions, function(error: any, info: any) {
-            if(error) {
+        await transporter.sendMail(mailOptions, function (error: any, info: any) {
+            if (error) {
                 console.log(error)
             }
             else {

@@ -1,32 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NavBar from "./NavBar";
-import LoginForm from "./LoginForm";
-import Filter from "./Filter";
-import Footer from "./Footer";
 import ActivityCard from "./ActivityCard";
 import ActivityDetail from "./ActivityDetail";
-import Pagination from "./Pagination";
-import SearchBarCopy from "./SearchBar/SearchBarCopy";
-import {
-    getActivities,
-    setLoading,
-    getCountries,
-    getCities,
-} from "./Redux/Actions/actions";
 import "./Css/ActivityCard.css";
 import "./Css/Home.css";
-//import search from '../Media/search.jpg'
-import RenderMap from "./GoogleMap/RenderMap/RenderMap.jsx";
-import Loading from "./Loading/Loading";
+import Filter from "./Filter";
+import Footer from "./Footer";
+import LoginForm from "./LoginForm";
+import NavBar from "./NavBar";
+import Pagination from "./Pagination";
+import {
+    getActivities,
+    getCities,
+    getCountries,
+    setLoading,
+} from "./Redux/Actions/actions";
+import SearchBarCopy from "./SearchBar/SearchBarCopy";
 
 export default function Home() {
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState(null);
     const [detail, setDetail] = useState(null);
-    const userName = localStorage.getItem("data")
-        ? JSON.parse(localStorage.getItem("data")).email
-        : "viajero";
     const activities = useSelector((state) => state.allActivities);
     const loading = useSelector((state) => state.loading);
     const [currentPage, setCurrentPage] = useState(1);

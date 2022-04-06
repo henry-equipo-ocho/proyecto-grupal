@@ -1,22 +1,21 @@
-import { Router } from 'express';
-import express from 'express';
+import express, { Router } from 'express';
 import morgan from 'morgan';
-import signup from './signup.route';
-import signin from './signin.route';
 import activities from './activities.route';
+import admin from './admin.route';
+import bussines from './bussines.route';
+import locations from './locations.route';
+import createOrder from './payment.route';
+import signin from './signin.route';
+import signup from './signup.route';
+import token from './token.route';
 import userFavorites from './userFavorites.route';
 import userUpdate from './userUpdate.route';
-import locations from './locations.route';
-import admin from './admin.route';
-import createOrder from './payment.route';
-import token from './token.route';
-import bussines from './bussines.route';
 
 
 const router: Router = Router();
 
 router.use(morgan('dev'));
-router.use(express.urlencoded({extended: false}));
+router.use(express.urlencoded({ extended: false }));
 
 router.use('/signup', signup);
 router.use('/signin', signin);

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { userUpdateController, passwordUpdateController, getUserCurrentInfoController } from '../controllers/userUpdate.controller';
 import passport from 'passport';
+import { getUserCurrentInfoController, passwordUpdateController, userUpdateController } from '../controllers/userUpdate.controller';
 
 const router: Router = Router();
 

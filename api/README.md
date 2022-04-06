@@ -436,8 +436,9 @@ Allows the front to create an order with PayPal API and create a Payment object 
 | `price`       | `number` | **Required** |
 | `tier`        | `number` | **Required** |
 | `description` | `string` | **Required** |
+
 ```js
-    // see src/interfaces/Cart.interface.ts
+// see src/interfaces/Cart.interface.ts
 ```
 
 #### Returns
@@ -462,11 +463,12 @@ Allows the front to update a Payment object in the given user's DB, mark it as p
     POST /payment/capture?token
 ```
 
-| Parameter     | Type     | Description  |
-| :------------ | :------- | :----------- |
-| `token`       | `string` | **Required**. Given as query param via PayPal redirect |
+| Parameter | Type     | Description                                            |
+| :-------- | :------- | :----------------------------------------------------- |
+| `token`   | `string` | **Required**. Given as query param via PayPal redirect |
+
 ```js
-    // see src/services/payment.services.ts - createOrder for the redirect URL
+// see src/services/payment.services.ts - createOrder for the redirect URL
 ```
 
 #### Returns

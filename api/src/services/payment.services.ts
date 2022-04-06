@@ -1,10 +1,10 @@
-import dotenv from 'dotenv';
 import axios, { AxiosResponse } from 'axios';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import User from '../models/User.models';
-import UserInterface, { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
 import Payment, { FrontFacingPayment } from "../interfaces/Payment.interface";
+import { UserRoles } from '../interfaces/User.interface';
+import User from '../models/User.models';
 
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
@@ -24,8 +24,6 @@ var transporter = nodemailer.createTransport({
 })
 
 export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any> => {
-    console.log(cart)
-    console.log(userID)
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -135,11 +133,9 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
 
             endSubscriptionUser(userID);
 
-            // return true;
             let paymentCreationDate = payment.createdAt as Date;
             let subscriptionExpiry = new Date(paymentCreationDate.getTime());
             subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
-            console.log(paymentCreationDate, subscriptionExpiry.toString());
 
             return {
                 name: user.name,
