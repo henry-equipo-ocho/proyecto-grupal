@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import axios, { AxiosResponse } from 'axios';
 import mongoose from 'mongoose';
 import User from '../models/User.models';
-import { UserRoles } from '../interfaces/User.interface';
+import UserInterface, { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
 import Payment, { FrontFacingPayment } from "../interfaces/Payment.interface";
 
@@ -156,7 +156,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
 
 async function endSubscriptionUser(userID: string) {
 
-    let user = await User.findById(userID);
+    let user: any = await User.findById(userID);
 
     var date = new Date();
     // date.setMonth(date.getMonth() + 1);

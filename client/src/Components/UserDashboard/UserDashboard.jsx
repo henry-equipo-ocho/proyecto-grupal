@@ -47,7 +47,6 @@ const UserDashboard = () => {
   };
 
   const logout = (e) => {
-    console.log('3')
     window.localStorage.clear();
     dispatch(setUserName('Viajero'));
     axiosPrivate.get('/token/clear');
@@ -56,10 +55,8 @@ const UserDashboard = () => {
   }
 
   const handleCloseNavMenu = (e) => {
-    console.log("entra")
     switch(e.target.innerText.toLowerCase()){
       case 'logout':{
-        console.log('2')
         logout(e);
         break;
       }

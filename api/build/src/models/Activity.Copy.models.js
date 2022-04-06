@@ -18,4 +18,4 @@ const activitySchema = new mongoose_1.default.Schema({
     created: { type: Boolean, default: false },
     ownerId: { type: String }
 });
-exports.default = mongoose_1.default.model('Activity', activitySchema);
+exports.default = mongoose_1.default.model('ActivityCopy', activitySchema);

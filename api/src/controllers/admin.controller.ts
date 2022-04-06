@@ -132,7 +132,7 @@ export const createActivityController = async (req: Request, res: Response) => {
         return res.status(400).send(<ServerResponse>({status: 'failed', errors: {message: `Missing values`}}));
     }
 
-    const activitiesFormat = {name, description, picture, city, country, price_currency, price_amount, booking}
+    const activitiesFormat = {name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0};
 
     try {
         

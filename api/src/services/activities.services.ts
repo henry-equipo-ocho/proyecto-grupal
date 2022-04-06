@@ -1,5 +1,6 @@
 import { Document, Types } from "mongoose"
 import Activity from "../models/Activity.models";
+import ActivityCopyModels from "../models/Activity.Copy.models";
 import ActivityInterface from "../interfaces/Activity.interface";
 import { Request } from "express";
 const Amadeus = require('amadeus');
@@ -16,7 +17,8 @@ export const getAPIActivitiesService = async (req: Request): Promise<any> => {
 
         const activities = await amadeus.shopping.activities.get({
             latitude: req.body.lat,
-            longitude: req.body.lon
+            longitude: req.body.lon,
+            radius: 20
         }).then((response: any) => response.data).catch((error: any) => error.code);
 
         return activities;
@@ -34,6 +36,32 @@ export const saveActivitiesService = async (activity: ActivityInterface): Promis
 
         const newActivity = new Activity(activity);
         await newActivity.save();
+    } catch (e) {
+        throw e
+    }
+}
+
+export const saveCopyActivitiesService = async (activity: ActivityInterface): Promise<any> => {
+    try {
+
+        // const found = await ActivityCopyModels.findOne({name: activity.name});
+        // if(found) throw new Error('Activity already exists');
+
+        const newActivity = new ActivityCopyModels(activity);
+        await newActivity.save();
+    } catch (e) {
+        throw e
+    }
+}
+
+export const updateActivitiesService = async (activity: ActivityInterface): Promise<any> => {
+    try {
+        const found = await Activity.findOne({ name: activity.name });
+        if (!found) throw new Error('Activity not found');
+
+        const update = { price_currency: activity.price_currency, price_amount: activity.price_amount };
+        await found.update(update);
+        await found.save();
     } catch (e) {
         throw e
     }
@@ -97,7 +125,7 @@ export const updateActivityInfo = async (req: Request, id: string) => {
 
 function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, ActivityInterface> & ActivityInterface & { _id: Types.ObjectId; })>, tier: number | undefined, onlyThirdParty: boolean | undefined): ActivityInterface[] {
     if (onlyThirdParty) {
-        return rawActivities.filter((activity) => !activity.ownerID);
+        return rawActivities.filter((activity) => !activity.ownerId);
     } else {
         return rawActivities.filter(async (activity) => {
             const populatedActivity = await activity.populate({
@@ -106,7 +134,31 @@ function filterActivitiesByTier(rawActivities: Array<(Document<unknown, any, Act
                 select: 'payments'
             });
             console.log(activity, populatedActivity);
-            return populatedActivity.ownerID && populatedActivity.ownerID.payments.at(-1).tier === tier;
+            if (typeof populatedActivity.ownerId !== 'string' && populatedActivity.ownerId?.payments) {
+                return populatedActivity.ownerId && populatedActivity.ownerId.payments.at(-1)?.tier === tier;
+            }
         });
+    }
+}
+export const updateCopyActivitiesService = async (): Promise<any> => {
+    try {
+        await Activity.updateMany([{ $addFields: { 'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7' } }]);
+    } catch (e) {
+        throw e
+    }
+}
+
+export const setWatchedTimesService = async (type: string, id: string) => {
+    try {
+
+        const found = await Activity.findOne({ _id: id });
+
+        if (!found) throw new Error('Activity not found');
+
+        if (type === 'watched') { found.watchedTimes = found.watchedTimes + 1; await found.save(); return found }
+        if (type === 'booked') { found.bookedTimes = found.bookedTimes + 1; await found.save(); return found }
+
+    } catch (e: any) {
+        throw e;
     }
 }

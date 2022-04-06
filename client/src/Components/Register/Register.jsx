@@ -72,15 +72,14 @@ export default function Register() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       if (terms) {
-        console.log(values)
+        // console.log(values)
         try {
           await axios.post('http://localhost:3001/signup', values);
           sweetAlert('Succesfully registered!', 'You can now verify your email for activate account!', 'success')
           history('/home');
         }
         catch (e) {
-          console.log(e)
-          alert(e)
+          sweetAlert('User already registered!', 'Please login!', 'error')
         }
       } else {
         setOpen(true);
@@ -94,7 +93,6 @@ export default function Register() {
 
   return (
     <>
-
                 <header className='header'>
                 <div>
                     <img src={logo} alt='Not found' />
@@ -247,7 +245,7 @@ export default function Register() {
         </DialogActions>
       </Dialog>
     </Container >
-    </center>
+    </Container>
     <Footer />
     </>
   );
