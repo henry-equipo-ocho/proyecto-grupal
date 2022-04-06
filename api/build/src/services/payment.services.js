@@ -70,35 +70,19 @@ const capturePayPalOrder = (token, userID) => __awaiter(void 0, void 0, void 0, 
     // https://developer.paypal.com/api/rest/reference/orders/v2/errors/
     try {
         if (!mongoose_1.default.Types.ObjectId.isValid(userID)) {
-            console.log(mongoose_1.default.Types.ObjectId.isValid(userID));
             throw new Error(`Invalid user ID: ${userID}`);
         }
-        console.log("boutta ask paypal");
         const response = yield axios_1.default.post(`${process.env.PAYPAL_URL}/v2/checkout/orders/${token}/capture`, {}, {
             auth: {
                 username: process.env.PAYPAL_CLIENT_ID,
                 password: process.env.PAYPAL_CLIENT_SECRET
             }
         });
-        console.log("response.data:", response.data);
         if (response.data.status === 'COMPLETED') {
-            let user = yield User_models_1.default.findById(userID);
-            if (user === null) {
-                throw new Error(`User (${userID}) not found`);
-            }
-            else {
-                let payment = user.payments.find((payment) => payment.id === response.data.id);
-                if (!payment) {
-                    throw new Error(`Payment (${response.data.id}) not found`);
-                }
-                payment.status = "COMPLETED";
-                user.role = User_interface_1.UserRoles.Business;
-                user.activeSubscription = true;
-                user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
-                yield user.save();
-                endSubscriptionUser(userID);
-                return updatePaymentInUserDB(userID, response.data.id);
-            }
+            return updatePaymentInUserDB(userID, response.data.id);
+        }
+        else {
+            throw new Error(`Payment (${response.data.id}) is not completed`);
         }
     }
     catch (error) {
@@ -149,13 +133,14 @@ function updatePaymentInUserDB(userID, orderID) {
                 // return true;
                 let paymentCreationDate = payment.createdAt;
                 let subscriptionExpiry = new Date(paymentCreationDate.getTime());
-                subscriptionExpiry.setMonth(paymentCreationDate.getMonth() + 1);
+                subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
                 console.log(paymentCreationDate, subscriptionExpiry.toString());
                 return {
                     name: user.name,
                     email: user.email,
                     tier: payment.tier,
                     price: payment.price,
+                    description: payment.description,
                     buyDate: payment.createdAt,
                     expireDate: subscriptionExpiry
                 };

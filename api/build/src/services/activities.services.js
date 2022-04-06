@@ -12,9 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setWatchedTimesService = exports.updateCopyActivitiesService = exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.updateActivitiesService = exports.saveCopyActivitiesService = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
+exports.getUserActivities = exports.setWatchedTimesService = exports.updateFieldActivitiesService = exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.getActivityById = exports.updateActivitiesService = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
-const Activity_Copy_models_1 = __importDefault(require("../models/Activity.Copy.models"));
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -49,18 +48,6 @@ const saveActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.saveActivitiesService = saveActivitiesService;
-const saveCopyActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        // const found = await ActivityCopyModels.findOne({name: activity.name});
-        // if(found) throw new Error('Activity already exists');
-        const newActivity = new Activity_Copy_models_1.default(activity);
-        yield newActivity.save();
-    }
-    catch (e) {
-        throw e;
-    }
-});
-exports.saveCopyActivitiesService = saveCopyActivitiesService;
 const updateActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const found = yield Activity_models_1.default.findOne({ name: activity.name });
@@ -75,6 +62,18 @@ const updateActivitiesService = (activity) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.updateActivitiesService = updateActivitiesService;
+const getActivityById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const found = yield Activity_models_1.default.findById(id);
+        if (!found)
+            throw new Error('Activity not found');
+        return found;
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.getActivityById = getActivityById;
 const getAllDBActivities = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const activities = yield Activity_models_1.default.find();
@@ -130,15 +129,16 @@ const updateActivityInfo = (req, id) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.updateActivityInfo = updateActivityInfo;
-const updateCopyActivitiesService = () => __awaiter(void 0, void 0, void 0, function* () {
+const updateFieldActivitiesService = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield Activity_models_1.default.updateMany([{ $addFields: { 'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7' } }]);
+        // await Activity.updateMany([{$addFields: {'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7'}}]);
+        // await Activity.updateMany({}, {$unset: {ownerId: 1}});
     }
     catch (e) {
         throw e;
     }
 });
-exports.updateCopyActivitiesService = updateCopyActivitiesService;
+exports.updateFieldActivitiesService = updateFieldActivitiesService;
 const setWatchedTimesService = (type, id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const found = yield Activity_models_1.default.findOne({ _id: id });
@@ -160,3 +160,13 @@ const setWatchedTimesService = (type, id) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.setWatchedTimesService = setWatchedTimesService;
+const getUserActivities = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const activities = yield Activity_models_1.default.find({ ownerId: id });
+        return activities;
+    }
+    catch (e) {
+        throw e;
+    }
+});
+exports.getUserActivities = getUserActivities;

@@ -10,6 +10,7 @@ import locations from './locations.route';
 import admin from './admin.route';
 import createOrder from './payment.route';
 import token from './token.route';
+import bussines from './bussines.route';
 
 
 const router: Router = Router();
@@ -26,5 +27,6 @@ router.use('/locations', locations);
 router.use('/admin', admin);
 router.use('/payment', createOrder);
 router.use('/token', token);
+router.use('/business', bussines);
 
 export default router;

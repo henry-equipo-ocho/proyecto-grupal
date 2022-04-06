@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setWatchedorBookedTimesController = exports.updateCopiesController = exports.cloneActivitiesController = exports.getActivitiesController = exports.updateAPIActivitiesController = exports.apiActivitiesController = void 0;
+exports.setWatchedorBookedTimesController = exports.updateFieldController = exports.getActivitiesController = exports.updateAPIActivitiesController = exports.apiActivitiesController = void 0;
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
 const activities_services_1 = require("../services/activities.services");
@@ -99,41 +99,16 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.getActivitiesController = getActivitiesController;
-const cloneActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateFieldController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const activities = yield (0, activities_services_1.getAllDBActivities)();
-        for (let i = 0; i < activities.length; i++) {
-            const activitiesFormat = {
-                name: activities[i].name,
-                description: activities[i].description,
-                picture: activities[i].picture,
-                city: activities[i].city,
-                country: activities[i].country,
-                price_currency: activities[i].price_currency,
-                price_amount: activities[i].price_amount,
-                booking: activities[i].booking,
-                watchedTimes: activities[i].watchedTimes,
-                bookedTimes: activities[i].bookedTimes,
-            };
-            yield (0, activities_services_1.saveCopyActivitiesService)(activitiesFormat);
-        }
-        return res.sendStatus(200);
-    }
-    catch (e) {
-        return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
-    }
-});
-exports.cloneActivitiesController = cloneActivitiesController;
-const updateCopiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, activities_services_1.updateCopyActivitiesService)();
+        yield (0, activities_services_1.updateFieldActivitiesService)();
         return res.sendStatus(200);
     }
     catch (e) {
         return res.sendStatus(400);
     }
 });
-exports.updateCopiesController = updateCopiesController;
+exports.updateFieldController = updateFieldController;
 const setWatchedorBookedTimesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { type, id } = req.body;
