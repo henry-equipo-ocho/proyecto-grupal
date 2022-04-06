@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
-
 import './back.css';
 
 import { ProviderContext } from './Context/context';
@@ -36,20 +34,25 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 export default function AdminDashboard() {
   const history = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+
   const verify = async () => {
-    try{
-      const token = JSON.parse(localStorage.getItem('token'));
-      await axios.post('http://localhost:3001/admin/token', { token }, { headers: { "Authorization": 'Bearer ' + token }});
-      console.log('hola admin!')
+    try {
+      const data = JSON.parse(localStorage.getItem('data')).role;
+      if (data !== 3) {
+        history('/home');
+      }
+      setLoading(false);
     }
-    catch(e){
+    catch (e) {
       history('/home');
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     verify();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [state, setState] = useState(false);
@@ -135,31 +138,38 @@ export default function AdminDashboard() {
 
   return (
     <Container maxWidth={false}>
-      <Box>
-        <Button onClick={toggleDrawer(true)} sx={{ position: 'fixed', left: '0', margin: '5px' }} color='inherit' variant='contained'><MenuIcon /></Button>
-        <SwipeableDrawer
-          anchor='left'
-          open={state}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-        >
-          {list()}
-        </SwipeableDrawer>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <ProviderContext value={{ page, reducer }} >
-        { page === 'dashboard' ? <Dashboard /> : null }
-        { page === 'about' ? <About /> : null }
-        { page === 'actividades' ? <Actividades /> : null }
-        { page === 'estadisticas' ? <Estadisticas /> : null }
-        { page === 'users' ? <Users /> : null }
-      </ProviderContext>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Typography className='footer' color="text.secondary">
-        Admin dashboard 0.0.1 - <strong>Eztinerary</strong>
-      </Typography>
-      </Box>
+      {
+        !loading ?
+          <>
+            <Box>
+              <Button onClick={toggleDrawer(true)} sx={{ position: 'fixed', left: '0', margin: '5px' }} color='inherit' variant='contained'><MenuIcon /></Button>
+              <SwipeableDrawer
+                anchor='left'
+                open={state}
+                onClose={toggleDrawer(false)}
+                onOpen={toggleDrawer(true)}
+              >
+                {list()}
+              </SwipeableDrawer>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <ProviderContext value={{ page, reducer }} >
+                {page === 'dashboard' ? <Dashboard /> : null}
+                {page === 'about' ? <About /> : null}
+                {page === 'actividades' ? <Actividades /> : null}
+                {page === 'estadisticas' ? <Estadisticas /> : null}
+                {page === 'users' ? <Users /> : null}
+              </ProviderContext>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Typography className='footer'>
+                <span style={{ color: 'black' }}>Admin dashboard 0.0.1 - <strong>Eztinerary</strong></span>
+              </Typography>
+            </Box>
+          </>
+          :
+          null
+      }
     </Container>
   );
 }

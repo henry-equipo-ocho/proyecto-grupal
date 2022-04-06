@@ -92,8 +92,7 @@ export default function Register() {
   };
 
   return (
- <div>
-
+    <>
       <header className='header'>
         <div>
           <img src={logo} alt='Not found' />
@@ -102,10 +101,8 @@ export default function Register() {
           <button><a href='/home'>HOME</a></button>
         </div>
       </header>
-      <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
-
+      <center>
         <Container sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', padding: '30px', background: 'white', margin: '10px', borderRadius: '5px' }}>
-
           <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', marginTop: '70px' }} >
             <Box>
               <Typography style={{ fontWeight: '300', fontSize: '60px' }}>
@@ -246,8 +243,8 @@ export default function Register() {
             </DialogActions>
           </Dialog>
         </Container >
-        </Container >
-        <Footer />
-    </div>
+      </center>
+      <Footer />
+    </>
   );
 }; 
