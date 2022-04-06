@@ -12,8 +12,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { setToken, setUserName } from './Redux/Actions/actions';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
+import GoogleButton from 'react-google-button'
+import GoogleLoginComponent from './GoogleLogin/GoogleLoginComponent';
 
 const style = {
   position: 'absolute',
@@ -69,6 +71,48 @@ const FormDialog = ({ abierto, close }) => {
       }
     },
   });
+  
+  // const fetchAuthAuthenticated = async () => {
+  //   const response = await axiosPrivate.get("http://localhost:3001/signin/verify-email", { withCredentials: true}).catch((err) => {
+  //     console.log('Not properly authenticated')
+  //   }) 
+
+  //   if (response && response.data) {
+  //     console.log('User:', response.data)
+  //   }
+  // }
+
+  const responseSucess = async () => {
+    const googleLoginURL = "http://localhost:3001/signin/google";
+   
+
+    const datos = window.open(
+      googleLoginURL, 
+      "width=500,height=600",
+     
+      );
+        
+    // let timer;
+    // const googleLoginURL = "http://localhost:3001/signin/google";
+
+    // const newWindow = window.open(
+    //   googleLoginURL, 
+    //   "_self",
+    //   "width=500,height=600");
+   
+      
+
+    // if (newWindow) {
+    //   timer = setInterval(() => {
+    //     if (newWindow.closed) {
+    //       console.log('you are authenticated');
+    //       // fetchAuthAuthenticated()
+    //       if (timer) clearInterval(timer)
+          
+    //     }
+    //   }, 5000)
+    // }
+  };
 
   return (
     <>
@@ -98,7 +142,6 @@ const FormDialog = ({ abierto, close }) => {
               helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
-              autoFocus
               fullWidth
               id="password"
               name="password"
@@ -110,6 +153,7 @@ const FormDialog = ({ abierto, close }) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
+           
 
             <DialogContentText>
               <Button>
@@ -124,9 +168,13 @@ const FormDialog = ({ abierto, close }) => {
                 <Button onClick={() => setOpen(!open)} color="primary" variant="contained" fullWidth type="submit">
                   Submit
                 </Button>
+
+                
               </DialogActions>
+               <GoogleButton onClick={responseSucess}/>
             </DialogContentText>
           </DialogContent>
+               {/* <GoogleLoginComponent /> */}
         </form>
       </Dialog>
     </>
