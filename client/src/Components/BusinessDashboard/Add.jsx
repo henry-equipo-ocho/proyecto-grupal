@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 import alert from 'sweetalert';
 
-//import axios from 'axios';
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -51,6 +51,7 @@ const validationSchema = yup.object({
 });
 
 export default function Add() {
+  const axios = useAxiosPrivate();
 
   const formik = useFormik({
     initialValues: {
@@ -66,12 +67,7 @@ export default function Add() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-       /*  const token = JSON.parse(localStorage.getItem('token'));
-        await axios.post('http://localhost:3001/admin/create/activity', values,  {
-            headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }); */
+        await axios.post('/business/activities', values);
         alert("Success", "Activity succesfully added!", "success");
         formik.resetForm();
       }

@@ -30,6 +30,8 @@ const UserDashboard = () => {
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
+  const role = JSON.parse(localStorage.getItem('data')).role;
+
   const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
@@ -55,8 +57,8 @@ const UserDashboard = () => {
   }
 
   const handleCloseNavMenu = (e) => {
-    switch(e.target.innerText.toLowerCase()){
-      case 'logout':{
+    switch (e.target.innerText.toLowerCase()) {
+      case 'logout': {
         logout(e);
         break;
       }
@@ -159,13 +161,18 @@ const UserDashboard = () => {
                 </Button>
               ))}
             </Box>
-            <Box sx={{ flexGrow: 0 }}>
-              <Link to='/mybusiness' style={{ textDecoration: 'none' }}>
-                <Button sx={{ my: 2, color: 'white !important', display: 'block' }} >
-                  Business Dashboard
-                </Button>
-              </Link>
-            </Box>
+            {
+              role === 1 ?
+                <Box sx={{ flexGrow: 0 }}>
+                  <Link to='/mybusiness' style={{ textDecoration: 'none' }}>
+                    <Button sx={{ my: 2, color: 'white !important', display: 'block' }} >
+                      Business Dashboard
+                    </Button>
+                  </Link>
+                </Box>
+                :
+                null
+            }
           </Toolbar>
         </Container>
       </AppBar>

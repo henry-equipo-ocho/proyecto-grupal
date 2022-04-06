@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from '../NavBar';
 import Add from './Add';
 import Listar from './List';
-import Estadisticas from './Estadisticas';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -24,7 +23,6 @@ import LinkIcon from '@mui/icons-material/Link';
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function BusinessDashboard() {
   const history = useNavigate();
@@ -34,7 +32,7 @@ export default function BusinessDashboard() {
   const verify = async () => {
     try {
       const data = JSON.parse(localStorage.getItem('data')).role;
-      if (data === 1 || data === 3) {
+      if (data === 1) {
         return setLoading(false);
       }
       history('/home');
@@ -112,12 +110,6 @@ export default function BusinessDashboard() {
           </ListItemIcon>
           <ListItemText primary='List my activities' />
         </ListItem>
-        <ListItem button onClick={() => setPage('stats')}>
-          <ListItemIcon>
-            <BarChartIcon />
-          </ListItemIcon>
-          <ListItemText primary='Statistics' />
-        </ListItem>
       </List>
     </Box>
   );
@@ -164,12 +156,9 @@ export default function BusinessDashboard() {
                       page === 'listar' ?
                         <Listar />
                         :
-                        page === 'stats' ?
-                          <Estadisticas />
-                          :
-                          <Alert severity='error' sx={{ padding: '30px' }}>
-                            <Typography variant='h5'>Page not found</Typography>
-                          </Alert>
+                        <Alert severity='error' sx={{ padding: '30px' }}>
+                          <Typography variant='h5'>Page not found</Typography>
+                        </Alert>
                 }
               </Container>
               <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
