@@ -172,7 +172,6 @@ function filterActivitiesByTier(rawActivities, tier, onlyThirdParty) {
         });
     }
 }
-
 const updateFieldActivitiesService = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // await Activity.updateMany([{$addFields: {'watchedTimes': 0, 'bookedTimes': 0, 'created': false, 'ownerId': '624ca156deffe80d892baeb7'}}]);

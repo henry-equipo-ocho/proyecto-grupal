@@ -77,7 +77,14 @@ const FormDialog = ({ abierto, close }) => {
         });
         history('/dashboard');
       } catch (error) {
-        sweetAlert('Oops...', 'User or password incorrect', 'error');
+        Swal.fire({
+          title:`Oops...`,
+          text:'User or password incorrect',
+          icon:'error',
+          color: 'white',
+          background:'#00498b',
+          confirmButtonColor: '#24c59c'
+        });
       }
     },
   });
@@ -121,7 +128,7 @@ const FormDialog = ({ abierto, close }) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-            <DialogContentText>
+            <DialogContent>
               <DialogActions>
                 <button
                   className='shopButton'
