@@ -8,7 +8,8 @@ dotenv_1.default.config();
 const whitelist = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    process.env.DOMAINS
+    process.env.DOMAINS,
+    process.env.API_DOMAIN
 ];
 const corsOptions = {
     origin: (origin, callback) => {
