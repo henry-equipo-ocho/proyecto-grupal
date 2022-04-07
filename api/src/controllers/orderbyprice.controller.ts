@@ -1,7 +1,7 @@
-import { Request, Response, RequestHandler } from 'express';
-import ServerResponse from '../interfaces/ServerResponse.interface';
 import dotenv from 'dotenv';
-import { getDBCountryActivities, getDBCityActivities } from '../services/activities.services';
+import { Request, RequestHandler, Response } from 'express';
+import ServerResponse from '../interfaces/ServerResponse.interface';
+import { getDBCityActivities, getDBCountryActivities } from '../services/activities.services';
 
 dotenv.config();
 

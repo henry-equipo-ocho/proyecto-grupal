@@ -1,17 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import {
-    SET_ALL_ACTIVITIES,
-    SET_USER_NAME,
-    GET_ACTIVITIES,
-    SET_LOADING,
-    ORDER_ACTIVITIES_BY_PRICE,
-    GET_COUNTRIES,
-    GET_CITIES,
-    PAYMENT_ORDER,
-    SET_TOKEN
-} from './actions_types'
+    GET_ACTIVITIES, GET_CITIES, GET_COUNTRIES, ORDER_ACTIVITIES_BY_PRICE, PAYMENT_ORDER, SET_ALL_ACTIVITIES, SET_LOADING, SET_TOKEN, SET_USER_NAME
+} from './actions_types';
 
-import Swal from 'sweetalert2'
 //import { SET_USER_NAME } from './actions_types';
 
 export function setUserName(payload) {
@@ -63,10 +55,9 @@ export function setAllActivities(value) {
                 payload: res.data.data,
             });
         } catch (error) {
-            console.log(error)
             Swal.fire({
                 title: 'Sorry!',
-                text: 'Activity not found',
+                text: 'Nothing matched your search',
                 icon: 'error',
                 color: 'white',
                 background: '#00498b',

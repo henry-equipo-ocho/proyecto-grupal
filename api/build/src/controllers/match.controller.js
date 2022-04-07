@@ -24,8 +24,7 @@ const getMatchActivitiesController = (req, res) => __awaiter(void 0, void 0, voi
         activities.forEach((byTier) => {
             filteredActivities.push(byTier.filter(ac => ac.name.toLowerCase().includes(word.toLowerCase())));
         });
-        console.log(filteredActivities.length, filteredActivities[3].length);
-        return filteredActivities[3].length ?
+        return (filteredActivities[0].length || filteredActivities[1].length || filteredActivities[2].length || filteredActivities[3].length) ?
             res.status(200).json(({ status: 'success', data: filteredActivities }))
             : res.status(404).json(({ status: 'failed', message: 'Activities not found' }));
     }

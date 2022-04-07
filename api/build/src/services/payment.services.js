@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.capturePayPalOrder = exports.createPayPalOrder = void 0;
-const dotenv_1 = __importDefault(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const User_models_1 = __importDefault(require("../models/User.models"));
 const User_interface_1 = require("../interfaces/User.interface");
+const User_models_1 = __importDefault(require("../models/User.models"));
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
 dotenv_1.default.config();
@@ -32,8 +32,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(cart);
-    console.log(userID);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -133,11 +131,9 @@ function updatePaymentInUserDB(userID, orderID) {
                 user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
                 yield user.save();
                 endSubscriptionUser(userID);
-                // return true;
                 let paymentCreationDate = payment.createdAt;
                 let subscriptionExpiry = new Date(paymentCreationDate.getTime());
                 subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
-                console.log(paymentCreationDate, subscriptionExpiry.toString());
                 return {
                     name: user.name,
                     email: user.email,

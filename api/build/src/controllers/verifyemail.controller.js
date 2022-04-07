@@ -25,11 +25,10 @@ const verifyEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
         else {
             res.redirect('http://localhost:3000/register');
-            console.log('email is not verified');
         }
     }
     catch (error) {
-        console.log(error);
+        throw error;
     }
 });
 exports.verifyEmail = verifyEmail;

@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createRefreshTokenService = exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const User_models_1 = __importDefault(require("../models/User.models"));
 dotenv_1.default.config();
 const getUserService = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {

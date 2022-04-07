@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { rmSync } from "fs";
 import { signUpController } from "../controllers/signup.controller";
 import { verifyEmail } from '../controllers/verifyemail.controller';
 
