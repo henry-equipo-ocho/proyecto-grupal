@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 import BusinessDashboard from './Components/BusinessDashboard/BusinessDashboard';
 import BussinesPackage from './Components/BussinesPackage';
@@ -19,7 +19,6 @@ function App() {
         <div>
             <Routes>
                 <Route path='/' element={<LandingPage />} />
-                {/* <Route exact path='/' element={<NavBar />} /> */}
                 <Route exact path='/home' element={<Home />} />
                 <Route exact path='/register' element={<Register />} />
                 <Route exact path='/dashboard' element={<UserDashboard />} />
@@ -31,6 +30,7 @@ function App() {
                 <Route exact path='/social-login' element={<SocialLogin />} />
                 <Route exact path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='/reset-password' element={<ResetPassword />} />
+                <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
 
         </div>
