@@ -5,46 +5,48 @@
     background-color: #ff880000;
     font-family: 'Roboto';
 
-  }
-.but{
+}
+
+.but {
     width: 30px;
     height: 20px;
     font-size: 15px;
-    font-family: Calibri; 
-    font-style:normal;
-    font-weight:550;
+    font-family: Calibri;
+    font-style: normal;
+    font-weight: 550;
     border-radius: 5px;
     margin: 1em;
     background-color: white;
-    
+
     border: 1px solid;
     transition-duration: 0.3s;
     cursor: pointer;
     text-decoration: none;
     list-style: none;
     text-align: center;
-    vertical-align:bottom;
+    vertical-align: bottom;
     position: relative;
     padding: 5px;
-    
-  }
-  .but:hover{
+
+}
+
+.but:hover {
     background-color: #244eda;
     color: white;
-  }
-  
-  .focus{
+}
+
+.focus {
     background-color: #24c59c;
     color: white;
-  }
+}
 
-.buttonPag{
+.buttonPag {
     width: 40px;
     height: 20px;
     font-size: 15px;
-    font-family: Calibri; 
-    font-style:normal;
-    font-weight:550;
+    font-family: Calibri;
+    font-style: normal;
+    font-weight: 550;
     border-radius: 5px;
     margin: 1em;
     background-color: #062554;
@@ -57,8 +59,9 @@
     top: 50px;
     padding: 5px;
     color: white
-  }
-  .buttonPag:hover{
+}
+
+.buttonPag:hover {
     background-color: #00498b;
     color: white;
-  }
+}

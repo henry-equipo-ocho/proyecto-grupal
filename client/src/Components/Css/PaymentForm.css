@@ -1,17 +1,18 @@
-.formPaymentContainer{
-padding: 10px;
-background-color: #00498b;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: larger;
-font-family: 'Roboto';
-font-weight: 800;
-color: white;
-margin: auto;
-border-radius: 10px
+.formPaymentContainer {
+    padding: 10px;
+    background-color: #00498b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    font-family: 'Roboto';
+    font-weight: 800;
+    color: white;
+    margin: auto;
+    border-radius: 10px
 }
-.form{
+
+.form {
     padding: 10px;
 }
 
@@ -21,16 +22,16 @@ border-radius: 10px
 
 }
 
-.form select option{
+.form select option {
     text-align: center;
     font-size: medium;
     background-color: #a9e8bc;
 }
 
-.buyBtn{
+.buyBtn {
     font-size: medium;
-    font-style:normal;
-    font-weight:550;
+    font-style: normal;
+    font-weight: 550;
     border-radius: 10px;
     background-color: #062554;
     color: white;

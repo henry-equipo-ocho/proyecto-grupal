@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setWatchedorBookedTimesController = exports.getActivitiesController = exports.updateAPIActivitiesController = exports.apiActivitiesController = void 0;
-const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
 const activities_services_1 = require("../services/activities.services");
+const Amadeus = require('amadeus');
 dotenv_1.default.config();
 // Actividades de Buenos Aires
 const apiActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

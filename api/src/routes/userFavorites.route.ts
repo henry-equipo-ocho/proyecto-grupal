@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from 'passport';
-import { getUserActivitiesController, addUserActivitiesController, deleteUserActivitiesController } from "../controllers/userFavorites.controller";
+import { addUserActivitiesController, deleteUserActivitiesController, getUserActivitiesController } from "../controllers/userFavorites.controller";
 
 const router: Router = Router();
 

@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signInFacebookService = exports.signInGoogleService = void 0;
-const passport_jwt_1 = require("passport-jwt");
 const dotenv_1 = __importDefault(require("dotenv"));
-const User_models_1 = __importDefault(require("../models/User.models"));
 const passport_1 = __importDefault(require("passport"));
+const passport_jwt_1 = require("passport-jwt");
+const User_models_1 = __importDefault(require("../models/User.models"));
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 dotenv_1.default.config();

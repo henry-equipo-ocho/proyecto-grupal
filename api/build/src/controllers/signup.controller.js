@@ -14,7 +14,7 @@ const signup_services_1 = require("../services/signup.services");
 const signUpController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, name, surname, country } = req.body;
     if (!email || !password || !name || !surname || !country) {
-        return res.status(400).send(({ status: 'failed', errors: { message: `Missing values` } }));
+        return res.status(400).send(({ status: 'failed', errors: { message: `Missing info` } }));
     }
     try {
         const newUser = yield (0, signup_services_1.signUpService)(req);

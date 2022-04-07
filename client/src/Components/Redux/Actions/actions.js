@@ -1,18 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import {
-    SET_ALL_ACTIVITIES,
-    SET_USER_NAME,
-    GET_ACTIVITIES,
-    SET_LOADING,
-    ORDER_ACTIVITIES_BY_CITY,
-    ORDER_ACTIVITIES_BY_PRICE,
-    GET_COUNTRIES,
-    GET_CITIES,
-    PAYMENT_ORDER,
-    SET_TOKEN
-} from './actions_types'
+    GET_ACTIVITIES, GET_CITIES, GET_COUNTRIES, ORDER_ACTIVITIES_BY_PRICE, PAYMENT_ORDER, SET_ALL_ACTIVITIES, SET_LOADING, SET_TOKEN, SET_USER_NAME
+} from './actions_types';
 
-import Swal from 'sweetalert2'
 //import { SET_USER_NAME } from './actions_types';
 
 export function setUserName(payload) {
@@ -24,7 +15,7 @@ export function setUserName(payload) {
 
 export function getActivities() {
     return async function (dispatch) {
-        dispatch(setLoading(true))
+      
         const { data: { data } } = await axios.post('http://localhost:3001/activities')
         dispatch({
             type: GET_ACTIVITIES,
@@ -58,15 +49,15 @@ export function setAllActivities(value) {
         try {
             dispatch(setLoading(true))
             let res = await axios.get(`http://localhost:3001/activities/match/${value}`);
+            console.log(res.data.data[3])
             return dispatch({
                 type: SET_ALL_ACTIVITIES,
                 payload: res.data.data,
             });
         } catch (error) {
-            console.log(error)
             Swal.fire({
                 title: 'Sorry!',
-                text: 'Activity not found',
+                text: 'Nothing matched your search',
                 icon: 'error',
                 color: 'white',
                 background: '#00498b',

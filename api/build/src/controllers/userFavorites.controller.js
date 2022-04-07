@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUserActivitiesController = exports.addUserActivitiesController = exports.getUserActivitiesController = void 0;
-const userFavorites_services_1 = require("../services/userFavorites.services");
 const activities_services_1 = require("../services/activities.services");
+const userFavorites_services_1 = require("../services/userFavorites.services");
 const getUserActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     if (!req.user) {

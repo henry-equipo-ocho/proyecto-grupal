@@ -1,9 +1,9 @@
-import { Request, Response, RequestHandler } from 'express';
-import ServerResponse from '../interfaces/ServerResponse.interface';
-const Amadeus = require('amadeus');
 import dotenv from 'dotenv';
+import { Request, RequestHandler, Response } from 'express';
 import ActivityInterface from '../interfaces/Activity.interface';
-import { getAPIActivitiesService, saveActivitiesService, getAllDBActivities, getDBCountryActivities, getDBCityActivities, setWatchedTimesService, updateFieldActivitiesService } from '../services/activities.services'
+import ServerResponse from '../interfaces/ServerResponse.interface';
+import { getAllDBActivities, getAPIActivitiesService, getDBCityActivities, getDBCountryActivities, saveActivitiesService, setWatchedTimesService } from '../services/activities.services';
+const Amadeus = require('amadeus');
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
     try {
         const activities = await getAPIActivitiesService(req);
 
-        for(let i: number = 0; i < activities.length; i++){
+        for (let i: number = 0; i < activities.length; i++) {
             const activitiesFormat: ActivityInterface = {
                 name: activities[i].name,
                 description: activities[i].shortDescription,
@@ -27,17 +27,17 @@ export const apiActivitiesController: RequestHandler = async (req: Request, res:
                 bookedTimes: 0
             }
 
-            const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
+            const { name, description, picture, city, country, price_currency, price_amount, booking } = activitiesFormat;
 
-            if(!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {continue};
+            if (!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) { continue };
 
             await saveActivitiesService(activitiesFormat);
         }
 
-        res.status(200).send(<ServerResponse>({status: 'success'}));
+        res.status(200).send(<ServerResponse>({ status: 'success' }));
 
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 };
 
@@ -45,7 +45,7 @@ export const updateAPIActivitiesController: RequestHandler = async (req: Request
     try {
         const activities = await getAPIActivitiesService(req);
 
-        for(let i: number = 0; i < activities.length; i++){
+        for (let i: number = 0; i < activities.length; i++) {
             const activitiesFormat: ActivityInterface = {
                 name: activities[i].name,
                 description: activities[i].shortDescription,
@@ -59,36 +59,36 @@ export const updateAPIActivitiesController: RequestHandler = async (req: Request
                 bookedTimes: 0
             }
 
-            const {name, description, picture, city, country, price_currency, price_amount, booking} = activitiesFormat;
+            const { name, description, picture, city, country, price_currency, price_amount, booking } = activitiesFormat;
 
-            if(!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) {continue};
+            if (!name || !description || !picture || !city || !country || !price_currency || !price_amount || !booking) { continue };
 
             await saveActivitiesService(activitiesFormat);
         }
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 }
 
 export const getActivitiesController: RequestHandler = async (req: Request, res: Response) => {
 
-    const {country, city} = req.body;
-    const noactivities: ServerResponse = {status: 'success', message: 'Activities not found'}
+    const { country, city } = req.body;
+    const noactivities: ServerResponse = { status: 'success', message: 'Activities not found' }
 
     try {
-        if(city) {
+        if (city) {
             const activities = await getDBCityActivities(country, city);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({ status: 'success', data: activities }))
         }
-        if(country) {
+        if (country) {
             const activities = await getDBCountryActivities(country);
-            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
+            return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({ status: 'success', data: activities }))
         }
 
         const activities = await getAllDBActivities();
-        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({status: 'success', data: activities}))
+        return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(<ServerResponse>({ status: 'success', data: activities }))
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 };
 

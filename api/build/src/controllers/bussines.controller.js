@@ -36,7 +36,7 @@ const postBusinesActivities = (req, res) => __awaiter(void 0, void 0, void 0, fu
         const tier = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.payments) === null || _d === void 0 ? void 0 : _d.pop().tier;
         const { name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
         if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {
-            res.status(400).send({ status: "failed", errors: { message: "Missing values" } });
+            res.status(400).send({ status: "failed", errors: { message: "Missing info" } });
         }
         const activitiesFormat = { name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0, ownerId: id };
         if (tier === 3) {
@@ -64,7 +64,7 @@ const updateBusinessActivities = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const { id } = req.body;
         const activity = yield (0, activities_services_1.getActivityById)(id);
-        if (activity.ownerId !== ((_e = req.user) === null || _e === void 0 ? void 0 : _e.id)) {
+        if (activity.ownerId != ((_e = req.user) === null || _e === void 0 ? void 0 : _e.id)) {
             return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } });
         }
         ;
@@ -81,7 +81,7 @@ const deleteBusinessActivity = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         const { id } = req.body;
         const activity = yield (0, activities_services_1.getActivityById)(id);
-        if (activity.ownerId !== ((_f = req.user) === null || _f === void 0 ? void 0 : _f.id)) {
+        if (activity.ownerId != ((_f = req.user) === null || _f === void 0 ? void 0 : _f.id)) {
             return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } });
         }
         ;

@@ -1,14 +1,6 @@
 import {
-    SET_USER_NAME,
-    SET_ALL_ACTIVITIES,
-    GET_ACTIVITIES,
-    SET_LOADING,
-    ORDER_ACTIVITIES_BY_CITY,
-    ORDER_ACTIVITIES_BY_PRICE,
-    GET_COUNTRIES,
-    GET_CITIES,
-    PAYMENT_ORDER,
-    SET_TOKEN,
+    GET_ACTIVITIES, GET_CITIES, GET_COUNTRIES, ORDER_ACTIVITIES_BY_CITY,
+    ORDER_ACTIVITIES_BY_PRICE, PAYMENT_ORDER, SET_ALL_ACTIVITIES, SET_LOADING, SET_TOKEN, SET_USER_NAME
 } from '../Actions/actions_types';
 
 const initialState = {
@@ -31,30 +23,24 @@ export default function rootReducer(state = initialState, action) {
             };
 
         case SET_ALL_ACTIVITIES:
-            let value = action.payload;
             return {
                 ...state,
                 allActivities: action.payload,
-                currentActivities: action.payload
+                currentActivities: action.payload,
             };
 
         case GET_ACTIVITIES:
             return {
                 ...state,
                 allActivities: action.payload,
-                currentActivities: action.payload,
+                currentActivities: action.payload
             };
         case SET_LOADING:
             return {
                 ...state,
                 loading: action.payload
             };
-        case ORDER_ACTIVITIES_BY_CITY:
-            return {
-                ...state,
-                allActivities: action.payload,
-                currentActivities: action.payload,
-            };
+
         case ORDER_ACTIVITIES_BY_PRICE:
             return {
                 ...state,
