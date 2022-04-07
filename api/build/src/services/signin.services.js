@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRefreshTokenService = exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
+exports.sendResetPasswordEmailService = exports.createRefreshTokenService = exports.createUserTokenService = exports.matchUserPasswordService = exports.getUserService = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_models_1 = __importDefault(require("../models/User.models"));
+const nodemailer = require('nodemailer');
 dotenv_1.default.config();
 const getUserService = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -49,3 +50,30 @@ const createRefreshTokenService = (user) => {
     });
 };
 exports.createRefreshTokenService = createRefreshTokenService;
+const sendResetPasswordEmailService = (email, token) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.CREATOR,
+            pass: process.env.PASS
+        },
+        tls: {
+            rejectUnanthorized: false
+        }
+    });
+    const mailOptions = {
+        from: process.env.CREATOR,
+        to: email,
+        subject: 'Reset Password',
+        html: `<p>You requested a password reset. Please click on the link below to reset your password.</p>
+        <a href='http://localhost:3000/reset-password?token=${token}'>http://localhost:3000/reset-password</a>
+        `
+    };
+    try {
+        yield transporter.sendMail(mailOptions);
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.sendResetPasswordEmailService = sendResetPasswordEmailService;

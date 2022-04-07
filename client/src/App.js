@@ -10,6 +10,8 @@ import Register from './Components/Register/Register';
 import Success from './Components/Success';
 import UserDashboard from './Components/UserDashboard/UserDashboard';
 import SocialLogin from './Components/SocialLogin';
+import ForgotPassword from './Components/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
                 <Route path='/success' element={<Success />} />
                 <Route exact path='/mybusiness' element={<BusinessDashboard />} />
                 <Route exact path='/social-login' element={<SocialLogin />} />
+                <Route exact path='/forgot-password' element={<ForgotPassword />} />
+                <Route path='/reset-password' element={<ResetPassword />} />
             </Routes>
 
         </div>

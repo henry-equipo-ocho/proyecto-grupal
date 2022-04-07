@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signInSocialCallBackController = exports.signInSocialFailureController = exports.signInController = void 0;
+exports.forgotPasswordController = exports.signInSocialCallBackController = exports.signInSocialFailureController = exports.signInController = void 0;
 const signin_services_1 = require("../services/signin.services");
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
@@ -55,3 +55,17 @@ const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, v
     }
 });
 exports.signInSocialCallBackController = signInSocialCallBackController;
+const forgotPasswordController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield (0, signin_services_1.getUserService)(req.body.email);
+        if (!user)
+            return res.status(400).json(({ status: 'failed', errors: { message: `User doesn't exist` } }));
+        const token = (0, signin_services_1.createUserTokenService)(user);
+        yield (0, signin_services_1.sendResetPasswordEmailService)(req.body.email, token);
+        return res.status(200).json({ status: 'success', data: { message: `Email sent` } });
+    }
+    catch (e) {
+        return res.status(e.status || 400).json(({ status: 'error', errors: { message: e.message || e } }));
+    }
+});
+exports.forgotPasswordController = forgotPasswordController;

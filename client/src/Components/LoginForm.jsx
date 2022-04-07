@@ -23,8 +23,8 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 500,
-    height: 500,
+    width: 450,
+    height: 450,
     p: 4,
 };
 
@@ -98,6 +98,10 @@ const FormDialog = ({ abierto, close }) => {
         window.open(facebookLoginURL, '_self');
     };
 
+    const redirectToResetPassword = () => {
+        history("/forgot-password");
+    }
+
     return (
         <>
             <Dialog
@@ -153,8 +157,7 @@ const FormDialog = ({ abierto, close }) => {
                         />
 
                         <DialogContent>
-                            <Button>Did you forget your password?</Button>{" "}
-                            <GoogleButton onClick={responseSucess} />
+                            <Button onClick={redirectToResetPassword}>Did you forget your password?</Button>{" "}
                         </DialogContent>
                         <DialogActions>
                             <button className="shopButton" onClick={close}>
@@ -167,8 +170,11 @@ const FormDialog = ({ abierto, close }) => {
                                 Submit
                             </button>
                         </DialogActions>
+                        <DialogContent>
+                            <GoogleLoginButton onClick={googleLogin} />
+                            <FacebookLoginButton onClick={facebookLogin} />
+                        </DialogContent>
                     </DialogContent>
-                    {/* <GoogleLoginComponent /> */}
                 </form>
             </Dialog>
         </>
