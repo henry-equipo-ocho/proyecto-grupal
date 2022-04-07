@@ -94,9 +94,11 @@ export default function Listar() {
   const loadActivities = async () => {
     try {
       const datos = await axios.get('/admin/activities');
-      setActivities(datos.data.data);
-      setActivitiesBackup(datos.data.data);
+      console.log(datos.data.data)
+      setActivities([...datos.data.data[0], ...datos.data.data[1], ...datos.data.data[2], ...datos.data.data[3]]);
+      setActivitiesBackup([...datos.data.data[0], ...datos.data.data[1], ...datos.data.data[2], ...datos.data.data[3]]);
       setLoading(false);
+
     }
     catch (e) {
       alert("Error", `Error to load activities (${e})`, "error");

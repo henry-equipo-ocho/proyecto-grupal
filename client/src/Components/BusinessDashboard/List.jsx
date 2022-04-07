@@ -123,6 +123,7 @@ export default function List() {
           loadActivities();
         }
         catch (e) {
+          console.log(_id);
           console.log(e)
           alert("Error", "" + e, "error")
         }

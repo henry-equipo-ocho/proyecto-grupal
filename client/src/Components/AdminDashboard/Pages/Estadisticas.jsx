@@ -110,9 +110,9 @@ export default function Estadisticas() {
   const cargarActivities = async () => {
     try {
       const datos = await axiosPrivate.get('/admin/activities');
-      setTotalActivities(datos.data.data.length);
-      setActivitiesBusiness(datos.data.data.filter(act => !act.booking.includes('https://b2c.mla.cloud/')).length);
-      setActivitiesAmadeus(datos.data.data.filter(act => act.booking.includes('https://b2c.mla.cloud/')).length);
+      setTotalActivities([...datos.data.data[0], ...datos.data.data[1], ...datos.data.data[2], ...datos.data.data[3]].length);
+      setActivitiesBusiness([...datos.data.data[0], ...datos.data.data[1], ...datos.data.data[2], ...datos.data.data[3]].filter(act => !act.booking.includes('https://b2c.mla.cloud/')).length);
+      setActivitiesAmadeus([...datos.data.data[0], ...datos.data.data[1], ...datos.data.data[2], ...datos.data.data[3]].filter(act => act.booking.includes('https://b2c.mla.cloud/')).length);
       setLoadActivities(false);
     }
     catch (e) {
