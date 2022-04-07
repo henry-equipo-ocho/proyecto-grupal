@@ -65,8 +65,12 @@ export default function Home() {
                                 activities[0]?.length > 0 ? "tier1" : null
                             }`}
                         >
-                            {/* Actividades top */}
+                        {activities[0]?.length > 0 ? <div>
+                                <h1> Top activities</h1>
+                            </div> : null}
+                            
                             {activities[0]?.length > 0 ? (
+                                
                                 <div className="cardsDisplay">
                                     <div className="cardsContainer">
                                         {activities[0].map((a) => (
@@ -87,7 +91,7 @@ export default function Home() {
                                     className="loader"
                                     style={{ fontSize: "50px" }}
                                 >
-                                    {" "}
+                                   
                                 </p>
                             ) : null}
                         </div>
@@ -97,7 +101,10 @@ export default function Home() {
                                 activities[1]?.length > 0 ? "tier2" : null
                             }`}
                         >
-                            {/* rec */}
+                            {activities[1]?.length > 0 ? <div>
+                                <h1> Latest recommendations</h1>
+                            </div> : null}
+                            
                             {activities[1]?.length > 0 ? (
                                 <div className="cardsDisplay">
                                     <div className="cardsContainer">
@@ -129,7 +136,9 @@ export default function Home() {
                                 activities[2]?.length > 0 ? "tier3" : null
                             }`}
                         >
-                            {/* agg */}
+                            {activities[2]?.length > 0 ? <div>
+                                <h1> Latest news</h1>
+                            </div> : null}
                             {activities[2]?.length > 0 ? (
                                 <div className="cardsDisplay">
                                     <div className="cardsContainer">
