@@ -32,6 +32,11 @@ var transporter = nodemailer.createTransport({
     }
 });
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    let user = yield User_models_1.default.findById(userID);
+    if (user === null)
+        throw new Error(`User ${userID} not found`);
+    if (user.activeSubscription)
+        throw new Error(`User ${userID} already has an active subscription`);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -130,10 +135,40 @@ function updatePaymentInUserDB(userID, orderID) {
                 user.activeSubscription = true;
                 user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
                 yield user.save();
-                endSubscriptionUser(userID);
                 let paymentCreationDate = payment.createdAt;
                 let subscriptionExpiry = new Date(paymentCreationDate.getTime());
                 subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
+                let infoMailOptions = {
+                    from: `"New subscription" <${process.env.CREATOR}>`,
+                    to: user.email,
+                    subject: "User's subscription",
+                    html: `<h2> Hi, ${user.name}! Welcome to Eztinerary for Businesses! </h2>
+                    <h4>You recently bought a subscription! Here are your order details:</h4>
+                    <ul>
+                    You subscribed to
+                        <li>
+                            ${payment.tier === 1
+                        ? "Business Basic"
+                        : payment.tier === 2
+                            ? "Business Standard"
+                            : "Business Premium"}
+                        </li>
+                        You subscribed on:
+                        <li>${payment.createdAt}</li>
+                            Your subscription ends on:
+                        <li>${subscriptionExpiry}</li>
+                    </ul>`
+                };
+                // sending email
+                yield transporter.sendMail(infoMailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log("The user's subscription has ended");
+                    }
+                });
+                endSubscriptionUser(userID);
                 return {
                     name: user.name,
                     email: user.email,
@@ -166,9 +201,10 @@ function endSubscriptionUser(userID) {
                 var mailOptions = {
                     from: ` "Subscription" <${process.env.CREATOR}>`,
                     to: user.email,
-                    subject: "User's subscription",
-                    html: `<h2> ${user.name}! your subscription has ended </h2>
-                    <h4>Please renew it to continue enjoying the benefits...</h4>`
+                    subject: "Your Eztinerary subscription ended",
+                    html: `<h2> Hi there, ${user.name}! Your subscription has just ended </h2>
+                    <h4>Please renew it to keep enjoying the benefits...</h4>
+                    <p>Head over <a href="http://localhost:3000/plans">here</a> to stay with us </p>`
                 };
                 // sending email
                 yield transporter.sendMail(mailOptions, function (error, info) {

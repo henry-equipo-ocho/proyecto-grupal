@@ -21,7 +21,7 @@ const verifyEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         }
         else {
             // TODO: que deberia suceder aca?
-            console.log('must verify the gmail account');
+            res.status(401).json({ status: 'failed', errors: { message: 'Email not verified' } });
         }
     }
     catch (error) {

@@ -11,7 +11,7 @@ const verifyEmail = async (req: Request, res: Response, next: any) => {
         }
         else {
             // TODO: que deberia suceder aca?
-            console.log('must verify the gmail account')
+            res.status(401).json({status: 'failed', errors: {message: 'Email not verified'}})
         }
     } catch (error) {
         throw error
