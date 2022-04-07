@@ -27,7 +27,7 @@ export default function Home() {
     const indexOfFirstActivity = (currentPage - 1) * 10;
     const currentActivities = activities[3]?.slice(
         indexOfFirstActivity,
-        indexOfFirstActivity + 10
+        indexOfFirstActivity + 12
     );
 
     useEffect(() => dispatch(getActivities()), [dispatch]);
