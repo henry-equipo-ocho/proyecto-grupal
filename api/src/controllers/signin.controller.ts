@@ -23,7 +23,7 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
         const refreshToken = createRefreshTokenService(user);
         if (!refreshToken) return res.status(400).json(<ServerResponse>({ status: 'failed', errors: { message: `Couldn't create refresh token` } }));
 
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' });
         return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     } catch (e: any) {
         return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));

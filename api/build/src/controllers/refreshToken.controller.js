@@ -41,7 +41,7 @@ const clearRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, functi
         const cookies = req.cookies;
         if (!(cookies === null || cookies === void 0 ? void 0 : cookies.refreshToken))
             return res.status(200).send({ status: 'success' });
-        res.clearCookie('refreshToken', { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        res.clearCookie('refreshToken', { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' });
         return res.status(200).send({ status: 'success' });
     }
     catch (e) {
