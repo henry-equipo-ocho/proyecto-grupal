@@ -1,24 +1,24 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
 import { store } from './Components/Redux/Store';
-import axios from 'axios';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 
 axios.defaults.withCredentials = true;
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      
-        <App />
-     
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <BrowserRouter>
+
+            <App />
+
+        </BrowserRouter>
+    </Provider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

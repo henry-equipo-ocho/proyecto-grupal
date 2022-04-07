@@ -1,9 +1,9 @@
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../Redux/Actions/actions";
 import { axiosPrivate } from "./axios";
 import { useRefreshToken } from "./useRefreshToken";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setToken } from "../Redux/Actions/actions";
-import jwtDecode from "jwt-decode";
 
 export const useAxiosPrivate = () => {
 
@@ -12,9 +12,9 @@ export const useAxiosPrivate = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
+
         const requestInterceptor = axiosPrivate.interceptors.request.use(config => {
-            
+
             if (!config.headers['Authorization'] && token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }

@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteActivityService = exports.getAllUserService = exports.deleteUserService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
+const User_models_1 = __importDefault(require("../models/User.models"));
 const deleteUserService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_models_1.default.findByIdAndDelete(id);

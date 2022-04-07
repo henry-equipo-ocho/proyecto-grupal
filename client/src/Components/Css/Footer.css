@@ -1,4 +1,4 @@
-.footerContainer{
+.footerContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -6,40 +6,43 @@
     position: absolute;
     background-color: #00498b;
     width: 100%;
-
-
- 
 }
 
-@media all and (min-width:1024px) and (max-width:1280px){}
-@media all and (min-width:768px) and (max-width:1024px){}
-@media all and (min-width:480px) and (max-width:768px){}
-@media all and (max-width:480px){}
+@media all and (min-width:1024px) and (max-width:1280px) {}
 
-.div1 img{
+@media all and (min-width:768px) and (max-width:1024px) {}
+
+@media all and (min-width:480px) and (max-width:768px) {}
+
+@media all and (max-width:480px) {}
+
+.div1 img {
     height: 50px;
 }
+
 .div1 h3 {
     font-family: 'Roboto';
-    color:white;
+    color: white;
 }
 
-.div2 ul{
+.div2 ul {
     font-family: 'Roboto';
-    color:white;
+    color: white;
     list-style: none;
 }
-.div2 h3{
+
+.div2 h3 {
     font-family: 'Roboto';
-    color:white;
+    color: white;
 }
 
 
-.div3 img{
+.div3 img {
     height: 100px;
     width: 160px;
 }
-.div3 h3{
+
+.div3 h3 {
     font-family: 'Roboto';
-    color:white;
+    color: white;
 }

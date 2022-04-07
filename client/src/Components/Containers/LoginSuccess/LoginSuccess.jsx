@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
-import swal from "sweetalert";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export function LoginSuccess() {
-   
     useEffect(() => {
         setTimeout(() => {
             window.close();
-        }, 2000)
+        }, 2000);
     }, []);
-    return (
-        swal('Thanks for Login')
-    )
-
+    return Swal.fire({
+        title: `Welcome`,
+        text: "Successfully signed in",
+        icon: "success",
+        color: "white",
+        background: "#00498b",
+        confirmButtonColor: "#24c59c",
+    });;
 }

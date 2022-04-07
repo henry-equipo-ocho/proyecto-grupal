@@ -1,10 +1,10 @@
-import dotenv from 'dotenv';
 import axios, { AxiosResponse } from 'axios';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import User from '../models/User.models';
-import UserInterface, { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
 import Payment, { FrontFacingPayment } from "../interfaces/Payment.interface";
+import { UserRoles } from '../interfaces/User.interface';
+import User from '../models/User.models';
 
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
@@ -24,8 +24,9 @@ var transporter = nodemailer.createTransport({
 })
 
 export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any> => {
-    console.log(cart)
-    console.log(userID)
+    let user = await User.findById(userID);
+    if (user === null) throw new Error(`User ${userID} not found`);
+    if (user.activeSubscription) throw new Error(`User ${userID} already has an active subscription`)
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -133,13 +134,43 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
             user.markModified('anything'); // ? https://stackoverflow.com/a/52033372
             await user.save();
 
-            endSubscriptionUser(userID);
-
-            // return true;
             let paymentCreationDate = payment.createdAt as Date;
             let subscriptionExpiry = new Date(paymentCreationDate.getTime());
             subscriptionExpiry.setMinutes(paymentCreationDate.getMinutes() + 2);
-            console.log(paymentCreationDate, subscriptionExpiry.toString());
+
+            let infoMailOptions = {
+                from: `"New subscription" <${process.env.CREATOR}>`,
+                to: user.email,
+                subject: "User's subscription",
+                html: `<h2> Hi, ${user.name}! Welcome to Eztinerary for Businesses! </h2>
+                    <h4>You recently bought a subscription! Here are your order details:</h4>
+                    <ul>
+                    You subscribed to
+                        <li>
+                            ${payment.tier === 1
+                        ? "Business Basic"
+                        : payment.tier === 2
+                            ? "Business Standard"
+                            : "Business Premium"}
+                        </li>
+                        You subscribed on:
+                        <li>${payment.createdAt}</li>
+                            Your subscription ends on:
+                        <li>${subscriptionExpiry}</li>
+                    </ul>`
+            };
+
+            // sending email
+            await transporter.sendMail(infoMailOptions, function (error: any, info: any) {
+                if (error) {
+                    console.log(error)
+                }
+                else {
+                    console.log("The user's subscription has ended")
+                }
+            });
+
+            endSubscriptionUser(userID);
 
             return {
                 name: user.name,
@@ -174,9 +205,10 @@ async function endSubscriptionUser(userID: string) {
             var mailOptions = {
                 from: ` "Subscription" <${process.env.CREATOR}>`,
                 to: user.email,
-                subject: "User's subscription",
-                html: `<h2> ${user.name}! your subscription has ended </h2>
-                    <h4>Please renew it to continue enjoying the benefits...</h4>`
+                subject: "Your Eztinerary subscription ended",
+                html: `<h2> Hi there, ${user.name}! Your subscription has just ended </h2>
+                    <h4>Please renew it to keep enjoying the benefits...</h4>
+                    <p>Head over <a href="http://localhost:3000/plans">here</a> to stay with us </p>`
             };
 
             // sending email

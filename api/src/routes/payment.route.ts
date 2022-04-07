@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from 'passport';
-import { createOrder, captureOrder } from "../controllers/payment.controller";
+import { captureOrder, createOrder } from "../controllers/payment.controller";
 
 const router: Router = Router();
 
