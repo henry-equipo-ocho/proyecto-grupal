@@ -51,7 +51,7 @@ const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, v
     try {
         const user = yield (0, signin_services_1.getUserService)(email);
         const refreshToken = (0, signin_services_1.createRefreshTokenService)(user);
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: true });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' });
         res.redirect(`${process.env.DOMAINS}/social-login/`);
         // return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     }
