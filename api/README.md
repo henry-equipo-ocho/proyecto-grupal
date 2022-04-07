@@ -2,7 +2,7 @@
 
 API del proyecto grupal "eztinerary"
 
-## API Reference
+## API Reference 
 
 ### Sign Up
 
