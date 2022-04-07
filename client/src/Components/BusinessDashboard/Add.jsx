@@ -70,7 +70,7 @@ export default function Add() {
             } catch (e) {
                 Swal.fire({
                     title: `Error`,
-                    text: `${e}`,
+                    text: `${e.response.data.errors.message}`,
                     icon: "error",
                     color: "white",
                     background: "#00498b",

@@ -24,8 +24,8 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 450,
-    height: 450,
+    width: 550,
+    height: 600,
     p: 4,
 };
 
@@ -43,7 +43,6 @@ const validationSchema = yup.object({
 
 const FormDialog = ({ abierto, close }) => {
     const axiosPrivate = useAxiosPrivate();
-
     const [open, setOpen] = React.useState(abierto);
     const history = useNavigate();
     const dispatch = useDispatch();
@@ -87,7 +86,7 @@ const FormDialog = ({ abierto, close }) => {
                     title: `Oops...`,
                     text:
                         error.response.data.errors.message ===
-                        "Email not verified"
+                            "Email not verified"
                             ? "Please, verify your email before signing in to your account"
                             : "Please, check your password and try again",
                     icon: "error",
@@ -126,7 +125,7 @@ const FormDialog = ({ abierto, close }) => {
                 }}
             >
                 <form
-                    style={{ border: "solid 1px black" }}
+                    style={{ borderRadius: "5px", boxShadow: "24" }}
                     onSubmit={formik.handleSubmit}
                 >
                     <DialogTitle>Log in</DialogTitle>
@@ -167,23 +166,20 @@ const FormDialog = ({ abierto, close }) => {
                             }
                         />
 
-                        <DialogContent>
-                            <Button onClick={redirectToResetPassword}>Did you forget your password?</Button>{" "}
-                        </DialogContent>
-                        <DialogActions>
+                        <center>
+                            <Button onClick={redirectToResetPassword}>Did you forget your password?</Button>
+                            <br />
                             <button className="shopButton" onClick={close}>
                                 Cancel
                             </button>
                             <button
                                 className="shopButton"
-                                /* onClick={() => setOpen(!open)} */
                             >
                                 Submit
                             </button>
-                        </DialogActions>
+                        </center>
                         <DialogContent>
                             <GoogleLoginButton onClick={googleLogin} />
-                            <FacebookLoginButton onClick={facebookLogin} />
                         </DialogContent>
                     </DialogContent>
                 </form>

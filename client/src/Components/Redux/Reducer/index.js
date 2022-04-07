@@ -23,30 +23,24 @@ export default function rootReducer(state = initialState, action) {
             };
 
         case SET_ALL_ACTIVITIES:
-            let value = action.payload;
             return {
                 ...state,
                 allActivities: action.payload,
-                currentActivities: action.payload
+                currentActivities: action.payload,
             };
 
         case GET_ACTIVITIES:
             return {
                 ...state,
                 allActivities: action.payload,
-                currentActivities: action.payload,
+                currentActivities: action.payload
             };
         case SET_LOADING:
             return {
                 ...state,
                 loading: action.payload
             };
-        case ORDER_ACTIVITIES_BY_CITY:
-            return {
-                ...state,
-                allActivities: action.payload,
-                currentActivities: action.payload,
-            };
+
         case ORDER_ACTIVITIES_BY_PRICE:
             return {
                 ...state,

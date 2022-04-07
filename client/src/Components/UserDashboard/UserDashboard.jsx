@@ -77,7 +77,7 @@ const UserDashboard = () => {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" sx={{borderRadius: "10px", backgroundColor:"#00498b"}}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography
@@ -176,7 +176,9 @@ const UserDashboard = () => {
                                 >
                                     Home
                                 </Button>
+                                
                             </Link>
+
                             {pages.map((page) => (
                                 <Button
                                     key={page}

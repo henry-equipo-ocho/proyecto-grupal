@@ -53,7 +53,7 @@ export default function Reset() {
                     background: "#00498b",
                     confirmButtonColor: "#24c59c",
                 });
-                history("/login");
+                history("/home");
             } catch(e) {
                 Swal.fire({
                     title: "Oops...",

@@ -24,9 +24,9 @@ const style = {
     width: 900,
     height: 650,
     bgcolor: "background.paper",
-    border: "1px solid #000",
     boxShadow: 24,
     p: 4,
+    borderRadius: "5px",
 };
 
 export default function ActivityDetail({ activity, close, id }) {
