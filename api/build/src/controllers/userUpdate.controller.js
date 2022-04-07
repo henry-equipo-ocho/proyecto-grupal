@@ -28,9 +28,9 @@ const userUpdateController = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (req.body.password)
             return res.status(400).send(({ status: 'error', errors: { message: 'Invalid route to modified password' } }));
         if (Object.entries(req.body).length === 0)
-            return res.status(400).send(({ status: 'error', errors: { message: 'No values to modified' } }));
+            return res.status(400).send(({ status: 'error', errors: { message: 'No values to modify' } }));
         if (Object.keys(req.body).includes('role'))
-            return res.status(400).send(({ status: 'error', errors: { message: 'No authorized to modified some props' } }));
+            return res.status(400).send(({ status: 'error', errors: { message: 'Unauthorized to modify' } }));
         yield (0, userUpdate_services_1.updatePersonalInfo)(req, user.id);
         return res.status(200).send(({ status: 'success' }));
     }

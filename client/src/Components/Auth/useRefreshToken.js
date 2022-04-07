@@ -1,6 +1,6 @@
-import { axiosPrivate } from "./axios";
 import { useDispatch } from "react-redux";
 import { setToken } from "../Redux/Actions/actions";
+import { axiosPrivate } from "./axios";
 
 export const useRefreshToken = () => {
 

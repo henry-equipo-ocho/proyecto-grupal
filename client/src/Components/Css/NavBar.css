@@ -1,5 +1,4 @@
-
-.headerNav{
+.headerNav {
     background-color: #00498b;
     height: 70px;
     display: flex;
@@ -10,22 +9,24 @@
     font-family: 'Roboto';
     color: white;
 }
-.headerNav img{
+
+.headerNav img {
     margin-left: 20px;
     width: 85px;
     height: 64px;
 }
 
-.buttonsLogOut, .buttonsLogin {
+.buttonsLogOut,
+.buttonsLogin {
     margin: 1em;
 }
 
 
 
-.buttonNav{
+.buttonNav {
     font-size: medium;
-    font-style:normal;
-    font-weight:550;
+    font-style: normal;
+    font-weight: 550;
     border-radius: 5px;
     background-color: #24c59d9f;
     color: white;
@@ -38,11 +39,11 @@
     border-right: 10px;
 }
 
-.buttonNav:hover{
+.buttonNav:hover {
     background-color: #a9e8bc;
 }
 
-.buttonNav a{
+.buttonNav a {
     font-family: 'Roboto';
     text-decoration: none;
     font-weight: 800;

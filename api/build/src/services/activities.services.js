@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserActivities = exports.setWatchedTimesService = exports.updateFieldActivitiesService = exports.updateActivityInfo = exports.getActivitiesFromArray = exports.getDBCityActivities = exports.getDBCountryActivities = exports.getAllDBActivities = exports.getActivityById = exports.updateActivitiesService = exports.saveActivitiesService = exports.getAPIActivitiesService = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
 const Activity_models_1 = __importDefault(require("../models/Activity.models"));
 const Amadeus = require('amadeus');
-const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const getAPIActivitiesService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpService = void 0;
-const User_models_1 = __importDefault(require("../models/User.models"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const User_models_1 = __importDefault(require("../models/User.models"));
 const nodemailer = require('nodemailer');
 dotenv_1.default.config();
 var transporter = nodemailer.createTransport({

@@ -1,7 +1,7 @@
-import { RequestHandler, Response, Request } from "express";
-import { getActivityById, getUserActivities, saveActivitiesService, updateActivityInfo } from "../services/activities.services";
+import { Request, RequestHandler, Response } from "express";
 import ActivityInterface from "../interfaces/Activity.interface";
 import ServerResponse from "../interfaces/ServerResponse.interface";
+import { getActivityById, getUserActivities, saveActivitiesService, updateActivityInfo } from "../services/activities.services";
 import { deleteActivityService } from "../services/admin.services";
 
 export const roleVerify = (req: Request, res: Response, next: Function) => {
@@ -30,22 +30,22 @@ export const postBusinesActivities: RequestHandler = async (req: Request, res: R
         const id = req.user?.id;
         const tier = req.user?.payments?.pop().tier;
 
-        const {name, description, picture, city, country, price_currency, price_amount, booking} = req.body;
+        const { name, description, picture, city, country, price_currency, price_amount, booking } = req.body;
 
-        if(!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) {res.status(400).send({ status: "failed", errors: { message: "Missing values" } })}
+        if (!name || !description || !picture || !country || !city || !price_currency || !price_amount || !booking) { res.status(400).send({ status: "failed", errors: { message: "Missing info" } }) }
 
-        const activitiesFormat: ActivityInterface = {name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0, ownerId: id};
+        const activitiesFormat: ActivityInterface = { name, description, picture, city, country, price_currency, price_amount, booking, watchedTimes: 0, bookedTimes: 0, ownerId: id };
 
-        if (tier === 3) {await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" }); }
+        if (tier === 3) { await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" }); }
 
         const activities = await getUserActivities(id);
 
-        if (tier === 1 && activities.length < 3) {await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" }); }
-        if (tier === 2 && activities.length < 5) {await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" });}
+        if (tier === 1 && activities.length < 3) { await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" }); }
+        if (tier === 2 && activities.length < 5) { await saveActivitiesService(activitiesFormat); return res.status(200).send({ status: "success" }); }
 
         return res.status(400).send({ status: "failed", errors: { message: "You have reached the limit of activities" } });
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 }
 
@@ -56,13 +56,13 @@ export const updateBusinessActivities: RequestHandler = async (req: Request, res
 
         const activity = await getActivityById(id);
 
-        if(activity.ownerId != req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
-        
+        if (activity.ownerId != req.user?.id) { return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } }) };
+
         await updateActivityInfo(req, id);
-        
-        return res.status(200).send(<ServerResponse>({status: 'success'}));
+
+        return res.status(200).send(<ServerResponse>({ status: 'success' }));
     } catch (e: any) {
-        return res.status(400).send(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(400).send(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 }
 
@@ -72,12 +72,12 @@ export const deleteBusinessActivity = async (req: Request, res: Response) => {
 
         const activity = await getActivityById(id);
 
-        if(activity.ownerId != req.user?.id) {return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } })};
+        if (activity.ownerId != req.user?.id) { return res.status(400).send({ status: "failed", errors: { message: "You are not the owner of this activity" } }) };
 
         await deleteActivityService(id);
 
-        return res.status(200).json(<ServerResponse>({status: 'success'}));
+        return res.status(200).json(<ServerResponse>({ status: 'success' }));
     } catch (e: any) {
-        return res.status(e.status || 400).json(<ServerResponse>({status: 'error', errors: {message: e.message || e}}));
+        return res.status(e.status || 400).json(<ServerResponse>({ status: 'error', errors: { message: e.message || e } }));
     }
 }
