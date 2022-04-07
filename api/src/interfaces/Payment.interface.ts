@@ -20,4 +20,4 @@ export default interface Payment {
     price: number,
     createdAt?: Date,
     updatedAt?: Date
-}
+}  

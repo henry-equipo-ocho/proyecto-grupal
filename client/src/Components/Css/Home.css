@@ -3,11 +3,6 @@
 @media all and (min-width:480px) and (max-width:768px){}
 @media all and (max-width:480px){}
 
-.page{
-    background-color: #a9e8bc;
-    padding: 10px;
-}
-
 .bodyContainer{
     display: flex;
     flex-direction: column;
@@ -15,7 +10,20 @@
     gap:30px;
 
 }
+.tier1{
+    background-color: goldenrod;
+    padding: 10px;
+}
 
+.tier2{
+    background-color: grey;
+    padding: 10px;
+}
+
+.tier3{
+    background-color:burlywood;
+    padding: 10px;
+}
 .searchImage {
     display: flex;
     flex-direction: column;

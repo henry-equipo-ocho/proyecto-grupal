@@ -23,7 +23,7 @@ const getOrderedCities = (req, res) => __awaiter(void 0, void 0, void 0, functio
         try {
             if (country) {
                 const activities = yield (0, activities_services_1.getDBCountryActivities)(country);
-                var orderedActivities = activities.sort(function (a, b) {
+                let orderedActivities = activities.sort(function (a, b) {
                     if (a.city > b.city) {
                         return 1;
                     }
@@ -35,8 +35,8 @@ const getOrderedCities = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
             }
             else {
-                const activities = yield (0, activities_services_1.getAllDBActivities)();
-                var orderedActivities = activities.sort(function (a, b) {
+                let activities = yield (0, activities_services_1.getAllDBActivities)();
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     if (a.city > b.city) {
                         return 1;
                     }
@@ -44,8 +44,8 @@ const getOrderedCities = (req, res) => __awaiter(void 0, void 0, void 0, functio
                         return -1;
                     }
                     return 0;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
         }
         catch (error) {
@@ -68,17 +68,17 @@ const getOrderedCities = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
             }
             else {
-                const activities = yield (0, activities_services_1.getAllDBActivities)();
-                var orderedActivities = activities.sort(function (a, b) {
+                let activities = yield (0, activities_services_1.getAllDBActivities)();
+                activities.forEach((byTier) => byTier.sort(function (a, b) {
                     if (a.city > b.city) {
-                        return -1;
-                    }
-                    else if (b.city > a.city) {
                         return 1;
                     }
+                    else if (b.city > a.city) {
+                        return -1;
+                    }
                     return 0;
-                });
-                return !orderedActivities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: orderedActivities }));
+                }));
+                return !activities.length ? res.status(400).send(noactivities) : res.status(200).send(({ status: 'success', data: activities }));
             }
         }
         catch (error) {

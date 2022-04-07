@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setWatchedorBookedTimesController = exports.updateFieldController = exports.getActivitiesController = exports.updateAPIActivitiesController = exports.apiActivitiesController = void 0;
+exports.setWatchedorBookedTimesController = exports.getActivitiesController = exports.updateAPIActivitiesController = exports.apiActivitiesController = void 0;
 const Amadeus = require('amadeus');
 const dotenv_1 = __importDefault(require("dotenv"));
 const activities_services_1 = require("../services/activities.services");
@@ -99,16 +99,6 @@ const getActivitiesController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.getActivitiesController = getActivitiesController;
-const updateFieldController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, activities_services_1.updateFieldActivitiesService)();
-        return res.sendStatus(200);
-    }
-    catch (e) {
-        return res.sendStatus(400);
-    }
-});
-exports.updateFieldController = updateFieldController;
 const setWatchedorBookedTimesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { type, id } = req.body;

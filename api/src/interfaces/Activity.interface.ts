@@ -1,3 +1,4 @@
+import User from "./User.interface";
 export default interface Activity {
     id?: string,
     name: string,
@@ -11,5 +12,5 @@ export default interface Activity {
     watchedTimes: number,
     bookedTimes: number,
     created?: boolean,
-    ownerId?: string
+    ownerId?: string | User
 }

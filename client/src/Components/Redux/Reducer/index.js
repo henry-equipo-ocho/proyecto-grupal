@@ -8,8 +8,6 @@ import {
     GET_COUNTRIES,
     GET_CITIES,
     PAYMENT_ORDER,
-    SUCCESS,
-
     SET_TOKEN,
 } from '../Actions/actions_types';
 
@@ -77,10 +75,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 payment: action.payload
-            }
-        case SUCCESS:
-            return
-
+            };
         case SET_TOKEN:
             return {
                 ...state,

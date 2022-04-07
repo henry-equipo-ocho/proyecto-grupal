@@ -23,23 +23,25 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 
-const pages = ['Favorites', 'Edit profile', 'Plans'];
+const pages = ['Favorites', 'Edit profile', 'Plans', 'Logout'];
 
 const UserDashboard = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
+  const role = JSON.parse(localStorage.getItem('data')).role;
+
   const isLogged = useSelector(state => state.token) || localStorage.getItem('loggedIn') ? true : false;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState('favorites');
 
   useEffect(() => {
-    if(!isLogged){
+    if (!isLogged) {
       history('/home');
     }
     document.title = 'Eztinerary - User Dashboard';
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpenNavMenu = (event) => {
@@ -55,16 +57,16 @@ const UserDashboard = () => {
   }
 
   const handleCloseNavMenu = (e) => {
-    switch(e.target.innerText.toLowerCase()){
-      case 'logout':{
+    switch (e.target.innerText.toLowerCase()) {
+      case 'logout': {
         logout(e);
         break;
       }
-      case 'favorites':{
+      case 'favorites': {
         setCurrentPage('favorites');
         break;
       }
-      case 'edit profile':{
+      case 'edit profile': {
         setCurrentPage('edit profile');
         break;
       }
@@ -77,101 +79,113 @@ const UserDashboard = () => {
 
   return (
     <>
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            User Dashboard
-          </Typography>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            >
+              User Dashboard
+            </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="dashboard menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              <MenuItem>
-                <Link to='/home' style={{ textDecoration: 'none', color: 'black' }}>
-                  <Typography>
-                    Home
-                  </Typography>
-                </Link>
-              </MenuItem>
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}>
-                  {page}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="dashboard menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                <MenuItem>
+                  <Link to='/home' style={{ textDecoration: 'none', color: 'black' }}>
+                    <Typography>
+                      Home
+                    </Typography>
+                  </Link>
                 </MenuItem>
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}>
+                    {page}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              UserDashboard
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Link to='/home' style={{ textDecoration: 'none' }}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Home
+                </Button>
+              </Link>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}
+                  sx={{ my: 2, color: 'white !important', display: 'block' }}
+                >
+                  {page}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            UserDashboard
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link to='/home' style={{ textDecoration: 'none' }}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Home
-              </Button>
-            </Link>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={(e) => page !== 'Plans' ? handleCloseNavMenu(e) : history('/plans')}
-                sx={{ my: 2, color: 'white !important', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    <Box>
-      { currentPage === 'favorites' 
-        ?
+            </Box>
+            {
+              role === 1 ?
+                <Box sx={{ flexGrow: 0 }}>
+                  <Link to='/mybusiness' style={{ textDecoration: 'none' }}>
+                    <Button sx={{ my: 2, color: 'white !important', display: 'block' }} >
+                      Business Dashboard
+                    </Button>
+                  </Link>
+                </Box>
+                :
+                null
+            }
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Box>
+        {currentPage === 'favorites'
+          ?
           <Favorites />
-        :
+          :
           <EditProfile />
-      }
-      <Footer />
+        }
+        <Footer />
 
-    </Box>
+      </Box>
     </>
   );
 };

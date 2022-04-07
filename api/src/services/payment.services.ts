@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import User from '../models/User.models';
 import UserInterface, { UserRoles } from '../interfaces/User.interface';
 import Cart from "../interfaces/Cart.interface";
-import { FrontFacingPayment } from "../interfaces/Payment.interface";
+import Payment, { FrontFacingPayment } from "../interfaces/Payment.interface";
 
 var cron = require('node-cron');
 const nodemailer = require('nodemailer');
@@ -24,6 +24,8 @@ var transporter = nodemailer.createTransport({
 })
 
 export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any> => {
+    console.log(cart)
+    console.log(userID)
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -41,6 +43,7 @@ export const createPayPalOrder = async (cart: Cart, userID: string): Promise<any
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+            shipping_preference: "NO_SHIPPING"
         }
     };
 
@@ -117,7 +120,7 @@ async function updatePaymentInUserDB(userID: string, orderID: string): Promise<F
     if (user === null) {
         throw new Error(`User (${userID}) not found`);
     } else {
-        let payment = user.payments.find((payment) => payment.id === orderID);
+        let payment: Payment | undefined = user.payments.find((payment) => payment.id === orderID);
         if (!payment) {
             throw new Error(`Payment (${orderID}) not found`);
         }

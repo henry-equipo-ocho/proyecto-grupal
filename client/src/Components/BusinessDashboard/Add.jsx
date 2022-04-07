@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 import alert from 'sweetalert';
 
-import { useAxiosPrivate } from '../../../Auth/useAxiosPrivate';
+import { useAxiosPrivate } from '../Auth/useAxiosPrivate';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 
-import countries from '../../../Register/countries';
+import countries from '../Register/countries';
 
 const validationSchema = yup.object({
   name: yup
@@ -51,7 +51,6 @@ const validationSchema = yup.object({
 });
 
 export default function Add() {
-
   const axios = useAxiosPrivate();
 
   const formik = useFormik({
@@ -68,7 +67,7 @@ export default function Add() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post('/admin/create/activity', values);
+        await axios.post('/business/activities', values);
         alert("Success", "Activity succesfully added!", "success");
         formik.resetForm();
       }
@@ -81,7 +80,7 @@ export default function Add() {
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <Typography variant='h4'>Add activity</Typography>
+      <Typography variant='h4'>Add an activity</Typography>
       <form onSubmit={formik.handleSubmit}>
         <Box>
           <TextField

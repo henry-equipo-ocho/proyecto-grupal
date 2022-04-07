@@ -32,6 +32,8 @@ var transporter = nodemailer.createTransport({
     }
 });
 const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(cart);
+    console.log(userID);
     const order = {
         intent: 'CAPTURE',
         purchase_units: [
@@ -49,6 +51,10 @@ const createPayPalOrder = (cart, userID) => __awaiter(void 0, void 0, void 0, fu
             user_action: 'PAY_NOW',
             return_url: process.env.CLIENT_APP_PAYMENT_SUCCESS,
             cancel_url: process.env.CLIENT_APP_PAYMENT_CANCEL,
+
+
+            shipping_preference: "NO_SHIPPING"
+
         }
     };
     try {
