@@ -45,7 +45,7 @@ export default function ForgotPassword() {
             } catch(e) {
                 Swal.fire({
                     title: "Oops...",
-                    text: "An error has occurred",
+                    text: "Email not found in our database",
                     icon: "error",
                     color: "white",
                     background: "#00498b",
