@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import logo from "../Media/Logo.png";
 import { useAxiosPrivate } from "./Auth/useAxiosPrivate";
@@ -6,8 +7,8 @@ import "./Css/Success.css";
 import Footer from "./Footer";
 
 export default function Success() {
+    const loading = useSelector((state) => state.loading)
     const axiosPrivate = useAxiosPrivate();
-
     const [searchParams] = useSearchParams();
     const paypalToken = searchParams.get("token");
 
@@ -53,32 +54,32 @@ export default function Success() {
                 </div>
             </header>
 
-            <div className="detailShop">
-                <center>
-                    <h1>Thanks, {detail.nombre}!</h1>
-                    This are your purchase details:
-                    <ul>
-                        <label className="tag">Your name:</label>
-                        <li>{detail.nombre}</li>
-                        <label className="tag">Your email:</label>
-                        <li> {detail.email}</li>
-                        <label className="tag">You subscribed to: </label>
-                        <li>
-                            {detail.tier === 1
-                                ? "Business Basic"
-                                : detail.tier === 2
-                                ? "Business Standard"
-                                : "Business Premium"}
-                        </li>
-                        <label className="tag">You subscribed on: </label>
-                        <li>{detail.buydate}</li>
-                        <label className="tag">
-                            Your subscription ends on:
-                        </label>
-                        <li> {detail.expira}</li>
-                    </ul>
-                </center>
-            </div>
+                <div className="detailShop">
+                    <center>
+                        <h1>Thanks, {detail.nombre}!</h1>
+                        This are your purchase details:
+                        <ul>
+                            <label className="tag">Your name:</label>
+                            <li>{detail.nombre}</li>
+                            <label className="tag">Your email:</label>
+                            <li> {detail.email}</li>
+                            <label className="tag">You subscribed to: </label>
+                            <li>
+                                {detail.tier === 1
+                                    ? "Business Basic"
+                                    : detail.tier === 2
+                                        ? "Business Standard"
+                                        : "Business Premium"}
+                            </li>
+                            <label className="tag">You subscribed on: </label>
+                            <li>{detail.buydate}</li>
+                            <label className="tag">
+                                Your subscription ends on:
+                            </label>
+                            <li> {detail.expira}</li>
+                        </ul>
+                    </center>
+                </div>
             <Footer />
         </div>
     );

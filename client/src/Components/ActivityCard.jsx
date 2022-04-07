@@ -19,7 +19,7 @@ export default function ActivityCard({ nombre, imagen, handleDetail, id }) {
     }
 
     return (
-        <Card sx={{ maxWidth: 400, border: 1 }}>
+        <Card sx={{ maxWidth: 400, boxShadow: 24 }}>
             <CardMedia
                 component="img"
                 height="300"

@@ -40,6 +40,7 @@
     height: 500px;
     align-items: center;
     margin: 1em;
+  
 }
 
 .filter {
@@ -49,6 +50,7 @@
     background-color: #00498b;
     border-radius: 10px;
     color: #24c59c;
+    box-shadow: "100px";
 }
 
 .cardsDisplay {

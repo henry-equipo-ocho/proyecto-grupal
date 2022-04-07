@@ -152,60 +152,6 @@ export default function Favorites() {
                                             alignItems: "center",
                                         }}
                                     >
-                                        <Accordion
-                                            key={itinerary.name + 1}
-                                            sx={{
-                                                my: 1,
-                                                width: "50vw",
-                                                border: "1px solid #CAE5CB",
-                                            }}
-                                        >
-                                            <AccordionSummary
-                                                expandIcon={<ExpandMoreIcon />}
-                                            >
-                                                <Typography>
-                                                    Edit itinerary
-                                                </Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails
-                                                sx={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                }}
-                                            >
-                                                <Box
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexDirection: "row",
-                                                        alignItems: "center",
-                                                        justifyContent:
-                                                            "center",
-                                                    }}
-                                                >
-                                                    <TextField
-                                                        sx={{
-                                                            ml: 1,
-                                                            width: "75%",
-                                                        }}
-                                                        id="name"
-                                                        name="name"
-                                                        label="Change name of itinerary"
-                                                        value={itiName}
-                                                        onChange={(e) =>
-                                                            setItiname(
-                                                                (prev) =>
-                                                                    (prev =
-                                                                        e.target
-                                                                            .value)
-                                                            )
-                                                        }
-                                                    />
-                                                    <Button sx={{ mx: 1 }}>
-                                                        Change name
-                                                    </Button>
-                                                </Box>
-                                            </AccordionDetails>
-                                        </Accordion>
                                         <Button
                                             variant="outlined"
                                             color="error"

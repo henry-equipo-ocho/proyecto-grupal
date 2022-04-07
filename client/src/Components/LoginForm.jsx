@@ -2,19 +2,21 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 import { useFormik } from "formik";
 // import { formLabelClasses, Link } from '@mui/material';
 import jwt_decode from "jwt-decode";
 import * as React from "react";
-import GoogleButton from "react-google-button";
+// import GoogleButton from "react-google-button";
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useAxiosPrivate } from "./Auth/useAxiosPrivate";
+import "./LoginForm.css";
 import { setToken, setUserName } from "./Redux/Actions/actions";
 
 const style = {
@@ -22,8 +24,9 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 500,
-    height: 500,
+    width: 550,
+    height: 600,
+    p: 4,
 };
 
 const validationSchema = yup.object({
@@ -52,7 +55,10 @@ const FormDialog = ({ abierto, close }) => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                const datos = await axiosPrivate.post("/signin", values);
+                const datos = await axios.post(
+                    "http://localhost:3001/signin",
+                    values
+                );
                 var decoded = jwt_decode(datos.data.data);
                 const miStorage = window.localStorage;
                 dispatch(setToken(datos.data.data));
@@ -74,8 +80,15 @@ const FormDialog = ({ abierto, close }) => {
                 history("/dashboard");
             } catch (error) {
                 Swal.fire({
+                    customClass: {
+                        container: "swal-container",
+                    },
                     title: `Oops...`,
-                    text: "Incorrect user or password",
+                    text:
+                        error.response.data.errors.message ===
+                            "Email not verified"
+                            ? "Please, verify your email before signing in to your account"
+                            : "Please, check your password and try again",
                     icon: "error",
                     color: "white",
                     background: "#00498b",
@@ -85,9 +98,19 @@ const FormDialog = ({ abierto, close }) => {
         },
     });
 
-    const responseSucess = async () => {
+    const googleLogin = async () => {
         const googleLoginURL = "http://localhost:3001/signin/google";
+        window.open(googleLoginURL, '_self');
     };
+
+    const facebookLogin = async () => {
+        const facebookLoginURL = "http://localhost:3001/signin/facebook";
+        window.open(facebookLoginURL, '_self');
+    };
+
+    const redirectToResetPassword = () => {
+        history("/forgot-password");
+    }
 
     return (
         <>
@@ -102,7 +125,7 @@ const FormDialog = ({ abierto, close }) => {
                 }}
             >
                 <form
-                    style={{ border: "solid 1px black" }}
+                    style={{ borderRadius: "5px", boxShadow: "24" }}
                     onSubmit={formik.handleSubmit}
                 >
                     <DialogTitle>Log in</DialogTitle>
@@ -143,23 +166,22 @@ const FormDialog = ({ abierto, close }) => {
                             }
                         />
 
-                        <DialogContent>
-                            <Button>Did you forget your password?</Button>{" "}
-                            <GoogleButton onClick={responseSucess} />
-                        </DialogContent>
-                        <DialogActions>
+                        <center>
+                            <Button onClick={redirectToResetPassword}>Did you forget your password?</Button>
+                            <br />
                             <button className="shopButton" onClick={close}>
                                 Cancel
                             </button>
                             <button
                                 className="shopButton"
-                                onClick={() => setOpen(!open)}
                             >
                                 Submit
                             </button>
-                        </DialogActions>
+                        </center>
+                        <DialogContent>
+                            <GoogleLoginButton onClick={googleLogin} />
+                        </DialogContent>
                     </DialogContent>
-                    {/* <GoogleLoginComponent /> */}
                 </form>
             </Dialog>
         </>

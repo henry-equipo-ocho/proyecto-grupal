@@ -56,7 +56,14 @@ export default function PaymentForm() {
             });
             dispatch(paymentOrder(payment));
         } catch (e) {
-            console.log(e);
+            Swal.fire({
+                title: `Sorry`,
+                text: `You already have a subscription!`,
+                icon: "error",
+                color: "white",
+                background: "#00498b",
+                confirmButtonColor: "#24c59c",
+            });
         }
     }
 

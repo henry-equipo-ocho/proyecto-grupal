@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from 'passport';
-import { signInController, signInSocialCallBackController, signInSocialFailureController } from "../controllers/signin.controller";
+import { forgotPasswordController, signInController, signInSocialCallBackController, signInSocialFailureController } from "../controllers/signin.controller";
 import verifyEmail from '../middlewares/verification';
 
 const router: Router = Router();
@@ -22,5 +22,9 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'pu
 router.get('/facebook/failure', signInSocialFailureController);
 
 router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/signin/facebook/failure' }), signInSocialCallBackController);
+
+// Forgot password
+
+router.post('/forgot-password', forgotPasswordController);
 
 export default router;
