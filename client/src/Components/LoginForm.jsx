@@ -181,6 +181,7 @@ const FormDialog = ({ abierto, close }) => {
                             </button>
                         </center>
                         <DialogContent>
+                            <FacebookLoginButton onClick={facebookLogin} />
                             <GoogleLoginButton onClick={googleLogin} />
                         </DialogContent>
                     </DialogContent>
