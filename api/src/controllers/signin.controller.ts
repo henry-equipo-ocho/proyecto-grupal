@@ -43,7 +43,7 @@ export const signInSocialCallBackController: RequestHandler = async (req: Reques
 
         const refreshToken = createRefreshTokenService(user);
         
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: true });
 
         res.redirect(`${process.env.DOMAINS}/social-login/`);
 

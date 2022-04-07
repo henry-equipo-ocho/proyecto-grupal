@@ -12,6 +12,7 @@ import reportWebVitals from './reportWebVitals';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_API;
+axios.defaults.credentials = 'include';
 
 ReactDOM.render(
     <Provider store={store}>
