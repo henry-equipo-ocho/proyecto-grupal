@@ -17,4 +17,6 @@ router.get('/google/callback', passport_1.default.authenticate('google', { failu
 router.get('/facebook', passport_1.default.authenticate('facebook', { scope: ['email', 'public_profile'], session: false }));
 router.get('/facebook/failure', signin_controller_1.signInSocialFailureController);
 router.get('/facebook/callback', passport_1.default.authenticate('facebook', { failureRedirect: '/signin/facebook/failure' }), signin_controller_1.signInSocialCallBackController);
+// Forgot password
+router.post('/forgot-password', signin_controller_1.forgotPasswordController);
 exports.default = router;

@@ -9,7 +9,8 @@ import { useFormik } from "formik";
 // import { formLabelClasses, Link } from '@mui/material';
 import jwt_decode from "jwt-decode";
 import * as React from "react";
-import GoogleButton from "react-google-button";
+// import GoogleButton from "react-google-button";
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -22,8 +23,8 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 500,
-    height: 500,
+    width: 450,
+    height: 450,
     p: 4,
 };
 
@@ -87,9 +88,19 @@ const FormDialog = ({ abierto, close }) => {
         },
     });
 
-    const responseSucess = async () => {
+    const googleLogin = async () => {
         const googleLoginURL = "http://localhost:3001/signin/google";
+        window.open(googleLoginURL, '_self');
     };
+
+    const facebookLogin = async () => {
+        const facebookLoginURL = "http://localhost:3001/signin/facebook";
+        window.open(facebookLoginURL, '_self');
+    };
+
+    const redirectToResetPassword = () => {
+        history("/forgot-password");
+    }
 
     return (
         <>
@@ -146,8 +157,7 @@ const FormDialog = ({ abierto, close }) => {
                         />
 
                         <DialogContent>
-                            <Button>Did you forget your password?</Button>{" "}
-                            <GoogleButton onClick={responseSucess} />
+                            <Button onClick={redirectToResetPassword}>Did you forget your password?</Button>{" "}
                         </DialogContent>
                         <DialogActions>
                             <button className="shopButton" onClick={close}>
@@ -160,8 +170,11 @@ const FormDialog = ({ abierto, close }) => {
                                 Submit
                             </button>
                         </DialogActions>
+                        <DialogContent>
+                            <GoogleLoginButton onClick={googleLogin} />
+                            <FacebookLoginButton onClick={facebookLogin} />
+                        </DialogContent>
                     </DialogContent>
-                    {/* <GoogleLoginComponent /> */}
                 </form>
             </Dialog>
         </>
