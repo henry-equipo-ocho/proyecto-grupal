@@ -105,7 +105,7 @@ export default function ActivityDetail({ activity, close, id }) {
 
     async function watchedOrBookeedTimes(id) {
         try {
-            await axios.post("http://localhost:3001/activities/watched", {
+            await axios.post("/activities/watched", {
                 type: "booked",
                 id: id,
             });

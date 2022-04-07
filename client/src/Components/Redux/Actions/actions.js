@@ -16,7 +16,7 @@ export function setUserName(payload) {
 export function getActivities() {
     return async function (dispatch) {
       
-        const { data: { data } } = await axios.post('http://localhost:3001/activities')
+        const { data: { data } } = await axios.post('/activities')
         dispatch({
             type: GET_ACTIVITIES,
             payload: data
@@ -26,7 +26,7 @@ export function getActivities() {
 
 export function getCountries() {
     return async function (dispatch) {
-        const countries = await axios.get('http://localhost:3001/locations/countries');
+        const countries = await axios.get('/locations/countries');
         return dispatch({
             type: GET_COUNTRIES,
             payload: countries.data.data,
@@ -36,7 +36,7 @@ export function getCountries() {
 
 export function getCities() {
     return async function (dispatch) {
-        const cities = await axios.get('http://localhost:3001/locations/cities');
+        const cities = await axios.get('/locations/cities');
         return dispatch({
             type: GET_CITIES,
             payload: cities.data.data,
@@ -48,7 +48,7 @@ export function setAllActivities(value) {
     return async function (dispatch) {
         try {
             dispatch(setLoading(true))
-            let res = await axios.get(`http://localhost:3001/activities/match/${value}`);
+            let res = await axios.get(`/activities/match/${value}`);
             console.log(res.data.data[3])
             return dispatch({
                 type: SET_ALL_ACTIVITIES,
@@ -73,7 +73,7 @@ export function setAllActivities(value) {
 export function orderActivitiesByPrice(payload) {
     return async function (dispatch) {
         dispatch(setLoading(true));
-        const prices = await axios.post('http://localhost:3001/activities/orderByPrice', payload);
+        const prices = await axios.post('/activities/orderByPrice', payload);
         return dispatch({
             type: ORDER_ACTIVITIES_BY_PRICE,
             payload: prices.data.data,

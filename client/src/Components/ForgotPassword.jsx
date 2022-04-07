@@ -33,7 +33,7 @@ export default function ForgotPassword() {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                await axios.post("http://localhost:3001/signin/forgot-password", values);
+                await axios.post("/signin/forgot-password", values);
                 Swal.fire({
                     title: "Email sent",
                     text: "Check your email to reset your password",

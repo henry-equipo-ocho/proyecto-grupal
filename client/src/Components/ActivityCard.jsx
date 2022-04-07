@@ -9,7 +9,7 @@ import React from "react";
 export default function ActivityCard({ nombre, imagen, handleDetail, id }) {
     async function watchedOrBookeedTimes(id) {
         try {
-            await axios.post("http://localhost:3001/activities/watched", {
+            await axios.post("/activities/watched", {
                 type: "watched",
                 id: id,
             });

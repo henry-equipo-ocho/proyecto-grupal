@@ -34,8 +34,7 @@ const GoogleLoginComponent = () => {
         localStorage.removeItem("loginData");
         setLoginData(null);
     };
-    // http://localhost:3001/signin/google
-    // http://localhost:3001/signin/facebook
+    
     return (
         <div className="app">
             {loginData ? (

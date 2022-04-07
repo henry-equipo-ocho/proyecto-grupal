@@ -7,8 +7,11 @@ import App from './App';
 import { store } from './Components/Redux/Store';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.REACT_APP_API;
 
 ReactDOM.render(
     <Provider store={store}>

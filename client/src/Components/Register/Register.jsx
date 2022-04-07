@@ -71,7 +71,7 @@ export default function Register() {
         onSubmit: async (values) => {
             if (terms) {
                 try {
-                    await axios.post("http://localhost:3001/signup", values);
+                    await axios.post("/signup", values);
                     Swal.fire({
                         title: `Welcome to Eztinerary!`,
                         text: "Please, check your email and confirm your account",

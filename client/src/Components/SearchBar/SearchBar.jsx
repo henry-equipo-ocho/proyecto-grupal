@@ -10,7 +10,7 @@ function SearchBar() {
     const handleChange = async (e) => {
         try {
             const searchName = await axios.get(
-                `http://localhost:3001/activities/match/${e.target.value}`
+                `/activities/match/${e.target.value}`
             );
 
             dispatch(setAllActivities(searchName.data.data));

@@ -44,7 +44,7 @@ export default function Reset() {
         onSubmit: async (values) => {
             try {
                 const headers = {Authorization: `Bearer ${token}`};
-                await axios.post("http://localhost:3001/update/password", values, {headers: headers});
+                await axios.post("/update/password", values, {headers: headers});
                 Swal.fire({
                     title: "Password Reset Successfully",
                     text: "You can now login with your new password",

@@ -18,6 +18,8 @@ import * as yup from "yup";
 import { useAxiosPrivate } from "./Auth/useAxiosPrivate";
 import "./LoginForm.css";
 import { setToken, setUserName } from "./Redux/Actions/actions";
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const style = {
     position: "absolute",
@@ -56,7 +58,7 @@ const FormDialog = ({ abierto, close }) => {
         onSubmit: async (values) => {
             try {
                 const datos = await axios.post(
-                    "http://localhost:3001/signin",
+                    "/signin",
                     values
                 );
                 var decoded = jwt_decode(datos.data.data);
@@ -99,12 +101,12 @@ const FormDialog = ({ abierto, close }) => {
     });
 
     const googleLogin = async () => {
-        const googleLoginURL = "http://localhost:3001/signin/google";
+        const googleLoginURL = `${process.env.REACT_APP_API}/signin/google`;
         window.open(googleLoginURL, '_self');
     };
 
     const facebookLogin = async () => {
-        const facebookLoginURL = "http://localhost:3001/signin/facebook";
+        const facebookLoginURL = `${process.env.REACT_APP_API}/signin/facebook`;
         window.open(facebookLoginURL, '_self');
     };
 
