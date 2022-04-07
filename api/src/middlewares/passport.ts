@@ -26,7 +26,7 @@ export default new Strategy(optStrategy, async (payload, done) => {
 export const signInGoogleService = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.DOMAINS}/signin/google/callback`
+    callbackURL: `${process.env.API_DOMAIN}/signin/google/callback`
 },
     async function (accessToken: any, refreshToken: any, profile: any, done: Function) {
         try {
@@ -42,7 +42,7 @@ export const signInGoogleService = new GoogleStrategy({
 export const signInFacebookService = new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${process.env.DOMAINS}/signin/facebook/callback`,
+    callbackURL: `${process.env.API_DOMAIN}/signin/facebook/callback`,
     profileFields: ['id', 'displayName', 'email']
 },
     async function (accessToken: any, refreshToken: any, profile: any, cb: Function) {

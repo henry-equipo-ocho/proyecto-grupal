@@ -39,7 +39,7 @@ exports.default = new passport_jwt_1.Strategy(optStrategy, (payload, done) => __
 exports.signInGoogleService = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.DOMAINS}/signin/google/callback`
+    callbackURL: `${process.env.API_DOMAIN}/signin/google/callback`
 }, function (accessToken, refreshToken, profile, done) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -58,7 +58,7 @@ exports.signInGoogleService = new GoogleStrategy({
 exports.signInFacebookService = new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${process.env.DOMAINS}/signin/facebook/callback`,
+    callbackURL: `${process.env.API_DOMAIN}/signin/facebook/callback`,
     profileFields: ['id', 'displayName', 'email']
 }, function (accessToken, refreshToken, profile, cb) {
     var _a;
