@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.forgotPasswordController = exports.signInSocialCallBackController = exports.signInSocialFailureController = exports.signInController = void 0;
 const signin_services_1 = require("../services/signin.services");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const signInController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password)
@@ -37,7 +42,7 @@ const signInController = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.signInController = signInController;
 const signInSocialFailureController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.status(400).redirect('http://localhost:3000/register/');
+    return res.status(400).redirect(`${process.env.DOMAINS}/register/`);
 });
 exports.signInSocialFailureController = signInSocialFailureController;
 const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,7 +52,7 @@ const signInSocialCallBackController = (req, res) => __awaiter(void 0, void 0, v
         const user = yield (0, signin_services_1.getUserService)(email);
         const refreshToken = (0, signin_services_1.createRefreshTokenService)(user);
         res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
-        res.redirect('http://localhost:3000/social-login/');
+        res.redirect(`${process.env.DOMAINS}/social-login/`);
         // return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     }
     catch (e) {

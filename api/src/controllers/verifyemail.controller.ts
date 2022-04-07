@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User.models';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const verifyEmail = async (req: Request, res: Response) => {
 
@@ -11,11 +12,10 @@ export const verifyEmail = async (req: Request, res: Response) => {
         if (user) {
             user.isVerified = true;
             await user.save();
-            res.redirect('http://localhost:3000/home')  // crear ruta para signin en rl front
+            res.redirect(`${process.env.DOMAINS}/home`)  // crear ruta para signin en rl front
         } else {
-            res.redirect('http://localhost:3000/register');
+            res.redirect(`${process.env.DOMAINS}/register`);
         }
-
     } catch (error) {
         throw error
     }

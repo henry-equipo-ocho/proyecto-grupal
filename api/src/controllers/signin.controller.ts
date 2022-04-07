@@ -1,6 +1,8 @@
 import { Request, RequestHandler, Response } from 'express';
 import ServerResponse from '../interfaces/ServerResponse.interface';
 import { createRefreshTokenService, createUserTokenService, getUserService, matchUserPasswordService, sendResetPasswordEmailService } from '../services/signin.services';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const signInController: RequestHandler = async (req: Request, res: Response) => {
 
@@ -29,7 +31,7 @@ export const signInController: RequestHandler = async (req: Request, res: Respon
 };
 
 export const signInSocialFailureController: RequestHandler = async (req: Request, res: Response) => {
-    return res.status(400).redirect('http://localhost:3000/register/');
+    return res.status(400).redirect(`${process.env.DOMAINS}/register/`);
 };
 
 export const signInSocialCallBackController: RequestHandler = async (req: Request, res: Response) => {
@@ -43,7 +45,7 @@ export const signInSocialCallBackController: RequestHandler = async (req: Reques
         
         res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-        res.redirect('http://localhost:3000/social-login/');
+        res.redirect(`${process.env.DOMAINS}/social-login/`);
 
         // return res.status(200).json(<ServerResponse>{ status: 'success', data: token });
     } catch (e: any) {

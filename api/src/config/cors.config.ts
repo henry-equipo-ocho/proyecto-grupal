@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const whitelist = [
     'http://127.0.0.1:3000',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    process.env.DOMAINS
 ];
 
 const corsOptions = {

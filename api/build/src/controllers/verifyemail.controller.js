@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyEmail = void 0;
 const User_models_1 = __importDefault(require("../models/User.models"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const verifyEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.query.id;
@@ -21,10 +23,10 @@ const verifyEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (user) {
             user.isVerified = true;
             yield user.save();
-            res.redirect('http://localhost:3000/home'); // crear ruta para signin en rl front
+            res.redirect(`${process.env.DOMAINS}/home`); // crear ruta para signin en rl front
         }
         else {
-            res.redirect('http://localhost:3000/register');
+            res.redirect(`${process.env.DOMAINS}/register`);
         }
     }
     catch (error) {

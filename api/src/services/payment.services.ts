@@ -208,7 +208,7 @@ async function endSubscriptionUser(userID: string) {
                 subject: "Your Eztinerary subscription ended",
                 html: `<h2> Hi there, ${user.name}! Your subscription has just ended </h2>
                     <h4>Please renew it to keep enjoying the benefits...</h4>
-                    <p>Head over <a href="http://localhost:3000/plans">here</a> to stay with us </p>`
+                    <p>Head over <a href=${process.env.DOMAINS}/plans>here</a> to stay with us </p>`
             };
 
             // sending email

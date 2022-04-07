@@ -66,7 +66,7 @@ const sendResetPasswordEmailService = (email, token) => __awaiter(void 0, void 0
         to: email,
         subject: 'Reset Password',
         html: `<p>You requested a password reset. Please click on the link below to reset your password.</p>
-        <a href='http://localhost:3000/reset-password?token=${token}'>http://localhost:3000/reset-password</a>
+        <a href=${process.env.DOMAINS}/reset-password?token=${token}>${process.env.DOMAINS}/reset-password</a>
         `
     };
     try {
