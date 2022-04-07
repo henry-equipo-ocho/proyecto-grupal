@@ -16,10 +16,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAxiosPrivate } from './Auth/useAxiosPrivate';
 
 import GoogleButton from 'react-google-button'
-import GoogleLoginComponent from './GoogleLogin/GoogleLoginComponent';
+// import GoogleLoginComponent from './GoogleLogin/GoogleLoginComponent';
 
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 
 const style = {
@@ -94,47 +95,46 @@ const FormDialog = ({ abierto, close }) => {
     },
   });
   
-  // const fetchAuthAuthenticated = async () => {
-  //   const response = await axiosPrivate.get("http://localhost:3001/signin/verify-email", { withCredentials: true}).catch((err) => {
-  //     console.log('Not properly authenticated')
-  //   }) 
-
-  //   if (response && response.data) {
-  //     console.log('User:', response.data)
-  //   }
-  // }
-
+  
   const responseSucess = async () => {
     const googleLoginURL = "http://localhost:3001/signin/google";
    
 
     const datos = window.open(
-      googleLoginURL, 
+      googleLoginURL,
+      history('/dashboard'), 
       "width=500,height=600",
-     
       );
         
-    // let timer;
-    // const googleLoginURL = "http://localhost:3001/signin/google";
-
-    // const newWindow = window.open(
-    //   googleLoginURL, 
-    //   "_self",
-    //   "width=500,height=600");
-   
-      
-
-    // if (newWindow) {
-    //   timer = setInterval(() => {
-    //     if (newWindow.closed) {
-    //       console.log('you are authenticated');
-    //       // fetchAuthAuthenticated()
-    //       if (timer) clearInterval(timer)
-          
-    //     }
-    //   }, 5000)
-    // }
+    
   };
+
+  // const handleClick = async() => {
+  //   try {
+  //     const datos = await axios.get("http://localhost:3001/signin/google");
+  //     var decoded = jwt_decode(datos.data.data);
+  //     const miStorage = window.localStorage
+  //     dispatch(setToken(datos.data.data))
+  //     miStorage.setItem('data', JSON.stringify(decoded))
+  //     miStorage.setItem('loggedIn', 'true')
+  //     //miStorage.setItem('token',  JSON.stringify(datos.data.data));
+  //     dispatch(setUserName(decoded.email))
+  //     const nombre = JSON.parse(localStorage.getItem('data')).name
+  //     formik.resetForm()
+  //     Swal.fire({
+  //       title:`${nombre}`,
+  //       text:'Bienvenido a Eztinerary',
+  //       icon:'success',
+  //       color: 'white',
+  //       background:'#00498b',
+  //       confirmButtonColor: '#24c59c'
+  //     });
+  //     history('/dashboard');
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+    
+  // }
 
   return (
     <>
@@ -194,6 +194,9 @@ const FormDialog = ({ abierto, close }) => {
 
                 
               </DialogActions>
+              {/* <Button onClick={handleClick}>
+                Login with Google
+              </Button> */}
                <GoogleButton onClick={responseSucess}/>
             </DialogContentText>
     <DialogContent>
